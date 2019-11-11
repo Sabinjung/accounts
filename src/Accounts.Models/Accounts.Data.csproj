@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Accounts.Data</AssemblyName>
+    <RootNamespace>Accounts.Data</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ve-1AF5.tmp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Abp.ZeroCore" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\" />
+  </ItemGroup>
+
+</Project>
