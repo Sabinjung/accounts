@@ -15,6 +15,8 @@ namespace Accounts.Models
 
         public int ProjectId { get; set; }
 
+        public int? TimesheetId { get; set; }
+
         public string ContentUrl { get; set; }
 
         public virtual Project Project { get; set; }

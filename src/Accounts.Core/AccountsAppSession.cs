@@ -1,4 +1,5 @@
-﻿using Abp.Configuration.Startup;
+﻿using Abp.Configuration;
+using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.MultiTenancy;
 using Abp.Runtime;
@@ -12,40 +13,32 @@ namespace Accounts.Core
 {
     public class AccountsAppSession : ClaimsAbpSession, ITransientDependency
     {
+
+        private readonly ISettingManager SettingManager;
         public AccountsAppSession(
         IPrincipalAccessor principalAccessor,
         IMultiTenancyConfig multiTenancy,
         ITenantResolver tenantResolver,
-        IAmbientScopeProvider<SessionOverride> sessionOverrideScopeProvider) :
+        IAmbientScopeProvider<SessionOverride> sessionOverrideScopeProvider,
+        ISettingManager settingManager) :
         base(principalAccessor, multiTenancy, tenantResolver, sessionOverrideScopeProvider)
         {
-
+            SettingManager = settingManager;
         }
 
         public string RealmId
         {
             get
             {
-                var realmId = PrincipalAccessor.Principal?.Claims.FirstOrDefault(c => c.Type == "realmid");
-                if (string.IsNullOrEmpty(realmId?.Value))
-                {
-                    return null;
-                }
+                return SettingManager.GetSettingValueForApplication("Intuit.RealmId");
 
-                return realmId.Value;
             }
         }
         public string AccessToken
         {
             get
             {
-                var accessToken = PrincipalAccessor.Principal?.Claims.FirstOrDefault(c => c.Type == "access_token");
-                if (string.IsNullOrEmpty(accessToken?.Value))
-                {
-                    return null;
-                }
-
-                return accessToken.Value;
+                return SettingManager.GetSettingValueForApplication("Intuit.AccessToken");
             }
         }
     }

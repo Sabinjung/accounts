@@ -37,7 +37,7 @@ namespace Accounts.Models
 
         public int Month { get; set; }
 
-        public int QBOInvoiceId { get; set; }
+        public string QBOInvoiceId { get; set; }
 
         public int? DocNumber { get; set; }
 
@@ -51,5 +51,8 @@ namespace Accounts.Models
 
         public virtual Term Term { get; set; }
         public int CompanyId { get; set; }
+
+        public virtual ICollection<Attachment> Attachments { get; set; }
+
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Accounts.Intuit
 {
-    public class IntuitAppservice : ApplicationService, IIntuitAppService
+    public class IntuitAppservice : AccountsAppServiceBase, IIntuitAppService
     {
         private readonly IntuitDataProvider IntuitDataProvider;
 
@@ -37,7 +37,6 @@ namespace Accounts.Intuit
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Intuit")]
-        //[AbpAuthorize("Invoicing.Submit")]
         public async Task SyncCompanies()
         {
             var customers = IntuitDataProvider.GetCustomers();
@@ -51,7 +50,6 @@ namespace Accounts.Intuit
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = "Intuit")]
-        //[AbpAuthorize("Invoicing.Submit")]
         public async Task SyncTerms()
         {
             var terms = IntuitDataProvider.GetTerms();

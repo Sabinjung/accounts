@@ -38,6 +38,7 @@ namespace Accounts.Models
 
         public virtual ICollection<HourLogEntry> HourLogEntries { get; set; }
 
+        public virtual ICollection<Timesheet> Timesheets { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }
 

@@ -10,6 +10,7 @@ namespace Accounts.Authorization.Roles
         public static class Tenants
         {
             public const string Admin = "Admin";
+          
         }
     }
 }

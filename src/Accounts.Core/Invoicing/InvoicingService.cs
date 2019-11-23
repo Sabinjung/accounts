@@ -2,6 +2,7 @@
 using Abp.Domain.Services;
 using Abp.ObjectMapping;
 using Abp.Runtime.Session;
+using Accounts.Data;
 using Accounts.Models;
 using System;
 using System.Collections.Generic;
@@ -34,27 +35,25 @@ namespace Accounts.Core.Invoicing
         public async Task<Invoice> GenerateInvoice(int timesheetId, int userId)
         {
             var timesheet = await TimesheetRepository.GetAsync(timesheetId);
-            if (timesheet != null)
-            {
-                //if (timesheet.InvoiceId.HasValue) return timesheet.Invoice;
-                var generatedInvoice = Mapper.Map<Invoice>(timesheet);
-                var invoice = InvoiceRepository.Insert(generatedInvoice);
-                timesheet.InvoiceGeneratedByUserId = userId;
-                timesheet.InvoiceGeneratedDate = DateTime.UtcNow;
-                timesheet.Invoice = invoice;
-                return invoice;
-            }
-            else
-            {
-                throw new Exception("Timesheet not found");
-            }
+            var generatedInvoice = Mapper.Map<Invoice>(timesheet);
+            var invoice = InvoiceRepository.Insert(generatedInvoice);
+
+            timesheet.Invoice = invoice;
+            timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;
+            return invoice;
+
 
         }
-        public async Task<int?> Submit(int invoiceId)
+        public async Task<string> Submit(int invoiceId, int userId)
         {
-            var invoice = await InvoiceRepository.GetAsync( invoiceId);
+            var invoice = await InvoiceRepository.GetAsync(invoiceId);
+            var timesheet = await TimesheetRepository.FirstOrDefaultAsync(t => t.InvoiceId == invoiceId);
             var referenceNo = await InvoiceProcessor.Send(invoice);
             invoice.QBOInvoiceId = referenceNo;
+            timesheet.StatusId = (int)TimesheetStatuses.Invoiced;
+            timesheet.InvoiceGeneratedByUserId = userId;
+            timesheet.InvoiceGeneratedDate = DateTime.UtcNow;
+
             return await Task.FromResult(referenceNo);
         }
     }

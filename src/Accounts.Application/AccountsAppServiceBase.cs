@@ -6,12 +6,15 @@ using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using Accounts.Authorization.Users;
 using Accounts.MultiTenancy;
+using Abp.Authorization;
 
 namespace Accounts
 {
     /// <summary>
     /// Derive your application services from this class.
     /// </summary>
+
+    [AbpAuthorize]
     public abstract class AccountsAppServiceBase : ApplicationService
     {
         public TenantManager TenantManager { get; set; }

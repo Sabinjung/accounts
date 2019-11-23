@@ -8,7 +8,7 @@ namespace Accounts.Timesheets.Dto
     public class TimesheetQueryParameters : NamedQueryParameter
     {
         public int? ProjectId { get; set; }
-        public int? StatusId { get; set; }
+        public int[] StatusId { get; set; }
     }
 
 }

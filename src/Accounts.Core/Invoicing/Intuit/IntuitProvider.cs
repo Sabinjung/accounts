@@ -1,4 +1,5 @@
-﻿using Abp.Dependency;
+﻿using Abp.Configuration;
+using Abp.Dependency;
 using Accounts.Core;
 using Accounts.Core.Invoicing.Intuit;
 using Intuit.Ipp.Core;
@@ -10,9 +11,11 @@ using Intuit.Ipp.QueryFilter;
 using Intuit.Ipp.ReportService;
 using Intuit.Ipp.Security;
 using Microsoft.Extensions.Options;
+using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -26,6 +29,8 @@ namespace Accounts.Intuit
         private readonly AccountsAppSession AccountsAppSession;
 
         private readonly IntuitSettings IntuitSettings;
+
+
 
         public IntuitDataProvider(AccountsAppSession accountsAppSession, IOptions<IntuitSettings> options)
         {
@@ -80,5 +85,104 @@ namespace Accounts.Intuit
 
             return added;
         }
+
+
+        public List<T> FindAll<T>(T entity, int startPosition = 1, int maxResults = 100) where T : IEntity
+        {
+            var serviceContext = GetServiceContext();
+            DataService service = new DataService(serviceContext);
+            ReadOnlyCollection<T> entityList = service.FindAll(entity, startPosition, maxResults);
+            return entityList.ToList<T>();
+        }
+
+
+        public Account FindOrAddAccount(AccountTypeEnum accountType, string subType, string accountName)
+        {
+            var serviceContext = GetServiceContext();
+            Account typeOfAccount = null;
+            List<Account> listOfAccount = FindAll<Account>(new Account(), 1, 500);
+            if (listOfAccount.Count > 0)
+            {
+                foreach (Account acc in listOfAccount)
+                {
+
+                    if (acc.AccountType == accountType && acc.AccountSubType == subType && acc.status != EntityStatusEnum.SyncError)
+                    {
+                        typeOfAccount = acc;
+                        break;
+                    }
+                }
+            }
+
+            if (typeOfAccount == null)
+            {
+                DataService service = new DataService(serviceContext);
+                Account account;
+                account = new Account();
+                account.Name = accountName;
+
+                account.AccountType = accountType;
+
+                Account createdAccount = service.Add<Account>(account);
+                typeOfAccount = createdAccount;
+            }
+
+            return typeOfAccount;
+        }
+
+        public void UploadFiles(string invoiceNo, List<FileForIntuitUploadDTO> attachments)
+        {
+            foreach (var attachment in attachments)
+            {
+                Attachable attachable = CreateAttachableForUpload(invoiceNo);
+                attachable.ContentType = attachment.ContentType;
+                attachable.FileName = attachment.FileName;
+                Upload(attachable, attachment.Stream);
+            }
+        }
+
+        private Attachable Upload(Attachable attachable, Stream stream)
+        {
+            var serviceContext = GetServiceContext();
+            var service = new DataService(serviceContext);
+            var uploaded = service.Upload(attachable, stream);
+            return uploaded;
+        }
+
+
+        private Attachable CreateAttachableForUpload(string invoiceNo)
+        {
+            var attachable = new Attachable();
+            var attachableRefs = new AttachableRef[1];
+            var ar = new AttachableRef();
+            ar.EntityRef = new ReferenceType();
+            ar.EntityRef.type = objectNameEnumType.Invoice.ToString();
+            ar.EntityRef.name = objectNameEnumType.Invoice.ToString();
+            ar.EntityRef.Value = invoiceNo;
+            attachableRefs[0] = ar;
+            attachable.AttachableRef = attachableRefs;
+            return attachable;
+        }
+    }
+
+    public class ErrorMessages
+    {
+        //Intuit
+        public static string INTUIT_UNAUTHORIZED_MESSAGE = "Unauthorized-401";
+        public static string INTUIT_AUTH_NULL = "Null auth";
+
+        //File
+        public static string FILE_NOT_FOUND = "File not found";
+
+    }
+
+    public class FileForIntuitUploadDTO
+    {
+        public string ContentType { get; set; }
+
+        public Stream Stream { get; set; }
+
+        public string FileName { get; set; }
+
     }
 }

@@ -28,4 +28,9 @@
     <ProjectReference Include="..\..\PQ\PQ.csproj" />
     <ProjectReference Include="..\Accounts.Models\Accounts.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Authorization">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.authorization\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authorization.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

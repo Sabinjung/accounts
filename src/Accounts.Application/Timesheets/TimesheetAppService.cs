@@ -22,9 +22,11 @@ using Accounts.Projects.Dto;
 using AutoMapper;
 using PQ.Pagination;
 using PQ;
+using Accounts.Timesheets;
 
 namespace Accounts.Projects
 {
+    [AbpAuthorize("Timesheet")]
     public class TimesheetAppService : ApplicationService, ITimesheetAppService
     {
         private readonly IRepository<Timesheet> Repository;
@@ -32,6 +34,7 @@ namespace Accounts.Projects
         private readonly IProjectRepository ProjectRepository;
 
         private readonly IHourLogEntryRepository HourLogEntryRepository;
+
         private readonly IRepository<Attachment> AttachmentRepository;
 
         private readonly IMapper Mapper;
@@ -39,13 +42,17 @@ namespace Accounts.Projects
         private readonly IList<TimesheetQueryParameters> SavedQueries;
 
         private readonly QueryBuilderFactory QueryBuilder;
+
+        private readonly ITimesheetService TimesheetService;
+
         public TimesheetAppService(
             IRepository<Timesheet> repository,
             IProjectRepository projectRepository,
             IRepository<Attachment> attachmentRepository,
             IHourLogEntryRepository hourLogEntryRepository,
             IMapper mapper,
-            QueryBuilderFactory queryBuilderFactory
+            QueryBuilderFactory queryBuilderFactory,
+            ITimesheetService timesheetService
             )
 
         {
@@ -60,19 +67,20 @@ namespace Accounts.Projects
                 new TimesheetQueryParameters
                 {
                     Name="Pending Approval",
-                    StatusId=(int)TimesheetStatuses.Created
+                    StatusId=new int[]{(int)TimesheetStatuses.Created }
                 },
                  new TimesheetQueryParameters
                 {
                     Name="Approved",
-                    StatusId=(int)TimesheetStatuses.Approved
+                    StatusId=new int[]{(int)TimesheetStatuses.Approved }
                 },
                   new TimesheetQueryParameters
                 {
                     Name="Invoiced",
-                    StatusId=(int)TimesheetStatuses.Invoiced
+                    StatusId=new int[]{(int)TimesheetStatuses.InvoiceGenerated, (int) TimesheetStatuses.Invoiced }
                 }
             };
+            TimesheetService = timesheetService;
         }
 
         [AbpAuthorize("Timesheet.Approve")]
@@ -89,56 +97,43 @@ namespace Accounts.Projects
         }
 
 
+        [AbpAuthorize("Timesheet.Create")]
         public async Task Create(CreateTimesheetInputDto input)
         {
+            // Gather required information
             var project = await ProjectRepository.GetAsync(input.ProjectId);
-            var startDt = new DateTime(project.StartDt.Year, project.StartDt.Month, 1);
-            var endDt = DateTime.Now.AddDays(2);
-
+            var lastTimesheet = await Repository.GetAll().Where(x => x.ProjectId == input.ProjectId).OrderByDescending(x => x.EndDt).FirstOrDefaultAsync();
+            var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
-
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
-            if (project != null)
-            {
-                var newTimesheet = new Timesheet
-                {
-                    ProjectId = project.Id,
-                    StatusId = (int)TimesheetStatuses.Created,
-                    HourLogEntries = hourLogentries,
-                    Attachments = attachments,
-                    StartDt = startDt,
-                    EndDt = endDt,
-                };
 
-                if (!string.IsNullOrEmpty(input.NoteText))
-                {
-                    newTimesheet.Notes = new List<Note>
+            // Construct new Timesheet
+            var newTimesheet = new Timesheet
+            {
+                ProjectId = project.Id,
+                StatusId = (int)TimesheetStatuses.Created,
+                HourLogEntries = hourLogentries,
+                Attachments = attachments,
+                StartDt = startDt,
+                EndDt = endDt,
+                TotalHrs = TimesheetService.CalculateTotalHours(hourLogentries)
+            };
+
+            if (!string.IsNullOrEmpty(input.NoteText))
+            {
+                newTimesheet.Notes = new List<Note>
                     {
                         new Note{ NoteText=input.NoteText}
                     };
-                }
-
-                Repository.Insert(newTimesheet);
             }
+
+            Repository.Insert(newTimesheet);
+
         }
 
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
         {
-            var project = await ProjectRepository.GetAsync(projectId);
-            var timesheet = await Repository.GetAll().Where(x => x.ProjectId == projectId).OrderByDescending(x => x.CreationTime).FirstOrDefaultAsync();
-            var timesheetInfo = new TimesheetDto();
-            timesheetInfo.ProjectId = projectId;
-            if (project != null)
-            {
-                timesheetInfo.Project = Mapper.Map<ProjectDto>(project);
-                timesheetInfo.StartDt = new DateTime(project.StartDt.Year, project.StartDt.Month, 1);
-                timesheetInfo.EndDt = timesheetInfo.StartDt.AddMonths(1).AddDays(-1);
-
-                var hourLogEntries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt, timesheetInfo.EndDt).ToListAsync();
-                timesheetInfo.HourLogEntries = Mapper.Map<IEnumerable<HourLogEntryDto>>(hourLogEntries);
-                timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
-            }
-            return timesheetInfo;
+            return await CreateNextTimesheet(projectId);
         }
 
 
@@ -153,7 +148,7 @@ namespace Accounts.Projects
         {
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
             query.WhereIf(p => p.ProjectId.HasValue, p => x => x.ProjectId == p.ProjectId);
-            query.WhereIf(p => p.StatusId.HasValue, p => x => x.StatusId == p.StatusId);
+            query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
             var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
@@ -163,6 +158,31 @@ namespace Accounts.Projects
         public IEnumerable<TimesheetQueryParameters> GetSavedQueries()
         {
             return SavedQueries;
+        }
+
+
+        private async Task<TimesheetDto> CreateNextTimesheet(int projectId)
+        {
+            var timesheetInfo = new TimesheetDto();
+            var project = await ProjectRepository.GetAsync(projectId);
+            var lastTimesheet = await Repository.GetAll().Where(x => x.ProjectId == projectId).OrderByDescending(x => x.EndDt).FirstOrDefaultAsync();
+            timesheetInfo.ProjectId = project.Id;
+            timesheetInfo.Project = Mapper.Map<ProjectDto>(project);
+            var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
+            timesheetInfo.StartDt = startDt;
+            timesheetInfo.EndDt = endDt;
+
+            // Fill in Timesheet Hour Log Entries
+            var hourLogEntries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt, timesheetInfo.EndDt).ToListAsync();
+
+            if (!TimesheetService.AllTimesheetHoursEntered(timesheetInfo.StartDt, timesheetInfo.EndDt, hourLogEntries))
+            {
+                throw new UserFriendlyException($"Please enter all billable hours between {timesheetInfo.StartDt.ToShortDateString()}-{timesheetInfo.EndDt.ToShortDateString()}");
+            }
+
+            timesheetInfo.HourLogEntries = Mapper.Map<IEnumerable<HourLogEntryDto>>(hourLogEntries);
+            timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
+            return timesheetInfo;
         }
 
 

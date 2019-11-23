@@ -8,6 +8,6 @@ namespace Accounts.Core.Invoicing
 {
     public interface IInvoiceProcessor
     {
-        Task<int> Send(Invoice invoice);
+        Task<string> Send(Invoice invoice);
     }
 }

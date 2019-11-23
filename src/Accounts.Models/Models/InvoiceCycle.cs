@@ -6,5 +6,6 @@ namespace Accounts.Models
 {
     public class InvoiceCycle : CodeBaseEntity
     {
+
     }
 }

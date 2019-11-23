@@ -9,7 +9,7 @@ namespace Accounts.Data
         Weekly = 1,
         Monthly = 2,
         BiWeekly = 3,
-        BiMontly = 4
+        BiMonthly = 4
     }
 
 
@@ -18,6 +18,8 @@ namespace Accounts.Data
         Created = 1,
         Approved = 2,
         Rejected = 3,
-        Invoiced = 4
+        Invoiced = 4,
+        InvoiceGenerated = 5
+
     }
 }

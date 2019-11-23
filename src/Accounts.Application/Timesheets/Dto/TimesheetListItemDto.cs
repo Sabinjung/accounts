@@ -24,5 +24,12 @@ namespace Accounts.Timesheets.Dto
 
 
         public DateTime CreatedDt { get; set; }
+
+        public string CreatedByUserName { get; set; }
+
+
+        public DateTime ApprovedDate { get; set; }
+
+        public string ApprovedByUserName { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Accounts.Core.Invoicing
     public interface IInvoicingService
     {
         Task<Invoice> GenerateInvoice(int timesheetId, int userId);
-        Task<int?> Submit(int invoiceId);
+        Task<string> Submit(int invoiceId, int userId);
     }
 }

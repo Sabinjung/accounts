@@ -18,6 +18,8 @@ using Accounts.Authorization.Users;
 using Accounts.Models.TokenAuth;
 using Accounts.MultiTenancy;
 using Microsoft.AspNetCore.Authentication;
+using Abp.Runtime.Session;
+using Accounts.Identity;
 
 namespace Accounts.Controllers
 {
@@ -31,6 +33,8 @@ namespace Accounts.Controllers
         private readonly IExternalAuthConfiguration _externalAuthConfiguration;
         private readonly IExternalAuthManager _externalAuthManager;
         private readonly UserRegistrationManager _userRegistrationManager;
+        public readonly IAbpSession _abpSession;
+        private readonly SignInManager _signInManager;
 
         public TokenAuthController(
             LogInManager logInManager,
@@ -39,7 +43,9 @@ namespace Accounts.Controllers
             TokenAuthConfiguration configuration,
             IExternalAuthConfiguration externalAuthConfiguration,
             IExternalAuthManager externalAuthManager,
-            UserRegistrationManager userRegistrationManager)
+            IAbpSession abpSession,
+            SignInManager signInManager,
+        UserRegistrationManager userRegistrationManager)
         {
             _logInManager = logInManager;
             _tenantCache = tenantCache;
@@ -48,6 +54,8 @@ namespace Accounts.Controllers
             _externalAuthConfiguration = externalAuthConfiguration;
             _externalAuthManager = externalAuthManager;
             _userRegistrationManager = userRegistrationManager;
+            _abpSession = abpSession;
+            _signInManager = signInManager;
         }
 
         [HttpPost]
@@ -70,6 +78,7 @@ namespace Accounts.Controllers
             };
         }
 
+
         [HttpGet]
         public async Task IntuitLogin(string returnUrl = "/")
         {
@@ -78,7 +87,7 @@ namespace Accounts.Controllers
         }
 
         [HttpGet]
-        public List<ExternalLoginProviderInfoModel> GetExternalAuthenticationProviders()
+        public  List<ExternalLoginProviderInfoModel> GetExternalAuthenticationProviders()
         {
             return ObjectMapper.Map<List<ExternalLoginProviderInfoModel>>(_externalAuthConfiguration.Providers);
         }
@@ -88,7 +97,7 @@ namespace Accounts.Controllers
         {
             var externalUser = await GetExternalUserInfo(model);
 
-            var loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
+            var loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, externalUser.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
 
             switch (loginResult.Result)
             {
@@ -104,7 +113,7 @@ namespace Accounts.Controllers
                     }
                 case AbpLoginResultType.UnknownExternalLogin:
                     {
-                        var newUser = await RegisterExternalUserAsync(externalUser);
+                        var newUser = await AssociateExternalLoginToUserAsync(externalUser);
                         if (!newUser.IsActive)
                         {
                             return new ExternalAuthenticateResultModel
@@ -114,7 +123,7 @@ namespace Accounts.Controllers
                         }
 
                         // Try to login again with newly registered user!
-                        loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
+                        loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, externalUser.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
                         if (loginResult.Result != AbpLoginResultType.Success)
                         {
                             throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
@@ -167,13 +176,20 @@ namespace Accounts.Controllers
             return user;
         }
 
+
+        private async Task<User> AssociateExternalLoginToUserAsync(ExternalAuthUserInfo externalUser)
+        {
+            var user = await _userRegistrationManager.AssociateExternalLoginToUser(externalUser.EmailAddress, externalUser.Provider, externalUser.ProviderKey);
+            return user;
+        }
+
         private async Task<ExternalAuthUserInfo> GetExternalUserInfo(ExternalAuthenticateModel model)
         {
             var userInfo = await _externalAuthManager.GetUserInfo(model.AuthProvider, model.ProviderAccessCode);
-            if (userInfo.ProviderKey != model.ProviderKey)
-            {
-                throw new UserFriendlyException(L("CouldNotValidateExternalUser"));
-            }
+            //if (userInfo.ProviderKey != model.ProviderKey)
+            //{
+            //    throw new UserFriendlyException(L("CouldNotValidateExternalUser"));
+            //}
 
             return userInfo;
         }

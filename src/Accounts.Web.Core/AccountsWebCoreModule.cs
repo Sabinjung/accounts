@@ -12,6 +12,7 @@ using Abp.Zero.Configuration;
 using Accounts.Authentication.JwtBearer;
 using Accounts.Configuration;
 using Accounts.EntityFrameworkCore;
+using Intuit.Ipp.OAuth2PlatformClient;
 
 namespace Accounts
 {
@@ -48,6 +49,8 @@ namespace Accounts
                  );
 
             ConfigureTokenAuth();
+
+           
         }
 
         private void ConfigureTokenAuth()
@@ -65,6 +68,7 @@ namespace Accounts
         public override void Initialize()
         {
             IocManager.RegisterAssemblyByConvention(typeof(AccountsWebCoreModule).GetAssembly());
+            
         }
     }
 }

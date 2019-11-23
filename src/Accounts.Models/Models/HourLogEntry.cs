@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Accounts.Models
 {
-    public class HourLogEntry: FullAuditedEntity
+    public class HourLogEntry : FullAuditedEntity
     {
         [Required]
         public double Hours { get; set; }
@@ -13,6 +13,8 @@ namespace Accounts.Models
         public DateTime Day { get; set; }
 
         public int ProjectId { get; set; }
+
+        public int? TimesheetId { get; set; }
 
         [ForeignKey(nameof(ProjectId))]
         public virtual Project Project { get; set; }

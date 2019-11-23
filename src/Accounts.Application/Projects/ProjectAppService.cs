@@ -13,6 +13,9 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Abp.Auditing;
 using Abp.Authorization;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace Accounts.Projects
 {
@@ -20,11 +23,11 @@ namespace Accounts.Projects
     {
         private readonly IAzureBlobService AzureBlobService;
 
-        private readonly IObjectMapper Mapper;
+        private readonly IMapper Mapper;
 
         private readonly IRepository<Attachment> AttachmentRepository;
 
-        public ProjectAppService(IRepository<Project> repository, IRepository<Attachment> attachmentRepository, IAzureBlobService azureBlobService, IObjectMapper mapper)
+        public ProjectAppService(IRepository<Project> repository, IRepository<Attachment> attachmentRepository, IAzureBlobService azureBlobService, IMapper mapper)
        : base(repository)
         {
             AzureBlobService = azureBlobService;
@@ -37,7 +40,7 @@ namespace Accounts.Projects
             var project = await Repository.GetAsync(projectId);
             if (project != null)
             {
-                var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.ToShortDateString()}";
+                var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.ToString("MM-dd-yy")}{Path.GetExtension(file.FileName)}";
                 var uri = await AzureBlobService.UploadSingleFileAsync(file, fileName);
                 project.Attachments.Add(new Attachment
                 {
@@ -51,12 +54,8 @@ namespace Accounts.Projects
 
         public async Task<IEnumerable<AttachmentDto>> GetAttachments(int projectId)
         {
-            var project = await Repository.GetAsync(projectId);
-            if (project != null)
-            {
-                return Mapper.Map<IEnumerable<AttachmentDto>>(project.Attachments);
-            }
-            return null;
+            var attachmentsQuery = AttachmentRepository.GetAll().Where(x => x.ProjectId == projectId && x.TimesheetId == null);
+            return await Mapper.ProjectTo<AttachmentDto>(attachmentsQuery).ToListAsync();
         }
 
 

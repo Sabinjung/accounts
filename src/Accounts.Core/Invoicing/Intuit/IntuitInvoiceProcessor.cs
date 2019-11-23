@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
+using Accounts.Blob;
 using Accounts.Intuit;
 using Accounts.Models;
 using Intuit.Ipp.Core;
@@ -19,24 +20,21 @@ namespace Accounts.Core.Invoicing.Intuit
     {
         private readonly IntuitDataProvider IntuitDataProvider;
 
+        private readonly IAzureBlobService AzureBlobService;
 
-
-        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider)
+        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider, IAzureBlobService azureBlobService)
         {
             IntuitDataProvider = intuitDataProvider;
+            AzureBlobService = azureBlobService;
 
         }
-        public async Task<int> Send(Invoice invoice)
+        public async Task<string> Send(Invoice invoice)
         {
 
             var intuitInvoice = new IntuitData.Invoice
             {
                 Deposit = 0,
                 DepositSpecified = true,
-                DueDate = invoice.DueDate,
-                DueDateSpecified = true,
-                PrintStatus = IntuitData.PrintStatusEnum.NotSet,
-                PrintStatusSpecified = true,
                 EmailStatus = IntuitData.EmailStatusEnum.NotSet,
                 EmailStatusSpecified = true,
                 TxnDate = invoice.InvoiceDate,
@@ -57,13 +55,27 @@ namespace Accounts.Core.Invoicing.Intuit
                 Value = invoice.TermId.ToString()
             };
 
-            AddCustomFields(intuitInvoice, invoice);
-            //var accountForDiscount = IntuitHelperService.FindOrAddAccount(serviceContext, IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
-            //AddLines(intuitInvoice, invoice, accountForDiscount);
 
-            //IntuitHelperService.Add(serviceContext, intuitInvoice);
-            IntuitDataProvider.Add(intuitInvoice);
-            return 1;
+
+            AddCustomFields(intuitInvoice, invoice);
+            var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
+            AddLines(intuitInvoice, invoice, accountForDiscount);
+            var savedInvoice = IntuitDataProvider.Add(intuitInvoice);
+
+            // Include Attachments
+            var invoiceAttachments = new List<FileForIntuitUploadDTO>();
+            foreach (var attachment in invoice.Attachments)
+            {
+                var dto = new FileForIntuitUploadDTO();
+                var blob = await AzureBlobService.DownloadFilesAsync(attachment.Name);
+                dto.Stream = await blob.OpenReadAsync();
+                dto.ContentType = attachment.ContentType;
+                dto.FileName = attachment.Name;
+                invoiceAttachments.Add(dto);
+            }
+            IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
+
+            return savedInvoice.Id;
 
         }
 
@@ -71,28 +83,17 @@ namespace Accounts.Core.Invoicing.Intuit
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice)
         {
             var consultant = invoice.Consultant;
-
-            var customFieldsForCandidateInfo = new List<IntuitData.CustomField>();
+            var customFields = new List<IntuitData.CustomField>();
 
             //Candidate Name
             var candidateCustomField = new IntuitData.CustomField();
-            candidateCustomField.Name = "Candidate Name";
+            candidateCustomField.Name = "Consultant";
             candidateCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
             candidateCustomField.AnyIntuitObject = consultant.FirstName + " " + consultant.LastName;
             candidateCustomField.DefinitionId = "1";
 
-            //Memo
-            var memoCustomField = new IntuitData.CustomField();
-            memoCustomField.Name = "Memo";
-            memoCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
-            memoCustomField.AnyIntuitObject = invoice.Memo;
-            memoCustomField.DefinitionId = "2";
-
-            customFieldsForCandidateInfo.Add(candidateCustomField);
-            customFieldsForCandidateInfo.Add(memoCustomField);
-
-            intuitInvoice.CustomField = customFieldsForCandidateInfo.ToArray();
-
+            customFields.Add(candidateCustomField);
+            intuitInvoice.CustomField = customFields.ToArray();
         }
 
 
@@ -118,7 +119,7 @@ namespace Accounts.Core.Invoicing.Intuit
             };
 
 
-
+            // Sub Total
             var subTotalLine = new IntuitData.Line();
             subTotalLine.Id = "2";
             subTotalLine.LineNum = "2";
@@ -136,12 +137,7 @@ namespace Accounts.Core.Invoicing.Intuit
 
             //discountLine.Amount = 0;            
             //discountLine.AmountSpecified = true;
-
-
             var discountLineDetail = new IntuitData.DiscountLineDetail();
-
-
-
 
             if (invoice.IsDiscountPercentageApplied)
             {

@@ -6,7 +6,7 @@ namespace Accounts.Invoicing
 {
     public interface IInvoiceAppService : IAsyncCrudAppService<InvoiceDto>
     {
-        Task<InvoiceDto> GenerateInvoice(GenerateInvoiceInputDto input);
+        Task<InvoiceDto> GenerateInvoice(int timesheetId);
 
         Task Submit(int invoiceId);
     }

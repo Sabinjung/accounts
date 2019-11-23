@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Accounts.Configuration;
+using Accounts.Authentication.External;
 
 namespace Accounts.Web.Host.Startup
 {
@@ -24,6 +25,19 @@ namespace Accounts.Web.Host.Startup
             IocManager.RegisterAssemblyByConvention(typeof(AccountsWebHostModule).GetAssembly());
 
 
+        }
+
+        public override void PostInitialize()
+        {
+            var externalAuthConfiguration = IocManager.Resolve<IExternalAuthConfiguration>();
+            externalAuthConfiguration.Providers.Add(
+                 new ExternalLoginProviderInfo(
+                    GoogleAuthProvider.Name,
+                    _appConfiguration["Authentication:Google:ClientId"],
+                    _appConfiguration["Authentication:Google:ClientSecret"],
+                    typeof(GoogleAuthProvider)
+                )
+            );
         }
     }
 }

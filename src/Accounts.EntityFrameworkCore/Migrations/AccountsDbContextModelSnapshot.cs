@@ -1052,6 +1052,8 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
+                    b.Property<int?>("InvoiceId");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
@@ -1067,6 +1069,8 @@ namespace Accounts.Migrations
                     b.Property<int?>("TimesheetId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProjectId");
 
@@ -1229,7 +1233,7 @@ namespace Accounts.Migrations
 
                     b.Property<int>("Month");
 
-                    b.Property<int>("QBOInvoiceId");
+                    b.Property<string>("QBOInvoiceId");
 
                     b.Property<double>("Rate");
 
@@ -1399,7 +1403,7 @@ namespace Accounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ApprovedByUserId");
+                    b.Property<long?>("ApprovedByUserId");
 
                     b.Property<DateTime?>("ApprovedDate");
 
@@ -1413,7 +1417,7 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime>("EndDt");
 
-                    b.Property<int?>("InvoiceGeneratedByUserId");
+                    b.Property<long?>("InvoiceGeneratedByUserId");
 
                     b.Property<DateTime?>("InvoiceGeneratedDate");
 
@@ -1434,6 +1438,10 @@ namespace Accounts.Migrations
                     b.Property<double>("TotalHrs");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApprovedByUserId");
+
+                    b.HasIndex("CreatorUserId");
 
                     b.HasIndex("InvoiceId");
 
@@ -1694,6 +1702,10 @@ namespace Accounts.Migrations
 
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
+                    b.HasOne("Accounts.Models.Invoice")
+                        .WithMany("Attachments")
+                        .HasForeignKey("InvoiceId");
+
                     b.HasOne("Accounts.Models.Project", "Project")
                         .WithMany("Attachments")
                         .HasForeignKey("ProjectId")
@@ -1766,6 +1778,14 @@ namespace Accounts.Migrations
 
             modelBuilder.Entity("Accounts.Models.Timesheet", b =>
                 {
+                    b.HasOne("Accounts.Authorization.Users.User", "ApprovedByUser")
+                        .WithMany()
+                        .HasForeignKey("ApprovedByUserId");
+
+                    b.HasOne("Accounts.Authorization.Users.User", "CreatorUser")
+                        .WithMany()
+                        .HasForeignKey("CreatorUserId");
+
                     b.HasOne("Accounts.Models.Invoice", "Invoice")
                         .WithMany()
                         .HasForeignKey("InvoiceId");

@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using Accounts.Authorization.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,14 +17,14 @@ namespace Accounts.Models
 
         public int StatusId { get; set; }
         // Approval
-        public int? ApprovedByUserId { get; set; }
+        public long? ApprovedByUserId { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
 
         // Invoice
         public int? InvoiceId { get; set; }
 
-        public int? InvoiceGeneratedByUserId { get; set; }
+        public long? InvoiceGeneratedByUserId { get; set; }
 
         public DateTime? InvoiceGeneratedDate { get; set; }
 
@@ -42,6 +43,13 @@ namespace Accounts.Models
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public virtual ICollection<Note> Notes { get; set; }
+
+        public virtual User CreatorUser { get; set; }
+
+        public virtual User ApprovedByUser { get; set; }
+
+        public virtual User InvoiceGeneratedByUser { get; set; }
+
 
     }
 }

@@ -28,5 +28,7 @@ namespace Accounts.Projects.Dto
         public int InvoiceCycleId { get; set; }
 
         public double Rate { get; set; }
+
+        public double PastTimesheetDays { get; set; }
     }
 }

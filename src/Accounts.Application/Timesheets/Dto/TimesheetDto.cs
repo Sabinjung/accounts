@@ -24,6 +24,11 @@ namespace Accounts.Timesheets.Dto
 
         public int ProjectId { get; set; }
 
+        public int? InvoiceId { get; set; }
+
+        public string QBInvoiceId { get; set; }
+
+
         public double TotalHrs { get; set; }
 
         public string ApprovedByUserDisplayName { get; set; }
@@ -33,6 +38,12 @@ namespace Accounts.Timesheets.Dto
         public DateTime? InvoiceGeneratedDate { get; set; }
 
         public DateTime CreatedDt { get; set; }
+
+        public string CreatedByUserName { get; set; }
+
+        public string ApprovedByUserName { get; set; }
+
+        public string InvoiceGeneratedByUserName { get; set; }
 
         public IEnumerable<HourLogEntryDto> HourLogEntries { get; set; }
 

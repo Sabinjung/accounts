@@ -20,7 +20,9 @@ namespace Accounts.EntityFrameworkCore.Repositories
 
         public IQueryable<HourLogEntry> GetHourLogEntriesByProjectIdAsync(int projectId, DateTime startDt, DateTime endDt)
         {
-            return GetAll().Where(p => p.Day >= startDt && p.Day <= endDt);
+            var startDateOnly = startDt.Date;
+            var endDateOnly = endDt.Date;
+            return GetAll().Where(p => p.ProjectId == projectId && p.Day >= startDateOnly && p.Day <= endDateOnly);
         }
 
 

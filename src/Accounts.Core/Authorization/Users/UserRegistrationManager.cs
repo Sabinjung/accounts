@@ -56,7 +56,7 @@ namespace Accounts.Authorization.Users
             };
 
             user.SetNormalizedNames();
-           
+
             foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
             {
                 user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
@@ -68,6 +68,25 @@ namespace Accounts.Authorization.Users
             await CurrentUnitOfWork.SaveChangesAsync();
 
             return user;
+        }
+
+        public async Task<User> AssociateExternalLoginToUser(string email, string provider, string providerKey)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                user.Logins.Add(
+                    new UserLogin
+                    {
+                        LoginProvider = provider,
+                        ProviderKey = providerKey,
+                        TenantId = user.TenantId
+                    }
+                );
+                await CurrentUnitOfWork.SaveChangesAsync();
+                return user;
+            }
+            throw new UserFriendlyException("User not found. Contact administrator.");
         }
 
         private void CheckForTenant()

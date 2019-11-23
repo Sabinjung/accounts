@@ -19,6 +19,7 @@ namespace Accounts
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<AccountsAuthorizationProvider>();
+            Configuration.Settings.Providers.Add<AccountsSettingsProvider>();
         }
 
         public override void Initialize()
@@ -33,7 +34,13 @@ namespace Accounts
                 {
                     cfg.CreateMap<Project, ProjectDto>()
                         .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
-                         .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName));
+                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName));
+
+
+                    cfg.CreateMap<ProjectDto, Project>()
+                        .ForMember("StartDt", x => x.MapFrom(y => y.StartDt.Date))
+                        .ForMember("EndDt", x => x.MapFrom(y => y.EndDt.HasValue ? y.EndDt.Value.Date : y.EndDt));
+
                     cfg.CreateMap<IntuitData.Customer, Company>()
                         .ForMember("ExternalCustomerId", x => x.MapFrom(y => y.Id))
                         .ForMember("Id", x => x.Ignore());
@@ -43,11 +50,21 @@ namespace Accounts
                         .ForMember("Id", x => x.Ignore());
 
                     cfg.CreateMap<Timesheet, TimesheetDto>()
-                        .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime));
+                        .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
+                        .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
+                        .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName))
+                        .ForMember("QBInvoiceId", x => x.MapFrom(y => y.Invoice.QBOInvoiceId))
+                        .ForMember("InvoiceGeneratedByUserName", x => x.MapFrom(y => y.InvoiceGeneratedByUser.FullName));
+
 
                     cfg.CreateMap<Timesheet, TimesheetListItemDto>()
-                        .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime));
-   
+                        .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
+                        .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
+                        .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName));
+
+                    cfg.CreateMap<HourLogEntryDto, HourLogEntry>()
+                        .ForMember("Day", x => x.MapFrom(y => y.Day.Date));
+
 
                     cfg.CreateMap<TimesheetQueryParameters, TimesheetQueryParameters>()
                         .ForMember(d => d.Name, x => x.Ignore())

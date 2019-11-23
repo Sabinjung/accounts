@@ -16,25 +16,32 @@ using AutoMapper.QueryableExtensions;
 using Abp.Collections.Extensions;
 using AutoMapper;
 using Abp.Authorization;
+using Accounts.Timesheets;
+using Accounts.Data;
 
 namespace Accounts.HourLogEntries
 {
+    [AbpAuthorize("Timesheet")]
     public class HourLogEntryAppService : AsyncCrudAppService<HourLogEntry, HourLogEntryDto>, IHourLogEntryAppService
     {
         private readonly IProjectRepository ProjectRepository;
 
         private readonly IMapper Mapper;
 
+        private readonly ITimesheetService TimesheetService;
+
         public HourLogEntryAppService(
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
+            ITimesheetService timesheetService,
             IMapper mapper) : base(repository)
         {
             ProjectRepository = projectRepository;
             Mapper = mapper;
+            TimesheetService = timesheetService;
         }
 
-        //[AbpAuthorize("Timesheet.LogHours")]
+        [AbpAuthorize("Timesheet.LogHour")]
         public async Task AddUpdateHourLogs(IEnumerable<HourLogEntryDto> projectsHourLogs)
         {
             var addedHourLogs = new ConcurrentBag<HourLogEntry>();
@@ -61,6 +68,7 @@ namespace Accounts.HourLogEntries
             }
         }
 
+
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
             (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
         {
@@ -70,6 +78,12 @@ namespace Accounts.HourLogEntries
             var activeProjectsQuery = ProjectRepository.QueryActiveProjects(startDay, endDay)
                 .Where(projectId.HasValue, x => x.Id == projectId)
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
+
+
+            var lastTimesheetQuery = from p in activeProjectsQuery
+                                     let lT = p.Timesheets.OrderByDescending(x => x.EndDt).FirstOrDefault()
+                                     select lT;
+
 
 
             var query = from log in Repository.GetAll()
@@ -82,8 +96,8 @@ namespace Accounts.HourLogEntries
                             {
                                 Day = plog.Day,
                                 Hours = plog.Hours,
-                                ProjectId = plog.ProjectId
-
+                                ProjectId = plog.ProjectId,
+                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue ? true : false
                             })
                         };
 
@@ -91,18 +105,24 @@ namespace Accounts.HourLogEntries
                 Mapper.ProjectTo<ProjectDto>(activeProjectsQuery).ToListAsync(),
                 query.ToListAsync());
 
+            var lastTimesheets = await lastTimesheetQuery.ToListAsync();
 
-            return activeProjects.AsParallel().Select(proj =>
+
+            var result = activeProjects.Select(proj =>
             {
-                var projectHourLog = projectsHourLogs.First(y => y.ProjectId == proj.Id);
+                var projectHourLog = projectsHourLogs.FirstOrDefault(y => y.ProjectId == proj.Id);
+                var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
+                var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
+                proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 return new ProjectHourLogEntryDto
                 {
                     Project = proj,
-                    HourLogEntries = projectHourLog.HourLogEntries
+                    HourLogEntries = projectHourLog?.HourLogEntries ?? new List<HourLogEntryDto>()
                 };
-
             });
 
+            return result;
         }
     }
 }
