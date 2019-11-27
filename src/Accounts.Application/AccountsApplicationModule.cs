@@ -8,6 +8,9 @@ using Accounts.Models;
 using IntuitData = Intuit.Ipp.Data;
 using Accounts.Timesheets.Dto;
 using PQ.Pagination;
+using Accounts.Projects;
+using System.Linq;
+using Accounts.Companies.Dto;
 
 namespace Accounts
 {
@@ -37,13 +40,25 @@ namespace Accounts
                         .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName));
 
 
+                    cfg.CreateMap<Project, ProjectListItemDto>()
+                       .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
+                       .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
+                       .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
+                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
+                        .ForMember("TermName", x => x.MapFrom(y => y.Term.Name))
+                        .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
+
+
+
                     cfg.CreateMap<ProjectDto, Project>()
                         .ForMember("StartDt", x => x.MapFrom(y => y.StartDt.Date))
                         .ForMember("EndDt", x => x.MapFrom(y => y.EndDt.HasValue ? y.EndDt.Value.Date : y.EndDt));
 
                     cfg.CreateMap<IntuitData.Customer, Company>()
                         .ForMember("ExternalCustomerId", x => x.MapFrom(y => y.Id))
-                        .ForMember("Id", x => x.Ignore());
+                        .ForMember("Id", x => x.Ignore())
+                        .ForMember("Email", x => x.MapFrom(y => y.PrimaryEmailAddr != null ? y.PrimaryEmailAddr.Address : string.Empty))
+                         .ForMember("PhoneNumber", x => x.MapFrom(y => y.PrimaryPhone != null ? y.PrimaryPhone.FreeFormNumber : string.Empty));
 
                     cfg.CreateMap<IntuitData.Term, Term>()
                         .ForMember("ExternalTermId", x => x.MapFrom(y => y.Id))
@@ -71,6 +86,13 @@ namespace Accounts
                         .ForMember(d => d.IsActive, x => x.Condition((source, dest) => source.Name == dest.Name))
                         .ForAllOtherMembers(opt => opt.Condition((source, dest, sourceMember, destmember) => destmember == null));
 
+                    cfg.CreateMap<ProjectQueryParameters, ProjectQueryParameters>()
+                        .ForMember(d => d.Name, x => x.Ignore())
+                        .ForMember(d => d.IsActive, x => x.Condition((source, dest) => source.Name == dest.Name))
+                        .ForAllOtherMembers(opt => opt.Condition((source, dest, sourceMember, destmember) => destmember == null));
+
+                    cfg.CreateMap<Company, CompanyDto>()
+                        .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty));
 
                     cfg.AddMaps(thisAssembly);
 

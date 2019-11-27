@@ -1095,6 +1095,8 @@ namespace Accounts.Migrations
 
                     b.Property<string>("DisplayName");
 
+                    b.Property<string>("Email");
+
                     b.Property<string>("ExternalCustomerId")
                         .IsConcurrencyToken();
 
@@ -1106,7 +1108,13 @@ namespace Accounts.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<int?>("TermId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TermId");
 
                     b.ToTable("Companies");
                 });
@@ -1233,6 +1241,8 @@ namespace Accounts.Migrations
 
                     b.Property<int>("Month");
 
+                    b.Property<int>("ProjectId");
+
                     b.Property<string>("QBOInvoiceId");
 
                     b.Property<double>("Rate");
@@ -1252,6 +1262,8 @@ namespace Accounts.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("ConsultantId");
+
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("TermId");
 
@@ -1329,17 +1341,15 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<decimal?>("DiscountAmount");
+                    b.Property<int?>("DiscountType");
 
-                    b.Property<double?>("DiscountPercentage");
+                    b.Property<double?>("DiscountValue");
 
                     b.Property<DateTime?>("EndDt");
 
                     b.Property<int>("InvoiceCycleId");
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<bool>("IsDiscountPercentageApplied");
 
                     b.Property<DateTime?>("LastModificationTime");
 
@@ -1442,6 +1452,8 @@ namespace Accounts.Migrations
                     b.HasIndex("ApprovedByUserId");
 
                     b.HasIndex("CreatorUserId");
+
+                    b.HasIndex("InvoiceGeneratedByUserId");
 
                     b.HasIndex("InvoiceId");
 
@@ -1716,6 +1728,13 @@ namespace Accounts.Migrations
                         .HasForeignKey("TimesheetId");
                 });
 
+            modelBuilder.Entity("Accounts.Models.Company", b =>
+                {
+                    b.HasOne("Accounts.Models.Term", "Term")
+                        .WithMany()
+                        .HasForeignKey("TermId");
+                });
+
             modelBuilder.Entity("Accounts.Models.HourLogEntry", b =>
                 {
                     b.HasOne("Accounts.Models.Project", "Project")
@@ -1738,6 +1757,11 @@ namespace Accounts.Migrations
                     b.HasOne("Accounts.Models.Consultant", "Consultant")
                         .WithMany()
                         .HasForeignKey("ConsultantId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Accounts.Models.Project", "Project")
+                        .WithMany("Invoices")
+                        .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Accounts.Models.Term", "Term")
@@ -1786,12 +1810,16 @@ namespace Accounts.Migrations
                         .WithMany()
                         .HasForeignKey("CreatorUserId");
 
+                    b.HasOne("Accounts.Authorization.Users.User", "InvoiceGeneratedByUser")
+                        .WithMany()
+                        .HasForeignKey("InvoiceGeneratedByUserId");
+
                     b.HasOne("Accounts.Models.Invoice", "Invoice")
                         .WithMany()
                         .HasForeignKey("InvoiceId");
 
                     b.HasOne("Accounts.Models.Project", "Project")
-                        .WithMany()
+                        .WithMany("Timesheets")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
 

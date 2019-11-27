@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using Accounts.Data;
 using Accounts.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,10 @@ namespace Accounts.Projects.Dto
         public int TermId { get; set; }
 
         public int InvoiceCycleId { get; set; }
+
+        public DiscountType? DiscountType { get; set; }
+
+        public double? DiscountValue { get; set; }
 
         public double Rate { get; set; }
 

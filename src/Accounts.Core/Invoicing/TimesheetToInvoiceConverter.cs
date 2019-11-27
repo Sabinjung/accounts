@@ -20,6 +20,7 @@ namespace Accounts.Invoicing
                 TermId = source.Project.TermId,
                 InvoiceDate = DateTime.Now,
                 Rate = source.Project.Rate,
+                ProjectId = source.ProjectId,
             };
 
             invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours);

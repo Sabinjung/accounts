@@ -22,6 +22,22 @@ namespace Accounts.Authorization
             // Invoice Permissions
             var invoicePermission = context.CreatePermission("Invoicing", L("Invoicing"));
             invoicePermission.CreateChildPermission("Invoicing.Submit", L("Submit Invoice"));
+
+            // Consultant Permissions
+            var consultantPermission = context.CreatePermission("Consultant", L("Consultant"));
+            consultantPermission.CreateChildPermission("Consultant.Create", L("Consultant.Create"));
+            consultantPermission.CreateChildPermission("Consultant.Delete", L("Consultant.Delete"));
+            consultantPermission.CreateChildPermission("Consultant.Update", L("Consultant.Update"));
+
+            // Company Permissions
+            var companyPermission = context.CreatePermission("Company", L("Company"));
+            companyPermission.CreateChildPermission("Company.Sync", L("Company.Sync"));
+
+            var projectPermission = context.CreatePermission("Project", L("Project"));
+            projectPermission.CreateChildPermission("Project.Create", L("Project.Create"));
+            projectPermission.CreateChildPermission("Project.Update", L("Project.Update"));
+            projectPermission.CreateChildPermission("Project.Delete", L("Project.Delete"));
+
         }
 
         private static ILocalizableString L(string name)

@@ -12,9 +12,18 @@ namespace Accounts.Models
 
         public string FullyQualifiedName { get; set; }
 
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public int? TermId { get; set; }
+
         [ConcurrencyCheck]
         public string ExternalCustomerId { get; set; }
 
         public virtual ICollection<Project> Projects { get; set; }
+
+        public virtual Term Term { get; set; }
+
     }
 }

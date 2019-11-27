@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using Accounts.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,11 +23,10 @@ namespace Accounts.Models
 
         public double Rate { get; set; }
 
-        public bool IsDiscountPercentageApplied { get; set; }
+        public DiscountType? DiscountType { get; set; }
 
-        public double? DiscountPercentage { get; set; }
+        public double? DiscountValue { get; set; }
 
-        public decimal? DiscountAmount { get; set; }
 
         public virtual Company Company { get; set; }
 
@@ -41,6 +41,18 @@ namespace Accounts.Models
         public virtual ICollection<Timesheet> Timesheets { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }
+
+        public virtual ICollection<Invoice> Invoices { get; set; }
+
+    }
+}
+
+namespace Accounts.Data
+{
+    public enum DiscountType
+    {
+        Percentage,
+        Value
 
     }
 }

@@ -45,6 +45,11 @@ namespace Accounts.Models
 
         public int ConsultantId { get; set; }
 
+        public int ProjectId { get; set; }
+
+
+        public virtual Project Project { get; set; }
+
         public virtual Company Company { get; set; }
 
         public virtual Consultant Consultant { get; set; }

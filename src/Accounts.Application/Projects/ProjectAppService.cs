@@ -16,9 +16,15 @@ using Abp.Authorization;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using PQ.Pagination;
+using PQ;
+using Accounts.Data;
+using Accounts.Timesheets;
+using Abp.Extensions;
 
 namespace Accounts.Projects
 {
+    [AbpAuthorize("Project")]
     public class ProjectAppService : AsyncCrudAppService<Project, ProjectDto>, IProjectAppService
     {
         private readonly IAzureBlobService AzureBlobService;
@@ -27,12 +33,45 @@ namespace Accounts.Projects
 
         private readonly IRepository<Attachment> AttachmentRepository;
 
-        public ProjectAppService(IRepository<Project> repository, IRepository<Attachment> attachmentRepository, IAzureBlobService azureBlobService, IMapper mapper)
+        private readonly QueryBuilderFactory QueryBuilder;
+
+        private readonly IList<ProjectQueryParameters> SavedQueries;
+
+        private readonly ITimesheetService TimesheetService;
+
+        public ProjectAppService(
+            IRepository<Project> repository,
+            IRepository<Attachment> attachmentRepository,
+            IAzureBlobService azureBlobService,
+            QueryBuilderFactory queryBuilderFactory,
+            ITimesheetService timesheetService,
+            IMapper mapper)
        : base(repository)
         {
             AzureBlobService = azureBlobService;
             Mapper = mapper;
             AttachmentRepository = attachmentRepository;
+            QueryBuilder = queryBuilderFactory;
+            TimesheetService = timesheetService;
+            SavedQueries = new List<ProjectQueryParameters>
+            {
+                new ProjectQueryParameters
+                {
+                    Name="Active",
+                    IsProjectActive=true
+
+                },
+                 new ProjectQueryParameters
+                {
+                    Name="Inactive",
+                    IsProjectActive=false
+
+                 }
+            };
+
+            CreatePermissionName = "Project.Create";
+            UpdatePermissionName = "Project.Update";
+            DeletePermissionName = "Project.Delete";
         }
 
         public async Task UploadAttachment(int projectId, IFormFile file)
@@ -58,7 +97,6 @@ namespace Accounts.Projects
             return await Mapper.ProjectTo<AttachmentDto>(attachmentsQuery).ToListAsync();
         }
 
-
         [HttpDelete]
         public async Task DeleteAttachment(int projectId, int attachmentId)
         {
@@ -66,5 +104,36 @@ namespace Accounts.Projects
             var attachment = await AttachmentRepository.GetAsync(attachmentId);
             await AttachmentRepository.DeleteAsync(attachment);
         }
+
+        [HttpGet]
+        public async Task<Page<ProjectListItemDto>> Search(ProjectQueryParameters queryParameter)
+        {
+
+            var query = QueryBuilder.Create<Project, ProjectQueryParameters>(Repository.GetAll());
+            query.WhereIf(p => p.IsProjectActive, p => x => x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true)
+           .WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword) || x.Consultant.FirstName.Contains(p.Keyword));
+            var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
+            var result = await query.ExecuteAsync<ProjectListItemDto>(queryParameters.ToArray());
+
+            var projects = result.Results;
+
+            var lastTimesheetQuery = from p in Repository.GetAll()
+                                     let lT = p.Timesheets.OrderByDescending(x => x.EndDt).FirstOrDefault()
+                                     where projects.Any(x => x.Id == p.Id)
+                                     select lT;
+            var lastTimesheets = await lastTimesheetQuery.ToListAsync();
+
+            Parallel.ForEach(result.Results, proj =>
+            {
+                var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
+                var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
+                proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
+
+            });
+
+            return result;
+        }
+
     }
 }

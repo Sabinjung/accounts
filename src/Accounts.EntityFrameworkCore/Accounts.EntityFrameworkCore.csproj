@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20191001022418_Invoices.Designer.cs" />
     <Compile Remove="Migrations\20191006023926_CodeTablePrimaryKey.cs" />
     <Compile Remove="Migrations\20191006023926_CodeTablePrimaryKey.Designer.cs" />
+    <Compile Remove="Migrations\20191127184104_CompanyMoreInformation.cs" />
+    <Compile Remove="Migrations\20191127184104_CompanyMoreInformation.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />
