@@ -37,7 +37,9 @@ namespace Accounts.EntityFrameworkCore
                 type.IsAssignableFrom(typeof(Attachment)) ||
                 type.IsAssignableFrom(typeof(Project)) ||
                 type.IsAssignableFrom(typeof(Invoice)) ||
-                type.IsAssignableFrom(typeof(Invoice))));
+                type.IsAssignableFrom(typeof(Consultant))||
+                type.IsAssignableFrom(typeof(Timesheet)) ||
+                type.IsAssignableFrom(typeof(HourLogEntry))));
             }
         }
 
