@@ -149,6 +149,11 @@ namespace Accounts.Projects
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
             query.WhereIf(p => p.ProjectId.HasValue, p => x => x.ProjectId == p.ProjectId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
+
+            var sorts = new Sorts<Timesheet>();
+            sorts.Add(true, t => t.CreationTime);
+            query.ApplySorts(sorts);
+
             var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
