@@ -38,12 +38,22 @@ namespace Accounts.Timesheets
 
             if (!lastTimesheetEndDt.HasValue)
             {
-                startDt = projectStartDt;
+                var ovverideDate = new DateTime(2019, 11, 1);
+                if (projectStartDt < ovverideDate)
+                {
+                    startDt = ovverideDate;
+                }
+                else
+                {
+                    startDt = projectStartDt;
+                }
             }
             else
             {
                 startDt = lastTimesheetEndDt.Value.AddDays(1);
             }
+
+
             endDt = CalculateTimesheetEndDt(startDt.Value);
             return Tuple.Create(startDt.Value.Date, endDt.Value.Date);
         }

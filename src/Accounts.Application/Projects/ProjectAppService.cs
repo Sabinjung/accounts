@@ -110,8 +110,14 @@ namespace Accounts.Projects
         {
 
             var query = QueryBuilder.Create<Project, ProjectQueryParameters>(Repository.GetAll());
-            query.WhereIf(p => p.IsProjectActive, p => x => x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true)
-           .WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword) || x.Consultant.FirstName.Contains(p.Keyword));
+            //query.WhereIf(p => p.IsProjectActive, p => x => x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true)
+            query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword) || x.Consultant.FirstName.ToUpper().Contains(p.Keyword.ToUpper()));
+
+            var sorts = new Sorts<Project>();
+
+            sorts.Add(true, x => x.StartDt);
+
+            query.ApplySorts(sorts);
             var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
             var result = await query.ExecuteAsync<ProjectListItemDto>(queryParameters.ToArray());
 
