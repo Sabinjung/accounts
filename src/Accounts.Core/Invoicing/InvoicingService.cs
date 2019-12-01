@@ -36,7 +36,8 @@ namespace Accounts.Core.Invoicing
         {
             var timesheet = await TimesheetRepository.GetAsync(timesheetId);
             var generatedInvoice = Mapper.Map<Invoice>(timesheet);
-            var invoice = InvoiceRepository.Insert(generatedInvoice);
+            var id = await InvoiceRepository.InsertAndGetIdAsync(generatedInvoice);
+            var invoice = await InvoiceRepository.GetAsync(id);
 
             timesheet.Invoice = invoice;
             timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;

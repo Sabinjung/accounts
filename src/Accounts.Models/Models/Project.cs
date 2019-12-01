@@ -25,8 +25,7 @@ namespace Accounts.Models
 
         public DiscountType? DiscountType { get; set; }
 
-        public double? DiscountValue { get; set; }
-
+        public decimal? DiscountValue { get; set; }
 
         public virtual Company Company { get; set; }
 
@@ -51,7 +50,7 @@ namespace Accounts.Data
 {
     public enum DiscountType
     {
-        Percentage,
+        Percentage = 1,
         Value
 
     }

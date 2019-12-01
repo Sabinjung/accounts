@@ -35,8 +35,6 @@ namespace Accounts.Core.Invoicing.Intuit
             {
                 Deposit = 0,
                 DepositSpecified = true,
-                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
-                EmailStatusSpecified = true,
                 TxnDate = invoice.InvoiceDate,
                 TxnDateSpecified = true,
                 TotalAmt = invoice.Total,
@@ -90,7 +88,7 @@ namespace Accounts.Core.Invoicing.Intuit
             candidateCustomField.Name = "Consultant";
             candidateCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
             candidateCustomField.AnyIntuitObject = consultant.FirstName + " " + consultant.LastName;
-            candidateCustomField.DefinitionId = "1";
+            candidateCustomField.DefinitionId = "2";
 
             customFields.Add(candidateCustomField);
             intuitInvoice.CustomField = customFields.ToArray();
@@ -139,21 +137,20 @@ namespace Accounts.Core.Invoicing.Intuit
             //discountLine.AmountSpecified = true;
             var discountLineDetail = new IntuitData.DiscountLineDetail();
 
-            if (invoice.IsDiscountPercentageApplied)
+            if (invoice.DiscountType == Data.DiscountType.Percentage)
             {
-                discountLineDetail.DiscountPercent = new Decimal(invoice.DiscountPercentage);
+                discountLineDetail.DiscountPercent = invoice.DiscountValue.Value;
                 discountLineDetail.DiscountPercentSpecified = true;
                 discountLineDetail.PercentBased = true;
 
             }
             else
             {
-                discountLine.Amount = invoice.DiscountAmount;
+                discountLine.Amount = invoice.DiscountValue.Value;
                 discountLine.AmountSpecified = true;
                 discountLineDetail.PercentBased = false;
 
             }
-            discountLineDetail.PercentBasedSpecified = true;
             discountLine.AnyIntuitObject = discountLineDetail;
             discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
             {

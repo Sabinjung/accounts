@@ -21,6 +21,7 @@ using PQ;
 using Accounts.Data;
 using Accounts.Timesheets;
 using Abp.Extensions;
+using Abp.UI;
 
 namespace Accounts.Projects
 {
@@ -141,5 +142,15 @@ namespace Accounts.Projects
             return result;
         }
 
+
+        public override async Task<ProjectDto> Create(ProjectDto input)
+        {
+            var activeProjectCount = await Repository.CountAsync(x => x.ConsultantId == input.ConsultantId && (x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true));
+            if (activeProjectCount > 0)
+            {
+                throw new UserFriendlyException("Consultant has active project. ");
+            }
+            return await base.Create(input);
+        }
     }
 }

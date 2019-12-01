@@ -1,4 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
+using Accounts.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,6 @@ namespace Accounts.Models
 {
     public class Invoice : FullAuditedEntity
     {
-
         public int TermId { get; set; }
 
         public string Memo { get; set; }
@@ -25,27 +25,19 @@ namespace Accounts.Models
 
         public decimal SubTotal { get; set; }
 
-        public bool IsDiscountPercentageApplied { get; set; }
+        public DiscountType? DiscountType { get; set; }
 
-        public double DiscountPercentage { get; set; }
-
-        public decimal DiscountAmount { get; set; }
+        public decimal? DiscountValue { get; set; }
 
         public decimal Total { get; set; }
 
-        public int Year { get; set; }
-
-        public int Month { get; set; }
-
         public string QBOInvoiceId { get; set; }
-
-        public int? DocNumber { get; set; }
-
-        public int CustomerId { get; set; }
 
         public int ConsultantId { get; set; }
 
         public int ProjectId { get; set; }
+
+        public int CompanyId { get; set; }
 
 
         public virtual Project Project { get; set; }
@@ -55,9 +47,8 @@ namespace Accounts.Models
         public virtual Consultant Consultant { get; set; }
 
         public virtual Term Term { get; set; }
-        public int CompanyId { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }
-
+        public decimal DiscountAmount { get; set; }
     }
 }

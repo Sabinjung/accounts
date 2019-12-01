@@ -11,6 +11,7 @@ using PQ.Pagination;
 using Accounts.Projects;
 using System.Linq;
 using Accounts.Companies.Dto;
+using Accounts.Invoicing.Dto;
 
 namespace Accounts
 {
@@ -76,6 +77,13 @@ namespace Accounts
                         .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
                         .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName));
+
+
+                    cfg.CreateMap<Invoice, InvoiceDto>()
+                        .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))
+                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
+                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"))
+                        .ForMember(x => x.CompanyEmail, y => y.MapFrom(z => $"{z.Company.Email}"));
 
                     cfg.CreateMap<HourLogEntryDto, HourLogEntry>()
                         .ForMember("Day", x => x.MapFrom(y => y.Day.Date));

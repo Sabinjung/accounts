@@ -22,13 +22,37 @@ namespace Accounts.Invoicing
                 Rate = source.Project.Rate,
                 ProjectId = source.ProjectId,
             };
-
-            invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours);
-            invoice.Total = invoice.SubTotal;
+            CalculateTotal(source.Project, invoice);
             invoice.Attachments = source.Attachments;
             invoice.Description = $"Billing Period {source.StartDt.ToShortDateString()} -  {source.EndDt.ToShortDateString()}";
-
             return invoice;
+        }
+
+        private void CalculateTotal(Project project, Invoice invoice)
+        {
+            decimal discount = 0;
+            invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours);
+            switch (project.DiscountType)
+            {
+                case Data.DiscountType.Percentage:
+
+                    if (project.DiscountValue.HasValue)
+                    {
+                        discount = (project.DiscountValue.Value / 100) * invoice.SubTotal;
+                    }
+                    break;
+                case Data.DiscountType.Value:
+                    if (project.DiscountValue.HasValue)
+                    {
+                        discount = project.DiscountValue.Value;
+                    }
+                    break;
+            }
+
+            invoice.DiscountType = project.DiscountType;
+            invoice.DiscountValue = project.DiscountValue;
+            invoice.DiscountAmount = discount; 
+            invoice.Total = invoice.SubTotal - discount;
         }
     }
 }
