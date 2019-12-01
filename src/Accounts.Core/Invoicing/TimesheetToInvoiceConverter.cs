@@ -19,8 +19,10 @@ namespace Accounts.Invoicing
                 CompanyId = source.Project.CompanyId,
                 TermId = source.Project.TermId,
                 InvoiceDate = DateTime.Now,
+                DueDate = DateTime.Now.AddDays(source.Project.Term.DueDays),
                 Rate = source.Project.Rate,
                 ProjectId = source.ProjectId,
+              
             };
             CalculateTotal(source.Project, invoice);
             invoice.Attachments = source.Attachments;
@@ -51,7 +53,7 @@ namespace Accounts.Invoicing
 
             invoice.DiscountType = project.DiscountType;
             invoice.DiscountValue = project.DiscountValue;
-            invoice.DiscountAmount = discount; 
+            invoice.DiscountAmount = discount;
             invoice.Total = invoice.SubTotal - discount;
         }
     }

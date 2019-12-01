@@ -95,6 +95,15 @@ namespace Accounts.Intuit
             return entityList.ToList<T>();
         }
 
+        public T FindById<T>(T entity) where T : IEntity
+        {
+            var serviceContext = GetServiceContext();
+            DataService service = new DataService(serviceContext);
+            T foundEntity = service.FindById(entity);
+
+            return foundEntity;
+        }
+
 
         public Account FindOrAddAccount(AccountTypeEnum accountType, string subType, string accountName)
         {

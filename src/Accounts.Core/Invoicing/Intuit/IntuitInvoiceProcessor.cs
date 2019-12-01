@@ -30,6 +30,8 @@ namespace Accounts.Core.Invoicing.Intuit
         }
         public async Task<string> Send(Invoice invoice)
         {
+            var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
+            var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
 
             var intuitInvoice = new IntuitData.Invoice
             {
@@ -38,7 +40,10 @@ namespace Accounts.Core.Invoicing.Intuit
                 TxnDate = invoice.InvoiceDate,
                 TxnDateSpecified = true,
                 TotalAmt = invoice.Total,
-                TotalAmtSpecified = true
+                TotalAmtSpecified = true,
+                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
+                BillEmail = customer.PrimaryEmailAddr,
+
             };
 
             intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
@@ -50,7 +55,7 @@ namespace Accounts.Core.Invoicing.Intuit
             intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
             {
                 name = invoice.Term.Name,
-                Value = invoice.TermId.ToString()
+                Value = invoice.Term.ExternalTermId.ToString()
             };
 
 
