@@ -57,5 +57,11 @@ namespace Accounts.Core.Invoicing
 
             return await Task.FromResult(referenceNo);
         }
+
+
+        public async Task ReadInvoice(int invoiceId)
+        {
+            await Task.CompletedTask;
+        }
     }
 }

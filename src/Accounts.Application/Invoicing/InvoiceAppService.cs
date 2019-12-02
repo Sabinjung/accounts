@@ -6,6 +6,7 @@ using Abp.ObjectMapping;
 using Abp.Runtime.Session;
 using Accounts.Core;
 using Accounts.Core.Invoicing;
+using Accounts.Intuit;
 using Accounts.Invoicing.Dto;
 using Accounts.Models;
 using Intuit.Ipp.Core;
@@ -17,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using IntuitData = Intuit.Ipp.Data;
 
 namespace Accounts.Invoicing
 {
@@ -26,14 +28,17 @@ namespace Accounts.Invoicing
         private readonly IInvoicingService InvoicingService;
         private readonly IObjectMapper Mapper;
         private readonly OAuth2Client OAuth2Client;
+        private readonly IntuitDataProvider IntuitDataProvider;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
-            OAuth2Client oAuth2Client)
+            OAuth2Client oAuth2Client,
+            IntuitDataProvider intuitDataProvider)
             : base(repository)
         {
             InvoicingService = invoicingService;
             Mapper = mapper;
             OAuth2Client = oAuth2Client;
+            IntuitDataProvider = intuitDataProvider;
         }
 
         [AbpAuthorize("Timesheet.GenerateInvoice")]
@@ -54,5 +59,16 @@ namespace Accounts.Invoicing
                 await InvoicingService.Submit(invoiceId, currentUserId);
             }
         }
+
+        public async Task ReadInvoice(string invoiceId)
+        {
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
+            {
+                var cus = new IntuitData.Invoice { Id = invoiceId };
+                var invoice = IntuitDataProvider.FindById(cus);
+            }
+        }
     }
+
 }

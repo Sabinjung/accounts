@@ -33,6 +33,7 @@ namespace Accounts.Core.Invoicing.Intuit
             var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
             var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
 
+
             var intuitInvoice = new IntuitData.Invoice
             {
                 Deposit = 0,
@@ -60,7 +61,7 @@ namespace Accounts.Core.Invoicing.Intuit
 
 
 
-            AddCustomFields(intuitInvoice, invoice);
+            AddCustomFields(intuitInvoice, invoice, customer);
             var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
             AddLines(intuitInvoice, invoice, accountForDiscount);
             var savedInvoice = IntuitDataProvider.Add(intuitInvoice);
@@ -83,17 +84,19 @@ namespace Accounts.Core.Invoicing.Intuit
         }
 
 
-        private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice)
+        private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
             var consultant = invoice.Consultant;
             var customFields = new List<IntuitData.CustomField>();
 
+            var customerFields = customer.CustomField;
+
             //Candidate Name
             var candidateCustomField = new IntuitData.CustomField();
-            candidateCustomField.Name = "Consultant";
+            candidateCustomField.Name = "Candidate Name";
             candidateCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
             candidateCustomField.AnyIntuitObject = consultant.FirstName + " " + consultant.LastName;
-            candidateCustomField.DefinitionId = "2";
+            candidateCustomField.DefinitionId = "1";
 
             customFields.Add(candidateCustomField);
             intuitInvoice.CustomField = customFields.ToArray();
@@ -138,24 +141,27 @@ namespace Accounts.Core.Invoicing.Intuit
             discountLine.DetailType = IntuitData.LineDetailTypeEnum.DiscountLineDetail;
             discountLine.DetailTypeSpecified = true;
 
-            //discountLine.Amount = 0;            
-            //discountLine.AmountSpecified = true;
+            discountLine.Amount = 0;
+            discountLine.AmountSpecified = true;
             var discountLineDetail = new IntuitData.DiscountLineDetail();
 
             if (invoice.DiscountType == Data.DiscountType.Percentage)
             {
-                discountLineDetail.DiscountPercent = invoice.DiscountValue.Value;
+                discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
                 discountLineDetail.DiscountPercentSpecified = true;
                 discountLineDetail.PercentBased = true;
+                discountLineDetail.PercentBasedSpecified = true;
 
             }
             else
             {
-                discountLine.Amount = invoice.DiscountValue.Value;
                 discountLine.AmountSpecified = true;
+                discountLine.Amount = invoice.DiscountAmount;
                 discountLineDetail.PercentBased = false;
 
             }
+
+
             discountLine.AnyIntuitObject = discountLineDetail;
             discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
             {

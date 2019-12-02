@@ -10,5 +10,6 @@ namespace Accounts.Core.Invoicing
     {
         Task<Invoice> GenerateInvoice(int timesheetId, int userId);
         Task<string> Submit(int invoiceId, int userId);
+        Task ReadInvoice(int invoiceId);
     }
 }

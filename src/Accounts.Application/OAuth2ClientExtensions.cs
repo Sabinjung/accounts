@@ -17,8 +17,8 @@ namespace Accounts
             var intuitAccessTokenExpiresIn = settingManager.GetSettingValueForApplication("Intuit.AccessTokenExpiresIn");
             var intuitRefreshtoken = settingManager.GetSettingValueForApplication("Intuit.RefreshToken");
             var intuitRefreshTokenExpiresIn = settingManager.GetSettingValueForApplication("Intuit.RefreshTokenExpiresIn");
-            var expirationExpiresIn = DateTime.Parse(intuitAccessTokenExpiresIn);
             if (string.IsNullOrEmpty(intuitAccessToken)) throw new AbpAuthorizationException();
+            var expirationExpiresIn = DateTime.Parse(intuitAccessTokenExpiresIn);
             if (DateTime.Parse(intuitRefreshTokenExpiresIn) < DateTime.UtcNow) throw new AbpAuthorizationException();
 
             if (DateTime.UtcNow > expirationExpiresIn)
