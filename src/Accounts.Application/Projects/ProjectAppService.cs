@@ -80,7 +80,7 @@ namespace Accounts.Projects
             var project = await Repository.GetAsync(projectId);
             if (project != null)
             {
-                var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.ToString("MM-dd-yy")}{Path.GetExtension(file.FileName)}";
+                var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.Ticks}{Path.GetExtension(file.FileName)}";
                 var uri = await AzureBlobService.UploadSingleFileAsync(file, fileName);
                 project.Attachments.Add(new Attachment
                 {

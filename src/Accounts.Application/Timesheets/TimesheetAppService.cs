@@ -185,7 +185,7 @@ namespace Accounts.Projects
             // Fill in Timesheet Hour Log Entries
             var hourLogEntries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt, timesheetInfo.EndDt).ToListAsync();
 
-            if (!TimesheetService.AllTimesheetHoursEntered(timesheetInfo.StartDt, timesheetInfo.EndDt, hourLogEntries))
+            if (!TimesheetService.AllTimesheetHoursEntered(project.StartDt > startDt ? project.StartDt : startDt, timesheetInfo.EndDt, hourLogEntries))
             {
                 throw new UserFriendlyException($"Please enter all billable hours between {timesheetInfo.StartDt.ToShortDateString()}-{timesheetInfo.EndDt.ToShortDateString()}");
             }
