@@ -111,7 +111,7 @@ namespace Accounts.Timesheets
                 case InvoiceCycles.Monthly:
                     return dateTime.EndofMonth();
                 case InvoiceCycles.BiWeekly:
-                    return dateTime.AddDays(14);
+                    return dateTime.AddDays(13);
                 default:
                     return dateTime.EndofMonth();
             }
