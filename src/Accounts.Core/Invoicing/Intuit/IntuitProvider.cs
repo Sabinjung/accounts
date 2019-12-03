@@ -168,8 +168,11 @@ namespace Accounts.Intuit
             ar.EntityRef.type = objectNameEnumType.Invoice.ToString();
             ar.EntityRef.name = objectNameEnumType.Invoice.ToString();
             ar.EntityRef.Value = invoiceNo;
+            ar.IncludeOnSend = true;
+            ar.IncludeOnSendSpecified = true;
             attachableRefs[0] = ar;
             attachable.AttachableRef = attachableRefs;
+
             return attachable;
         }
     }
