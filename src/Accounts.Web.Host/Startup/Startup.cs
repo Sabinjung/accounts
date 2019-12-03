@@ -48,6 +48,7 @@ namespace Accounts.Web.Host.Startup
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
             services.Configure<AzureBlobSettings>(_appConfiguration.GetSection("AzureBlob"));
             services.Configure<IntuitSettings>(_appConfiguration.GetSection("Intuit"));
 
