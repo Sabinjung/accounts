@@ -26,6 +26,8 @@ namespace Accounts.HourLogEntries
     {
         private readonly IProjectRepository ProjectRepository;
 
+        private readonly IRepository<Timesheet> TimesheetRepository;
+
         private readonly IMapper Mapper;
 
         private readonly ITimesheetService TimesheetService;
@@ -34,11 +36,13 @@ namespace Accounts.HourLogEntries
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
             ITimesheetService timesheetService,
+            IRepository<Timesheet> timesheetRepository,
             IMapper mapper) : base(repository)
         {
             ProjectRepository = projectRepository;
             Mapper = mapper;
             TimesheetService = timesheetService;
+            TimesheetRepository = timesheetRepository;
         }
 
         [AbpAuthorize("Timesheet.LogHour")]
@@ -80,9 +84,10 @@ namespace Accounts.HourLogEntries
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
 
 
-            var lastTimesheetQuery = from p in activeProjectsQuery
-                                     let lT = p.Timesheets.OrderByDescending(x => x.EndDt).FirstOrDefault()
-                                     select lT;
+            var lastTimesheetQuery = from t in TimesheetRepository.GetAll()
+                                     where activeProjectsQuery.Any(x => x.Id == t.ProjectId)
+                                     group t by t.ProjectId into g
+                                     select g.OrderByDescending(x => x.EndDt).First();
 
 
 
@@ -108,7 +113,7 @@ namespace Accounts.HourLogEntries
             var lastTimesheets = await lastTimesheetQuery.ToListAsync();
 
 
-            var result = activeProjects.Select(proj =>
+            var result = activeProjects.AsParallel().Select(proj =>
             {
                 var projectHourLog = projectsHourLogs.FirstOrDefault(y => y.ProjectId == proj.Id);
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
@@ -122,7 +127,7 @@ namespace Accounts.HourLogEntries
                 };
             });
 
-            return result;
+            return result.OrderBy(x=>x.Project.ConsultantName);
         }
     }
 }
