@@ -14,7 +14,7 @@ namespace Accounts.Timesheets
 
         Tuple<DateTime, DateTime> CalculateTimesheetPeriod(Project project, Timesheet lastTimesheet);
 
-        Tuple<DateTime, DateTime> CalculateTimesheetPeriod(DateTime projectStartDt, DateTime? projectEndDt, InvoiceCycles invoiceCycles, DateTime? lastTimesheetEndDt);
+        Tuple<DateTime, DateTime> CalculateTimesheetPeriod(DateTime projectStartDt, DateTime? projectEndDt, DateTime invoiceCycleStartDt, InvoiceCycles invoiceCycles, DateTime? lastTimesheetEndDt);
 
         bool AllTimesheetHoursEntered(DateTime startDt, DateTime endDt, IEnumerable<HourLogEntry> hourLogEntries);
 

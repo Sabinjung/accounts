@@ -23,6 +23,7 @@ namespace Accounts.Projects.Dto
 
         public DateTime? EndDt { get; set; }
 
+        public DateTime InvoiceCycleStartDt { get; set; }
 
         public string InvoiceCycleName { get; set; }
 

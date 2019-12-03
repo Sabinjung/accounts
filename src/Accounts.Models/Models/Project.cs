@@ -13,6 +13,8 @@ namespace Accounts.Models
 
         public DateTime? EndDt { get; set; }
 
+        public DateTime? InvoiceCycleStartDt { get; set; }
+
         public int TermId { get; set; }
 
         public int InvoiceCycleId { get; set; }

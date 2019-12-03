@@ -133,7 +133,7 @@ namespace Accounts.Projects
             Parallel.ForEach(result.Results, proj =>
             {
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
-                var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
+                var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
 

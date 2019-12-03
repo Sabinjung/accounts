@@ -22,11 +22,11 @@ namespace Accounts.Timesheets
 
         public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(Project project, Timesheet lastTimesheet)
         {
-            return CalculateTimesheetPeriod(project.StartDt, project.EndDt, (InvoiceCycles)project.InvoiceCycleId, lastTimesheet?.EndDt);
+            return CalculateTimesheetPeriod(project.StartDt, project.EndDt, project.InvoiceCycleStartDt.Value, (InvoiceCycles)project.InvoiceCycleId, lastTimesheet?.EndDt);
         }
 
 
-        public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(DateTime projectStartDt, DateTime? projectEndDt, InvoiceCycles invoiceCycles, DateTime? lastTimesheetEndDt)
+        public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(DateTime projectStartDt, DateTime? projectEndDt, DateTime invoiceCycleStartDt, InvoiceCycles invoiceCycles, DateTime? lastTimesheetEndDt)
         {
             DateTime? startDt;
             DateTime? endDt;
@@ -38,21 +38,12 @@ namespace Accounts.Timesheets
 
             if (!lastTimesheetEndDt.HasValue)
             {
-                var ovverideDate = new DateTime(2019, 11, 1);
-                if (projectStartDt < ovverideDate)
-                {
-                    startDt = ovverideDate;
-                }
-                else
-                {
-                    startDt = projectStartDt;
-                }
+                startDt = CalculateFirstTimesheetStartDt(projectStartDt, invoiceCycleStartDt, invoiceCycles);
             }
             else
             {
                 startDt = lastTimesheetEndDt.Value.AddDays(1);
             }
-
 
             endDt = CalculateTimesheetEndDt(startDt.Value);
             return Tuple.Create(startDt.Value.Date, endDt.Value.Date);
@@ -119,9 +110,19 @@ namespace Accounts.Timesheets
                     return dateTime.EndOfWeek();
                 case InvoiceCycles.Monthly:
                     return dateTime.EndofMonth();
+                case InvoiceCycles.BiWeekly:
+                    return dateTime.AddDays(14);
                 default:
                     return dateTime.EndofMonth();
             }
+        }
+
+
+
+        private DateTime CalculateFirstTimesheetStartDt(DateTime projectStartDt, DateTime invoiceCycleStartDt, InvoiceCycles invoiceCycle)
+        {
+
+            return invoiceCycleStartDt;
         }
     }
 }

@@ -53,7 +53,8 @@ namespace Accounts
 
                     cfg.CreateMap<ProjectDto, Project>()
                         .ForMember("StartDt", x => x.MapFrom(y => y.StartDt.Date))
-                        .ForMember("EndDt", x => x.MapFrom(y => y.EndDt.HasValue ? y.EndDt.Value.Date : y.EndDt));
+                        .ForMember("EndDt", x => x.MapFrom(y => y.EndDt.HasValue ? y.EndDt.Value.Date : y.EndDt))
+                        .ForMember("InvoiceCycleStartDt", x => x.MapFrom(y => y.InvoiceCycleStartDt.Date));
 
                     cfg.CreateMap<IntuitData.Customer, Company>()
                         .ForMember("ExternalCustomerId", x => x.MapFrom(y => y.Id))
