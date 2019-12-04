@@ -23,6 +23,7 @@ using AutoMapper;
 using PQ.Pagination;
 using PQ;
 using Accounts.Timesheets;
+using MoreLinq;
 
 namespace Accounts.Projects
 {
@@ -112,16 +113,17 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
 
+            var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
                 ProjectId = project.Id,
                 StatusId = (int)TimesheetStatuses.Created,
-                HourLogEntries = hourLogentries,
+                HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
                 StartDt = startDt,
                 EndDt = endDt,
-                TotalHrs = TimesheetService.CalculateTotalHours(hourLogentries)
+                TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
             };
 
             if (!string.IsNullOrEmpty(input.NoteText))
