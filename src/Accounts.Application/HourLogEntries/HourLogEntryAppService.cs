@@ -18,6 +18,7 @@ using AutoMapper;
 using Abp.Authorization;
 using Accounts.Timesheets;
 using Accounts.Data;
+using MoreLinq;
 
 namespace Accounts.HourLogEntries
 {
@@ -48,12 +49,13 @@ namespace Accounts.HourLogEntries
         [AbpAuthorize("Timesheet.LogHour")]
         public async Task AddUpdateHourLogs(IEnumerable<HourLogEntryDto> projectsHourLogs)
         {
+            var distinctHourLogs = projectsHourLogs.DistinctBy(x => new { x.Day, x.ProjectId });
             var addedHourLogs = new ConcurrentBag<HourLogEntry>();
 
             var hourLogEntries = await Repository.GetAllListAsync(x =>
-            projectsHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
+            distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
 
-            Parallel.ForEach(projectsHourLogs, log =>
+            Parallel.ForEach(distinctHourLogs, log =>
             {
                 var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
                 if (existingHourLog != null)
