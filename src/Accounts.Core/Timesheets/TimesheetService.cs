@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PQ.Extensions;
+using MoreLinq;
 
 namespace Accounts.Timesheets
 {
@@ -16,7 +17,7 @@ namespace Accounts.Timesheets
 
         public double CalculateTotalHours(IEnumerable<HourLogEntry> hourLogEntries)
         {
-            return hourLogEntries.Sum(x => x.Hours);
+            return hourLogEntries.DistinctBy(x=>x.Day).Sum(x => x.Hours);
         }
 
 
