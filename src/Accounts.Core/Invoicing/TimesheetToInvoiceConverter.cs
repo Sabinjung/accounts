@@ -22,7 +22,11 @@ namespace Accounts.Invoicing
                 DueDate = DateTime.Now.AddDays(source.Project.Term.DueDays),
                 Rate = source.Project.Rate,
                 ProjectId = source.ProjectId,
-              
+                Company = source.Project.Company,
+                Term = source.Project.Term,
+                Consultant = source.Project.Consultant,
+                Project = source.Project
+
             };
             CalculateTotal(source.Project, invoice);
             invoice.Attachments = source.Attachments;

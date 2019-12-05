@@ -33,7 +33,7 @@ namespace Accounts.Core.Invoicing
             InvoiceProcessor = invoiceProcessor;
             Mapper = mapper;
         }
-        public async Task<Invoice> GenerateInvoice(int timesheetId, int userId)
+        public async Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate= false)
         {
             var timesheet = await TimesheetRepository.GetAsync(timesheetId);
 
@@ -42,24 +42,21 @@ namespace Accounts.Core.Invoicing
                 throw new UserFriendlyException("Invoice is already generated.");
             }
             var generatedInvoice = Mapper.Map<Invoice>(timesheet);
-            var id = await InvoiceRepository.InsertAndGetIdAsync(generatedInvoice);
-            var invoice = await InvoiceRepository.GetAsync(id);
 
-            timesheet.Invoice = invoice;
-            timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;
-            return invoice;
+            return generatedInvoice;
 
 
         }
-        public async Task<string> Submit(int invoiceId, int userId)
+        public async Task<string> Submit(int timesheetId, int userId)
         {
-            var invoice = await InvoiceRepository.GetAsync(invoiceId);
-            if (!string.IsNullOrEmpty(invoice.QBOInvoiceId))
+            var timesheet = await TimesheetRepository.FirstOrDefaultAsync(timesheetId);
+            if (timesheet.InvoiceId.HasValue && !string.IsNullOrEmpty(timesheet.Invoice.QBOInvoiceId))
             {
                 throw new UserFriendlyException("Invoice is already submitted.");
             }
-
-            var timesheet = await TimesheetRepository.FirstOrDefaultAsync(t => t.InvoiceId == invoiceId);
+            var invoice = await GenerateInvoice(timesheetId, userId);         
+            timesheet.Invoice = invoice;
+            timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;   
             var referenceNo = await InvoiceProcessor.Send(invoice);
             invoice.QBOInvoiceId = referenceNo;
             timesheet.StatusId = (int)TimesheetStatuses.Invoiced;

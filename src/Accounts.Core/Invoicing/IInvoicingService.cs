@@ -8,7 +8,7 @@ namespace Accounts.Core.Invoicing
 {
     public interface IInvoicingService
     {
-        Task<Invoice> GenerateInvoice(int timesheetId, int userId);
+        Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate = false);
         Task<string> Submit(int invoiceId, int userId);
         Task ReadInvoice(int invoiceId);
     }

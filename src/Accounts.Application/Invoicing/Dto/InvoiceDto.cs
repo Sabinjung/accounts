@@ -11,6 +11,7 @@ namespace Accounts.Invoicing.Dto
     [AutoMap(typeof(Invoice))]
     public class InvoiceDto : EntityDto
     {
+        public int? TimesheetId { get; set; }
         public string Description { get; set; }
 
         public DateTime InvoiceDate { get; set; }

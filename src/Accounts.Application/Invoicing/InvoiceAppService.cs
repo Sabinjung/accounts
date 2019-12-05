@@ -41,12 +41,15 @@ namespace Accounts.Invoicing
             IntuitDataProvider = intuitDataProvider;
         }
 
+        [HttpGet]
         [AbpAuthorize("Timesheet.GenerateInvoice")]
         public async Task<InvoiceDto> GenerateInvoice(int timesheetId)
         {
             var currentUserId = Convert.ToInt32(AbpSession.UserId);
             var invoice = await InvoicingService.GenerateInvoice(timesheetId, currentUserId);
-            return Mapper.Map<InvoiceDto>(invoice);
+            var dto = Mapper.Map<InvoiceDto>(invoice);
+            dto.TimesheetId = timesheetId;
+            return dto;
         }
 
         [AbpAuthorize("Invoicing.Submit")]
@@ -57,6 +60,19 @@ namespace Accounts.Invoicing
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
                 await InvoicingService.Submit(invoiceId, currentUserId);
+            }
+        }
+
+        [AbpAuthorize("Invoicing.Submit")]
+        public async Task GenerateAndSubmit(int timesheetId)
+        {
+            var currentUserId = Convert.ToInt32(AbpSession.UserId);
+            //var invoice = await InvoicingService.GenerateInvoice(timesheetId, currentUserId, false);
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
+            {
+
+                await InvoicingService.Submit(timesheetId, currentUserId);
             }
         }
 
