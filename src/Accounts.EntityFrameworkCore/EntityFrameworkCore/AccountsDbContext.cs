@@ -32,6 +32,8 @@ namespace Accounts.EntityFrameworkCore
         public DbSet<InvoiceCycle> InvoiceCycles { get; set; }
 
         public DbSet<Note> Notes { get; set; }
+        public DbSet<Expenses> Expenses { get; set; }
+        public DbSet<ExpensesType> ExpensesTypes { get; set; }
 
         public AccountsDbContext(DbContextOptions<AccountsDbContext> options)
             : base(options)

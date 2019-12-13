@@ -46,6 +46,8 @@ namespace Accounts.Projects
 
         private readonly ITimesheetService TimesheetService;
 
+        private readonly IRepository<Models.Expenses> ExpensesRepository;
+
         public TimesheetAppService(
             IRepository<Timesheet> repository,
             IProjectRepository projectRepository,
@@ -53,7 +55,8 @@ namespace Accounts.Projects
             IHourLogEntryRepository hourLogEntryRepository,
             IMapper mapper,
             QueryBuilderFactory queryBuilderFactory,
-            ITimesheetService timesheetService
+            ITimesheetService timesheetService,
+            IRepository<Models.Expenses> expensesRepository
             )
 
         {
@@ -63,6 +66,7 @@ namespace Accounts.Projects
             HourLogEntryRepository = hourLogEntryRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
+            ExpensesRepository = expensesRepository;
             SavedQueries = new List<TimesheetQueryParameters>
             {
                 new TimesheetQueryParameters
@@ -112,6 +116,7 @@ namespace Accounts.Projects
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
+            var expenses = await ExpensesRepository.GetAsync(input.ExpensesId);
 
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
             // Construct new Timesheet
@@ -121,6 +126,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
+                ExpensesId = expenses.Id,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)

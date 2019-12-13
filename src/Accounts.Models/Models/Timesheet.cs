@@ -16,7 +16,11 @@ namespace Accounts.Models
         public DateTime EndDt { get; set; }
 
         public int StatusId { get; set; }
-        // Approval
+        
+        //Expenses
+        public int ExpensesId { get; set; }
+        
+            // Approval
         public long? ApprovedByUserId { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
@@ -37,6 +41,7 @@ namespace Accounts.Models
         public virtual Invoice Invoice { get; set; }
 
         public virtual Project Project { get; set; }
+        public virtual Expenses Expenses { get; set; }
 
         public virtual ICollection<HourLogEntry> HourLogEntries { get; set; }
 
