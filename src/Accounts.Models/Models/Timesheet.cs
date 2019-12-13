@@ -17,9 +17,6 @@ namespace Accounts.Models
 
         public int StatusId { get; set; }
         
-        //Expenses
-        public int ExpensesId { get; set; }
-        
             // Approval
         public long? ApprovedByUserId { get; set; }
 
@@ -41,8 +38,8 @@ namespace Accounts.Models
         public virtual Invoice Invoice { get; set; }
 
         public virtual Project Project { get; set; }
-        public virtual Expenses Expenses { get; set; }
 
+        public virtual ICollection<Expenses> Expenses { get; set; }
         public virtual ICollection<HourLogEntry> HourLogEntries { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }

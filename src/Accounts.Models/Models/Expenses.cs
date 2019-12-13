@@ -11,7 +11,6 @@ namespace Accounts.Models
         public string Comment { get; set; }
         public DateTime ReportDt { get; set; }
         public int ExpensesTypeId { get; set; }
-        public int TimeSheetId { get; set; }
         public virtual ExpensesType ExpensesType { get; set; }
         //public virtual Timesheet Timesheet { get; set; }
     }

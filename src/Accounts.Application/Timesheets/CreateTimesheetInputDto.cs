@@ -6,8 +6,6 @@ namespace Accounts.Projects
     public class CreateTimesheetInputDto
     {
         public int ProjectId { get; set; }
-        
-        public int ExpensesId { get; set; }
 
         public DateTime StartDt { get; set; }
 
@@ -16,5 +14,7 @@ namespace Accounts.Projects
         public string NoteText { get; set; }
 
         public int[] AttachmentIds { get; set; }
+
+        public int[] Expenses { get; set; }
     }
 }
