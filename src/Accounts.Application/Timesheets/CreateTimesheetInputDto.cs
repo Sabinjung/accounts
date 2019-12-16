@@ -15,6 +15,12 @@ namespace Accounts.Projects
 
         public int[] AttachmentIds { get; set; }
 
-        public int[] Expenses { get; set; }
+        public int Value { get; set; }
+        
+        public string Comment { get; set; }
+        
+        public DateTime ReportDt { get; set; }
+        
+        public int ExpensesTypeId { get; set; }
     }
 }

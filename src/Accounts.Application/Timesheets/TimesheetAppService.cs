@@ -116,9 +116,13 @@ namespace Accounts.Projects
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
-            var expenses = await ExpensesRepository.GetAll().Where(e => input.Expenses.Any(y => y == e.Id)).ToListAsync();
-
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
+            
+            // Insert Expenses Data
+            var querry = await ExpensesRepository.InsertAndGetIdAsync(ObjectMapper.Map<Models.Expenses>(input));
+            // Get Data from Expenses Table
+            var expenses = await ExpensesRepository.GetAsync(querry);
+            
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -126,7 +130,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
-                Expenses = expenses,
+                //Expenses. = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
