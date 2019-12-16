@@ -121,8 +121,9 @@ namespace Accounts.Projects
             // Insert Expenses Data
             var querry = await ExpensesRepository.InsertAndGetIdAsync(ObjectMapper.Map<Models.Expenses>(input));
             // Get Data from Expenses Table
-            var expenses = await ExpensesRepository.GetAsync(querry);
-            
+            var expense = await ExpensesRepository.GetAsync(querry);
+            var expenses = await ExpensesRepository.GetAll().Where(e => input.ExpensesIds.Any(y => y == e.Id)).ToListAsync();
+
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -130,7 +131,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
-                //Expenses. = expenses,
+                Expenses = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
