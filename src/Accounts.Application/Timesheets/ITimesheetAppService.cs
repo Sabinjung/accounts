@@ -10,6 +10,5 @@ namespace Accounts.Projects
         Task Approve(int timesheetId);
 
         Task Create(CreateTimesheetInputDto input);
-        Task Create(ExpenseDto input);
     }
 }

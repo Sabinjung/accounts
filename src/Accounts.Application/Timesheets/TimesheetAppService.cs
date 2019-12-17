@@ -117,8 +117,11 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expenses = await ExpensesRepository.GetAll().Where(e => input.ExpensesIds.Any(y => y == e.Id)).ToListAsync();
-            
+            var expense = await ExpensesRepository.InsertAndGetIdAsync(ObjectMapper.Map<Expense>(input.ExpensesDto));
+            /*foreach(ExpenseDto e in input.ExpensesDto)
+            {
+                var expenses = await ExpenseDto.Add(e);
+            }*/
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -126,7 +129,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
-                Expenses = expenses,
+                //Expenses = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
@@ -201,12 +204,6 @@ namespace Accounts.Projects
             timesheetInfo.HourLogEntries = Mapper.Map<IEnumerable<HourLogEntryDto>>(hourLogEntries);
             timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
             return timesheetInfo;
-        }
-
-        public async Task Create(ExpenseDto input)
-        {
-            // Insert Expenses Data
-            await ExpensesRepository.InsertAsync(ObjectMapper.Map<Expense>(input));
         }
     }
 }

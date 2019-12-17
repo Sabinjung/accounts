@@ -1,5 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
+using Accounts.Timesheets.Dto;
 using System;
+using System.Collections.Generic;
 
 namespace Accounts.Projects
 {
@@ -15,6 +17,6 @@ namespace Accounts.Projects
 
         public int[] AttachmentIds { get; set; }
 
-        public int[] ExpensesIds { get; set; }
+        public List<ExpenseDto> ExpensesDto { get; set; }
     }
 }
