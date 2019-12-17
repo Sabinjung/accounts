@@ -39,7 +39,7 @@ namespace Accounts.Models
 
         public virtual Project Project { get; set; }
 
-        public virtual ICollection<Expenses> Expenses { get; set; }
+        public virtual ICollection<Expense> Expenses { get; set; }
         public virtual ICollection<HourLogEntry> HourLogEntries { get; set; }
 
         public virtual ICollection<Attachment> Attachments { get; set; }

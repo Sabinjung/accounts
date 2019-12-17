@@ -44,13 +44,6 @@ namespace Accounts.Consultants
             return Repository.GetAll()
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.FirstName.Contains(input.Keyword) || x.LastName.Contains(input.Keyword));
         }
-
-        /*public async override Task<PagedResultDto<ConsultantDto>> GetAll(PagedCompanyResultRequestDto input)
-        {
-            input = 
-            return await base.GetAll(input);
-        }*/
-
     }
 
 

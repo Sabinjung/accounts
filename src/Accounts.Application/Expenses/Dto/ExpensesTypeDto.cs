@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Accounts.Expenses.Dto
 {
-    [AutoMap(typeof(ExpensesType))]
+    [AutoMap(typeof(ExpenseType))]
     public class ExpensesTypeDto : EntityDto
     {
         public string ExpensesName { get; set; }

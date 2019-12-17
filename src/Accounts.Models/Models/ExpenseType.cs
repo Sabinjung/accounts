@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Accounts.Models
 {
-    public class ExpensesType : FullAuditedEntity
+    public class ExpenseType : FullAuditedEntity
     {
         public string ExpensesName { get; set; }
         public string Description { get; set; }

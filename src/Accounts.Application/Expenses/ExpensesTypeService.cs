@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Accounts.Expenses
 {
-    public class ExpensesTypeService : AsyncCrudAppService<ExpensesType, ExpensesTypeDto>
+    public class ExpensesTypeService : AsyncCrudAppService<ExpenseType, ExpensesTypeDto>
     {
-        public ExpensesTypeService(IRepository<ExpensesType> repository)
+        public ExpensesTypeService(IRepository<ExpenseType> repository)
         : base(repository)
         {
 
