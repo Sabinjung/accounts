@@ -79,11 +79,6 @@ namespace Accounts.Projects
                     Name="Approved",
                     StatusId=new int[]{(int)TimesheetStatuses.Approved }
                 },
-                  new TimesheetQueryParameters
-                {
-                    Name="Inv. Gen",
-                    StatusId=new int[]{(int)TimesheetStatuses.InvoiceGenerated, }
-                },
                    new TimesheetQueryParameters
                 {
                     Name="Invoiced",
@@ -117,7 +112,7 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expense = await ExpensesRepository.InsertAndGetIdAsync(ObjectMapper.Map<Expense>(input.ExpensesDto));
+            var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
             /*foreach(ExpenseDto e in input.ExpensesDto)
             {
                 var expenses = await ExpenseDto.Add(e);
@@ -129,7 +124,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
-                //Expenses = expenses,
+                Expenses = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
