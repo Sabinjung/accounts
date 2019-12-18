@@ -112,11 +112,8 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
-            /*foreach(ExpenseDto e in input.ExpensesDto)
-            {
-                var expenses = await ExpenseDto.Add(e);
-            }*/
+            var expenses = ObjectMapper.Map<List<Expense>>(input.Expense);
+            
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -169,7 +166,6 @@ namespace Accounts.Projects
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
         }
-
 
         public IEnumerable<TimesheetQueryParameters> GetSavedQueries()
         {

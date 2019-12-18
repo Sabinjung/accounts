@@ -98,6 +98,11 @@ namespace Accounts.Projects
             return await Mapper.ProjectTo<AttachmentDto>(attachmentsQuery).ToListAsync();
         }
 
+        public IEnumerable<ProjectQueryParameters> GetSavedQueries()
+        {
+            return SavedQueries;
+        }
+
         [HttpDelete]
         public async Task DeleteAttachment(int projectId, int attachmentId)
         {

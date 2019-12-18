@@ -15,6 +15,6 @@ namespace Accounts.Timesheets.Dto
 
         public DateTime ReportDt { get; set; }
 
-        public int ExpensesTypeId { get; set; }
+        public int ExpenseTypeId { get; set; }
     }
 }
