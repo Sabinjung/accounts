@@ -122,10 +122,14 @@ namespace Accounts.HourLogEntries
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
+                if (duedays > 0)
+                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Open;
+                else
+                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Submitted;
                 return new ProjectHourLogEntryDto
                 {
                     Project = proj,
-                    HourLogEntries = projectHourLog?.HourLogEntries ?? new List<HourLogEntryDto>()
+                    HourLogEntries = projectHourLog?. HourLogEntries ?? new List<HourLogEntryDto>()
                 };
             });
 

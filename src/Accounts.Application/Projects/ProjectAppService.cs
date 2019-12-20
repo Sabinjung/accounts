@@ -147,7 +147,6 @@ namespace Accounts.Projects
 
             return result;
         }
-        //just to test
 
         public override async Task<ProjectDto> Create(ProjectDto input)
         {
