@@ -3,6 +3,7 @@ using Abp.AutoMapper;
 using Accounts.Data;
 using Accounts.Models;
 using Accounts.Projects;
+using Accounts.Timesheets.Dto;
 using System;
 using System.Collections.Generic;
 
@@ -39,9 +40,11 @@ namespace Accounts.Invoicing.Dto
         public string TermName { get; set; }
 
         public string CompanyEmail { get; set; }
-
+         
         public string QBOInvoiceId { get; set; }
 
+        public List<ExpenseDto> Expense { get; set; }
+        //public IEnumerable<Expense> Expenses { get; set; }
         public IEnumerable<AttachmentDto> Attachments { get; set; }
     }
 }

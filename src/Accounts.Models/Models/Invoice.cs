@@ -48,6 +48,8 @@ namespace Accounts.Models
 
         public virtual Term Term { get; set; }
 
+        public virtual IEnumerable<Expense> Expenses { get; set; }
+
         public virtual ICollection<Attachment> Attachments { get; set; }
         public decimal DiscountAmount { get; set; }
     }
