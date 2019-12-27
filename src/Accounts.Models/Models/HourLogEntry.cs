@@ -16,6 +16,8 @@ namespace Accounts.Models
 
         public int? TimesheetId { get; set; }
 
+        public virtual Timesheet Timesheet { get; set; }
+
         [ForeignKey(nameof(ProjectId))]
         public virtual Project Project { get; set; }
     }

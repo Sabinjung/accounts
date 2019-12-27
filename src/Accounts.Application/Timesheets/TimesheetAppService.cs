@@ -139,11 +139,13 @@ namespace Accounts.Projects
 
         }
 
+        [AbpAuthorize("Timesheet.Delete")]
+        public async Task Delete(int id) => await Repository.DeleteAsync(id);
+
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
         {
             return await CreateNextTimesheet(projectId);
         }
-
 
         [HttpGet]
         public async Task<TimesheetDto> Detail(int timesheetId)

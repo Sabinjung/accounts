@@ -104,7 +104,7 @@ namespace Accounts.HourLogEntries
                                 Day = plog.Day,
                                 Hours = plog.Hours,
                                 ProjectId = plog.ProjectId,
-                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue ? true : false
+                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created  ? true : false
                             })
                         };
 
@@ -122,10 +122,10 @@ namespace Accounts.HourLogEntries
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
-                if (duedays > 0)
+                /*if (duedays > 0)
                     proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Open;
                 else
-                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Submitted;
+                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Submitted;*/
                 return new ProjectHourLogEntryDto
                 {
                     Project = proj,
