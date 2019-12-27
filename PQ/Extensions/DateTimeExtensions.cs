@@ -9,7 +9,7 @@ namespace PQ.Extensions
 
         public static DateTime StartOfWeek(this DateTime dateTime) => dateTime.AddDays(-(int)dateTime.DayOfWeek);
 
-        public static DateTime EndOfWeek(this DateTime dateTime) => dateTime.StartOfWeek().AddDays(7);
+        public static DateTime EndOfWeek(this DateTime dateTime) => dateTime.StartOfWeek().AddDays(6);
 
         public static DateTime EndofMonth(this DateTime dateTime) => new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
 
