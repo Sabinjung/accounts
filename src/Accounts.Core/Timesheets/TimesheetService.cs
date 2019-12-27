@@ -108,7 +108,7 @@ namespace Accounts.Timesheets
             switch (invoiceCycles)
             {
                 case InvoiceCycles.Weekly:
-                    return dateTime.EndOfWeek();
+                    return dateTime.AddDays(6);
                 case InvoiceCycles.Monthly:
                     return dateTime.EndofMonth();
                 case InvoiceCycles.BiWeekly:
