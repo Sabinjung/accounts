@@ -19,6 +19,8 @@ namespace Accounts.Web.Host.Startup
     public class GoogleAuthProvider : ExternalAuthProviderApiBase
     {
         public const string Name = "Google";
+
+
         public override async Task<ExternalAuthUserInfo> GetUserInfo(string accessCode)
         {
 
@@ -28,7 +30,7 @@ namespace Accounts.Web.Host.Startup
                 Scopes = new[] { "profile" },
             });
 
-            var credential = await flow.ExchangeCodeForTokenAsync("user-id", accessCode, "http://localhost:3000/user/oauth_callback", CancellationToken.None);
+            var credential = await flow.ExchangeCodeForTokenAsync("user-id", accessCode, ProviderInfo.CallbackUrl, CancellationToken.None);
             var idtokenpayload = await GoogleJsonWebSignature.ValidateAsync(credential.IdToken);
 
 

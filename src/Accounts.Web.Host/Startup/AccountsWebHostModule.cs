@@ -35,6 +35,7 @@ namespace Accounts.Web.Host.Startup
                     GoogleAuthProvider.Name,
                     _appConfiguration["Authentication:Google:ClientId"],
                     _appConfiguration["Authentication:Google:ClientSecret"],
+                    _appConfiguration["Authentication:Google:CallbackUrl"],
                     typeof(GoogleAuthProvider)
                 )
             );
