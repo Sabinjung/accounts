@@ -7,9 +7,9 @@ namespace Accounts.Models
 {
     public class Expense : FullAuditedEntity
     {
-        public int Value { get; set; }
+        public decimal Amount { get; set; }
         public string Comment { get; set; }
-        public DateTime ReportDt { get; set; }
+        public DateTime ServiceDt { get; set; }
         public int ExpensesTypeId { get; set; }
         public virtual ExpenseType ExpenseType { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using Accounts.Data;
+using Accounts.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,7 +40,6 @@ namespace Accounts.Models
 
         public int CompanyId { get; set; }
 
-
         public virtual Project Project { get; set; }
 
         public virtual Company Company { get; set; }
@@ -48,9 +48,10 @@ namespace Accounts.Models
 
         public virtual Term Term { get; set; }
 
-        public virtual IEnumerable<Expense> Expenses { get; set; }
-
+        public virtual IEnumerable<LineItem> LineItems { get; set; }
+        
         public virtual ICollection<Attachment> Attachments { get; set; }
+        
         public decimal DiscountAmount { get; set; }
     }
 }

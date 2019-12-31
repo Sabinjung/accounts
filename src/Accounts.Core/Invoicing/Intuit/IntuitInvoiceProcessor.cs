@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Accounts.Blob;
+using Accounts.Data.Models;
 using Accounts.Intuit;
 using Accounts.Models;
 using Intuit.Ipp.Core;
@@ -108,7 +109,7 @@ namespace Accounts.Core.Invoicing.Intuit
             var lineList = new List<IntuitData.Line>();
             var line = new IntuitData.Line();
             line.Id = "1";
-            line.LineNum = "1";
+            //line.LineNum = "1";
             line.Description = invoice.Description;
             line.Amount = invoice.SubTotal;
             line.AmountSpecified = true;
@@ -123,21 +124,47 @@ namespace Accounts.Core.Invoicing.Intuit
                 AnyIntuitObject = invoice.Rate,
                 ItemElementName = IntuitData.ItemChoiceType.UnitPrice,
             };
+            lineList.Add(line);
 
+
+            //Expenses
+
+            var expenseLines = new List<IntuitData.Line>();
+            foreach (var e in invoice.LineItems)
+            // for(int i=0;i<=invoice.LineItems.Count();i++)
+            {
+                var expenseLine = new IntuitData.Line();
+                expenseLine.Id = "4";
+                //expenseLine.LineNum = "4";
+                expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
+                expenseLine.DetailTypeSpecified = true;
+                expenseLine.Amount = e.Amount;
+                expenseLine.Description = e.Description;
+                expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                {
+                    ServiceDate = e.ServiceDt,
+                    ServiceDateSpecified = true,
+                    
+
+                };
+                lineList.Add(expenseLine);
+            }
 
             // Sub Total
             var subTotalLine = new IntuitData.Line();
             subTotalLine.Id = "2";
-            subTotalLine.LineNum = "2";
+            //subTotalLine.LineNum = "2";
             subTotalLine.DetailType = IntuitData.LineDetailTypeEnum.SubTotalLineDetail;
             subTotalLine.DetailTypeSpecified = true;
             subTotalLine.Amount = invoice.SubTotal;
+            lineList.Add(subTotalLine);
+
 
 
             //Discount
             var discountLine = new IntuitData.Line();
             discountLine.Id = "3";
-            discountLine.LineNum = "3";
+            //discountLine.LineNum = "3";
             discountLine.DetailType = IntuitData.LineDetailTypeEnum.DiscountLineDetail;
             discountLine.DetailTypeSpecified = true;
 
@@ -167,11 +194,10 @@ namespace Accounts.Core.Invoicing.Intuit
             {
                 name = "Discounts given",
                 Value = accountForDiscount.Id
-            };
-
-            lineList.Add(line);
-            lineList.Add(subTotalLine);
+            };     
             lineList.Add(discountLine);
+
+           
             intuitInvoice.Line = lineList.ToArray();
         }
 

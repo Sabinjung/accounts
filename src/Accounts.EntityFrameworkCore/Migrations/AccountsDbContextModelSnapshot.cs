@@ -1034,6 +1034,41 @@ namespace Accounts.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("Accounts.Data.Models.LineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("InvoiceId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<DateTime>("ServiceDt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("LineItem");
+                });
+
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -1166,6 +1201,8 @@ namespace Accounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal>("Amount");
+
                     b.Property<string>("Comment");
 
                     b.Property<DateTime>("CreationTime");
@@ -1186,11 +1223,9 @@ namespace Accounts.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<DateTime>("ReportDt");
+                    b.Property<DateTime>("ServiceDt");
 
                     b.Property<int?>("TimesheetId");
-
-                    b.Property<int>("Value");
 
                     b.HasKey("Id");
 
@@ -1217,13 +1252,13 @@ namespace Accounts.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("ExpensesName");
-
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -1776,6 +1811,13 @@ namespace Accounts.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
+            modelBuilder.Entity("Accounts.Data.Models.LineItem", b =>
+                {
+                    b.HasOne("Accounts.Models.Invoice")
+                        .WithMany("LineItems")
+                        .HasForeignKey("InvoiceId");
+                });
+
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.HasOne("Accounts.Models.Invoice")
@@ -1817,7 +1859,7 @@ namespace Accounts.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Accounts.Models.Timesheet")
+                    b.HasOne("Accounts.Models.Timesheet", "Timesheet")
                         .WithMany("HourLogEntries")
                         .HasForeignKey("TimesheetId");
                 });

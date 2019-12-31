@@ -1,9 +1,9 @@
-﻿using Accounts.Models;
+﻿using Accounts.Data.Models;
+using Accounts.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Accounts.Invoicing
 {
@@ -28,16 +28,19 @@ namespace Accounts.Invoicing
                 Project = source.Project
 
             };
+            destination.LineItems = context.Mapper.Map<IList<LineItem>>(source.Expenses);
             CalculateTotal(source.Project, invoice);
             invoice.Attachments = source.Attachments;
             invoice.Description = $"Billing Period {source.StartDt.ToShortDateString()} -  {source.EndDt.ToShortDateString()}";
             return invoice;
         }
 
+
         private void CalculateTotal(Project project, Invoice invoice)
         {
             decimal discount = 0;
-            invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours);
+
+            invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours) + invoice.LineItems.Sum(x => x.Amount);
             switch (project.DiscountType)
             {
                 case Data.DiscountType.Percentage:

@@ -7,6 +7,7 @@ using Abp.Zero.Configuration;
 using Accounts.Authorization.Roles;
 using Accounts.Authorization.Users;
 using Accounts.Configuration;
+using Accounts.Data.Models;
 using Accounts.Invoicing;
 using Accounts.Localization;
 using Accounts.Models;
@@ -48,6 +49,8 @@ namespace Accounts
                // Scan the assembly for classes which inherit from AutoMapper.Profile
                cfg =>
                {
+                   cfg.CreateMap<Expense, LineItem>()
+                      .ForMember("Description", x => x.MapFrom(y => $" {y.ExpenseType.Name} {y.Comment}" )); 
                    cfg.CreateMap<Timesheet, Invoice>()
                       .ConvertUsing<TimesheetToInvoiceConverter>();
                }

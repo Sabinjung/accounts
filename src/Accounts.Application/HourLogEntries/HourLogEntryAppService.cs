@@ -104,7 +104,7 @@ namespace Accounts.HourLogEntries
                                 Day = plog.Day,
                                 Hours = plog.Hours,
                                 ProjectId = plog.ProjectId,
-                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created  ? true : false
+                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false
                             })
                         };
 
@@ -122,18 +122,24 @@ namespace Accounts.HourLogEntries
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
-                /*if (duedays > 0)
-                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Open;
+                if (duedays > 0)
+                {
+                    proj.TimesheetStatus = TimesheetStatuses.TimeSheetOpen;
+                }
                 else
-                    proj.IsTimeSheetSubmitted = IsTimeSheetSubmittedState.Submitted;*/
+                {
+                    proj.TimesheetStatus = projectLastTimesheet != null
+                    ? (TimesheetStatuses)projectLastTimesheet.Status.Id
+                    : TimesheetStatuses.TimeSheetOpen;
+                }
                 return new ProjectHourLogEntryDto
                 {
                     Project = proj,
-                    HourLogEntries = projectHourLog?. HourLogEntries ?? new List<HourLogEntryDto>()
+                    HourLogEntries = projectHourLog?.HourLogEntries ?? new List<HourLogEntryDto>()
                 };
             });
 
-            return result.OrderBy(x=>x.Project.ConsultantName);
+            return result.OrderBy(x => x.Project.ConsultantName);
         }
     }
 }

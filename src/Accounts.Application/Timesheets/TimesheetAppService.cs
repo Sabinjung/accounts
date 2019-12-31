@@ -4,22 +4,17 @@ using Accounts.Timesheets.Dto;
 using Accounts.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Abp.Application.Services.Dto;
 using Accounts.HourLogEntries.Dto;
 using System.Threading.Tasks;
-using Accounts.Invoicing;
-using Abp.Runtime.Session;
 using Abp.Authorization;
 using Abp.UI;
-using Abp.ObjectMapping;
 using Accounts.Data;
 using Accounts.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Accounts.Projects.Dto;
-using AutoMapper;
 using PQ.Pagination;
 using PQ;
 using Accounts.Timesheets;
@@ -56,7 +51,7 @@ namespace Accounts.Projects
             IMapper mapper,
             QueryBuilderFactory queryBuilderFactory,
             ITimesheetService timesheetService,
-            IRepository<Models.Expense> expensesRepository
+            IRepository<Expense> expensesRepository
             )
 
         {
@@ -113,7 +108,7 @@ namespace Accounts.Projects
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
             var expenses = ObjectMapper.Map<List<Expense>>(input.Expense);
-            
+
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -140,7 +135,15 @@ namespace Accounts.Projects
         }
 
         [AbpAuthorize("Timesheet.Delete")]
-        public async Task Delete(int id) => await Repository.DeleteAsync(id);
+        public async Task Delete(int id)
+        {
+            var timesheet = await Repository.GetAsync(id);
+            if (timesheet.InvoiceId != null)
+            {
+                throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
+            }
+            await Repository.DeleteAsync(id);
+        }
 
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
         {
