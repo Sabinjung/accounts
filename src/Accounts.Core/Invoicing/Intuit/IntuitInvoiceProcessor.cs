@@ -106,10 +106,22 @@ namespace Accounts.Core.Invoicing.Intuit
 
         private void AddLines(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Account accountForDiscount)
         {
+            var lineNum = 1;
+
+            string GetLineNum(bool increment = false)
+            {
+                if (increment)
+                {
+                    lineNum++;
+                }
+                return lineNum.ToString();
+
+            }
+
             var lineList = new List<IntuitData.Line>();
             var line = new IntuitData.Line();
-            line.Id = "1";
-            //line.LineNum = "1";
+            line.Id = GetLineNum();
+            line.LineNum = GetLineNum();
             line.Description = invoice.Description;
             line.Amount = invoice.SubTotal;
             line.AmountSpecified = true;
@@ -128,14 +140,13 @@ namespace Accounts.Core.Invoicing.Intuit
 
 
             //Expenses
-
-            var expenseLines = new List<IntuitData.Line>();
-            foreach (var e in invoice.LineItems)
-            // for(int i=0;i<=invoice.LineItems.Count();i++)
+            for (var i = 0; i < invoice.LineItems.Count(); i++)
             {
+                
+                var e = invoice.LineItems.ToList()[i];
                 var expenseLine = new IntuitData.Line();
-                expenseLine.Id = "4";
-                //expenseLine.LineNum = "4";
+                expenseLine.Id = GetLineNum(true);
+                expenseLine.LineNum = GetLineNum();
                 expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
                 expenseLine.DetailTypeSpecified = true;
                 expenseLine.Amount = e.Amount;
@@ -144,16 +155,17 @@ namespace Accounts.Core.Invoicing.Intuit
                 {
                     ServiceDate = e.ServiceDt,
                     ServiceDateSpecified = true,
-                    
+
 
                 };
                 lineList.Add(expenseLine);
+
             }
 
             // Sub Total
             var subTotalLine = new IntuitData.Line();
-            subTotalLine.Id = "2";
-            //subTotalLine.LineNum = "2";
+            subTotalLine.Id = GetLineNum(true);
+            subTotalLine.LineNum = GetLineNum();
             subTotalLine.DetailType = IntuitData.LineDetailTypeEnum.SubTotalLineDetail;
             subTotalLine.DetailTypeSpecified = true;
             subTotalLine.Amount = invoice.SubTotal;
@@ -163,8 +175,8 @@ namespace Accounts.Core.Invoicing.Intuit
 
             //Discount
             var discountLine = new IntuitData.Line();
-            discountLine.Id = "3";
-            //discountLine.LineNum = "3";
+            discountLine.Id = GetLineNum(true);
+            discountLine.LineNum = GetLineNum();
             discountLine.DetailType = IntuitData.LineDetailTypeEnum.DiscountLineDetail;
             discountLine.DetailTypeSpecified = true;
 
@@ -194,10 +206,10 @@ namespace Accounts.Core.Invoicing.Intuit
             {
                 name = "Discounts given",
                 Value = accountForDiscount.Id
-            };     
+            };
             lineList.Add(discountLine);
 
-           
+
             intuitInvoice.Line = lineList.ToArray();
         }
 
