@@ -13,5 +13,6 @@ namespace PQ.Extensions
 
         public static DateTime EndofMonth(this DateTime dateTime) => new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month));
 
+        public static DateTime StartOfMonth(this DateTime date) => new DateTime();
     }
 }

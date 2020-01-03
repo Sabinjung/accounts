@@ -17,6 +17,6 @@ namespace Accounts.Projects
 
         public int[] AttachmentIds { get; set; }
 
-        public List<ListItemDto> Expense { get; set; }
+        public List<ListItemDto> Expenses { get; set; }
     }
 }

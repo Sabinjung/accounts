@@ -128,7 +128,6 @@ namespace PQ
             {
                 Name = x.Name,
                 Count = await CompileQuery(x).CountAsync()
-
             }));
             var result = new Page<TDataTransferObject>
             {

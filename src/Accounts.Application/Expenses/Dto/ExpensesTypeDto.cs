@@ -10,7 +10,7 @@ namespace Accounts.Expenses.Dto
     [AutoMap(typeof(ExpenseType))]
     public class ExpensesTypeDto : EntityDto
     {
-        public string ExpensesName { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

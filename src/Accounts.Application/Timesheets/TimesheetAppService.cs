@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Accounts.Projects.Dto;
 using PQ.Pagination;
 using PQ;
+using PQ.Extensions;
 using Accounts.Timesheets;
 using MoreLinq;
 
@@ -107,7 +108,7 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expenses = ObjectMapper.Map<List<Expense>>(input.Expense);
+            var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
 
             // Construct new Timesheet
             var newTimesheet = new Timesheet
@@ -162,7 +163,7 @@ namespace Accounts.Projects
 
             if (!queryParameter.StartTime.HasValue)
             {
-                queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1);
+                queryParameter.StartTime = DateTime.UtcNow.EndofMonth();
                 queryParameter.EndTime = DateTime.UtcNow;
             }
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
@@ -170,7 +171,7 @@ namespace Accounts.Projects
             query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
             query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
-            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => p.StartTime > x.StartDt && p.EndTime < x.EndDt);
+            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >=p.StartTime && x.EndDt<=p.EndTime );
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.CreationTime);
