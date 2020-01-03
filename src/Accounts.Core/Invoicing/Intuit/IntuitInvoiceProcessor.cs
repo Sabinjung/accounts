@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
 using Accounts.Blob;
-using Accounts.Data.Models;
 using Accounts.Intuit;
 using Accounts.Models;
 using Intuit.Ipp.Core;

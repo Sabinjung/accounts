@@ -1,6 +1,5 @@
 ﻿using Abp.Domain.Entities.Auditing;
 using Accounts.Data;
-using Accounts.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

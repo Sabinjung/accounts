@@ -21,6 +21,16 @@
     <Compile Remove="Migrations\20191127184104_CompanyMoreInformation.Designer.cs" />
     <Compile Remove="Migrations\20191203213341_InvoiceCycleStartDtNonNullable.cs" />
     <Compile Remove="Migrations\20191203213341_InvoiceCycleStartDtNonNullable.Designer.cs" />
+    <Compile Remove="Migrations\20200103184330_CheckingDatabase.cs" />
+    <Compile Remove="Migrations\20200103184330_CheckingDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20200103213825_UpdateTableExpense.cs" />
+    <Compile Remove="Migrations\20200103213825_UpdateTableExpense.Designer.cs" />
+    <Compile Remove="Migrations\20200103215446_UptoDateDatabase.cs" />
+    <Compile Remove="Migrations\20200103215446_UptoDateDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20200103223049_MakingDatabaseUptoDate.cs" />
+    <Compile Remove="Migrations\20200103223049_MakingDatabaseUptoDate.Designer.cs" />
+    <Compile Remove="Migrations\20200103223402_MakingDatabaseUptoDate.cs" />
+    <Compile Remove="Migrations\20200103223402_MakingDatabaseUptoDate.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />

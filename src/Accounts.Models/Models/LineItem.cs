@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Accounts.Data.Models
+namespace Accounts.Models
 {
     public class LineItem : FullAuditedEntity
     {

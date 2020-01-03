@@ -7,13 +7,13 @@ using System.Text;
 namespace Accounts.Timesheets.Dto
 {
     [AutoMap(typeof(Expense))]
-    public class ListItemDto
+    public class ExpenseDto
     {
         public decimal Amount { get; set; }
 
-        public string Description { get; set; }
+        public string Comment { get; set; }
 
-        public DateTime ReportDt { get; set; }
+        public DateTime ServiceDt { get; set; }
 
         public int ExpenseTypeId { get; set; }
     }

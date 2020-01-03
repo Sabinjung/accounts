@@ -1,5 +1,4 @@
-﻿using Accounts.Data.Models;
-using Accounts.Models;
+﻿using Accounts.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Accounts.Invoicing
                 Project = source.Project
 
             };
-            destination.LineItems = context.Mapper.Map<IList<LineItem>>(source.Expenses);
+            invoice.LineItems = context.Mapper.Map<IList<LineItem>>(source.Expenses);
             CalculateTotal(source.Project, invoice);
             invoice.Attachments = source.Attachments;
             invoice.Description = $"Billing Period {source.StartDt.ToShortDateString()} -  {source.EndDt.ToShortDateString()}";

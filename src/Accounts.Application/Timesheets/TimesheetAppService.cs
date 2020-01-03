@@ -160,10 +160,9 @@ namespace Accounts.Projects
 
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
         {
-
-            if (!queryParameter.StartTime.HasValue)
+            if (!queryParameter.StartTime.HasValue && queryParameter.Name == "Invoiced")
             {
-                queryParameter.StartTime = DateTime.UtcNow.EndofMonth();
+                queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1).StartOfMonth();
                 queryParameter.EndTime = DateTime.UtcNow;
             }
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
@@ -171,7 +170,7 @@ namespace Accounts.Projects
             query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
             query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
-            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >=p.StartTime && x.EndDt<=p.EndTime );
+            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.CreationTime);

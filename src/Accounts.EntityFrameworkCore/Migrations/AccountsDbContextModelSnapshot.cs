@@ -1034,41 +1034,6 @@ namespace Accounts.Migrations
                     b.ToTable("AbpUsers");
                 });
 
-            modelBuilder.Entity("Accounts.Data.Models.LineItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<string>("Description");
-
-                    b.Property<int?>("InvoiceId");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.Property<DateTime>("ServiceDt");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.ToTable("LineItem");
-                });
-
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -1213,9 +1178,7 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<int?>("ExpenseTypeId");
-
-                    b.Property<int>("ExpensesTypeId");
+                    b.Property<int>("ExpenseTypeId");
 
                     b.Property<bool>("IsDeleted");
 
@@ -1262,7 +1225,7 @@ namespace Accounts.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExpensesTypes");
+                    b.ToTable("ExpenseTypes");
                 });
 
             modelBuilder.Entity("Accounts.Models.HourLogEntry", b =>
@@ -1382,6 +1345,41 @@ namespace Accounts.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InvoiceCycles");
+                });
+
+            modelBuilder.Entity("Accounts.Models.LineItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("InvoiceId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<DateTime>("ServiceDt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("LineItems");
                 });
 
             modelBuilder.Entity("Accounts.Models.Note", b =>
@@ -1811,13 +1809,6 @@ namespace Accounts.Migrations
                         .HasForeignKey("LastModifierUserId");
                 });
 
-            modelBuilder.Entity("Accounts.Data.Models.LineItem", b =>
-                {
-                    b.HasOne("Accounts.Models.Invoice")
-                        .WithMany("LineItems")
-                        .HasForeignKey("InvoiceId");
-                });
-
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.HasOne("Accounts.Models.Invoice")
@@ -1845,7 +1836,8 @@ namespace Accounts.Migrations
                 {
                     b.HasOne("Accounts.Models.ExpenseType", "ExpenseType")
                         .WithMany()
-                        .HasForeignKey("ExpenseTypeId");
+                        .HasForeignKey("ExpenseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Accounts.Models.Timesheet")
                         .WithMany("Expenses")
@@ -1885,6 +1877,13 @@ namespace Accounts.Migrations
                         .WithMany()
                         .HasForeignKey("TermId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Accounts.Models.LineItem", b =>
+                {
+                    b.HasOne("Accounts.Models.Invoice")
+                        .WithMany("LineItems")
+                        .HasForeignKey("InvoiceId");
                 });
 
             modelBuilder.Entity("Accounts.Models.Note", b =>

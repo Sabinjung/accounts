@@ -1,5 +1,5 @@
 ﻿using Abp.AutoMapper;
-using Accounts.Data.Models;
+using Accounts.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +11,6 @@ namespace Accounts.Invoicing.Dto
     {
         public decimal Amount { get; set; }
         public string Description { get; set; }
-        public DateTime ReportDt { get; set; }
+        public DateTime ServiceDt { get; set; }
     }
 }

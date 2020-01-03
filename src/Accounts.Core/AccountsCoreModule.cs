@@ -7,10 +7,9 @@ using Abp.Zero.Configuration;
 using Accounts.Authorization.Roles;
 using Accounts.Authorization.Users;
 using Accounts.Configuration;
-using Accounts.Data.Models;
+using Accounts.Models;
 using Accounts.Invoicing;
 using Accounts.Localization;
-using Accounts.Models;
 using Accounts.MultiTenancy;
 using Accounts.Timing;
 using AutoMapper;
@@ -50,7 +49,8 @@ namespace Accounts
                cfg =>
                {
                    cfg.CreateMap<Expense, LineItem>()
-                      .ForMember("Description", x => x.MapFrom(y => $" {y.ExpenseType.Name} {y.Comment}" )); 
+                      .ForMember(x => x.Description, x => x.MapFrom(y => $"{y.ExpenseType.Name} {y.Comment}"));
+                      //.ForMember(x => x.ServiceDt, x => x.MapFrom(y => y.ServiceDt));
                    cfg.CreateMap<Timesheet, Invoice>()
                       .ConvertUsing<TimesheetToInvoiceConverter>();
                }
