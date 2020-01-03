@@ -159,9 +159,18 @@ namespace Accounts.Projects
 
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
         {
+
+            if (!queryParameter.StartTime.HasValue)
+            {
+                queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1);
+                queryParameter.EndTime = DateTime.UtcNow;
+            }
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
             query.WhereIf(p => p.ProjectId.HasValue, p => x => x.ProjectId == p.ProjectId);
+            query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
+            query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
+            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => p.StartTime > x.StartDt && p.EndTime < x.EndDt);
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.CreationTime);
