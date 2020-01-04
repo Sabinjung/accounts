@@ -8,7 +8,7 @@ namespace Accounts.Projects
     public interface ITimesheetAppService
     {
         Task Approve(int timesheetId);
-        Task Create(CreateTimesheetInputDto input);
 
+        Task Create(CreateTimesheetInputDto input);
     }
 }

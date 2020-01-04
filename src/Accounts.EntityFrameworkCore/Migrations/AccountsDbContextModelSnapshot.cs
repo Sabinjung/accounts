@@ -1160,6 +1160,76 @@ namespace Accounts.Migrations
                     b.ToTable("Consultants");
                 });
 
+            modelBuilder.Entity("Accounts.Models.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<int?>("ExpenseTypeId");
+
+                    b.Property<int>("ExpensesTypeId");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.Property<DateTime>("ReportDt");
+
+                    b.Property<int?>("TimesheetId");
+
+                    b.Property<int>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseTypeId");
+
+                    b.HasIndex("TimesheetId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("Accounts.Models.ExpenseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ExpensesName");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpensesTypes");
+                });
+
             modelBuilder.Entity("Accounts.Models.HourLogEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -1727,6 +1797,17 @@ namespace Accounts.Migrations
                     b.HasOne("Accounts.Models.Term", "Term")
                         .WithMany()
                         .HasForeignKey("TermId");
+                });
+
+            modelBuilder.Entity("Accounts.Models.Expense", b =>
+                {
+                    b.HasOne("Accounts.Models.ExpenseType", "ExpenseType")
+                        .WithMany()
+                        .HasForeignKey("ExpenseTypeId");
+
+                    b.HasOne("Accounts.Models.Timesheet")
+                        .WithMany("Expenses")
+                        .HasForeignKey("TimesheetId");
                 });
 
             modelBuilder.Entity("Accounts.Models.HourLogEntry", b =>

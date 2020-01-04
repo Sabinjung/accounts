@@ -46,6 +46,8 @@ namespace Accounts.Projects
 
         private readonly ITimesheetService TimesheetService;
 
+        private readonly IRepository<Expense> ExpensesRepository;
+
         public TimesheetAppService(
             IRepository<Timesheet> repository,
             IProjectRepository projectRepository,
@@ -53,7 +55,8 @@ namespace Accounts.Projects
             IHourLogEntryRepository hourLogEntryRepository,
             IMapper mapper,
             QueryBuilderFactory queryBuilderFactory,
-            ITimesheetService timesheetService
+            ITimesheetService timesheetService,
+            IRepository<Models.Expense> expensesRepository
             )
 
         {
@@ -63,6 +66,7 @@ namespace Accounts.Projects
             HourLogEntryRepository = hourLogEntryRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
+            ExpensesRepository = expensesRepository;
             SavedQueries = new List<TimesheetQueryParameters>
             {
                 new TimesheetQueryParameters
@@ -74,11 +78,6 @@ namespace Accounts.Projects
                 {
                     Name="Approved",
                     StatusId=new int[]{(int)TimesheetStatuses.Approved }
-                },
-                  new TimesheetQueryParameters
-                {
-                    Name="Inv. Gen",
-                    StatusId=new int[]{(int)TimesheetStatuses.InvoiceGenerated, }
                 },
                    new TimesheetQueryParameters
                 {
@@ -112,8 +111,9 @@ namespace Accounts.Projects
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
-
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
+            var expenses = ObjectMapper.Map<List<Expense>>(input.Expense);
+            
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -121,6 +121,7 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
+                Expenses = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
@@ -138,11 +139,13 @@ namespace Accounts.Projects
 
         }
 
+        [AbpAuthorize("Timesheet.Delete")]
+        public async Task Delete(int id) => await Repository.DeleteAsync(id);
+
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
         {
             return await CreateNextTimesheet(projectId);
         }
-
 
         [HttpGet]
         public async Task<TimesheetDto> Detail(int timesheetId)
@@ -165,7 +168,6 @@ namespace Accounts.Projects
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
         }
-
 
         public IEnumerable<TimesheetQueryParameters> GetSavedQueries()
         {
@@ -196,8 +198,5 @@ namespace Accounts.Projects
             timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
             return timesheetInfo;
         }
-
-
-
     }
 }

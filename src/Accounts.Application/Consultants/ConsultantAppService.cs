@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -32,6 +33,9 @@ namespace Accounts.Consultants
         {
             var query = QueryBuilder.Create<Consultant, ConsultantSearchParameters>(Repository.GetAll());
             query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText));
+            var sorts = new Sorts<Consultant>();
+            sorts.Add(true, c => c.FirstName);
+            query.ApplySorts(sorts);
             var result = await query.ExecuteAsync<ConsultantDto>(queryParameter);
             return result;
         }
@@ -40,7 +44,6 @@ namespace Accounts.Consultants
             return Repository.GetAll()
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.FirstName.Contains(input.Keyword) || x.LastName.Contains(input.Keyword));
         }
-
     }
 
 

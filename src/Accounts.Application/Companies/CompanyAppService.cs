@@ -33,6 +33,9 @@ namespace Accounts.Companies
         {
             var query = QueryBuilder.Create<Company, CompanySearchParameters>(Repository.GetAll());
             query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.DisplayName.Contains(p.SearchText));
+            var sorts = new Sorts<Company>();
+            sorts.Add(true, c => c.DisplayName);
+            query.ApplySorts(sorts);
             var result = await query.ExecuteAsync<CompanyDto>(queryParameter);
             return result;
         }

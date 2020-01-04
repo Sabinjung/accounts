@@ -31,7 +31,7 @@ namespace Accounts.EntityFrameworkCore
                     {
                         AccountsDbContextConfigurer.Configure(options.DbContextOptions, options.ConnectionString);
                     }
-                });
+                 });
 
                 Configuration.EntityHistory.Selectors.Add(new Abp.NamedTypeSelector("Accounts.Models", type =>
                 type.IsAssignableFrom(typeof(Attachment)) ||

@@ -79,7 +79,7 @@ namespace Accounts.Projects
         {
             var project = await Repository.GetAsync(projectId);
             if (project != null)
-            {
+            { 
                 var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.Ticks}{Path.GetExtension(file.FileName)}";
                 var uri = await AzureBlobService.UploadSingleFileAsync(file, fileName);
                 project.Attachments.Add(new Attachment
@@ -112,7 +112,10 @@ namespace Accounts.Projects
 
             var query = QueryBuilder.Create<Project, ProjectQueryParameters>(Repository.GetAll());
 
-            //query.WhereIf(p => p.IsProjectActive, p => x => x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true)
+            query.WhereIf(p => p.IsProjectActive.HasValue, p => x => p.IsProjectActive.Value 
+            ? x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true 
+            : x.EndDt.HasValue && x.EndDt < DateTime.UtcNow);
+            
             query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword) || x.Consultant.FirstName.ToUpper().Contains(p.Keyword.ToUpper()));
 
             var sorts = new Sorts<Project>();
@@ -142,7 +145,6 @@ namespace Accounts.Projects
 
             return result;
         }
-
 
         public override async Task<ProjectDto> Create(ProjectDto input)
         {
