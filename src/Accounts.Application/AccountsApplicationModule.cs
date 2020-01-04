@@ -103,6 +103,9 @@ namespace Accounts
                     cfg.CreateMap<Company, CompanyDto>()
                         .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty));
 
+                    cfg.CreateMap<LineItem, LineItemDto>()
+                        .ForMember(x => x.ExpenseTypeName, x => x.MapFrom(y => y.ExpenseType.Name));
+
                     cfg.AddMaps(thisAssembly);
 
                 }

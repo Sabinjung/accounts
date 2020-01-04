@@ -66,6 +66,24 @@ namespace Accounts.Core.Invoicing
             return await Task.FromResult(referenceNo);
         }
 
+        public async Task<string> Save(int timesheetId, int userId, string referenceNo)
+        {
+            var timesheet = await TimesheetRepository.FirstOrDefaultAsync(timesheetId);
+            if (timesheet.InvoiceId.HasValue && !string.IsNullOrEmpty(timesheet.Invoice.QBOInvoiceId))
+            {
+                throw new UserFriendlyException("Invoice is already submitted.");
+            }
+            var invoice = await GenerateInvoice(timesheetId, userId);
+            timesheet.Invoice = invoice;
+            timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;
+            invoice.QBOInvoiceId = referenceNo;
+            timesheet.StatusId = (int)TimesheetStatuses.Invoiced;
+            timesheet.InvoiceGeneratedByUserId = userId;
+            timesheet.InvoiceGeneratedDate = DateTime.UtcNow;
+
+            return await Task.FromResult(referenceNo);
+        }
+
 
         public async Task ReadInvoice(int invoiceId)
         {

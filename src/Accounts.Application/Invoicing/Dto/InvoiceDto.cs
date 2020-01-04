@@ -23,6 +23,8 @@ namespace Accounts.Invoicing.Dto
 
         public double Rate { get; set; }
 
+        public decimal ServiceTotal { get; set; }
+
         public decimal SubTotal { get; set; }
 
         public DiscountType? DiscountType { get; set; }
@@ -40,7 +42,7 @@ namespace Accounts.Invoicing.Dto
         public string TermName { get; set; }
 
         public string CompanyEmail { get; set; }
-         
+
         public string QBOInvoiceId { get; set; }
 
         public List<LineItemDto> LineItems { get; set; }

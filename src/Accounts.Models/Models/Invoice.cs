@@ -23,6 +23,8 @@ namespace Accounts.Models
 
         public double Rate { get; set; }
 
+        public decimal ServiceTotal { get; set; }
+
         public decimal SubTotal { get; set; }
 
         public DiscountType? DiscountType { get; set; }

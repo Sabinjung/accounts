@@ -53,6 +53,26 @@ namespace Accounts.Invoicing
         }
 
         [AbpAuthorize("Invoicing.Submit")]
+        public async Task GenerateAndSubmit(int timesheetId)
+        {
+            var currentUserId = Convert.ToInt32(AbpSession.UserId);
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
+            {
+
+                await InvoicingService.Submit(timesheetId, currentUserId);
+            }
+        }
+
+        [AbpAuthorize("Invoicing.Submit")]
+        public async Task GenerateAndSave(int timesheetId, string qbInvoiceId)
+        {
+            var currentUserId = Convert.ToInt32(AbpSession.UserId);
+            await InvoicingService.Save(timesheetId, currentUserId, qbInvoiceId);
+
+        }
+
+        [AbpAuthorize("Invoicing.Submit")]
         public async Task Submit(int invoiceId)
         {
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
@@ -62,29 +82,5 @@ namespace Accounts.Invoicing
                 await InvoicingService.Submit(invoiceId, currentUserId);
             }
         }
-
-        [AbpAuthorize("Invoicing.Submit")]
-        public async Task GenerateAndSubmit(int timesheetId)
-        {
-            var currentUserId = Convert.ToInt32(AbpSession.UserId);
-            //var invoice = await InvoicingService.GenerateInvoice(timesheetId, currentUserId, false);
-            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
-            if (isConnectionEstablished)
-            {
-
-                await InvoicingService.Submit(timesheetId, currentUserId);
-            }
-        }
-
-        public async Task ReadInvoice(string invoiceId)
-        {
-            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
-            if (isConnectionEstablished)
-            {
-                var cus = new IntuitData.Invoice { Id = invoiceId };
-                var invoice = IntuitDataProvider.FindById(cus);
-            }
-        }
     }
-
 }

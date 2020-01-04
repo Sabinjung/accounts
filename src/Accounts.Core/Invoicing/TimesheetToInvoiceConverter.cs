@@ -39,7 +39,8 @@ namespace Accounts.Invoicing
         {
             decimal discount = 0;
 
-            invoice.SubTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours) + invoice.LineItems.Sum(x => x.Amount);
+            invoice.ServiceTotal = System.Convert.ToDecimal(invoice.Rate * invoice.TotalHours);
+            invoice.SubTotal = invoice.ServiceTotal + invoice.LineItems.Sum(x => x.Amount);
             switch (project.DiscountType)
             {
                 case Data.DiscountType.Percentage:

@@ -1178,7 +1178,7 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime?>("DeletionTime");
 
-                    b.Property<int>("ExpenseTypeId");
+                    b.Property<int?>("ExpenseTypeId");
 
                     b.Property<bool>("IsDeleted");
 
@@ -1186,7 +1186,7 @@ namespace Accounts.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
-                    b.Property<DateTime>("ServiceDt");
+                    b.Property<DateTime>("ReportDt");
 
                     b.Property<int?>("TimesheetId");
 
@@ -1309,6 +1309,8 @@ namespace Accounts.Migrations
 
                     b.Property<double>("Rate");
 
+                    b.Property<decimal>("ServiceTotal");
+
                     b.Property<decimal>("SubTotal");
 
                     b.Property<int>("TermId");
@@ -1365,6 +1367,8 @@ namespace Accounts.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int>("ExpenseTypeId");
+
                     b.Property<int?>("InvoiceId");
 
                     b.Property<bool>("IsDeleted");
@@ -1376,6 +1380,8 @@ namespace Accounts.Migrations
                     b.Property<DateTime>("ServiceDt");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExpenseTypeId");
 
                     b.HasIndex("InvoiceId");
 
@@ -1836,8 +1842,7 @@ namespace Accounts.Migrations
                 {
                     b.HasOne("Accounts.Models.ExpenseType", "ExpenseType")
                         .WithMany()
-                        .HasForeignKey("ExpenseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ExpenseTypeId");
 
                     b.HasOne("Accounts.Models.Timesheet")
                         .WithMany("Expenses")
@@ -1881,6 +1886,11 @@ namespace Accounts.Migrations
 
             modelBuilder.Entity("Accounts.Models.LineItem", b =>
                 {
+                    b.HasOne("Accounts.Models.ExpenseType", "ExpenseType")
+                        .WithMany()
+                        .HasForeignKey("ExpenseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Accounts.Models.Invoice")
                         .WithMany("LineItems")
                         .HasForeignKey("InvoiceId");

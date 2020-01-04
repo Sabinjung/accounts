@@ -10,5 +10,7 @@ namespace Accounts.Models
         public decimal Amount { get; set; }
         public string Description { get; set; }
         public DateTime ServiceDt { get; set; }
+        public int ExpenseTypeId { get; set; }
+        public virtual ExpenseType ExpenseType { get; set; }
     }
 }

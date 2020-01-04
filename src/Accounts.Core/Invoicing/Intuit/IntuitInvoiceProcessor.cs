@@ -122,7 +122,7 @@ namespace Accounts.Core.Invoicing.Intuit
             line.Id = GetLineNum();
             line.LineNum = GetLineNum();
             line.Description = invoice.Description;
-            line.Amount = invoice.SubTotal;
+            line.Amount = invoice.ServiceTotal;
             line.AmountSpecified = true;
             line.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
             line.DetailTypeSpecified = true;
@@ -149,6 +149,7 @@ namespace Accounts.Core.Invoicing.Intuit
                 expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
                 expenseLine.DetailTypeSpecified = true;
                 expenseLine.Amount = e.Amount;
+                expenseLine.AmountSpecified = true;
                 expenseLine.Description = e.Description;
                 expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
                 {

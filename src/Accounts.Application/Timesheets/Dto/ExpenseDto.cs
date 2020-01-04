@@ -13,7 +13,7 @@ namespace Accounts.Timesheets.Dto
 
         public string Comment { get; set; }
 
-        public DateTime ServiceDt { get; set; }
+        public DateTime ReportDt { get; set; }
 
         public int ExpenseTypeId { get; set; }
     }

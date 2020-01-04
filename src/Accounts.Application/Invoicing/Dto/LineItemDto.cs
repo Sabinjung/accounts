@@ -12,5 +12,6 @@ namespace Accounts.Invoicing.Dto
         public decimal Amount { get; set; }
         public string Description { get; set; }
         public DateTime ServiceDt { get; set; }
+        public string ExpenseTypeName { get; set; }
     }
 }

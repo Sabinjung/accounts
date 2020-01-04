@@ -9,7 +9,7 @@ namespace Accounts.Models
     {
         public decimal Amount { get; set; }
         public string Comment { get; set; }
-        public DateTime ServiceDt { get; set; }
+        public DateTime ReportDt { get; set; }
         public int? ExpenseTypeId { get; set; }
         public virtual ExpenseType ExpenseType { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿  using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Accounts.Timesheets.Dto;
 using Accounts.Models;
@@ -143,6 +143,9 @@ namespace Accounts.Projects
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
             }
+
+            var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
+            hourLogEntries.ForEach(x => x.TimesheetId = null);
             await Repository.DeleteAsync(id);
         }
 
@@ -160,7 +163,7 @@ namespace Accounts.Projects
 
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
         {
-            if (!queryParameter.StartTime.HasValue && queryParameter.Name == "Invoiced")
+            if (!queryParameter.StartTime.HasValue)
             {
                 queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1).StartOfMonth();
                 queryParameter.EndTime = DateTime.UtcNow;
@@ -170,7 +173,7 @@ namespace Accounts.Projects
             query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
             query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
-            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
+            query.WhereIf(p => p.Name == "Invoiced" && p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.CreationTime);

@@ -49,8 +49,9 @@ namespace Accounts
                cfg =>
                {
                    cfg.CreateMap<Expense, LineItem>()
-                      .ForMember(x => x.Description, x => x.MapFrom(y => $"{y.ExpenseType.Name} {y.Comment}"));
-                      //.ForMember(x => x.ServiceDt, x => x.MapFrom(y => y.ServiceDt));
+                      .ForMember(x => x.Description, x => x.MapFrom(y => y.Comment))
+                      .ForMember(x => x.ServiceDt, x => x.MapFrom(y => y.ReportDt))
+                      .ForMember(x => x.Id, x => x.Ignore());
                    cfg.CreateMap<Timesheet, Invoice>()
                       .ConvertUsing<TimesheetToInvoiceConverter>();
                }
