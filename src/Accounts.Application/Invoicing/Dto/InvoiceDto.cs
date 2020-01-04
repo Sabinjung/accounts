@@ -43,8 +43,8 @@ namespace Accounts.Invoicing.Dto
          
         public string QBOInvoiceId { get; set; }
 
-        public List<ExpenseDto> Expense { get; set; }
-        //public IEnumerable<Expense> Expenses { get; set; }
+        public List<LineItemDto> LineItems { get; set; }
+
         public IEnumerable<AttachmentDto> Attachments { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Accounts.Models
 {
     public class ExpenseType : FullAuditedEntity
     {
-        public string ExpensesName { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

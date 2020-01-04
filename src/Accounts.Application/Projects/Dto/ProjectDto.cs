@@ -37,5 +37,7 @@ namespace Accounts.Projects.Dto
         public double Rate { get; set; }
 
         public double PastTimesheetDays { get; set; }
+        
+        public TimesheetStatuses TimesheetStatus { get; set; }
     }
 }

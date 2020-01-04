@@ -10,7 +10,9 @@ namespace Accounts.Data
         Approved = 2,
         Rejected = 3,
         Invoiced = 4,
-        InvoiceGenerated = 5
+        InvoiceGenerated = 5,
+        TimeSheetOpen = 6,
+        TimeSheetSubmitted = 7
 
     }
 

@@ -18,6 +18,7 @@ namespace Accounts.Authorization
             timesheetPermission.CreateChildPermission("Timesheet.Create", L("Timesheet Creation"));
             timesheetPermission.CreateChildPermission("Timesheet.Approve", L("Timesheet Approval"));
             timesheetPermission.CreateChildPermission("Timesheet.GenerateInvoice", L("Invoice Generation"));
+            timesheetPermission.CreateChildPermission("Timesheet.Delete", L("Timesheet Delete"));
 
             // Invoice Permissions
             var invoicePermission = context.CreatePermission("Invoicing", L("Invoicing"));

@@ -1,27 +1,23 @@
-﻿using Abp.Application.Services;
+﻿  using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Accounts.Timesheets.Dto;
 using Accounts.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Abp.Application.Services.Dto;
 using Accounts.HourLogEntries.Dto;
 using System.Threading.Tasks;
-using Accounts.Invoicing;
-using Abp.Runtime.Session;
 using Abp.Authorization;
 using Abp.UI;
-using Abp.ObjectMapping;
 using Accounts.Data;
 using Accounts.EntityFrameworkCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Accounts.Projects.Dto;
-using AutoMapper;
 using PQ.Pagination;
 using PQ;
+using PQ.Extensions;
 using Accounts.Timesheets;
 using MoreLinq;
 
@@ -56,7 +52,7 @@ namespace Accounts.Projects
             IMapper mapper,
             QueryBuilderFactory queryBuilderFactory,
             ITimesheetService timesheetService,
-            IRepository<Models.Expense> expensesRepository
+            IRepository<Expense> expensesRepository
             )
 
         {
@@ -112,8 +108,8 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expenses = ObjectMapper.Map<List<Expense>>(input.Expense);
-            
+            var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
+
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -140,7 +136,15 @@ namespace Accounts.Projects
         }
 
         [AbpAuthorize("Timesheet.Delete")]
-        public async Task Delete(int id) => await Repository.DeleteAsync(id);
+        public async Task Delete(int id)
+        {
+            var timesheet = await Repository.GetAsync(id);
+            if (timesheet.InvoiceId != null)
+            {
+                throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
+            }
+            await Repository.DeleteAsync(id);
+        }
 
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
         {
@@ -156,9 +160,17 @@ namespace Accounts.Projects
 
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
         {
+            if (!queryParameter.StartTime.HasValue && queryParameter.Name == "Invoiced")
+            {
+                queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1).StartOfMonth();
+                queryParameter.EndTime = DateTime.UtcNow;
+            }
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
             query.WhereIf(p => p.ProjectId.HasValue, p => x => x.ProjectId == p.ProjectId);
+            query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
+            query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
+            query.WhereIf(p => p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.CreationTime);
