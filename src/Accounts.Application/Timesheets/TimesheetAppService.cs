@@ -143,7 +143,7 @@ namespace Accounts.Projects
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
             }
-
+             
             var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
             hourLogEntries.ForEach(x => x.TimesheetId = null);
             await Repository.DeleteAsync(id);

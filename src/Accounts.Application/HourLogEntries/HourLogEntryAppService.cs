@@ -19,6 +19,7 @@ using Abp.Authorization;
 using Accounts.Timesheets;
 using Accounts.Data;
 using MoreLinq;
+using PQ;
 
 namespace Accounts.HourLogEntries
 {
@@ -74,6 +75,22 @@ namespace Accounts.HourLogEntries
             }
         }
 
+        public Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectMonthlyHourLog(HourLogQueryParameter queryParameter)
+        {
+            var endMonth = queryParameter.endMonth.Date;
+
+            var MonthlyHourLogQuery = from hourLog in Repository.GetAll()
+                                          //where activeProjectsQuery.Any(x => x.Id == hourLog.ProjectId)
+                                      group hourLog by new { projectId = hourLog.ProjectId, endMonth = hourLog.Day }
+                                      into h
+                                      select new //h.OrderByDescending(x => x.Day).First();
+                                      {
+
+                                      };
+            //var query = QueryBuilder.Create<HourLogEntry, HourLogQueryParameter>(MonthlyHourLogQuery);
+
+            return null;
+        }
 
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
             (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
