@@ -2,6 +2,7 @@
 using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Domain.Repositories;
+using Abp.Extensions;
 using Abp.ObjectMapping;
 using Abp.Runtime.Session;
 using Accounts.Core;
@@ -13,7 +14,10 @@ using Intuit.Ipp.Core;
 using Intuit.Ipp.OAuth2PlatformClient;
 using Intuit.Ipp.Security;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using PQ;
+using PQ.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,15 +33,23 @@ namespace Accounts.Invoicing
         private readonly IObjectMapper Mapper;
         private readonly OAuth2Client OAuth2Client;
         private readonly IntuitDataProvider IntuitDataProvider;
+        private readonly QueryBuilderFactory QueryBuilder;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
             OAuth2Client oAuth2Client,
-            IntuitDataProvider intuitDataProvider)
+             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
+           )
             : base(repository)
         {
             InvoicingService = invoicingService;
             Mapper = mapper;
             OAuth2Client = oAuth2Client;
+            IntuitDataProvider = intuitDataProvider;
+
+            QueryBuilder = queryBuilderFactory;
+            CreatePermissionName = "Invoice.Create";
+            UpdatePermissionName = "Invoice.Update";
+            DeletePermissionName = "Invoice.Delete";
             IntuitDataProvider = intuitDataProvider;
         }
 
@@ -59,7 +71,6 @@ namespace Accounts.Invoicing
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
-
                 await InvoicingService.Submit(timesheetId, currentUserId);
             }
         }
@@ -69,7 +80,6 @@ namespace Accounts.Invoicing
         {
             var currentUserId = Convert.ToInt32(AbpSession.UserId);
             await InvoicingService.Save(timesheetId, currentUserId, qbInvoiceId);
-
         }
 
         [AbpAuthorize("Invoicing.Submit")]
@@ -81,6 +91,24 @@ namespace Accounts.Invoicing
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
                 await InvoicingService.Submit(invoiceId, currentUserId);
             }
+        }
+
+        [HttpGet]
+        public async Task<Page<InvoiceQueryDto>> Search(InvoiceQueryParameter queryParameter)
+        {
+            var query2 = await Repository.GetAllListAsync();
+
+            var query = QueryBuilder.Create<Invoice, InvoiceQueryParameter>(Repository.GetAll());
+            query.WhereIf(x => !x.ConsultantName.IsNullOrWhiteSpace(), c => p => p.Consultant.FirstName.ToUpper().Contains(c.ConsultantName.ToUpper()));
+            query.WhereIf(x => !x.CompanyName.IsNullOrWhiteSpace(), c => p => p.Company.DisplayName.ToUpper().Contains(c.CompanyName.ToUpper()));
+            query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
+            query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
+            query.WhereIf(x => !x.IssueDate.ToString().IsNullOrWhiteSpace(), c => p => p.InvoiceDate.Date.ToString().Contains(c.IssueDate.ToString()));
+            var sorts = new Sorts<Invoice>();
+            sorts.Add(true, x => x.Consultant.FirstName);
+            query.ApplySorts(sorts);
+            var results = await query.ExecuteAsync<InvoiceQueryDto>(queryParameter);
+            return results;
         }
     }
 }
