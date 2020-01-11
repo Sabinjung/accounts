@@ -1,28 +1,21 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
-using Abp.Configuration;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.ObjectMapping;
-using Abp.Runtime.Session;
-using Accounts.Core;
 using Accounts.Core.Invoicing;
 using Accounts.Intuit;
 using Accounts.Invoicing.Dto;
 using Accounts.Models;
-using Intuit.Ipp.Core;
 using Intuit.Ipp.OAuth2PlatformClient;
-using Intuit.Ipp.Security;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using PQ;
 using PQ.Pagination;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using IntuitData = Intuit.Ipp.Data;
+using System.Linq;
+using MoreLinq;
 
 namespace Accounts.Invoicing
 {
@@ -34,10 +27,12 @@ namespace Accounts.Invoicing
         private readonly OAuth2Client OAuth2Client;
         private readonly IntuitDataProvider IntuitDataProvider;
         private readonly QueryBuilderFactory QueryBuilder;
+        private readonly IRepository<Invoice> _invoiceRepository;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
             OAuth2Client oAuth2Client,
-             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
+             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory,
+             IRepository<Invoice> invoiceRepository
            )
             : base(repository)
         {
@@ -51,6 +46,7 @@ namespace Accounts.Invoicing
             UpdatePermissionName = "Invoice.Update";
             DeletePermissionName = "Invoice.Delete";
             IntuitDataProvider = intuitDataProvider;
+            _invoiceRepository = invoiceRepository;
         }
 
         [HttpGet]
@@ -96,19 +92,53 @@ namespace Accounts.Invoicing
         [HttpGet]
         public async Task<Page<InvoiceQueryDto>> Search(InvoiceQueryParameter queryParameter)
         {
-            var query2 = await Repository.GetAllListAsync();
-
             var query = QueryBuilder.Create<Invoice, InvoiceQueryParameter>(Repository.GetAll());
             query.WhereIf(x => !x.ConsultantName.IsNullOrWhiteSpace(), c => p => p.Consultant.FirstName.ToUpper().Contains(c.ConsultantName.ToUpper()));
             query.WhereIf(x => !x.CompanyName.IsNullOrWhiteSpace(), c => p => p.Company.DisplayName.ToUpper().Contains(c.CompanyName.ToUpper()));
             query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
+            query.WhereIf(x => x.ProjectId.HasValue, c => p => p.ProjectId == c.ProjectId);
             query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
-            query.WhereIf(x => !x.IssueDate.ToString().IsNullOrWhiteSpace(), c => p => p.InvoiceDate.Date.ToString().Contains(c.IssueDate.ToString()));
+
+            query.WhereIf(x => !x.IssueDate.ToString().IsNullOrWhiteSpace(), c => p => Equals(p.InvoiceDate, c.IssueDate));
+
             var sorts = new Sorts<Invoice>();
             sorts.Add(true, x => x.Consultant.FirstName);
             query.ApplySorts(sorts);
             var results = await query.ExecuteAsync<InvoiceQueryDto>(queryParameter);
             return results;
+        }
+
+        [HttpGet]
+        public async Task<IEnumerable<Object>> AggregateInvoice(InvoiceAggregateQueryParameter queryParameter)
+        {
+            var query = QueryBuilder.Create<Invoice, InvoiceAggregateQueryParameter>(Repository.GetAll());
+            query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
+            query.WhereIf(x => x.ProjectId.HasValue, c => p => p.ProjectId == c.ProjectId);
+            query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
+
+            return await query.ExecuteAsync((o) =>
+                 from t1 in o
+                 group t1 by new
+                 {
+                     IssueDate = t1.InvoiceDate,
+                     Amount = t1.Total
+                 } into g
+
+                 select new
+                 {
+                     Monthly = g.Key.IssueDate.Month,
+                     monthlyAmount = from tm in g
+                                     group tm by new
+                                     {
+                                         tm.InvoiceDate.Month
+                                     } into tg
+
+                                     select new
+                                     {
+                                         Monthly = g.Key.IssueDate.Month,
+                                         Amount = tg.Sum(y => y.Total)
+                                     }
+                 }, queryParameter);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Accounts.Invoicing.Dto
         public int? CompanyId { get; set; }
         public int? ConsultantId { get; set; }
 
+        public int? ProjectId { get; set; }
+
         public string ConsultantName { get; set; }
         public string CompanyName { get; set; }
 
