@@ -8,7 +8,7 @@ using System.Text;
 namespace Accounts.Invoicing.Dto
 {
     [AutoMap(typeof(Invoice))]
-    public class InvoiceQueryDto : EntityDto
+    public class IncoiceListItemDto : EntityDto
     {
         public string QBOInvoiceId { get; set; }
         public string CompanyName { get; set; }

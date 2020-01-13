@@ -89,8 +89,7 @@ namespace Accounts.Invoicing
             }
         }
 
-        [HttpGet]
-        public async Task<Page<InvoiceQueryDto>> Search(InvoiceQueryParameter queryParameter)
+        private QueryBuilder<Invoice, InvoiceQueryParameter> GetQuery(InvoiceQueryParameter queryParameter)
         {
             var query = QueryBuilder.Create<Invoice, InvoiceQueryParameter>(Repository.GetAll());
             query.WhereIf(x => !x.ConsultantName.IsNullOrWhiteSpace(), c => p => p.Consultant.FirstName.ToUpper().Contains(c.ConsultantName.ToUpper()));
@@ -98,46 +97,42 @@ namespace Accounts.Invoicing
             query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
             query.WhereIf(x => x.ProjectId.HasValue, c => p => p.ProjectId == c.ProjectId);
             query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
-
-            query.WhereIf(x => !x.IssueDate.ToString().IsNullOrWhiteSpace(), c => p => Equals(p.InvoiceDate, c.IssueDate));
+            query.WhereIf(x => x.StartDate.HasValue && x.EndDate.HasValue, c => p => p.InvoiceDate.Date >= c.StartDate && p.InvoiceDate.Date <= c.EndDate);
 
             var sorts = new Sorts<Invoice>();
             sorts.Add(true, x => x.Consultant.FirstName);
             query.ApplySorts(sorts);
-            var results = await query.ExecuteAsync<InvoiceQueryDto>(queryParameter);
+
+            return query;
+        }
+
+        [HttpGet]
+        public async Task<Page<IncoiceListItemDto>> GetSearch(InvoiceQueryParameter queryParameter)
+        {
+            var query = GetQuery(queryParameter);
+            var results = await query.ExecuteAsync<IncoiceListItemDto>(queryParameter);
             return results;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Object>> AggregateInvoice(InvoiceAggregateQueryParameter queryParameter)
+        public async Task<IEnumerable<InvoiceMonthReportDto>> GetInvoicesByMonthReport(InvoiceQueryParameter queryParameter)
         {
-            var query = QueryBuilder.Create<Invoice, InvoiceAggregateQueryParameter>(Repository.GetAll());
-            query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
-            query.WhereIf(x => x.ProjectId.HasValue, c => p => p.ProjectId == c.ProjectId);
-            query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
+            var query = GetQuery(queryParameter);
 
             return await query.ExecuteAsync((o) =>
                  from t1 in o
                  group t1 by new
                  {
-                     IssueDate = t1.InvoiceDate,
-                     Amount = t1.Total
+                     Month = t1.InvoiceDate.Month,
+                     Year = t1.InvoiceDate.Year
                  } into g
 
-                 select new
+                 select new InvoiceMonthReportDto
                  {
-                     Monthly = g.Key.IssueDate.Month,
-                     monthlyAmount = from tm in g
-                                     group tm by new
-                                     {
-                                         tm.InvoiceDate.Month
-                                     } into tg
+                     Year = g.Key.Year,
+                     MonthName = g.Key.Month,
 
-                                     select new
-                                     {
-                                         Monthly = g.Key.IssueDate.Month,
-                                         Amount = tg.Sum(y => y.Total)
-                                     }
+                     MonthAmount = g.Sum(y => y.Total),
                  }, queryParameter);
         }
     }

@@ -8,9 +8,9 @@ using System.Text;
 namespace Accounts.Invoicing.Dto
 {
     [AutoMap(typeof(Invoice))]
-    public class AggregateInvoiceQueryDto:EntityDto
+    public class AggregateInvoiceQueryDto : EntityDto
     {
-        public DateTime InvoiceDate { get; set; }
+        public DateTime MonthName { get; set; }
         public decimal Total { get; set; }
     }
 }

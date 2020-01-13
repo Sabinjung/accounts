@@ -48,7 +48,7 @@ namespace Accounts
                         .ForMember("TermName", x => x.MapFrom(y => y.Term.Name))
                         .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
 
-                    cfg.CreateMap<Invoice, InvoiceQueryDto>()
+                    cfg.CreateMap<Invoice, IncoiceListItemDto>()
                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 

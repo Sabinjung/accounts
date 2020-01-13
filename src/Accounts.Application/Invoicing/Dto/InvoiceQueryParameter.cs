@@ -15,6 +15,8 @@ namespace Accounts.Invoicing.Dto
         public string ConsultantName { get; set; }
         public string CompanyName { get; set; }
 
-        public DateTime? IssueDate { get; set; }
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
     }
 }
