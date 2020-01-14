@@ -1,25 +1,22 @@
 ﻿using Abp.Application.Services;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Accounts.Data;
 using Accounts.EntityFrameworkCore.Repositories;
+using Accounts.Extensions;
 using Accounts.HourLogEntries.Dto;
 using Accounts.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Accounts.Extensions;
-using System.Collections.Concurrent;
 using Accounts.Projects.Dto;
-using AutoMapper.QueryableExtensions;
-using Abp.Collections.Extensions;
-using AutoMapper;
-using Abp.Authorization;
 using Accounts.Timesheets;
-using Accounts.Data;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using MoreLinq;
 using PQ;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Accounts.HourLogEntries
 {
@@ -34,17 +31,23 @@ namespace Accounts.HourLogEntries
 
         private readonly ITimesheetService TimesheetService;
 
+        private readonly QueryBuilderFactory QueryBuilderFactory;
+
         public HourLogEntryAppService(
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
             ITimesheetService timesheetService,
             IRepository<Timesheet> timesheetRepository,
+            QueryBuilderFactory queryBuilderFactory,
             IMapper mapper) : base(repository)
         {
             ProjectRepository = projectRepository;
             Mapper = mapper;
             TimesheetService = timesheetService;
             TimesheetRepository = timesheetRepository;
+            QueryBuilderFactory = queryBuilderFactory;
+            // Filters
+            // Sorting
         }
 
         [AbpAuthorize("Timesheet.LogHour")]
@@ -75,21 +78,27 @@ namespace Accounts.HourLogEntries
             }
         }
 
-        public Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectMonthlyHourLog(HourLogQueryParameter queryParameter)
+        public async Task<IEnumerable<HourMonthlyReport>> GetProjectMonthlyHourReport(HourLogQueryParameter queryParameter)
         {
-            var endMonth = queryParameter.endMonth.Date;
 
-            var MonthlyHourLogQuery = from hourLog in Repository.GetAll()
-                                          //where activeProjectsQuery.Any(x => x.Id == hourLog.ProjectId)
-                                      group hourLog by new { projectId = hourLog.ProjectId, endMonth = hourLog.Day }
-                                      into h
-                                      select new //h.OrderByDescending(x => x.Day).First();
-                                      {
-
-                                      };
-            //var query = QueryBuilder.Create<HourLogEntry, HourLogQueryParameter>(MonthlyHourLogQuery);
-
-            return null;
+            var query = QueryBuilderFactory.Create<HourLogEntry, HourLogQueryParameter>(Repository.GetAll());
+            return await query.ExecuteAsync((originalQuery) =>
+                    from hl in originalQuery
+                    group hl by new { hl.ProjectId, ConsultantName = hl.Project.Consultant.FirstName + " " + hl.Project.Consultant.LastName } into g
+                    select new HourMonthlyReport
+                    {
+                        ConsultantName = g.Key.ConsultantName,
+                        MonthlySummaries = from mhl in g
+                                           group mhl by new { mhl.Day.Month, mhl.Day.Year } into mg
+                                           select new MonthlySummary
+                                           {
+                                               ProjectId = g.Key.ProjectId,
+                                               Month = mg.Key.Month,
+                                               Year = mg.Key.Year,
+                                               Value = mg.Sum(y => y.Hours)
+                                           }
+                    }
+            , queryParameter);
         }
 
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs

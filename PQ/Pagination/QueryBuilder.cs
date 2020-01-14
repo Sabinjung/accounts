@@ -1,16 +1,13 @@
-﻿using Abp.Dependency;
-using Abp.Specifications;
+﻿using Abp.Specifications;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using PQ.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace PQ
 {
