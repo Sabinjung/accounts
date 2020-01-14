@@ -27,12 +27,10 @@ namespace Accounts.Invoicing
         private readonly OAuth2Client OAuth2Client;
         private readonly IntuitDataProvider IntuitDataProvider;
         private readonly QueryBuilderFactory QueryBuilder;
-        private readonly IRepository<Invoice> _invoiceRepository;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
             OAuth2Client oAuth2Client,
-             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory,
-             IRepository<Invoice> invoiceRepository
+             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
            )
             : base(repository)
         {
@@ -46,7 +44,6 @@ namespace Accounts.Invoicing
             UpdatePermissionName = "Invoice.Update";
             DeletePermissionName = "Invoice.Delete";
             IntuitDataProvider = intuitDataProvider;
-            _invoiceRepository = invoiceRepository;
         }
 
         [HttpGet]
@@ -107,7 +104,7 @@ namespace Accounts.Invoicing
         }
 
         [HttpGet]
-        public async Task<Page<IncoiceListItemDto>> GetSearch(InvoiceQueryParameter queryParameter)
+        public async Task<Page<IncoiceListItemDto>> Search(InvoiceQueryParameter queryParameter)
         {
             var query = GetQuery(queryParameter);
             var results = await query.ExecuteAsync<IncoiceListItemDto>(queryParameter);
@@ -123,15 +120,14 @@ namespace Accounts.Invoicing
                  from t1 in o
                  group t1 by new
                  {
-                     Month = t1.InvoiceDate.Month,
-                     Year = t1.InvoiceDate.Year
+                     t1.InvoiceDate.Month,
+                     t1.InvoiceDate.Year
                  } into g
 
                  select new InvoiceMonthReportDto
                  {
                      Year = g.Key.Year,
                      MonthName = g.Key.Month,
-
                      MonthAmount = g.Sum(y => y.Total),
                  }, queryParameter);
         }

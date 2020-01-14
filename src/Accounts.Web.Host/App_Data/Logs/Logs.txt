@@ -7889,3 +7889,218 @@ INFO  2020-01-13 23:42:15,822 [6    ] .Mvc.Infrastructure.ObjectResultExecutor -
 INFO  2020-01-13 23:42:15,861 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application) in 13107.0897ms
 INFO  2020-01-13 23:42:15,866 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application)'
 INFO  2020-01-13 23:42:15,871 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 13210.7367ms 200 application/json; charset=utf-8
+DEBUG 2020-01-13 17:28:10,802 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-01-13 17:28:10,922 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-01-13 17:28:10,945 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,947 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,948 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,948 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,948 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,948 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,948 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,949 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,949 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,950 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,950 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,950 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,951 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,951 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,951 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,951 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:10,956 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-01-13 17:28:11,028 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:28:11,028 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:28:11,028 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:28:11,028 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:28:11,515 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:28:12,651 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-01-13 17:28:12,683 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-01-13 17:28:12,693 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-01-13 17:28:12,698 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-01-13 17:28:12,703 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-01-13 17:28:12,879 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-01-13 17:28:12,998 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-01-13 17:28:13,045 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 25 classes define auto mapping attributes
+DEBUG 2020-01-13 17:28:13,045 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-01-13 17:28:13,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-01-13 17:28:13,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-01-13 17:28:13,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.ExpenseDto
+DEBUG 2020-01-13 17:28:13,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-01-13 17:28:13,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-01-13 17:28:13,056 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.AggregateInvoiceQueryDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-01-13 17:28:13,057 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-01-13 17:28:13,058 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-01-13 17:28:13,058 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-01-13 17:28:13,058 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-01-13 17:28:23,747 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-01-13 17:28:23,747 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-01-13 17:28:23,843 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 107.6979ms 200 
+INFO  2020-01-13 17:28:24,070 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-01-13 17:28:27,254 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-01-13 17:28:28,220 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-01-13 17:28:28,227 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.4ms.
+INFO  2020-01-13 17:28:28,627 [7    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-01-13 17:28:28,641 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 1381.7625ms
+INFO  2020-01-13 17:28:28,644 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-01-13 17:28:28,662 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4930.7648ms 302 
+INFO  2020-01-13 17:28:28,673 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger  
+INFO  2020-01-13 17:28:28,709 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 35.2978ms 301 
+INFO  2020-01-13 17:28:28,713 [22   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-01-13 17:28:28,883 [22   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 169.6501ms 200 text/html
+INFO  2020-01-13 17:28:28,929 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui.css  
+INFO  2020-01-13 17:28:28,934 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-bundle.js  
+INFO  2020-01-13 17:28:28,936 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/swagger-ui-standalone-preset.js  
+INFO  2020-01-13 17:28:28,938 [20   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.js  
+INFO  2020-01-13 17:28:28,941 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.swagger.js  
+INFO  2020-01-13 17:28:28,977 [21   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.swagger.js'. Physical path: 'H:\Workspaces\iTSutra\4.8.0\aspnet-core\src\Accounts.Web.Host\wwwroot\swagger\ui\abp.swagger.js'
+INFO  2020-01-13 17:28:28,978 [7    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger/ui/abp.js'. Physical path: 'H:\Workspaces\iTSutra\4.8.0\aspnet-core\src\Accounts.Web.Host\wwwroot\swagger\ui\abp.js'
+INFO  2020-01-13 17:28:28,981 [21   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 38.519ms 200 application/javascript
+INFO  2020-01-13 17:28:28,983 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 45.0298ms 200 application/javascript
+INFO  2020-01-13 17:28:28,987 [16   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+INFO  2020-01-13 17:28:28,990 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 61.4341ms 200 text/css
+INFO  2020-01-13 17:28:29,004 [20   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+INFO  2020-01-13 17:28:29,011 [20   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 75.1585ms 200 application/javascript
+INFO  2020-01-13 17:28:29,016 [22   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+INFO  2020-01-13 17:28:29,020 [22   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 87.3066ms 200 application/javascript
+INFO  2020-01-13 17:28:29,779 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-01-13 17:28:29,809 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/favicon-32x32.png  
+INFO  2020-01-13 17:28:29,812 [7    ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+INFO  2020-01-13 17:28:29,814 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4.8453ms 200 image/png
+INFO  2020-01-13 17:28:30,028 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 248.8709ms 200 application/json;charset=utf-8
+DEBUG 2020-01-13 17:30:34,750 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-01-13 17:30:34,812 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-01-13 17:30:34,835 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,838 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,839 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,839 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,839 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,839 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,840 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,840 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,840 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,841 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,841 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,841 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,841 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,841 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,842 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,842 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:34,845 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-01-13 17:30:34,941 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:30:34,941 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:30:34,941 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:30:34,941 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-01-13 17:30:35,404 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-01-13 17:30:36,673 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-01-13 17:30:36,707 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-01-13 17:30:36,719 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-01-13 17:30:36,724 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-01-13 17:30:36,729 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-01-13 17:30:36,931 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-01-13 17:30:37,081 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-01-13 17:30:37,138 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 25 classes define auto mapping attributes
+DEBUG 2020-01-13 17:30:37,138 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-01-13 17:30:37,146 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-01-13 17:30:37,147 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-01-13 17:30:37,147 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.ExpenseDto
+DEBUG 2020-01-13 17:30:37,148 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-01-13 17:30:37,149 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.AggregateInvoiceQueryDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-01-13 17:30:37,150 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-01-13 17:30:37,151 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-01-13 17:30:37,152 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-01-13 17:30:48,087 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-01-13 17:30:48,087 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-01-13 17:30:48,192 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 117.2013ms 200 
+INFO  2020-01-13 17:30:48,419 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-01-13 17:30:51,714 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-01-13 17:30:52,659 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-01-13 17:30:52,665 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.1195ms.
+INFO  2020-01-13 17:30:53,080 [6    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-01-13 17:30:53,095 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 1374.1271ms
+INFO  2020-01-13 17:30:53,098 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-01-13 17:30:53,116 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 5044.9524ms 302 
+INFO  2020-01-13 17:30:53,123 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-01-13 17:30:53,340 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 216.6948ms 200 text/html
+INFO  2020-01-13 17:30:54,259 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-01-13 17:30:54,516 [16   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 255.9219ms 200 application/json;charset=utf-8
+INFO  2020-01-13 17:31:10,471 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/Invoice/Search  
+INFO  2020-01-13 17:31:10,476 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)'
+INFO  2020-01-13 17:31:10,520 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Search", controller = "Invoice"}. Executing action Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)
+WARN  2020-01-13 17:31:11,040 [7    ] Mvc.Authorization.AbpAuthorizationFilter - Abp.Authorization.AbpAuthorizationException: Current user did not login to the application!
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(IEnumerable`1 authorizeAttributes) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 42
+   at Abp.Authorization.AuthorizationHelper.CheckPermissions(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 107
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 56
+   at Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter.OnAuthorizationAsync(AuthorizationFilterContext context) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Authorization\AbpAuthorizationFilter.cs:line 53
+Abp.Authorization.AbpAuthorizationException: Current user did not login to the application!
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(IEnumerable`1 authorizeAttributes) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 42
+   at Abp.Authorization.AuthorizationHelper.CheckPermissions(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 107
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 56
+   at Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter.OnAuthorizationAsync(AuthorizationFilterContext context) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Authorization\AbpAuthorizationFilter.cs:line 53
+INFO  2020-01-13 17:31:11,046 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Authorization failed for the request at filter 'Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter'.
+INFO  2020-01-13 17:31:11,069 [7    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-01-13 17:31:11,092 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application) in 568.2262ms
+INFO  2020-01-13 17:31:11,093 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)'
+INFO  2020-01-13 17:31:11,096 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 624.1682ms 401 application/json; charset=utf-8
+INFO  2020-01-13 17:31:20,087 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/TokenAuth/Authenticate application/json 50
+INFO  2020-01-13 17:31:20,096 [6    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-01-13 17:31:20,098 [6    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-01-13 17:31:20,103 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)'
+INFO  2020-01-13 17:31:20,112 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Authenticate", controller = "TokenAuth", area = ""}. Executing action Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)
+INFO  2020-01-13 17:31:20,114 [6    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-01-13 17:31:20,116 [6    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-01-13 17:31:21,057 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core) with arguments (Accounts.Models.TokenAuth.AuthenticateModel) - Validation state: Valid
+INFO  2020-01-13 17:31:22,199 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1139.265ms.
+INFO  2020-01-13 17:31:22,435 [6    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-01-13 17:31:22,440 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core) in 2326.1995ms
+INFO  2020-01-13 17:31:22,442 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)'
+INFO  2020-01-13 17:31:22,446 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2358.7208ms 200 application/json; charset=utf-8
+INFO  2020-01-13 17:32:24,443 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/Invoice/Search  
+INFO  2020-01-13 17:32:24,506 [7    ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-01-13 17:32:24,703 [16   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)'
+INFO  2020-01-13 17:32:24,709 [16   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Search", controller = "Invoice"}. Executing action Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)
+INFO  2020-01-13 17:32:25,995 [16   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application) with arguments (Accounts.Invoicing.Dto.InvoiceQueryParameter) - Validation state: Valid
+INFO  2020-01-13 17:32:26,590 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 592.9443ms.
+INFO  2020-01-13 17:32:26,843 [7    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-01-13 17:32:26,852 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application) in 2141.0987ms
+INFO  2020-01-13 17:32:26,854 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Invoicing.InvoiceAppService.Search (Accounts.Application)'
+INFO  2020-01-13 17:32:26,857 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2413.7915ms 200 application/json; charset=utf-8
+INFO  2020-01-13 17:32:48,820 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/Invoice/GetInvoicesByMonthReport  
+INFO  2020-01-13 17:32:48,823 [12   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-01-13 17:32:48,825 [12   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application)'
+INFO  2020-01-13 17:32:48,840 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetInvoicesByMonthReport", controller = "Invoice"}. Executing action Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application)
+INFO  2020-01-13 17:32:48,847 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application) with arguments (Accounts.Invoicing.Dto.InvoiceQueryParameter) - Validation state: Valid
+INFO  2020-01-13 17:32:49,026 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 177.2581ms.
+INFO  2020-01-13 17:32:49,265 [7    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-01-13 17:32:49,271 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application) in 428.6002ms
+INFO  2020-01-13 17:32:49,273 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Invoicing.InvoiceAppService.GetInvoicesByMonthReport (Accounts.Application)'
+INFO  2020-01-13 17:32:49,275 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 455.312ms 200 application/json; charset=utf-8
