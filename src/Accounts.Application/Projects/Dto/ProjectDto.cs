@@ -20,6 +20,10 @@ namespace Accounts.Projects.Dto
 
         public int CompanyId { get; set; }
 
+        public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
+
         public DateTime StartDt { get; set; }
 
         public DateTime? EndDt { get; set; }
@@ -39,5 +43,9 @@ namespace Accounts.Projects.Dto
         public double PastTimesheetDays { get; set; }
         
         public TimesheetStatuses TimesheetStatus { get; set; }
+
+        public double TotalHoursBilled { get; set; }
+
+        public decimal TotalAmountBilled { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
@@ -152,5 +153,13 @@ namespace Accounts.Projects
             }
             return await base.Create(input);
         }
+
+
+        public override async Task<ProjectDto> Get(EntityDto<int> input)
+        {
+            var project = await Repository.GetAsync(input.Id);
+            return Mapper.Map<ProjectDto>(project);
+        }
+
     }
 }
