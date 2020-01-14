@@ -20,6 +20,8 @@ using PQ;
 using PQ.Extensions;
 using Accounts.Timesheets;
 using MoreLinq;
+using Accounts.Data.Dto;
+using Accounts.EntityFrameworkCore.Extensions;
 
 namespace Accounts.Projects
 {
@@ -143,7 +145,7 @@ namespace Accounts.Projects
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
             }
-             
+
             var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
             hourLogEntries.ForEach(x => x.TimesheetId = null);
             await Repository.DeleteAsync(id);
@@ -161,7 +163,8 @@ namespace Accounts.Projects
             return timesheet;
         }
 
-        public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
+
+        private QueryBuilder<Timesheet, TimesheetQueryParameters> GetQuery(TimesheetQueryParameters queryParameter)
         {
             if (!queryParameter.StartTime.HasValue)
             {
@@ -179,9 +182,26 @@ namespace Accounts.Projects
             sorts.Add(true, t => t.CreationTime);
             query.ApplySorts(sorts);
 
+            return query;
+
+        }
+
+        public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
+        {
+            var query = GetQuery(queryParameter);
             var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
+        }
+
+
+        public async Task<IEnumerable<MonthlySummary>> GetMonthlyHourReport(TimesheetQueryParameters queryParameter)
+        {
+            var query = GetQuery(queryParameter);
+            return await query.ExecuteAsync((originalQuery) =>
+                 (from t in originalQuery
+                  select t.HourLogEntries).SelectMany(x => x).GetMonthlyHourReport()
+            , queryParameter);
         }
 
         public IEnumerable<TimesheetQueryParameters> GetSavedQueries()

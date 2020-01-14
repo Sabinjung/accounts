@@ -2,6 +2,7 @@
 using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Accounts.Data;
+using Accounts.Data.Dto;
 using Accounts.EntityFrameworkCore.Repositories;
 using Accounts.Extensions;
 using Accounts.HourLogEntries.Dto;

@@ -14,8 +14,4 @@
     <PackageReference Include="Abp.ZeroCore" Version="4.9.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dto\" />
-  </ItemGroup>
-
 </Project>
