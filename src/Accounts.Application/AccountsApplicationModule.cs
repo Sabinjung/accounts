@@ -40,7 +40,6 @@ namespace Accounts
                         .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
                         .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName));
 
-
                     cfg.CreateMap<Project, ProjectListItemDto>()
                        .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
@@ -49,7 +48,9 @@ namespace Accounts
                         .ForMember("TermName", x => x.MapFrom(y => y.Term.Name))
                         .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
 
-
+                    cfg.CreateMap<Invoice, IncoiceListItemDto>()
+                       .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
+                       .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
                     cfg.CreateMap<ProjectDto, Project>()
                         .ForMember("StartDt", x => x.MapFrom(y => y.StartDt.Date))
@@ -73,12 +74,10 @@ namespace Accounts
                         .ForMember("QBInvoiceId", x => x.MapFrom(y => y.Invoice.QBOInvoiceId))
                         .ForMember("InvoiceGeneratedByUserName", x => x.MapFrom(y => y.InvoiceGeneratedByUser.FullName));
 
-
                     cfg.CreateMap<Timesheet, TimesheetListItemDto>()
                         .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
                         .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName));
-
 
                     cfg.CreateMap<Invoice, InvoiceDto>()
                         .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))
@@ -88,7 +87,6 @@ namespace Accounts
 
                     cfg.CreateMap<HourLogEntryDto, HourLogEntry>()
                         .ForMember("Day", x => x.MapFrom(y => y.Day.Date));
-
 
                     cfg.CreateMap<TimesheetQueryParameters, TimesheetQueryParameters>()
                         .ForMember(d => d.Name, x => x.Ignore())
@@ -107,7 +105,6 @@ namespace Accounts
                         .ForMember(x => x.ExpenseTypeName, x => x.MapFrom(y => y.ExpenseType.Name));
 
                     cfg.AddMaps(thisAssembly);
-
                 }
 
             );
