@@ -112,6 +112,16 @@ namespace Accounts.Projects
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
             var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
 
+
+            if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
+               (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
+               (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
+            {
+                startDt = input.StartDt;
+                endDt = input.EndDt;
+            }
+
+
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {

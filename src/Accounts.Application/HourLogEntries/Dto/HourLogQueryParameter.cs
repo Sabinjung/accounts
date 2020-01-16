@@ -7,8 +7,8 @@ namespace Accounts.HourLogEntries.Dto
 {
     public class HourLogQueryParameter : NamedQueryParameter
     {
-        public DateTime StartDt { get; set; }
-        public DateTime EndDt { get; set; }
+        public DateTime? StartDt { get; set; }
+        public DateTime? EndDt { get; set; }
         public int? ProjectId { get; set; }
     }
 }
