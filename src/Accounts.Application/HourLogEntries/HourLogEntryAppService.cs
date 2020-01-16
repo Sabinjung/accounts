@@ -173,7 +173,7 @@ namespace Accounts.HourLogEntries
                 else
                 {
                     proj.TimesheetStatus = projectLastTimesheet != null
-                    ? (TimesheetStatuses)projectLastTimesheet.Status.Id
+                    ? (TimesheetStatuses)projectLastTimesheet.StatusId
                     : TimesheetStatuses.TimeSheetOpen;
                 }
                 return new ProjectHourLogEntryDto
