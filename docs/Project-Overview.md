@@ -1,0 +1,2 @@
+![consultant.JPG](/.attachments/consultant-120a0050-d781-44f6-883b-41e5c840b856.JPG)
+# This is our In-build Account application. So, first of all we start from the Consultants, after clicking that add sign we add a new candidate.
