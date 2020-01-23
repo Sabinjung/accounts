@@ -82,25 +82,19 @@ namespace Accounts.HourLogEntries
         {
             var query = QueryBuilderFactory.Create<HourLogEntry, HourLogQueryParameter>(Repository.GetAll());
             query.WhereIf(h => h.ProjectId.HasValue, h => x => x.ProjectId == h.ProjectId);
-            //query.WhereIf(h => h.StartDt.HasValue && h.EndDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date &&
-            //                   x.Day.Date <= h.EndDt.Value.Date);
-
             query.WhereIf(h => h.StartDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date);
             query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
-
-            var sorts = new Sorts<HourLogEntry>();
-            sorts.Add(true, t => t.CreationTime);
-            query.ApplySorts(sorts);
-
+            query.WhereIf(h => true, h => x => x.Timesheet != null && x.Timesheet.StatusId == (int)TimesheetStatuses.Approved);
+            
             return await query.ExecuteAsync((originalQuery) =>
                     from proj in ProjectRepository.GetAll()
                     join p in (from hl in originalQuery
-                               group hl by new { hl.ProjectId, } into g
+                               group hl by new { hl.ProjectId } into g
                                select new HourMonthlyReport
                                {
                                    ProjectId = g.Key.ProjectId,
                                    MonthlySummaries = from mhl in g
-                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year } into mg
+                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year,  } into mg
                                                       select new MonthlySummary
                                                       {
                                                           ProjectId = g.Key.ProjectId,
@@ -110,6 +104,7 @@ namespace Accounts.HourLogEntries
                                                       }
                                }) on proj.Id equals p.ProjectId  
                     let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
+                    orderby proj.Consultant.FirstName
                     select new HourMonthlyReport
                     {
                         ProjectId = proj.Id,
@@ -119,7 +114,7 @@ namespace Accounts.HourLogEntries
                     }
             , queryParameter);
         }
-            public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
+        public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
                 (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
         {
             var startDay = startDt.Date;
