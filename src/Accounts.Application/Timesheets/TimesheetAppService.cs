@@ -142,17 +142,26 @@ namespace Accounts.Projects
         }
 
         [AbpAuthorize("Timesheet.Delete")]
-        public async Task Delete(int id)
+        public async Task Delete(DeleteTimesheetDto input)
         {
-            var timesheet = await Repository.GetAsync(id);
+            var timesheet = await Repository.GetAsync(input.TimesheetId);
             if (timesheet.InvoiceId != null)
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
             }
 
-            var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
+            if (!string.IsNullOrEmpty(input.NoteText))
+            {
+                timesheet.Notes.Add(new Note
+                {
+                    NoteTitle = "Timesheet Deleted",
+                    NoteText = input.NoteText
+                });
+            }
+
+            var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == input.TimesheetId).ToListAsync();
             hourLogEntries.ForEach(x => x.TimesheetId = null);
-            await Repository.DeleteAsync(id);
+            await Repository.DeleteAsync(input.TimesheetId);
         }
 
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
@@ -183,7 +192,7 @@ namespace Accounts.Projects
             query.WhereIf(p => p.Name == "Invoiced" && p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
-            sorts.Add(true, t => t.LastModificationTime,true,2);
+            sorts.Add(true, t => t.LastModificationTime, true, 2);
             sorts.Add(true, t => t.CreationTime);
             query.ApplySorts(sorts);
 
