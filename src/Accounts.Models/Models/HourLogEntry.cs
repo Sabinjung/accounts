@@ -20,5 +20,7 @@ namespace Accounts.Models
 
         [ForeignKey(nameof(ProjectId))]
         public virtual Project Project { get; set; }
+
+        public bool IsAssociatedWithTimesheet { get { return TimesheetId.HasValue; } }
     }
 }
