@@ -173,7 +173,7 @@ namespace Accounts.Projects
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
 
-            var timesheet =  Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
+            var timesheet = Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
             return timesheet;
         }
 
@@ -194,7 +194,7 @@ namespace Accounts.Projects
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.LastModificationTime, true, 1);
-            sorts.Add(true, t => t.CreationTime, true, priority:2);
+            sorts.Add(true, t => t.CreationTime, true, priority: 2);
             query.ApplySorts(sorts);
 
             return query;
@@ -204,7 +204,9 @@ namespace Accounts.Projects
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
         {
             var query = GetQuery(queryParameter);
-            var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
+            var queryParameters =
+                queryParameter.IsActive && !string.IsNullOrEmpty(queryParameter.Name) ?
+                SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList() : new[] { queryParameter }.ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
         }
