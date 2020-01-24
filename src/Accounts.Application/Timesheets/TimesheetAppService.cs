@@ -142,9 +142,9 @@ namespace Accounts.Projects
         }
 
         [AbpAuthorize("Timesheet.Delete")]
-        public async Task Delete(DeleteTimesheetDto input)
+        public async Task Delete([FromQuery]int id, [FromBody]DeleteTimesheetDto input)
         {
-            var timesheet = await Repository.GetAsync(input.TimesheetId);
+            var timesheet = await Repository.GetAsync(id);
             if (timesheet.InvoiceId != null)
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
@@ -159,9 +159,9 @@ namespace Accounts.Projects
                 });
             }
 
-            var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == input.TimesheetId).ToListAsync();
+            var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
             hourLogEntries.ForEach(x => x.TimesheetId = null);
-            await Repository.DeleteAsync(input.TimesheetId);
+            await Repository.DeleteAsync(id);
         }
 
         public async Task<TimesheetDto> GetUpcomingTimesheetInfo(int projectId)
