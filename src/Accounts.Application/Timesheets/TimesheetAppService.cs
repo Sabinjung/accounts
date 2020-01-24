@@ -183,6 +183,7 @@ namespace Accounts.Projects
             query.WhereIf(p => p.Name == "Invoiced" && p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
+            sorts.Add(true, t => t.LastModificationTime,true,2);
             sorts.Add(true, t => t.CreationTime);
             query.ApplySorts(sorts);
 
