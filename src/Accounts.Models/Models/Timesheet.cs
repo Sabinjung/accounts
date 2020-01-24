@@ -16,8 +16,8 @@ namespace Accounts.Models
         public DateTime EndDt { get; set; }
 
         public int StatusId { get; set; }
-        
-            // Approval
+
+        // Approval
         public long? ApprovedByUserId { get; set; }
 
         public DateTime? ApprovedDate { get; set; }
@@ -51,7 +51,5 @@ namespace Accounts.Models
         public virtual User ApprovedByUser { get; set; }
 
         public virtual User InvoiceGeneratedByUser { get; set; }
-
-
     }
 }
