@@ -11,9 +11,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using Abp.Authorization;
 
 namespace Accounts.Expenses
 {
+    [AbpAuthorize]
     public class ExpenseAppService : AsyncCrudAppService<Expense, ExpenseDto>, IExpenseAppService
     {
         private readonly QueryBuilderFactory QueryBuilder;
@@ -21,6 +23,9 @@ namespace Accounts.Expenses
         public ExpenseAppService(IRepository<Expense> repository, QueryBuilderFactory queryBuilderFactory) : base(repository)
         {
             QueryBuilder = queryBuilderFactory;
+            CreatePermissionName = "Expense.Create";
+            UpdatePermissionName = "Expense.Update";
+            DeletePermissionName = "Expense.Delete";
         }
 
         [HttpGet]

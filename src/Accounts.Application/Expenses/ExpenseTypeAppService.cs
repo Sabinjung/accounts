@@ -10,10 +10,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Abp.Authorization;
 using Accounts.Expenses.Dto;
 
 namespace Accounts.Expenses
 {
+    [AbpAuthorize]
     public class ExpenseTypeAppService : AsyncCrudAppService<ExpenseType, ExpenseTypeDto>
     {
         private readonly QueryBuilderFactory QueryBuilder;

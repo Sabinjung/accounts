@@ -34,10 +34,17 @@ namespace Accounts.Authorization
             var companyPermission = context.CreatePermission("Company", L("Company"));
             companyPermission.CreateChildPermission("Company.Sync", L("Company.Sync"));
 
+            // Project Permissions
             var projectPermission = context.CreatePermission("Project", L("Project"));
             projectPermission.CreateChildPermission("Project.Create", L("Project.Create"));
             projectPermission.CreateChildPermission("Project.Update", L("Project.Update"));
             projectPermission.CreateChildPermission("Project.Delete", L("Project.Delete"));
+
+            // Expense Permissions
+            var expensePermission = context.CreatePermission("Expense", L("Expense"));
+            expensePermission.CreateChildPermission("Expense.Create", L("Expense.Create"));
+            expensePermission.CreateChildPermission("Expense.Update", L("Expense.Update"));
+            expensePermission.CreateChildPermission("Expense.Delete", L("Expense.Delete"));
 
         }
 
