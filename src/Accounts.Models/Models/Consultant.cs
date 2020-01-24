@@ -25,6 +25,7 @@ namespace Accounts.Models
         [Column(TypeName = "varchar(15)")]
         public string PhoneNumber { get; set; }
 
-        //public string DisplayName => $"{FirstName} {LastName}";
+        [NotMapped]
+        public string DisplayName => $"{FirstName} {LastName}";
     }
 }
