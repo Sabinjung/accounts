@@ -102,7 +102,8 @@ namespace Accounts.HourLogEntries
                                                           Year = mg.Key.Year,
                                                           Value = mg.Sum(y => y.Hours),
                                                       }
-                               }) on proj.Id equals p.ProjectId  
+                               }) on proj.Id equals p.ProjectId  into s
+                    from ms in s.DefaultIfEmpty()
                     let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
                     orderby proj.Consultant.FirstName
                     select new HourMonthlyReport
@@ -110,7 +111,7 @@ namespace Accounts.HourLogEntries
                         ProjectId = proj.Id,
                         ConsultantName = consultantName,
                         IsProjectActive = proj.EndDt.HasValue ? proj.EndDt > DateTime.UtcNow : true,
-                        MonthlySummaries = p.MonthlySummaries
+                        MonthlySummaries = ms.MonthlySummaries
                     }
             , queryParameter);
         }
