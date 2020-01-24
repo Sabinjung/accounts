@@ -172,7 +172,8 @@ namespace Accounts.Projects
         [HttpGet]
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
-            var timesheet = await Mapper.ProjectTo<TimesheetDto>(Repository.GetAll().Where(x => x.Id == timesheetId)).FirstOrDefaultAsync();
+
+            var timesheet =  Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
             return timesheet;
         }
 
