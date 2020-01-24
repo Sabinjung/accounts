@@ -33,7 +33,7 @@ namespace Accounts.Consultants
         public async Task<Page<ConsultantDto>> Search(ConsultantSearchParameters queryParameter)
         {
             var query = QueryBuilder.Create<Consultant, ConsultantSearchParameters>(Repository.GetAll());
-            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText));
+            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.DisplayName.Contains(p.SearchText));
             var sorts = new Sorts<Consultant>();
             sorts.Add(true, c => c.FirstName);
             query.ApplySorts(sorts);
