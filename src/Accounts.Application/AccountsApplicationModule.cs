@@ -81,7 +81,8 @@ namespace Accounts
                     cfg.CreateMap<Timesheet, TimesheetListItemDto>()
                         .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
-                        .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName));
+                        .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName))
+                        .ForMember("QBOInvoiceId", x => x.MapFrom(y => y.InvoiceId.HasValue ? y.Invoice.QBOInvoiceId : string.Empty));
 
                     cfg.CreateMap<Invoice, InvoiceDto>()
                         .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))

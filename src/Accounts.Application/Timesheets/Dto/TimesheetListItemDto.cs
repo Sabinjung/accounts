@@ -31,5 +31,7 @@ namespace Accounts.Timesheets.Dto
         public DateTime ApprovedDate { get; set; }
 
         public string ApprovedByUserName { get; set; }
+
+        public string QBOInvoiceId { get; set; }
     }
 }
