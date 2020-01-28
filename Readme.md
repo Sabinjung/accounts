@@ -5,7 +5,7 @@
 ### Solution Architect - Anuj Malla
 ### Project Manager - Prajit Shrestha
 ### Scrum Master - Prajit Shrestha
-### Business Analyst - Patt Pokhrel
+### Business Analyst - Pratt Pokhrel
 ---
 ### Backend Developer - Andrew Neupane
 ### Backend Developer - Suraj Ghatraj
