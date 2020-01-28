@@ -9,6 +9,7 @@ using Accounts.HourLogEntries.Dto;
 using Accounts.Models;
 using Accounts.Projects.Dto;
 using Accounts.Timesheets;
+using Accounts.Timesheets.Dto;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MoreLinq;
@@ -161,6 +162,15 @@ namespace Accounts.HourLogEntries
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
+
+                var upcomingTimesheetSummary = new TimesheetSummary
+                {
+                    StartDt = uStartDt,
+                    EndDt = uEndDt,
+                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours)
+                };
+                proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
+                
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
                 {

@@ -2,6 +2,7 @@
 using Abp.AutoMapper;
 using Accounts.Data;
 using Accounts.Models;
+using Accounts.Timesheets.Dto;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -47,5 +48,7 @@ namespace Accounts.Projects.Dto
         public double TotalHoursBilled { get; set; }
 
         public decimal TotalAmountBilled { get; set; }
+
+        public TimesheetSummary UpcomingTimesheetSummary { get; set; }
     }
 }
