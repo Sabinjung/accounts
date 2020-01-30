@@ -42,7 +42,8 @@ namespace Accounts
                        .ForMember("PhoneNumber", x => x.MapFrom(y => y.Consultant.PhoneNumber))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
                        .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
-                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)));
+                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
+                       .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
 
                     cfg.CreateMap<Project, ProjectListItemDto>()
                        .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
