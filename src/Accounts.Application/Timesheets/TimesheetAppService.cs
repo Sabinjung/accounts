@@ -70,15 +70,20 @@ namespace Accounts.Projects
                     Name="Pending Apprv",
                     StatusId=new int[]{(int)TimesheetStatuses.Created }
                 },
-                 new TimesheetQueryParameters
+                new TimesheetQueryParameters
                 {
                     Name="Approved",
                     StatusId=new int[]{(int)TimesheetStatuses.Approved }
                 },
-                   new TimesheetQueryParameters
+                new TimesheetQueryParameters
                 {
                     Name="Invoiced",
                     StatusId=new int[]{ (int) TimesheetStatuses.Invoiced }
+                },
+                new TimesheetQueryParameters
+                {
+                    Name="Rejected",
+                    StatusId = new int[] { (int) TimesheetStatuses.Rejected}
                 }
             };
             TimesheetService = timesheetService;
