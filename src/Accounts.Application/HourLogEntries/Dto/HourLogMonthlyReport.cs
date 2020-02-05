@@ -11,9 +11,10 @@ namespace Accounts.HourLogEntries.Dto
 
         public string ConsultantName { get; set; }
 
-        public bool IsProjectActive { get; set; }
-
+        public string  CompanyName { get; set; }
+        
+        public bool IsProjectActive { get; set; } 
+        
         public IEnumerable<MonthlySummary> MonthlySummaries { get; set; }
     }
-
 }

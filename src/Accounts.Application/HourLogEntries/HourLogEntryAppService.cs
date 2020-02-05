@@ -106,11 +106,13 @@ namespace Accounts.HourLogEntries
                                }) on proj.Id equals p.ProjectId  into s
                     from ms in s.DefaultIfEmpty()
                     let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
+                    let companyName = proj.Company.DisplayName
                     orderby proj.Consultant.FirstName
                     select new HourMonthlyReport
                     {
                         ProjectId = proj.Id,
                         ConsultantName = consultantName,
+                        CompanyName = companyName,
                         IsProjectActive = proj.EndDt.HasValue ? proj.EndDt > DateTime.UtcNow : true,
                         MonthlySummaries = ms.MonthlySummaries
                     }
