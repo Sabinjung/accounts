@@ -113,7 +113,6 @@ namespace Accounts.Projects
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
 
-
             if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
                (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
                (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
@@ -121,7 +120,6 @@ namespace Accounts.Projects
                 startDt = input.StartDt;
                 endDt = input.EndDt;
             }
-
 
             // Construct new Timesheet
             var newTimesheet = new Timesheet
@@ -177,11 +175,9 @@ namespace Accounts.Projects
         [HttpGet]
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
-
             var timesheet = Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
             return timesheet;
         }
-
 
         private QueryBuilder<Timesheet, TimesheetQueryParameters> GetQuery(TimesheetQueryParameters queryParameter)
         {
@@ -203,7 +199,6 @@ namespace Accounts.Projects
             query.ApplySorts(sorts);
 
             return query;
-
         }
 
         public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
@@ -215,7 +210,6 @@ namespace Accounts.Projects
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
         }
-
 
         public async Task<IEnumerable<MonthlySummary>> GetMonthlyHourReport(TimesheetQueryParameters queryParameter)
         {
@@ -251,7 +245,7 @@ namespace Accounts.Projects
             }
 
             timesheetInfo.HourLogEntries = Mapper.Map<IEnumerable<HourLogEntryDto>>(hourLogEntries);
-            timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
+            timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours.HasValue ? x.Hours.Value : 0);
             return timesheetInfo;
         }
     }

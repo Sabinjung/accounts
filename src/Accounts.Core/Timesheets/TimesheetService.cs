@@ -13,19 +13,15 @@ namespace Accounts.Timesheets
 {
     public class TimesheetService : DomainService, ITimesheetService
     {
-
-
         public double CalculateTotalHours(IEnumerable<HourLogEntry> hourLogEntries)
         {
-            return hourLogEntries.DistinctBy(x=>x.Day).Sum(x => x.Hours);
+            return hourLogEntries.DistinctBy(x => x.Day).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0);
         }
-
 
         public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(Project project, Timesheet lastTimesheet)
         {
             return CalculateTimesheetPeriod(project.StartDt, project.EndDt, project.InvoiceCycleStartDt.Value, (InvoiceCycles)project.InvoiceCycleId, lastTimesheet?.EndDt);
         }
-
 
         public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(DateTime projectStartDt, DateTime? projectEndDt, DateTime invoiceCycleStartDt, InvoiceCycles invoiceCycles, DateTime? lastTimesheetEndDt)
         {
@@ -49,7 +45,6 @@ namespace Accounts.Timesheets
             endDt = CalculateTimesheetEndDt(startDt.Value);
             return Tuple.Create(startDt.Value.Date, endDt.Value.Date);
         }
-
 
         public int BusinessDaysUntil(DateTime dtmStart, DateTime dtmEnd, params DateTime[] bankHolidays)
         {
@@ -109,20 +104,20 @@ namespace Accounts.Timesheets
             {
                 case InvoiceCycles.Weekly:
                     return dateTime.AddDays(6);
+
                 case InvoiceCycles.Monthly:
                     return dateTime.EndofMonth();
+
                 case InvoiceCycles.BiWeekly:
                     return dateTime.AddDays(13);
+
                 default:
                     return dateTime.EndofMonth();
             }
         }
 
-
-
         private DateTime CalculateFirstTimesheetStartDt(DateTime projectStartDt, DateTime invoiceCycleStartDt, InvoiceCycles invoiceCycle)
         {
-
             return invoiceCycleStartDt;
         }
     }

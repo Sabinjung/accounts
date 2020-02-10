@@ -9,7 +9,6 @@ namespace Accounts.EntityFrameworkCore.Extensions
 {
     public static class IQueryableExtensions
     {
-
         public static IQueryable<MonthlySummary> GetMonthlyHourReport(this IQueryable<HourLogEntry> hourLogEntries)
         {
             return from mhl in hourLogEntries
@@ -18,7 +17,7 @@ namespace Accounts.EntityFrameworkCore.Extensions
                    {
                        Month = mg.Key.Month,
                        Year = mg.Key.Year,
-                       Value = mg.Sum(y => y.Hours)
+                       Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0)
                    };
         }
     }

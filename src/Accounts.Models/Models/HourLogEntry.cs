@@ -8,7 +8,7 @@ namespace Accounts.Models
     public class HourLogEntry : FullAuditedEntity
     {
         [Required]
-        public double Hours { get; set; }
+        public double? Hours { get; set; }
 
         public DateTime Day { get; set; }
 

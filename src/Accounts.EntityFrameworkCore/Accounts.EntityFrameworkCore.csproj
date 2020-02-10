@@ -33,6 +33,10 @@
     <Compile Remove="Migrations\20200103223402_MakingDatabaseUptoDate.Designer.cs" />
     <Compile Remove="Migrations\20200122170628_ForeignKeyTimeSheetAddedinExpenseModel.cs" />
     <Compile Remove="Migrations\20200122170628_ForeignKeyTimeSheetAddedinExpenseModel.Designer.cs" />
+    <Compile Remove="Migrations\20200207143820_HourLogEntryMakingHourNullable.cs" />
+    <Compile Remove="Migrations\20200207143820_HourLogEntryMakingHourNullable.Designer.cs" />
+    <Compile Remove="Migrations\20200207145609_HourLogEntryMakingHourNullable.cs" />
+    <Compile Remove="Migrations\20200207145609_HourLogEntryMakingHourNullable.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.2.4" />

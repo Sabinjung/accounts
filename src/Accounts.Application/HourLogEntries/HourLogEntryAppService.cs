@@ -65,7 +65,10 @@ namespace Accounts.HourLogEntries
                 var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
                 if (existingHourLog != null)
                 {
-                    existingHourLog.Hours = log.Hours;
+                    if (log.Hours.HasValue)
+                    {
+                        existingHourLog.Hours = log.Hours;
+                    }
                 }
                 else
                 {
@@ -86,7 +89,7 @@ namespace Accounts.HourLogEntries
             query.WhereIf(h => h.StartDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date);
             query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
             query.WhereIf(h => true, h => x => x.Timesheet != null && x.Timesheet.StatusId == (int)TimesheetStatuses.Approved);
-            
+
             return await query.ExecuteAsync((originalQuery) =>
                     from proj in ProjectRepository.GetAll()
                     join p in (from hl in originalQuery
@@ -95,15 +98,15 @@ namespace Accounts.HourLogEntries
                                {
                                    ProjectId = g.Key.ProjectId,
                                    MonthlySummaries = from mhl in g
-                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year,  } into mg
+                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year, } into mg
                                                       select new MonthlySummary
                                                       {
                                                           ProjectId = g.Key.ProjectId,
                                                           Month = mg.Key.Month,
                                                           Year = mg.Key.Year,
-                                                          Value = mg.Sum(y => y.Hours),
+                                                          Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0),
                                                       }
-                               }) on proj.Id equals p.ProjectId  into s
+                               }) on proj.Id equals p.ProjectId into s
                     from ms in s.DefaultIfEmpty()
                     let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
                     let companyName = proj.Company.DisplayName
@@ -118,6 +121,7 @@ namespace Accounts.HourLogEntries
                     }
             , queryParameter);
         }
+
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
                 (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
         {
@@ -128,13 +132,10 @@ namespace Accounts.HourLogEntries
                 .Where(projectId.HasValue, x => x.Id == projectId)
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
 
-
             var lastTimesheetQuery = from t in TimesheetRepository.GetAll()
                                      where activeProjectsQuery.Any(x => x.Id == t.ProjectId)
                                      group t by t.ProjectId into g
                                      select g.OrderByDescending(x => x.EndDt).First();
-
-
 
             var query = from log in Repository.GetAll()
                         where log.Day >= startDay && log.Day <= endDay && activeProjectsQuery.Any(x => x.Id == log.ProjectId)
@@ -145,7 +146,7 @@ namespace Accounts.HourLogEntries
                             HourLogEntries = projectLogs.Select(plog => new HourLogEntryDto
                             {
                                 Day = plog.Day,
-                                Hours = plog.Hours,
+                                Hours = plog.Hours.HasValue ? plog.Hours.Value : 0,
                                 ProjectId = plog.ProjectId,
                                 IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false
                             })
@@ -156,7 +157,6 @@ namespace Accounts.HourLogEntries
                 query.ToListAsync());
 
             var lastTimesheets = await lastTimesheetQuery.ToListAsync();
-
 
             var result = activeProjects.AsParallel().Select(proj =>
             {
@@ -169,10 +169,10 @@ namespace Accounts.HourLogEntries
                 {
                     StartDt = uStartDt,
                     EndDt = uEndDt,
-                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours)
+                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0)
                 };
                 proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
-                
+
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
                 {

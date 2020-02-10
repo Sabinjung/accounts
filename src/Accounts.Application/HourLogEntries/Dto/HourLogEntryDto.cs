@@ -8,7 +8,6 @@ using System.Text;
 
 namespace Accounts.HourLogEntries.Dto
 {
-   
     public class ProjectHourLogEntryDto : EntityDto
     {
         public ProjectDto Project { get; set; }
@@ -23,10 +22,8 @@ namespace Accounts.HourLogEntries.Dto
 
         public DateTime Day { get; set; }
 
-        public double Hours { get; set; }
+        public double? Hours { get; set; }
 
         public bool IsAssociatedWithTimesheet { get; set; }
     }
-
-
 }

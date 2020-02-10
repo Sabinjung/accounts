@@ -18948,3 +18948,1201 @@ INFO  2020-01-29 03:54:50,789 [6    ] .Mvc.Infrastructure.ObjectResultExecutor -
 INFO  2020-01-29 03:54:50,797 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectHourLogs (Accounts.Application) in 2250.0583ms
 INFO  2020-01-29 03:54:50,799 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectHourLogs (Accounts.Application)'
 INFO  2020-01-29 03:54:50,801 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2288.3406ms 200 application/json; charset=utf-8
+DEBUG 2020-02-07 04:28:36,343 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 04:28:36,596 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 04:28:36,617 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,621 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,621 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,622 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,622 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,622 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,622 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,623 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,633 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,633 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,634 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,634 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,635 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,635 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,636 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,636 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:36,641 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 04:28:36,864 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:28:36,864 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:28:36,864 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:28:36,864 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:28:37,884 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:28:39,299 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 04:28:39,340 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 04:28:39,353 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 04:28:39,358 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 04:28:39,365 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 04:28:39,598 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 04:28:39,758 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 04:28:39,828 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 04:28:39,828 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 04:28:39,836 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 04:28:39,836 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 04:28:39,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 04:28:39,837 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 04:28:39,838 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 04:28:39,839 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 04:28:39,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 04:28:39,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 04:28:39,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 04:28:39,840 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 04:29:23,115 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 04:29:23,115 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 04:29:23,275 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 177.849ms 200 
+INFO  2020-02-07 04:29:23,633 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:29:32,182 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 04:29:33,418 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 04:29:33,426 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 4.1692ms.
+INFO  2020-02-07 04:29:34,561 [9    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 04:29:34,578 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2388.0574ms
+INFO  2020-02-07 04:29:34,582 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:29:34,603 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 11512.3591ms 302 
+INFO  2020-02-07 04:29:34,609 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 04:29:34,887 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 277.7216ms 200 text/html
+INFO  2020-02-07 04:29:35,166 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 04:29:35,591 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 425.0234ms 200 application/json;charset=utf-8
+DEBUG 2020-02-07 04:47:41,685 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 04:47:42,053 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 04:47:42,080 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,083 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,083 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,083 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,083 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,084 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,084 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,084 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,085 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,113 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,114 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:42,117 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 04:47:42,333 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:47:42,334 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:47:42,334 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:47:42,334 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:47:43,276 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:47:48,513 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 04:47:48,569 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 04:47:48,579 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 04:47:48,584 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 04:47:48,613 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 04:47:48,862 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 04:47:48,993 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 04:47:49,039 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 04:47:49,039 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 04:47:49,045 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 04:47:49,046 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 04:47:49,051 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 04:47:49,052 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 04:47:49,053 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 04:47:49,054 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 04:47:49,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 04:47:49,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 04:47:49,055 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 04:48:20,962 [21   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 04:48:20,962 [22   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 04:48:21,059 [22   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 111.3288ms 200 
+INFO  2020-02-07 04:48:21,283 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:48:28,139 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 04:48:29,112 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 04:48:29,119 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.3749ms.
+INFO  2020-02-07 04:48:30,248 [21   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 04:48:30,261 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2116.2927ms
+INFO  2020-02-07 04:48:30,265 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:48:30,281 [21   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 9336.7485ms 302 
+INFO  2020-02-07 04:48:30,290 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 04:48:30,496 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 205.4631ms 200 text/html
+INFO  2020-02-07 04:48:30,614 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 04:48:30,887 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 273.165ms 200 application/json;charset=utf-8
+INFO  2020-02-07 04:48:36,898 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/TokenAuth/Authenticate application/json 50
+INFO  2020-02-07 04:48:36,907 [7    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:48:36,909 [7    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:48:36,915 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)'
+INFO  2020-02-07 04:48:36,940 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Authenticate", controller = "TokenAuth", area = ""}. Executing action Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)
+INFO  2020-02-07 04:48:36,943 [7    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:48:36,944 [7    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:48:37,813 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core) with arguments (Accounts.Models.TokenAuth.AuthenticateModel) - Validation state: Valid
+INFO  2020-02-07 04:48:42,100 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4282.3141ms.
+INFO  2020-02-07 04:48:43,464 [7    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 04:48:43,483 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core) in 6540.5089ms
+INFO  2020-02-07 04:48:43,485 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Controllers.TokenAuthController.Authenticate (Accounts.Web.Core)'
+INFO  2020-02-07 04:48:43,489 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 6590.742ms 200 application/json; charset=utf-8
+INFO  2020-02-07 04:49:39,570 [21   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 04:49:39,584 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:49:39,597 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 04:49:39,601 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 04:49:39,603 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 0.0105ms.
+INFO  2020-02-07 04:49:40,474 [15   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 04:49:40,482 [15   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 877.5877ms
+INFO  2020-02-07 04:49:40,490 [15   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:49:40,500 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 924.7816ms 302 
+INFO  2020-02-07 04:49:40,515 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger  
+INFO  2020-02-07 04:49:40,524 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 6.8613ms 301 
+INFO  2020-02-07 04:49:40,529 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 04:49:40,534 [15   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4.5833ms 200 text/html
+INFO  2020-02-07 04:49:40,648 [38   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 04:49:40,692 [38   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 04:49:41,619 [38   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 971.3165ms 200 application/json;charset=utf-8
+INFO  2020-02-07 04:51:46,813 [40   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/AddUpdateHourLogs application/json-patch+json 74
+INFO  2020-02-07 04:51:46,815 [40   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:51:46,817 [40   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:51:46,820 [40   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 04:51:46,832 [40   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 04:51:46,842 [40   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "AddUpdateHourLogs", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)
+INFO  2020-02-07 04:51:46,845 [40   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:51:46,849 [40   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:51:53,952 [40   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) with arguments (System.Collections.Generic.List`1[Accounts.HourLogEntries.Dto.HourLogEntryDto]) - Validation state: Valid
+INFO  2020-02-07 04:52:00,436 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 6481.2695ms.
+ERROR 2020-02-07 04:52:03,062 [21   ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.CompleteUowAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 83
+   at Abp.Domain.Uow.UnitOfWorkBase.CompleteAsync() in D:\Github\aspnetboilerplate\src\Abp\Domain\Uow\UnitOfWorkBase.cs:line 273
+   at Abp.AspNetCore.Mvc.Uow.AbpUowActionFilter.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Uow\AbpUowActionFilter.cs:line 49
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 04:52:04,293 [21   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 04:52:04,301 [21   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) in 17454.6735ms
+INFO  2020-02-07 04:52:04,304 [21   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 04:52:04,308 [21   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 17494.3616ms 500 application/json; charset=utf-8
+DEBUG 2020-02-07 04:57:04,252 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 04:57:04,320 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 04:57:04,337 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,339 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,339 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,339 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,339 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,340 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,340 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,340 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,340 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,340 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,341 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:04,344 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 04:57:04,440 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:57:04,440 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:57:04,440 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:57:04,440 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 04:57:04,811 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 04:57:05,810 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 04:57:05,841 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 04:57:05,851 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 04:57:05,854 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 04:57:05,858 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 04:57:06,229 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 04:57:06,372 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 04:57:06,415 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 04:57:06,415 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 04:57:06,421 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 04:57:06,421 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 04:57:06,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 04:57:06,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 04:57:06,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 04:57:06,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 04:57:06,422 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 04:57:06,423 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 04:57:06,424 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 04:57:33,980 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 04:57:33,981 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 04:57:34,094 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 127.3242ms 200 
+INFO  2020-02-07 04:57:34,321 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:57:41,629 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 04:57:42,551 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 04:57:42,559 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.5735ms.
+INFO  2020-02-07 04:57:43,718 [14   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 04:57:43,731 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2096.9402ms
+INFO  2020-02-07 04:57:43,735 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 04:57:43,754 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 9792.4321ms 302 
+INFO  2020-02-07 04:57:43,758 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 04:57:43,951 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 194.0773ms 200 text/html
+INFO  2020-02-07 04:57:44,075 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 04:57:44,174 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 04:57:45,411 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1336.1699ms 200 application/json;charset=utf-8
+INFO  2020-02-07 04:59:50,321 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/AddUpdateHourLogs application/json-patch+json 126
+INFO  2020-02-07 04:59:50,330 [39   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:59:50,338 [39   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:59:50,344 [39   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 04:59:50,350 [39   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 04:59:50,379 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "AddUpdateHourLogs", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)
+INFO  2020-02-07 04:59:50,383 [39   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 04:59:50,385 [39   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 04:59:58,475 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) with arguments (System.Collections.Generic.List`1[Accounts.HourLogEntries.Dto.HourLogEntryDto]) - Validation state: Valid
+INFO  2020-02-07 05:00:00,072 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 1595.5176ms.
+ERROR 2020-02-07 05:00:02,570 [47   ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.CompleteUowAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 83
+   at Abp.Domain.Uow.UnitOfWorkBase.CompleteAsync() in D:\Github\aspnetboilerplate\src\Abp\Domain\Uow\UnitOfWorkBase.cs:line 273
+   at Abp.AspNetCore.Mvc.Uow.AbpUowActionFilter.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Uow\AbpUowActionFilter.cs:line 49
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 05:00:03,745 [47   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:00:03,765 [47   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) in 13382.7817ms
+INFO  2020-02-07 05:00:03,768 [47   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 05:00:03,772 [47   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 13451.5783ms 500 application/json; charset=utf-8
+INFO  2020-02-07 05:00:25,429 [37   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/AddUpdateHourLogs application/json-patch+json 114
+INFO  2020-02-07 05:00:25,432 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:00:25,434 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:00:25,436 [37   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:00:25,447 [37   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 05:00:25,454 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "AddUpdateHourLogs", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)
+INFO  2020-02-07 05:00:25,457 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:00:25,459 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:00:25,473 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) with arguments (System.Collections.Generic.List`1[Accounts.HourLogEntries.Dto.HourLogEntryDto]) - Validation state: Valid
+INFO  2020-02-07 05:00:26,082 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 605.4385ms.
+INFO  2020-02-07 05:00:27,247 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:00:27,253 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) in 1793.5364ms
+INFO  2020-02-07 05:00:27,258 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 05:00:27,264 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1831.7462ms 200 application/json; charset=utf-8
+INFO  2020-02-07 05:01:35,162 [37   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/AddUpdateHourLogs application/json-patch+json 126
+INFO  2020-02-07 05:01:35,165 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:01:35,167 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:01:35,170 [37   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:01:35,173 [37   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 05:01:35,179 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "AddUpdateHourLogs", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)
+INFO  2020-02-07 05:01:35,181 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:01:35,184 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:01:35,190 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) with arguments (System.Collections.Generic.List`1[Accounts.HourLogEntries.Dto.HourLogEntryDto]) - Validation state: Valid
+INFO  2020-02-07 05:01:35,810 [45   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 615.2106ms.
+INFO  2020-02-07 05:01:37,338 [13   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:01:37,345 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application) in 2160.9343ms
+INFO  2020-02-07 05:01:37,349 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.AddUpdateHourLogs (Accounts.Application)'
+INFO  2020-02-07 05:01:37,354 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2189.5621ms 200 application/json; charset=utf-8
+INFO  2020-02-07 05:03:47,270 [37   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 106
+INFO  2020-02-07 05:03:47,272 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:03:47,274 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:03:47,277 [37   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:03:47,279 [37   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:03:47,291 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 05:03:47,295 [37   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:03:47,298 [37   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:03:47,303 [37   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+INFO  2020-02-07 05:03:49,610 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2304.9267ms.
+INFO  2020-02-07 05:03:50,801 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:03:50,812 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 3516.909ms
+INFO  2020-02-07 05:03:50,816 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:03:50,820 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3549.1799ms 200 application/json; charset=utf-8
+INFO  2020-02-07 05:05:16,745 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 94
+INFO  2020-02-07 05:05:16,748 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:05:16,750 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:05:16,752 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:05:16,755 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:05:16,760 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 05:05:16,762 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:05:16,764 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:05:16,769 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 05:05:19,426 [13   ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.Application.Services.AsyncCrudAppService`8.Create(TCreateInput input) in D:\Github\aspnetboilerplate\src\Abp\Application\Services\AsyncCrudAppService.cs:line 140
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 05:05:19,430 [13   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:05:19,433 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 2670.9454ms
+INFO  2020-02-07 05:05:19,435 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:05:19,438 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2692.5285ms 500 application/json; charset=utf-8
+DEBUG 2020-02-07 05:42:10,168 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 05:42:10,238 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 05:42:10,259 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,264 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,264 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,264 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,264 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:10,268 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 05:42:10,338 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:42:10,338 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:42:10,338 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:42:10,338 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:42:10,699 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:42:11,744 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 05:42:11,776 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 05:42:11,784 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 05:42:11,788 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 05:42:11,792 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 05:42:12,022 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 05:42:12,158 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 05:42:12,202 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 05:42:12,202 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 05:42:12,209 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 05:42:12,209 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 05:42:12,210 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 05:42:12,210 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 05:42:12,210 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 05:42:12,211 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 05:42:12,212 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 05:42:39,406 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 05:42:39,406 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 05:42:39,527 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 137.075ms 200 
+INFO  2020-02-07 05:42:39,740 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:42:47,471 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 05:42:48,513 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 05:42:48,520 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.5111ms.
+INFO  2020-02-07 05:42:49,716 [7    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 05:42:49,730 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2253.0584ms
+INFO  2020-02-07 05:42:49,733 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:42:49,752 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 05:42:49,754 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 10367.2917ms 302 
+INFO  2020-02-07 05:42:49,955 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 202.5261ms 200 text/html
+INFO  2020-02-07 05:42:50,082 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 05:42:50,183 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:42:51,281 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1198.2171ms 200 application/json;charset=utf-8
+INFO  2020-02-07 05:43:32,995 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 107
+INFO  2020-02-07 05:43:33,005 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:43:33,008 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:43:33,015 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:43:33,023 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:43:33,051 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 05:43:33,054 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:43:33,056 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:43:41,830 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 05:43:44,853 [6    ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.Application.Services.AsyncCrudAppService`8.Create(TCreateInput input) in D:\Github\aspnetboilerplate\src\Abp\Application\Services\AsyncCrudAppService.cs:line 140
+   at Accounts.HourLogEntries.HourLogEntryAppService.Create(HourLogEntryDto input) in D:\WorkSpace\Accounts\src\Accounts.Application\HourLogEntries\HourLogEntryAppService.cs:line 209
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 05:43:46,288 [6    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:43:46,308 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 13255.058ms
+INFO  2020-02-07 05:43:46,311 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:43:46,315 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 13320.4653ms 500 application/json; charset=utf-8
+DEBUG 2020-02-07 05:52:12,225 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 05:52:12,303 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 05:52:12,323 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,325 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,326 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,326 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,326 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,326 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,326 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,327 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,327 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,327 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,327 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,327 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,328 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,328 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,328 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,328 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:12,331 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 05:52:12,403 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:52:12,403 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:52:12,403 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:52:12,403 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:52:12,797 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:52:13,880 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 05:52:13,915 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 05:52:13,926 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 05:52:13,930 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 05:52:13,935 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 05:52:14,130 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 05:52:14,290 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 05:52:14,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 05:52:14,338 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 05:52:14,345 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 05:52:14,345 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 05:52:14,345 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 05:52:14,346 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 05:52:14,346 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 05:52:14,346 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 05:52:14,346 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 05:52:14,347 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 05:52:14,348 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 05:52:40,473 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 05:52:40,473 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 05:52:40,565 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 106.2529ms 200 
+INFO  2020-02-07 05:52:40,778 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:52:47,631 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 05:52:48,564 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 05:52:48,570 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 1.7714ms.
+INFO  2020-02-07 05:52:49,840 [17   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 05:52:49,854 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2217.4868ms
+INFO  2020-02-07 05:52:49,859 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:52:49,877 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 9420.9324ms 302 
+INFO  2020-02-07 05:52:49,881 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 05:52:50,079 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 198.1463ms 200 text/html
+INFO  2020-02-07 05:52:50,199 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 05:52:50,328 [17   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:52:51,640 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1440.1645ms 200 application/json;charset=utf-8
+INFO  2020-02-07 05:53:19,066 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 108
+INFO  2020-02-07 05:53:19,074 [19   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:53:19,077 [19   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:53:19,083 [19   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:53:19,090 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:53:19,116 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 05:53:19,119 [19   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 05:53:19,122 [19   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 05:53:20,144 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 05:53:25,958 [6    ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.Application.Services.AsyncCrudAppService`8.Create(TCreateInput input) in D:\Github\aspnetboilerplate\src\Abp\Application\Services\AsyncCrudAppService.cs:line 140
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 05:53:27,254 [6    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 05:53:27,274 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 8154.816ms
+INFO  2020-02-07 05:53:27,276 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 05:53:27,280 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 8214.4964ms 500 application/json; charset=utf-8
+DEBUG 2020-02-07 05:55:58,067 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 05:55:58,135 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 05:55:58,151 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,154 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,154 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,155 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,155 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,155 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,155 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,155 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,156 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,156 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,156 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,156 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,156 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,157 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,157 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,157 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:58,160 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 05:55:58,231 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:55:58,232 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:55:58,232 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:55:58,232 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 05:55:58,643 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 05:55:59,679 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 05:55:59,729 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 05:55:59,739 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 05:55:59,743 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 05:55:59,746 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 05:55:59,974 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 05:56:00,112 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 05:56:00,155 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 05:56:00,155 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 05:56:00,162 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 05:56:00,163 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 05:56:00,163 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 05:56:00,163 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 05:56:00,164 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 05:56:00,165 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 05:56:22,887 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 05:56:22,887 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 05:56:22,981 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 109.4837ms 200 
+INFO  2020-02-07 05:56:23,201 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:56:30,751 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 05:56:31,697 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 05:56:31,703 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.3331ms.
+INFO  2020-02-07 05:56:32,804 [7    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 05:56:32,818 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2060.6807ms
+INFO  2020-02-07 05:56:32,822 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 05:56:32,840 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 9970.2525ms 302 
+INFO  2020-02-07 05:56:32,844 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 05:56:33,037 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 195.5876ms 200 text/html
+INFO  2020-02-07 05:56:33,157 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 05:56:33,251 [18   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 05:56:34,386 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1229.3031ms 200 application/json;charset=utf-8
+DEBUG 2020-02-07 19:59:46,083 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 19:59:46,908 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 19:59:47,743 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,748 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,749 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,749 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,750 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,751 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,751 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,751 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,752 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,753 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,754 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,754 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,754 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,755 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,755 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,756 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:47,833 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 19:59:48,296 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 19:59:48,296 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 19:59:48,296 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 19:59:48,296 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 19:59:49,431 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 19:59:56,701 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 19:59:56,785 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 19:59:56,804 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 19:59:56,815 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 19:59:56,827 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 19:59:57,416 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 19:59:58,006 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 19:59:58,109 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 19:59:58,109 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 19:59:58,124 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 19:59:58,125 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 19:59:58,126 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 19:59:58,127 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 19:59:58,128 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 19:59:58,128 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 19:59:58,128 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 19:59:58,128 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 19:59:58,129 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 19:59:58,129 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 19:59:58,129 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 19:59:58,130 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 19:59:58,130 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 19:59:58,130 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 19:59:58,131 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 19:59:58,131 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 19:59:58,131 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 19:59:58,131 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 19:59:58,131 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 19:59:58,132 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 19:59:58,132 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 19:59:58,132 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 19:59:58,133 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 20:00:41,934 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 20:00:41,934 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 20:00:42,096 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 190.8615ms 200 
+INFO  2020-02-07 20:00:42,602 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 20:01:01,802 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 20:01:04,950 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 20:01:04,961 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 4.5883ms.
+INFO  2020-02-07 20:01:06,480 [20   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 20:01:06,516 [20   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 4699.8782ms
+INFO  2020-02-07 20:01:06,525 [20   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 20:01:06,568 [20   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 24664.6587ms 302 
+INFO  2020-02-07 20:01:06,577 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 20:01:06,994 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 421.345ms 200 text/html
+INFO  2020-02-07 20:01:07,040 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.swagger.js  
+INFO  2020-02-07 20:01:07,044 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/ui/abp.js  
+INFO  2020-02-07 20:01:07,084 [6    ] NetCore.StaticFiles.StaticFileMiddleware - The file /swagger/ui/abp.swagger.js was not modified
+INFO  2020-02-07 20:01:07,088 [19   ] NetCore.StaticFiles.StaticFileMiddleware - The file /swagger/ui/abp.js was not modified
+INFO  2020-02-07 20:01:07,101 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 62.7392ms 304 application/javascript
+INFO  2020-02-07 20:01:07,105 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 58.7802ms 304 application/javascript
+INFO  2020-02-07 20:01:07,245 [20   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 20:01:07,446 [20   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:01:09,011 [20   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1757.0119ms 200 application/json;charset=utf-8
+INFO  2020-02-07 20:02:00,811 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 107
+INFO  2020-02-07 20:02:00,823 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:02:00,826 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:02:00,835 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:02:00,843 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:02:00,886 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 20:02:00,891 [13   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:02:00,895 [13   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:02:03,476 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 20:02:10,663 [13   ] Mvc.ExceptionHandling.AbpExceptionFilter - An error occurred while updating the entries. See the inner exception for details.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while updating the entries. See the inner exception for details. ---> System.Data.SqlClient.SqlException: Cannot insert the value NULL into column 'Hours', table 'dev-accounts.dbo.HourLogEntries'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__122_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot)
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.Internal.RelationalCommand.ExecuteAsync(IRelationalConnection connection, DbCommandMethod executeMethod, IReadOnlyDictionary`2 parameterValues, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(DbContext _, ValueTuple`2 parameters, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IReadOnlyList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Abp.EntityFrameworkCore.AbpDbContext.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\AbpDbContext.cs:line 208
+   at Abp.Zero.EntityFrameworkCore.AbpZeroCommonDbContext`3.SaveChangesAsync(CancellationToken cancellationToken) in D:\Github\aspnetboilerplate\src\Abp.ZeroCore.EntityFrameworkCore\Zero\EntityFrameworkCore\AbpZeroCommonDbContext.cs:line 170
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesInDbContextAsync(DbContext dbContext) in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 167
+   at Abp.EntityFrameworkCore.Uow.EfCoreUnitOfWork.SaveChangesAsync() in D:\Github\aspnetboilerplate\src\Abp.EntityFrameworkCore\EntityFrameworkCore\Uow\EfCoreUnitOfWork.cs:line 68
+   at Abp.Application.Services.AsyncCrudAppService`8.Create(TCreateInput input) in D:\Github\aspnetboilerplate\src\Abp\Application\Services\AsyncCrudAppService.cs:line 140
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 20:02:12,447 [13   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:02:12,492 [13   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 11600.5942ms
+INFO  2020-02-07 20:02:12,496 [13   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:02:12,502 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 11690.7427ms 500 application/json; charset=utf-8
+DEBUG 2020-02-07 20:50:00,380 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-02-07 20:50:00,480 [1    ] Abp.Modules.AbpModuleManager             - Found 16 ABP modules in total.
+DEBUG 2020-02-07 20:50:00,497 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,499 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,499 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,500 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,500 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,500 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,500 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,500 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,501 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,501 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,501 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,502 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,502 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,502 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,502 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,503 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:00,506 [1    ] Abp.Modules.AbpModuleManager             - 16 modules loaded.
+DEBUG 2020-02-07 20:50:00,596 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 20:50:00,596 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 20:50:00,596 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 20:50:00,596 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-02-07 20:50:00,963 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-02-07 20:50:01,987 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-02-07 20:50:02,018 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-02-07 20:50:02,031 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-02-07 20:50:02,036 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2020-02-07 20:50:02,042 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-02-07 20:50:02,227 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-02-07 20:50:02,397 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2020-02-07 20:50:02,448 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 24 classes define auto mapping attributes
+DEBUG 2020-02-07 20:50:02,448 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2020-02-07 20:50:02,454 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2020-02-07 20:50:02,455 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2020-02-07 20:50:02,455 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2020-02-07 20:50:02,456 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2020-02-07 20:50:02,457 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2020-02-07 20:50:02,458 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2020-02-07 20:50:02,458 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2020-02-07 20:50:02,458 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2020-02-07 20:50:02,458 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2020-02-07 20:50:02,480 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2020-02-07 20:50:27,782 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-02-07 20:50:27,782 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2020-02-07 20:50:27,874 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 106.6172ms 200 
+INFO  2020-02-07 20:50:28,087 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 20:50:35,596 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2020-02-07 20:50:36,697 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2020-02-07 20:50:36,703 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 1.9361ms.
+INFO  2020-02-07 20:50:37,901 [6    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-02-07 20:50:37,916 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2313.5714ms
+INFO  2020-02-07 20:50:37,920 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2020-02-07 20:50:37,942 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 20:50:37,944 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 10177.7143ms 302 
+INFO  2020-02-07 20:50:38,148 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 206.5583ms 200 text/html
+INFO  2020-02-07 20:50:38,273 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 20:50:38,379 [6    ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:50:39,621 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1346.6793ms 200 application/json;charset=utf-8
+INFO  2020-02-07 20:51:59,168 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 108
+INFO  2020-02-07 20:51:59,223 [9    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:51:59,227 [9    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:51:59,244 [9    ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:51:59,250 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:51:59,284 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 20:51:59,287 [9    ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:51:59,289 [9    ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:52:00,499 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+INFO  2020-02-07 20:52:05,327 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 4825.2235ms.
+INFO  2020-02-07 20:52:06,635 [7    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:52:06,657 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 7369.7848ms
+INFO  2020-02-07 20:52:06,660 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:52:06,664 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 7498.093ms 200 application/json; charset=utf-8
+INFO  2020-02-07 20:53:56,812 [35   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 PUT http://localhost:21021/api/services/app/HourLogEntry/Update application/json-patch+json 121
+INFO  2020-02-07 20:53:56,814 [35   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:53:56,816 [35   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:53:56,819 [35   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:53:56,826 [35   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:53:56,836 [35   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Update", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)
+INFO  2020-02-07 20:53:56,838 [35   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:53:56,841 [35   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:53:56,847 [35   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 20:54:00,156 [35   ] Mvc.ExceptionHandling.AbpExceptionFilter - Data is Null. This method or property cannot be called on Null values.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at System.Data.SqlClient.SqlBuffer.get_Double()
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.FirstOrDefault_[TSource](IAsyncEnumerable`1 source, CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\First.cs:line 144
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.TaskResultAsyncEnumerable`1.Enumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Select.cs:line 106
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\AsyncIterator.cs:line 98
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteSingletonAsyncQuery[TResult](QueryContext queryContext, Func`2 compiledQuery, IDiagnosticsLogger`1 logger, Type contextType)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.FirstOrDefaultAsync(TPrimaryKey id)
+   at Abp.Domain.Repositories.AbpRepositoryBase`2.GetAsync(TPrimaryKey id)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Application.Services.AsyncCrudAppService`8.Update(TUpdateInput input)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 20:54:01,445 [35   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:54:01,456 [35   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) in 4614.5158ms
+INFO  2020-02-07 20:54:01,460 [35   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:54:01,465 [35   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 4651.1461ms 500 application/json; charset=utf-8
+INFO  2020-02-07 20:55:54,218 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 PUT http://localhost:21021/api/services/app/HourLogEntry/Update application/json-patch+json 121
+INFO  2020-02-07 20:55:54,221 [42   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:55:54,223 [42   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:55:54,226 [42   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:55:54,229 [42   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:55:54,235 [42   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Update", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)
+INFO  2020-02-07 20:55:54,238 [42   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:55:54,240 [42   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:55:54,246 [42   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 20:55:56,994 [9    ] Mvc.ExceptionHandling.AbpExceptionFilter - Data is Null. This method or property cannot be called on Null values.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at System.Data.SqlClient.SqlBuffer.get_Double()
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.FirstOrDefault_[TSource](IAsyncEnumerable`1 source, CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\First.cs:line 144
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.TaskResultAsyncEnumerable`1.Enumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Select.cs:line 106
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\AsyncIterator.cs:line 98
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteSingletonAsyncQuery[TResult](QueryContext queryContext, Func`2 compiledQuery, IDiagnosticsLogger`1 logger, Type contextType)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.FirstOrDefaultAsync(TPrimaryKey id)
+   at Abp.Domain.Repositories.AbpRepositoryBase`2.GetAsync(TPrimaryKey id)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Application.Services.AsyncCrudAppService`8.Update(TUpdateInput input)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 20:55:56,999 [9    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:55:57,001 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) in 2763.9043ms
+INFO  2020-02-07 20:55:57,003 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:55:57,006 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2787.2303ms 500 application/json; charset=utf-8
+INFO  2020-02-07 20:56:21,396 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 PUT http://localhost:21021/api/services/app/HourLogEntry/Update application/json-patch+json 109
+INFO  2020-02-07 20:56:21,398 [43   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:56:21,401 [43   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:56:21,404 [43   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:56:21,406 [43   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:56:21,412 [43   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Update", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)
+INFO  2020-02-07 20:56:21,415 [43   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:56:21,417 [43   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:56:21,421 [43   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 20:56:24,081 [43   ] Mvc.ExceptionHandling.AbpExceptionFilter - Data is Null. This method or property cannot be called on Null values.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at System.Data.SqlClient.SqlBuffer.get_Double()
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.FirstOrDefault_[TSource](IAsyncEnumerable`1 source, CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\First.cs:line 144
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.TaskResultAsyncEnumerable`1.Enumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Select.cs:line 106
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\AsyncIterator.cs:line 98
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteSingletonAsyncQuery[TResult](QueryContext queryContext, Func`2 compiledQuery, IDiagnosticsLogger`1 logger, Type contextType)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.FirstOrDefaultAsync(TPrimaryKey id)
+   at Abp.Domain.Repositories.AbpRepositoryBase`2.GetAsync(TPrimaryKey id)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Application.Services.AsyncCrudAppService`8.Update(TUpdateInput input)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 20:56:24,085 [43   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:56:24,088 [43   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) in 2672.911ms
+INFO  2020-02-07 20:56:24,090 [43   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:56:24,093 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2697.3467ms 500 application/json; charset=utf-8
+INFO  2020-02-07 20:56:32,495 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 20:56:32,499 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3.6707ms 200 text/html
+INFO  2020-02-07 20:56:32,589 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 20:56:32,592 [9    ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:56:32,602 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/favicon-32x32.png  
+INFO  2020-02-07 20:56:32,623 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 33.1002ms 200 application/json;charset=utf-8
+INFO  2020-02-07 20:56:32,637 [43   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+INFO  2020-02-07 20:56:32,639 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 37.7737ms 200 image/png
+INFO  2020-02-07 20:57:52,175 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 PUT http://localhost:21021/api/services/app/HourLogEntry/Update application/json-patch+json 122
+INFO  2020-02-07 20:57:52,178 [41   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:57:52,181 [41   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:57:52,184 [41   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:57:52,186 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:57:52,194 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Update", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)
+INFO  2020-02-07 20:57:52,197 [41   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:57:52,200 [41   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:57:52,205 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+ERROR 2020-02-07 20:57:55,436 [9    ] Mvc.ExceptionHandling.AbpExceptionFilter - Data is Null. This method or property cannot be called on Null values.
+System.Data.SqlTypes.SqlNullValueException: Data is Null. This method or property cannot be called on Null values.
+   at System.Data.SqlClient.SqlBuffer.get_Double()
+   at lambda_method(Closure , DbDataReader )
+   at Microsoft.EntityFrameworkCore.Storage.Internal.TypedRelationalValueBufferFactory.Create(DbDataReader dataReader)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.FirstOrDefault_[TSource](IAsyncEnumerable`1 source, CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\First.cs:line 144
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.TaskResultAsyncEnumerable`1.Enumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\Select.cs:line 106
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken) in D:\a\1\s\Ix.NET\Source\System.Interactive.Async\AsyncIterator.cs:line 98
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteSingletonAsyncQuery[TResult](QueryContext queryContext, Func`2 compiledQuery, IDiagnosticsLogger`1 logger, Type contextType)
+   at Abp.EntityFrameworkCore.Repositories.EfCoreRepositoryBase`3.FirstOrDefaultAsync(TPrimaryKey id)
+   at Abp.Domain.Repositories.AbpRepositoryBase`2.GetAsync(TPrimaryKey id)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at Abp.Application.Services.AsyncCrudAppService`8.Update(TUpdateInput input)
+   at Abp.Threading.InternalAsyncHelper.AwaitTaskWithPostActionAndFinallyAndGetResult[T](Task`1 actualReturnValue, Func`1 postAction, Action`1 finalAction)
+   at lambda_method(Closure , Object )
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+INFO  2020-02-07 20:57:55,440 [9    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:57:55,443 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application) in 3246.3272ms
+INFO  2020-02-07 20:57:55,446 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Update (Accounts.Application)'
+INFO  2020-02-07 20:57:55,448 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3272.7142ms 500 application/json; charset=utf-8
+INFO  2020-02-07 20:58:47,333 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 POST http://localhost:21021/api/services/app/HourLogEntry/Create application/json-patch+json 121
+INFO  2020-02-07 20:58:47,335 [41   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:58:47,338 [41   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:58:47,340 [41   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 20:58:47,344 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:58:47,351 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "Create", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)
+INFO  2020-02-07 20:58:47,354 [41   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2020-02-07 20:58:47,356 [41   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2020-02-07 20:58:47,361 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogEntryDto) - Validation state: Valid
+INFO  2020-02-07 20:58:49,428 [40   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 2062.6022ms.
+INFO  2020-02-07 20:58:50,638 [41   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 20:58:50,649 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application) in 3289.3028ms
+INFO  2020-02-07 20:58:50,655 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.Create (Accounts.Application)'
+INFO  2020-02-07 20:58:50,658 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3323.7454ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:25:56,114 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2020-01-16&EndDt=2020-02-05%20&ProjectId=12&IsActive=true  
+INFO  2020-02-07 21:25:56,117 [39   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:25:58,766 [39   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:25:58,815 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:25:58,846 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:26:00,182 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 1334.1598ms.
+INFO  2020-02-07 21:26:01,364 [17   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:26:01,375 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2554.766ms
+INFO  2020-02-07 21:26:01,380 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:26:01,385 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 5268.5484ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:29:04,869 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2020-01-16&EndDt=2020-02-05%20&ProjectId=12&Name=Approved&IsActive=true  
+INFO  2020-02-07 21:29:04,872 [41   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:29:04,875 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:04,881 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:29:04,886 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:29:05,790 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 893.6382ms.
+INFO  2020-02-07 21:29:06,989 [36   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:29:07,001 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2110.2586ms
+INFO  2020-02-07 21:29:07,006 [36   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:07,010 [36   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2139.5683ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:29:39,562 [35   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2019-01-16&EndDt=2019-02-05%20&ProjectId=12&Name=Approved&IsActive=true  
+INFO  2020-02-07 21:29:39,565 [35   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:29:39,567 [35   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:39,574 [35   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:29:39,578 [35   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:29:40,472 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 881.2371ms.
+INFO  2020-02-07 21:29:41,676 [17   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:29:41,685 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2103.6721ms
+INFO  2020-02-07 21:29:41,690 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:41,695 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2131.2117ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:29:54,174 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2019-01-16&EndDt=2019-02-05%20&ProjectId=12&IsActive=true  
+INFO  2020-02-07 21:29:54,177 [17   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:29:54,179 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:54,184 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:29:54,188 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:29:55,073 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 870.3194ms.
+INFO  2020-02-07 21:29:56,283 [41   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:29:56,286 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2099.1033ms
+INFO  2020-02-07 21:29:56,288 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:29:56,290 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2116.1626ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:30:03,434 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-02-07 21:30:03,438 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 3.648ms 200 text/html
+INFO  2020-02-07 21:30:03,534 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-02-07 21:30:03,539 [6    ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:30:03,545 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/swagger/favicon-32x32.png  
+INFO  2020-02-07 21:30:03,549 [42   ] NetCore.StaticFiles.StaticFileMiddleware - Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+INFO  2020-02-07 21:30:03,552 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 8.3919ms 200 image/png
+INFO  2020-02-07 21:30:03,580 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 44.2107ms 200 application/json;charset=utf-8
+INFO  2020-02-07 21:31:12,012 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2019-10-12%20&EndDt=2020-1-12%20&ProjectId=12&IsActive=true  
+INFO  2020-02-07 21:31:12,016 [39   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:31:12,018 [39   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:31:12,025 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:31:12,030 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:31:12,905 [42   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 869.5003ms.
+INFO  2020-02-07 21:31:14,494 [42   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:31:14,501 [42   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2470.1264ms
+INFO  2020-02-07 21:31:14,511 [42   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:31:14,515 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2501.2026ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:32:00,658 [36   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2019-10-12%20&EndDt=2020-1-12%20&ProjectId=12&Name=Invoiced&IsActive=true  
+INFO  2020-02-07 21:32:00,661 [36   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:32:00,663 [36   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:32:00,668 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:32:00,673 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:32:01,552 [42   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 869.2842ms.
+INFO  2020-02-07 21:32:02,736 [5    ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:32:02,745 [5    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2069.8098ms
+INFO  2020-02-07 21:32:02,754 [5    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:32:02,762 [5    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2099.4912ms 200 application/json; charset=utf-8
+INFO  2020-02-07 21:32:19,525 [36   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/HourLogEntry/GetProjectMonthlyHourReport?StartDt=2019-10-12%20&EndDt=2020-1-12%20&ProjectId=12&Name=Active&IsActive=true  
+INFO  2020-02-07 21:32:19,528 [36   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2020-02-07 21:32:19,530 [36   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:32:19,535 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetProjectMonthlyHourReport", controller = "HourLogEntry"}. Executing action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)
+INFO  2020-02-07 21:32:19,539 [36   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) with arguments (Accounts.HourLogEntries.Dto.HourLogQueryParameter) - Validation state: Valid
+INFO  2020-02-07 21:32:20,406 [39   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 862.2031ms.
+INFO  2020-02-07 21:32:21,573 [41   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-02-07 21:32:21,576 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2038.3235ms
+INFO  2020-02-07 21:32:21,579 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
+INFO  2020-02-07 21:32:21,581 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2056.3547ms 200 application/json; charset=utf-8
