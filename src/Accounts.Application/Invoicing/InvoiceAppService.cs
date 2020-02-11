@@ -95,7 +95,7 @@ namespace Accounts.Invoicing
             query.WhereIf(x => x.ProjectId.HasValue, c => p => p.ProjectId == c.ProjectId);
             query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
             query.WhereIf(x => x.StartDate.HasValue && x.EndDate.HasValue, c => p => p.InvoiceDate.Date >= c.StartDate && p.InvoiceDate.Date <= c.EndDate);
-
+            query.WhereIf(x => x.DueDate.HasValue, c => p => p.DueDate.Date == c.DueDate.Value);
             var sorts = new Sorts<Invoice>();
             sorts.Add(true, x => x.Consultant.FirstName);
             query.ApplySorts(sorts);
