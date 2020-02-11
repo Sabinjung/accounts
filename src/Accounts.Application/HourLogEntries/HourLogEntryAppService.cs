@@ -138,11 +138,11 @@ namespace Accounts.HourLogEntries
                                      select g.OrderByDescending(x => x.EndDt).First();
 
             var lastApprovedTimeSheetQuery = from t in TimesheetRepository.GetAll()
-                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.StatusId == (int)TimesheetStatuses.Approved
+                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.ApprovedDate.HasValue
                                              group t by t.ProjectId into g
                                              select g.OrderByDescending(x => x.EndDt).First();
             var lastInvoicedTimesheetQuery = from t in TimesheetRepository.GetAll()
-                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.StatusId == (int)TimesheetStatuses.Invoiced
+                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.InvoiceGeneratedDate.HasValue
                                              group t by t.ProjectId into g
                                              select g.OrderByDescending(x => x.EndDt).First();
 
@@ -173,8 +173,8 @@ namespace Accounts.HourLogEntries
             {
                 var projectHourLog = projectsHourLogs.FirstOrDefault(y => y.ProjectId == proj.Id);
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
-                var projectLastApproved = lastApproved.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
-                var projectLastInvoiced = lastInvoiced.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var projectLastApprovedTimesheet = lastApproved.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var projectLastInvoicedTimesheet = lastInvoiced.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
 
@@ -186,8 +186,8 @@ namespace Accounts.HourLogEntries
                 };
                 proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
 
-                proj.LastApprovedDate = projectLastApproved.ApprovedDate.HasValue ? projectLastApproved.ApprovedDate : null;
-                proj.LastInvoicedDate = projectLastInvoiced.InvoiceGeneratedDate.HasValue ? projectLastInvoiced.InvoiceGeneratedDate : null;
+                proj.LastApprovedDate = projectLastApprovedTimesheet.ApprovedDate.HasValue ? projectLastApprovedTimesheet.ApprovedDate : null;
+                proj.LastInvoicedDate = projectLastInvoicedTimesheet.InvoiceGeneratedDate.HasValue ? projectLastInvoicedTimesheet.InvoiceGeneratedDate : null;
 
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
