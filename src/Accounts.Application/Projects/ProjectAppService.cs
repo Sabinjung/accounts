@@ -116,6 +116,10 @@ namespace Accounts.Projects
 
             query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword.ToUpper()) || x.Consultant.DisplayName.ToUpper().Contains(p.Keyword.ToUpper()));
 
+            query.WhereIf(p => p.InvoiceCyclesId.HasValue, p => x => p.InvoiceCyclesId == x.InvoiceCycleId);
+
+            query.WhereIf(p => p.TermId.HasValue, p => x => p.TermId == x.TermId);
+
             var sorts = new Sorts<Project>();
 
             sorts.Add(true, x => x.StartDt);

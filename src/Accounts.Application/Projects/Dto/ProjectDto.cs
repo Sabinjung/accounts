@@ -52,5 +52,9 @@ namespace Accounts.Projects.Dto
         public decimal TotalAmountBilled { get; set; }
 
         public TimesheetSummary UpcomingTimesheetSummary { get; set; }
+
+        public DateTime? LastApprovedDate { get; set; }
+
+        public DateTime? LastInvoicedDate { get; set; }
     }
 }

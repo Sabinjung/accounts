@@ -25,5 +25,7 @@ namespace Accounts.HourLogEntries.Dto
         public double? Hours { get; set; }
 
         public bool IsAssociatedWithTimesheet { get; set; }
+
+        public int TimesheetStatusesId { get; set; }
     }
 }
