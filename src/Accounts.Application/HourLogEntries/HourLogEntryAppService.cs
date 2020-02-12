@@ -158,7 +158,8 @@ namespace Accounts.HourLogEntries
                                 Hours = plog.Hours.HasValue ? plog.Hours.Value : 0,
                                 ProjectId = plog.ProjectId,
                                 IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false,
-                                TimesheetStatusesId = plog.Timesheet.StatusId
+                                TimesheetStatusesId = plog.TimesheetId.HasValue ? plog.Timesheet.StatusId : (int)TimesheetStatuses.TimeSheetOpen
+
                             })
                         };
 
@@ -186,8 +187,8 @@ namespace Accounts.HourLogEntries
                 };
                 proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
 
-                proj.LastApprovedDate = projectLastApprovedTimesheet.ApprovedDate.HasValue ? projectLastApprovedTimesheet.ApprovedDate : null;
-                proj.LastInvoicedDate = projectLastInvoicedTimesheet.InvoiceGeneratedDate.HasValue ? projectLastInvoicedTimesheet.InvoiceGeneratedDate : null;
+                proj.LastApprovedDate = projectLastApprovedTimesheet?.ApprovedDate;
+                proj.LastInvoicedDate = projectLastInvoicedTimesheet?.InvoiceGeneratedDate;
 
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
