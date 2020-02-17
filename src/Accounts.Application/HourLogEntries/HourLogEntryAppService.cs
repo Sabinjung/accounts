@@ -81,7 +81,7 @@ namespace Accounts.HourLogEntries
             var startDay = startDt.Date;
             var endDay = endDt.Date;
 
-            var activeProjectsQuery = ProjectRepository.QueryActiveProjects(startDay, endDay)
+            var activeProjectsQuery = ProjectRepository.QueryActiveProjectsByDate(startDay, endDay)
                 .Where(projectId.HasValue, x => x.Id == projectId)
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
 
