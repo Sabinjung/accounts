@@ -12,10 +12,12 @@ using Accounts.Projects;
 using System.Linq;
 using Accounts.Companies.Dto;
 using Accounts.Invoicing.Dto;
+using Abp.FluentValidation;
 
 namespace Accounts
 {
     [DependsOn(
+        typeof(AbpFluentValidationModule),
         typeof(AccountsCoreModule),
         typeof(AbpAutoMapperModule))]
     public class AccountsApplicationModule : AbpModule
