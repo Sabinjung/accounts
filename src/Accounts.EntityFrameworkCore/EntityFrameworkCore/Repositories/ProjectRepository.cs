@@ -12,12 +12,13 @@ namespace Accounts.EntityFrameworkCore.Repositories
     public interface IProjectRepository : IRepository<Project>
     {
         IQueryable<Project> QueryActiveProjects(DateTime startDt, DateTime endDt);
-
     }
+
     public class ProjectRepository : AccountsRepositoryBase<Project>, IProjectRepository
     {
-
-        public ProjectRepository(IDbContextProvider<AccountsDbContext> dbContextProvider) : base(dbContextProvider) { }
+        public ProjectRepository(IDbContextProvider<AccountsDbContext> dbContextProvider) : base(dbContextProvider)
+        {
+        }
 
         public Task<IEnumerable<HourLogEntry>> GetHourLogsAsync(int id, DateTime startDt, DateTime endDt)
         {
@@ -26,9 +27,11 @@ namespace Accounts.EntityFrameworkCore.Repositories
 
         public IQueryable<Project> QueryActiveProjects(DateTime startDt, DateTime endDt)
         {
-            return GetAll().Where(p => (p.StartDt >= startDt && p.StartDt <= endDt)
-            || ((p.EndDt.HasValue && p.EndDt >= startDt && p.EndDt <= endDt) || !p.EndDt.HasValue));
-
+            return GetAll().Where(p => ((p.StartDt >= startDt && p.StartDt <= endDt)
+                                || ((p.EndDt.HasValue && p.EndDt >= startDt && p.StartDt >= startDt))
+                                || (p.StartDt <= startDt && (!p.EndDt.HasValue))
+                                || (p.StartDt <= startDt && (p.EndDt >= startDt)))
+                                && (p.EndDt.HasValue ? p.EndDt > DateTime.UtcNow : true) == true);//checks for only active projects
         }
     }
 }
