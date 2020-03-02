@@ -88,7 +88,8 @@ namespace Accounts.HourLogEntries
             query.WhereIf(h => h.ProjectId.HasValue, h => x => x.ProjectId == h.ProjectId);
             query.WhereIf(h => h.StartDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date);
             query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
-            query.WhereIf(h => true, h => x => x.Timesheet != null && x.Timesheet.StatusId == (int)TimesheetStatuses.Approved);
+            query.WhereIf(h => true, h => x => x.Timesheet != null && (x.Timesheet.ApprovedDate.HasValue));
+
 
             return await query.ExecuteAsync((originalQuery) =>
                     from proj in ProjectRepository.GetAll()
