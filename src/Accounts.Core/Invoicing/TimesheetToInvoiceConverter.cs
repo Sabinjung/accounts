@@ -60,8 +60,8 @@ namespace Accounts.Invoicing
 
             invoice.DiscountType = project.DiscountType;
             invoice.DiscountValue = project.DiscountValue;
-            invoice.DiscountAmount = discount;
-            invoice.Total = invoice.SubTotal - discount;
+            invoice.DiscountAmount = Math.Round(discount, 2);
+            invoice.Total = Math.Round(invoice.SubTotal - discount, 2);
         }
     }
 }

@@ -1,24 +1,25 @@
 ﻿using Abp.Application.Services;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Accounts.Data;
+using Accounts.Data.Dto;
 using Accounts.EntityFrameworkCore.Repositories;
+using Accounts.Extensions;
 using Accounts.HourLogEntries.Dto;
 using Accounts.Models;
+using Accounts.Projects.Dto;
+using Accounts.Timesheets;
+using Accounts.Timesheets.Dto;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using MoreLinq;
+using PQ;
+using PQ.Pagination;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Accounts.Extensions;
-using System.Collections.Concurrent;
-using Accounts.Projects.Dto;
-using AutoMapper.QueryableExtensions;
-using Abp.Collections.Extensions;
-using AutoMapper;
-using Abp.Authorization;
-using Accounts.Timesheets;
-using Accounts.Data;
-using MoreLinq;
 
 namespace Accounts.HourLogEntries
 {
@@ -33,17 +34,21 @@ namespace Accounts.HourLogEntries
 
         private readonly ITimesheetService TimesheetService;
 
+        private readonly QueryBuilderFactory QueryBuilderFactory;
+
         public HourLogEntryAppService(
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
             ITimesheetService timesheetService,
             IRepository<Timesheet> timesheetRepository,
+            QueryBuilderFactory queryBuilderFactory,
             IMapper mapper) : base(repository)
         {
             ProjectRepository = projectRepository;
             Mapper = mapper;
             TimesheetService = timesheetService;
             TimesheetRepository = timesheetRepository;
+            QueryBuilderFactory = queryBuilderFactory;
         }
 
         [AbpAuthorize("Timesheet.LogHour")]
@@ -60,7 +65,10 @@ namespace Accounts.HourLogEntries
                 var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
                 if (existingHourLog != null)
                 {
-                    existingHourLog.Hours = log.Hours;
+                    if (log.Hours.HasValue)
+                    {
+                        existingHourLog.Hours = log.Hours;
+                    }
                 }
                 else
                 {
@@ -74,9 +82,48 @@ namespace Accounts.HourLogEntries
             }
         }
 
+        public async Task<IEnumerable<HourMonthlyReport>> GetProjectMonthlyHourReport(HourLogQueryParameter queryParameter)
+        {
+            var query = QueryBuilderFactory.Create<HourLogEntry, HourLogQueryParameter>(Repository.GetAll());
+            query.WhereIf(h => h.ProjectId.HasValue, h => x => x.ProjectId == h.ProjectId);
+            query.WhereIf(h => h.StartDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date);
+            query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
+            query.WhereIf(h => true, h => x => x.Timesheet != null && x.Timesheet.StatusId == (int)TimesheetStatuses.Approved);
+
+            return await query.ExecuteAsync((originalQuery) =>
+                    from proj in ProjectRepository.GetAll()
+                    join p in (from hl in originalQuery
+                               group hl by new { hl.ProjectId } into g
+                               select new HourMonthlyReport
+                               {
+                                   ProjectId = g.Key.ProjectId,
+                                   MonthlySummaries = from mhl in g
+                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year, } into mg
+                                                      select new MonthlySummary
+                                                      {
+                                                          ProjectId = g.Key.ProjectId,
+                                                          Month = mg.Key.Month,
+                                                          Year = mg.Key.Year,
+                                                          Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0),
+                                                      }
+                               }) on proj.Id equals p.ProjectId into s
+                    from ms in s.DefaultIfEmpty()
+                    let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
+                    let companyName = proj.Company.DisplayName
+                    orderby proj.Consultant.FirstName
+                    select new HourMonthlyReport
+                    {
+                        ProjectId = proj.Id,
+                        ConsultantName = consultantName,
+                        CompanyName = companyName,
+                        IsProjectActive = proj.EndDt.HasValue ? proj.EndDt > DateTime.UtcNow : true,
+                        MonthlySummaries = ms.MonthlySummaries
+                    }
+            , queryParameter);
+        }
 
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
-            (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
+                (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
         {
             var startDay = startDt.Date;
             var endDay = endDt.Date;
@@ -85,13 +132,19 @@ namespace Accounts.HourLogEntries
                 .Where(projectId.HasValue, x => x.Id == projectId)
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
 
-
             var lastTimesheetQuery = from t in TimesheetRepository.GetAll()
                                      where activeProjectsQuery.Any(x => x.Id == t.ProjectId)
                                      group t by t.ProjectId into g
                                      select g.OrderByDescending(x => x.EndDt).First();
 
-
+            var lastApprovedTimeSheetQuery = from t in TimesheetRepository.GetAll()
+                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.ApprovedDate.HasValue
+                                             group t by t.ProjectId into g
+                                             select g.OrderByDescending(x => x.EndDt).First();
+            var lastInvoicedTimesheetQuery = from t in TimesheetRepository.GetAll()
+                                             where activeProjectsQuery.Any(x => x.Id == t.ProjectId) && t.InvoiceGeneratedDate.HasValue
+                                             group t by t.ProjectId into g
+                                             select g.OrderByDescending(x => x.EndDt).First();
 
             var query = from log in Repository.GetAll()
                         where log.Day >= startDay && log.Day <= endDay && activeProjectsQuery.Any(x => x.Id == log.ProjectId)
@@ -102,9 +155,11 @@ namespace Accounts.HourLogEntries
                             HourLogEntries = projectLogs.Select(plog => new HourLogEntryDto
                             {
                                 Day = plog.Day,
-                                Hours = plog.Hours,
+                                Hours = plog.Hours.HasValue ? plog.Hours.Value : 0,
                                 ProjectId = plog.ProjectId,
-                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false
+                                IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false,
+                                TimesheetStatusesId = plog.TimesheetId.HasValue ? plog.Timesheet.StatusId : (int)TimesheetStatuses.TimeSheetOpen
+
                             })
                         };
 
@@ -112,15 +167,29 @@ namespace Accounts.HourLogEntries
                 Mapper.ProjectTo<ProjectDto>(activeProjectsQuery).ToListAsync(),
                 query.ToListAsync());
 
+            var (lastApproved, lastInvoiced) = await TaskEx.WhenAll(lastApprovedTimeSheetQuery.ToListAsync(), lastInvoicedTimesheetQuery.ToListAsync());
             var lastTimesheets = await lastTimesheetQuery.ToListAsync();
-
 
             var result = activeProjects.AsParallel().Select(proj =>
             {
                 var projectHourLog = projectsHourLogs.FirstOrDefault(y => y.ProjectId == proj.Id);
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var projectLastApprovedTimesheet = lastApproved.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
+                var projectLastInvoicedTimesheet = lastInvoiced.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
+
+                var upcomingTimesheetSummary = new TimesheetSummary
+                {
+                    StartDt = uStartDt,
+                    EndDt = uEndDt,
+                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0)
+                };
+                proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
+
+                proj.LastApprovedDate = projectLastApprovedTimesheet?.ApprovedDate;
+                proj.LastInvoicedDate = projectLastInvoicedTimesheet?.InvoiceGeneratedDate;
+
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
                 {
@@ -129,7 +198,7 @@ namespace Accounts.HourLogEntries
                 else
                 {
                     proj.TimesheetStatus = projectLastTimesheet != null
-                    ? (TimesheetStatuses)projectLastTimesheet.Status.Id
+                    ? (TimesheetStatuses)projectLastTimesheet.StatusId
                     : TimesheetStatuses.TimeSheetOpen;
                 }
                 return new ProjectHourLogEntryDto

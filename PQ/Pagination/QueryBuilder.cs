@@ -1,34 +1,29 @@
-﻿
-using Abp.Dependency;
-using Abp.Specifications;
+﻿using Abp.Specifications;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using PQ.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace PQ
 {
-
     public enum SpecificationType
     {
         And,
         Or,
         Not
     }
+
     public class QueryBuilder<TDataModel, TQueryParameter> where TQueryParameter : NamedQueryParameter
     {
         private readonly IQueryable<TDataModel> OriginalQuery;
 
         private IQueryable<TDataModel> CompileQuery(TQueryParameter queryParameter)
         {
-
             ISpecification<TDataModel> ConsturctSpecification(TQueryParameter p)
             {
                 return Specifications.Aggregate(RootSpecification, (s, t) =>
@@ -61,7 +56,9 @@ namespace PQ
 
         public IQueryable<TDataModel> Query { get; private set; }
 
-        public QueryBuilder(IQueryable<TDataModel> query, IMapper mapper) : this(query, mapper, new AnySpecification<TDataModel>()) { }
+        public QueryBuilder(IQueryable<TDataModel> query, IMapper mapper) : this(query, mapper, new AnySpecification<TDataModel>())
+        {
+        }
 
         public QueryBuilder(IQueryable<TDataModel> query, IMapper mapper, ISpecification<TDataModel> specification)
         {
@@ -71,7 +68,6 @@ namespace PQ
             Mapper = mapper;
             Specifications = new List<(SpecificationType, Func<TQueryParameter, ISpecification<TDataModel>>)>();
             PreDefinedQuerParameters = new List<TQueryParameter>();
-
         }
 
         public QueryBuilder<TDataModel, TQueryParameter> Where(Func<TQueryParameter, Expression<Func<TDataModel, bool>>> specFun)
@@ -104,7 +100,6 @@ namespace PQ
 
         public QueryBuilder<TDataModel, TQueryParameter> ApplySorts(Sorts<TDataModel> sorts)
         {
-
             if (sorts.IsValid())
             {
                 Query = Sorts<TDataModel>.ApplySorts(Query, sorts);
@@ -114,7 +109,6 @@ namespace PQ
 
         public async Task<Page<TDataTransferObject>> ExecuteAsync<TDataTransferObject>(params TQueryParameter[] queryParameters)
         {
-
             var primaryQueryParameter = queryParameters.Length == 1 ? queryParameters.First() : queryParameters.First(x => x.IsActive);
             var pageNumber = primaryQueryParameter.PageNumber;
             var pageSize = primaryQueryParameter.PageSize;
@@ -137,11 +131,19 @@ namespace PQ
                 RecordCount = compiledQuery.Count(),
                 Results = pageNumber.HasValue ? await projectedQuery.Skip((pageNumber.Value - 1) * pageSize.Value).Take(pageSize.Value).ToListAsync() : await projectedQuery.ToListAsync(),
                 RecordCounts = recordCounts
-
             };
             result.PageCount = pageNumber.HasValue ? (int)Math.Ceiling((double)result.RecordCount / pageSize.Value) : result.TotalCount;
             return result;
         }
 
+        public async Task<IEnumerable<TDataTransferObject>> ExecuteAsync<TDataTransferObject>(
+           Func<IQueryable<TDataModel>, IQueryable<TDataTransferObject>> mapQuery,
+           params TQueryParameter[] queryParameters)
+        {
+            var primaryQueryParameter = queryParameters.Length == 1 ? queryParameters.First() : queryParameters.First(x => x.IsActive);
+            var compiledQuery = CompileQuery(primaryQueryParameter);
+            var finalQuery = mapQuery(compiledQuery);
+            return await finalQuery.ToListAsync();
+        }
     }
 }

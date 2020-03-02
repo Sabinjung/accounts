@@ -20,6 +20,8 @@ using PQ;
 using PQ.Extensions;
 using Accounts.Timesheets;
 using MoreLinq;
+using Accounts.Data.Dto;
+using Accounts.EntityFrameworkCore.Extensions;
 
 namespace Accounts.Projects
 {
@@ -42,8 +44,6 @@ namespace Accounts.Projects
 
         private readonly ITimesheetService TimesheetService;
 
-        private readonly IRepository<Expense> ExpensesRepository;
-
         public TimesheetAppService(
             IRepository<Timesheet> repository,
             IProjectRepository projectRepository,
@@ -51,8 +51,8 @@ namespace Accounts.Projects
             IHourLogEntryRepository hourLogEntryRepository,
             IMapper mapper,
             QueryBuilderFactory queryBuilderFactory,
-            ITimesheetService timesheetService,
-            IRepository<Expense> expensesRepository
+            ITimesheetService timesheetService
+
             )
 
         {
@@ -62,7 +62,7 @@ namespace Accounts.Projects
             HourLogEntryRepository = hourLogEntryRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
-            ExpensesRepository = expensesRepository;
+
             SavedQueries = new List<TimesheetQueryParameters>
             {
                 new TimesheetQueryParameters
@@ -70,15 +70,20 @@ namespace Accounts.Projects
                     Name="Pending Apprv",
                     StatusId=new int[]{(int)TimesheetStatuses.Created }
                 },
-                 new TimesheetQueryParameters
+                new TimesheetQueryParameters
                 {
                     Name="Approved",
                     StatusId=new int[]{(int)TimesheetStatuses.Approved }
                 },
-                   new TimesheetQueryParameters
+                new TimesheetQueryParameters
                 {
                     Name="Invoiced",
                     StatusId=new int[]{ (int) TimesheetStatuses.Invoiced }
+                },
+                new TimesheetQueryParameters
+                {
+                    Name="Rejected",
+                    StatusId = new int[] { (int) TimesheetStatuses.Rejected}
                 }
             };
             TimesheetService = timesheetService;
@@ -97,7 +102,6 @@ namespace Accounts.Projects
             }
         }
 
-
         [AbpAuthorize("Timesheet.Create")]
         public async Task Create(CreateTimesheetInputDto input)
         {
@@ -108,7 +112,14 @@ namespace Accounts.Projects
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
-            var expenses = ObjectMapper.Map<List<Expense>>(input.Expenses);
+
+            if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
+               (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
+               (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
+            {
+                startDt = input.StartDt;
+                endDt = input.EndDt;
+            }
 
             // Construct new Timesheet
             var newTimesheet = new Timesheet
@@ -117,7 +128,6 @@ namespace Accounts.Projects
                 StatusId = (int)TimesheetStatuses.Created,
                 HourLogEntries = distinctHourLogEntries,
                 Attachments = attachments,
-                Expenses = expenses,
                 StartDt = startDt,
                 EndDt = endDt,
                 TotalHrs = TimesheetService.CalculateTotalHours(distinctHourLogEntries)
@@ -132,16 +142,24 @@ namespace Accounts.Projects
             }
 
             Repository.Insert(newTimesheet);
-
         }
 
         [AbpAuthorize("Timesheet.Delete")]
-        public async Task Delete(int id)
+        public async Task Delete([FromQuery]int id, [FromBody]DeleteTimesheetDto input)
         {
             var timesheet = await Repository.GetAsync(id);
             if (timesheet.InvoiceId != null)
             {
                 throw new UserFriendlyException("Cannot delete Timesheet. Invoice is already created");
+            }
+
+            if (!string.IsNullOrEmpty(input.NoteText))
+            {
+                timesheet.Notes.Add(new Note
+                {
+                    NoteTitle = "Timesheet Deleted",
+                    NoteText = input.NoteText
+                });
             }
 
             var hourLogEntries = await HourLogEntryRepository.GetAll().Where(x => x.TimesheetId == id).ToListAsync();
@@ -157,11 +175,11 @@ namespace Accounts.Projects
         [HttpGet]
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
-            var timesheet = await Mapper.ProjectTo<TimesheetDto>(Repository.GetAll().Where(x => x.Id == timesheetId)).FirstOrDefaultAsync();
+            var timesheet = Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
             return timesheet;
         }
 
-        public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
+        private QueryBuilder<Timesheet, TimesheetQueryParameters> GetQuery(TimesheetQueryParameters queryParameter)
         {
             if (!queryParameter.StartTime.HasValue)
             {
@@ -176,19 +194,36 @@ namespace Accounts.Projects
             query.WhereIf(p => p.Name == "Invoiced" && p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
 
             var sorts = new Sorts<Timesheet>();
-            sorts.Add(true, t => t.CreationTime);
+            sorts.Add(true, t => t.LastModificationTime, true, 1);
+            sorts.Add(true, t => t.CreationTime, true, priority: 2);
             query.ApplySorts(sorts);
 
-            var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
+            return query;
+        }
+
+        public async Task<Page<TimesheetListItemDto>> GetTimesheets(TimesheetQueryParameters queryParameter)
+        {
+            var query = GetQuery(queryParameter);
+            var queryParameters =
+                queryParameter.IsActive && !string.IsNullOrEmpty(queryParameter.Name) ?
+                SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList() : new[] { queryParameter }.ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
             return result;
+        }
+
+        public async Task<IEnumerable<MonthlySummary>> GetMonthlyHourReport(TimesheetQueryParameters queryParameter)
+        {
+            var query = GetQuery(queryParameter);
+            return await query.ExecuteAsync((originalQuery) =>
+                 (from t in originalQuery
+                  select t.HourLogEntries).SelectMany(x => x).GetMonthlyHourReport()
+            , queryParameter);
         }
 
         public IEnumerable<TimesheetQueryParameters> GetSavedQueries()
         {
             return SavedQueries;
         }
-
 
         private async Task<TimesheetDto> CreateNextTimesheet(int projectId)
         {
@@ -210,7 +245,7 @@ namespace Accounts.Projects
             }
 
             timesheetInfo.HourLogEntries = Mapper.Map<IEnumerable<HourLogEntryDto>>(hourLogEntries);
-            timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours);
+            timesheetInfo.TotalHrs = timesheetInfo.HourLogEntries.Sum(x => x.Hours.HasValue ? x.Hours.Value : 0);
             return timesheetInfo;
         }
     }

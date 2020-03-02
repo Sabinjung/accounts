@@ -19,6 +19,7 @@ namespace Accounts.Consultants
     public class ConsultantAppService : AsyncCrudAppService<Consultant, ConsultantDto, int, PagedCompanyResultRequestDto>
     {
         private readonly QueryBuilderFactory QueryBuilder;
+
         public ConsultantAppService(IRepository<Consultant> repository, QueryBuilderFactory queryBuilderFactory)
        : base(repository)
         {
@@ -32,20 +33,18 @@ namespace Accounts.Consultants
         public async Task<Page<ConsultantDto>> Search(ConsultantSearchParameters queryParameter)
         {
             var query = QueryBuilder.Create<Consultant, ConsultantSearchParameters>(Repository.GetAll());
-            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText));
+            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText) || x.LastName.Contains(p.SearchText));
             var sorts = new Sorts<Consultant>();
             sorts.Add(true, c => c.FirstName);
             query.ApplySorts(sorts);
             var result = await query.ExecuteAsync<ConsultantDto>(queryParameter);
             return result;
         }
+
         protected override IQueryable<Consultant> CreateFilteredQuery(PagedCompanyResultRequestDto input)
         {
             return Repository.GetAll()
                 .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.FirstName.Contains(input.Keyword) || x.LastName.Contains(input.Keyword));
         }
     }
-
-
-
 }

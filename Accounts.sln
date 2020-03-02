@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.EntityFrameworkCor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts.Data", "src\Accounts.Models\Accounts.Data.csproj", "{A4B84BE6-38EF-40E1-9C0A-085B74524B48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PQ", "PQ\PQ.csproj", "{32464B64-80B4-43A7-80ED-91A04547D64A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PQ", "PQ\PQ.csproj", "{32464B64-80B4-43A7-80ED-91A04547D64A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

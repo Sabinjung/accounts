@@ -1,27 +1,25 @@
 ﻿using Abp.Application.Services;
-using Abp.Domain.Repositories;
-using Accounts.Projects.Dto;
-using Accounts.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using Accounts.Blob;
-using Abp.ObjectMapping;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using Abp.Auditing;
+using Abp.Application.Services.Dto;
 using Abp.Authorization;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using PQ.Pagination;
-using PQ;
-using Accounts.Data;
-using Accounts.Timesheets;
+using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.UI;
+using Accounts.Blob;
+using Accounts.Data;
+using Accounts.Models;
+using Accounts.Projects.Dto;
+using Accounts.Timesheets;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PQ;
+using PQ.Pagination;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Accounts.Projects
 {
@@ -79,7 +77,7 @@ namespace Accounts.Projects
         {
             var project = await Repository.GetAsync(projectId);
             if (project != null)
-            { 
+            {
                 var fileName = $"{project.Consultant.FirstName}_{project.Consultant.LastName}_{DateTime.Now.Ticks}{Path.GetExtension(file.FileName)}";
                 var uri = await AzureBlobService.UploadSingleFileAsync(file, fileName);
                 project.Attachments.Add(new Attachment
@@ -112,11 +110,15 @@ namespace Accounts.Projects
 
             var query = QueryBuilder.Create<Project, ProjectQueryParameters>(Repository.GetAll());
 
-            query.WhereIf(p => p.IsProjectActive.HasValue, p => x => p.IsProjectActive.Value 
-            ? x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true 
+            query.WhereIf(p => p.IsProjectActive.HasValue, p => x => p.IsProjectActive.Value
+            ? x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true
             : x.EndDt.HasValue && x.EndDt < DateTime.UtcNow);
-            
-            query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword) || x.Consultant.FirstName.ToUpper().Contains(p.Keyword.ToUpper()));
+
+            query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword.ToUpper()) || x.Consultant.DisplayName.ToUpper().Contains(p.Keyword.ToUpper()));
+
+            query.WhereIf(p => p.InvoiceCyclesId.HasValue, p => x => p.InvoiceCyclesId == x.InvoiceCycleId);
+
+            query.WhereIf(p => p.TermId.HasValue, p => x => p.TermId == x.TermId);
 
             var sorts = new Sorts<Project>();
 
@@ -155,5 +157,13 @@ namespace Accounts.Projects
             }
             return await base.Create(input);
         }
+
+
+        public override async Task<ProjectDto> Get(EntityDto<int> input)
+        {
+            var project = await Repository.GetAsync(input.Id);
+            return Mapper.Map<ProjectDto>(project);
+        }
+
     }
 }

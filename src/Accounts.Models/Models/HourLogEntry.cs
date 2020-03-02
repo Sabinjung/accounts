@@ -7,8 +7,7 @@ namespace Accounts.Models
 {
     public class HourLogEntry : FullAuditedEntity
     {
-        [Required]
-        public double Hours { get; set; }
+        public double? Hours { get; set; }
 
         public DateTime Day { get; set; }
 
@@ -20,5 +19,7 @@ namespace Accounts.Models
 
         [ForeignKey(nameof(ProjectId))]
         public virtual Project Project { get; set; }
+
+        public bool IsAssociatedWithTimesheet { get { return TimesheetId.HasValue; } }
     }
 }
