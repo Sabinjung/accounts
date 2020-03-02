@@ -88,7 +88,40 @@ namespace Accounts.HourLogEntries
             query.WhereIf(h => h.ProjectId.HasValue, h => x => x.ProjectId == h.ProjectId);
             query.WhereIf(h => h.StartDt.HasValue, h => x => x.Day.Date >= h.StartDt.Value.Date);
             query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
-            query.WhereIf(h => true, h => x => x.Timesheet != null && x.Timesheet.StatusId == (int)TimesheetStatuses.Approved);
+            query.WhereIf(h => true, h => x => x.Timesheet != null && (x.Timesheet.ApprovedDate.HasValue));
+
+
+            return await query.ExecuteAsync((originalQuery) =>
+                    from proj in ProjectRepository.GetAll()
+                    join p in (from hl in originalQuery
+                               group hl by new { hl.ProjectId } into g
+                               select new HourMonthlyReport
+                               {
+                                   ProjectId = g.Key.ProjectId,
+                                   MonthlySummaries = from mhl in g
+                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year, } into mg
+                                                      select new MonthlySummary
+                                                      {
+                                                          ProjectId = g.Key.ProjectId,
+                                                          Month = mg.Key.Month,
+                                                          Year = mg.Key.Year,
+                                                          Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0),
+                                                      }
+                               }) on proj.Id equals p.ProjectId into s
+                    from ms in s.DefaultIfEmpty()
+                    let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
+                    let companyName = proj.Company.DisplayName
+                    orderby proj.Consultant.FirstName
+                    select new HourMonthlyReport
+                    {
+                        ProjectId = proj.Id,
+                        ConsultantName = consultantName,
+                        CompanyName = companyName,
+                        IsProjectActive = proj.EndDt.HasValue ? proj.EndDt > DateTime.UtcNow : true,
+                        MonthlySummaries = ms.MonthlySummaries
+                    }
+            , queryParameter);
+        }
 
             return await query.ExecuteAsync((originalQuery) =>
                     from proj in ProjectRepository.GetAll()
@@ -128,7 +161,7 @@ namespace Accounts.HourLogEntries
             var startDay = startDt.Date;
             var endDay = endDt.Date;
 
-            var activeProjectsQuery = ProjectRepository.QueryActiveProjects(startDay, endDay)
+            var activeProjectsQuery = ProjectRepository.QueryActiveProjectsByDate(startDay, endDay)
                 .Where(projectId.HasValue, x => x.Id == projectId)
                 .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
 
