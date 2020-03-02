@@ -123,38 +123,6 @@ namespace Accounts.HourLogEntries
             , queryParameter);
         }
 
-            return await query.ExecuteAsync((originalQuery) =>
-                    from proj in ProjectRepository.GetAll()
-                    join p in (from hl in originalQuery
-                               group hl by new { hl.ProjectId } into g
-                               select new HourMonthlyReport
-                               {
-                                   ProjectId = g.Key.ProjectId,
-                                   MonthlySummaries = from mhl in g
-                                                      group mhl by new { mhl.Day.Month, mhl.Day.Year, } into mg
-                                                      select new MonthlySummary
-                                                      {
-                                                          ProjectId = g.Key.ProjectId,
-                                                          Month = mg.Key.Month,
-                                                          Year = mg.Key.Year,
-                                                          Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0),
-                                                      }
-                               }) on proj.Id equals p.ProjectId into s
-                    from ms in s.DefaultIfEmpty()
-                    let consultantName = proj.Consultant.FirstName + " " + proj.Consultant.LastName
-                    let companyName = proj.Company.DisplayName
-                    orderby proj.Consultant.FirstName
-                    select new HourMonthlyReport
-                    {
-                        ProjectId = proj.Id,
-                        ConsultantName = consultantName,
-                        CompanyName = companyName,
-                        IsProjectActive = proj.EndDt.HasValue ? proj.EndDt > DateTime.UtcNow : true,
-                        MonthlySummaries = ms.MonthlySummaries
-                    }
-            , queryParameter);
-        }
-
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
                 (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
         {
