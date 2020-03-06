@@ -58,13 +58,11 @@ namespace Accounts.Projects
                 {
                     Name="Active",
                     IsProjectActive=true
-
                 },
                  new ProjectQueryParameters
                 {
                     Name="Inactive",
                     IsProjectActive=false
-
                  }
             };
 
@@ -73,7 +71,7 @@ namespace Accounts.Projects
             DeletePermissionName = "Project.Delete";
         }
 
-        public async Task UploadAttachment(int projectId, IFormFile file)
+        public async Task UploadAttachment(int projectId, IFormFile file, int? timehsheetId)
         {
             var project = await Repository.GetAsync(projectId);
             if (project != null)
@@ -85,8 +83,9 @@ namespace Accounts.Projects
                     ContentType = file.ContentType,
                     Name = fileName,
                     OriginalName = file.FileName,
-                    ContentUrl = uri.PrimaryUri.ToString()
-                });
+                    ContentUrl = uri.PrimaryUri.ToString(),
+                    TimesheetId = timehsheetId.HasValue ? timehsheetId.Value : (int?)null
+                }); ;
             }
         }
 
@@ -107,7 +106,6 @@ namespace Accounts.Projects
         [HttpGet]
         public async Task<Page<ProjectListItemDto>> Search(ProjectQueryParameters queryParameter)
         {
-
             var query = QueryBuilder.Create<Project, ProjectQueryParameters>(Repository.GetAll());
 
             query.WhereIf(p => p.IsProjectActive.HasValue, p => x => p.IsProjectActive.Value
@@ -142,7 +140,6 @@ namespace Accounts.Projects
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
-
             });
 
             return result;
@@ -158,12 +155,10 @@ namespace Accounts.Projects
             return await base.Create(input);
         }
 
-
         public override async Task<ProjectDto> Get(EntityDto<int> input)
         {
             var project = await Repository.GetAsync(input.Id);
             return Mapper.Map<ProjectDto>(project);
         }
-
     }
 }
