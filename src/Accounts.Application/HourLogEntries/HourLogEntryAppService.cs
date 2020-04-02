@@ -19,6 +19,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Accounts.HourLogEntries
@@ -105,7 +106,7 @@ namespace Accounts.HourLogEntries
                                                           ProjectId = g.Key.ProjectId,
                                                           Month = mg.Key.Month,
                                                           Year = mg.Key.Year,
-                                                          Value = mg.Sum(y => y.Hours.HasValue ? y.Hours.Value : 0),
+                                                          Value = mg.Sum(y => y.Hours ?? 0),
                                                       }
                                }) on proj.Id equals p.ProjectId into s
                     from ms in s.DefaultIfEmpty()
@@ -121,6 +122,39 @@ namespace Accounts.HourLogEntries
                         MonthlySummaries = ms.MonthlySummaries
                     }
             , queryParameter);
+        }
+
+        public async Task<List<ProjectHourLogReport>> GetPayrollHourLogsReport(ProjectParameter queryParameter)
+        {
+            
+            var startDay = new DateTime(queryParameter.Year,queryParameter.Month,1);
+            var endDay = startDay.AddMonths(1);
+
+            List<DailyHourLogDetails> hourLogs = await Repository.GetAll().Where(x => x.TimesheetId != null && x.Day >= startDay && x.Day < endDay)
+                .Select(y => new DailyHourLogDetails()
+                {
+                    Day = y.Day,
+                    ProjectId = y.ProjectId,
+                    CompanyName = y.Project.Company.DisplayName,
+                    ConsultantName = y.Project.Consultant.DisplayName,
+                    Hours = y.Hours,
+                    Status = y.Timesheet.Status.Name
+                }).ToListAsync();
+
+            var projectHourLogReports = hourLogs.GroupBy(h => new {h.ProjectId, h.ConsultantName, h.CompanyName})
+                .Select(y => new ProjectHourLogReport()
+                {
+                    ProjectId = y.Key.ProjectId, CompanyName = y.Key.CompanyName, ConsultantName = y.Key.ConsultantName
+                }).ToList();
+
+            foreach (var projectHourLogReport in projectHourLogReports)
+            {
+                var dailyhourlogs = hourLogs.Where(x => x.ProjectId == projectHourLogReport.ProjectId)
+                    .Select(y => new DailyHourLog() {Day = y.Day, Hours = y.Hours, Status = y.Status});
+                projectHourLogReport.DailyHourLogs.AddRange(dailyhourlogs);
+            }
+
+            return projectHourLogReports;
         }
 
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
