@@ -10,7 +10,6 @@ namespace Accounts.Projects
 {
     public interface IProjectAppService : IAsyncCrudAppService<ProjectDto>
     {
-        Task UploadAttachment(int projectId, IFormFile file);
-
+        Task UploadAttachment(int projectId, IFormFile file, int? timesheetId);
     }
 }
