@@ -9,5 +9,9 @@
 ---
 ### Backend Developer - Andrew Neupane
 ### Backend Developer - Suraj Ghatraj
+### Backend Developer - Sanjok Gyawali
 ### UI Developer - Ashish Thapa
 ### UI Developer - Sabin Chettri
+### UI Developer - Khagendra Adhikari
+---
+### QA           - Birajan Shrestha
