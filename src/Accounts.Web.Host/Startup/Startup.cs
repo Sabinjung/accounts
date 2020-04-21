@@ -31,6 +31,7 @@ using Accounts.Authorization.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Accounts.Core.Invoicing.Intuit;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Options;
 
 namespace Accounts.Web.Host.Startup
@@ -103,6 +104,12 @@ namespace Accounts.Web.Host.Startup
                 });
             });
 
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/build";
+            });
+
             // Configure Abp and Dependency Injection
             return services.AddAbp<AccountsWebHostModule>(
                 // Configure Log4Net logging
@@ -119,6 +126,7 @@ namespace Accounts.Web.Host.Startup
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseAuthentication();
 
@@ -146,9 +154,19 @@ namespace Accounts.Web.Host.Startup
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json", "Accounts API V1");
-                options.IndexStream = () => Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("Accounts.Web.Host.wwwroot.swagger.ui.index.html");
+                //options.IndexStream = () => Assembly.GetExecutingAssembly()
+                //    .GetManifestResourceStream("Accounts.Web.Host.wwwroot.swagger.ui.index.html");
             }); // URL: /swagger
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
         }
     }
 }

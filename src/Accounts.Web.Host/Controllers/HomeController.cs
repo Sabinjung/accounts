@@ -19,7 +19,7 @@ namespace Accounts.Web.Host.Controllers
 
         public IActionResult Index()
         {
-            return Redirect("/swagger");
+            return Redirect("/index.html");
         }
 
         /// <summary>

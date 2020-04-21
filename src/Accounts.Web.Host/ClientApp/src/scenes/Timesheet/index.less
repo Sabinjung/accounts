@@ -1,0 +1,265 @@
+@import '~antd/lib/style/themes/default.less';
+
+.ant-table-fixed {
+  table-layout: fixed;
+}
+
+.ant-popover-inner-content{
+  .ant-descriptions-title{
+    margin-bottom: 5px !important;
+  }
+  
+  .ant-descriptions-item{
+    padding-bottom: 5px !important;
+  }
+}
+
+
+.ant-table-scroll {
+  .ant-table-body {
+    overflow-x: auto !important;
+  }
+  ::-webkit-scrollbar {
+    height: 10px;
+  }
+}
+.hour-log-entry-input {
+  width: 50px;
+}
+
+th.is-holiday{
+  background: #DDD !important;
+}
+
+td,
+th {
+  background: white;
+}
+
+.upcoming-timesheet-totalhrs{
+  display: none;
+  position: absolute;
+  font-size: 10px;
+  top: -1rem;
+  left: 0.2rem;
+  background: #456f97;
+  border: 1px solid #456f97;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+  color: white;
+  padding: 0px 5px;
+}
+
+.ant-table-row-hover{
+  & > .btw .upcoming-timesheet-totalhrs {
+    display:block;
+  }
+
+  & > .btw~.btw .upcoming-timesheet-totalhrs {
+    display:none;
+  }
+  
+  td {
+    position: relative;
+    &.is-upcoming-startDt{
+      border-left: 0.1px solid #456f97 !important;
+      border-top: 0.1px solid #456f97 !important;
+      border-bottom: 0.1px solid #456f97 !important;
+      background-color: white !important;
+    }
+    
+    &.is-upcoming-endDt{
+      border-right: 0.1px solid #456f97 !important;
+      border-top: 0.1px solid #456f97 !important;
+      border-bottom: 0.1px solid #456f97 !important;
+      background-color: white !important;
+    }
+    
+    &.is-upcoming-btw{
+      border-top: 0.1px solid #456f97!important;
+      border-bottom: 0.1px solid #456f97!important;
+      background-color: white !important;
+    }
+
+    &.is-holiday{
+      background: #f6f6f6 !important;
+    }
+  }
+}
+
+.ant-table-row {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  td{
+    &.is-holiday{
+      background: #f6f6f6;
+    }
+    &.is-associated{
+      background: #a5b3fa8f !important;
+      cursor: not-allowed;
+    }
+    &.is-disabled {
+      background: #ccc0 !important;
+      cursor: not-allowed;
+    }
+    &.is-modified{
+      border-left: 2px solid blue;
+    }
+    &.is-current-date{
+      border-right: 2px solid #1DA57A !important;
+    }
+  }
+}
+  
+.ant-form-item-control {
+  margin: -10px -10px;
+}
+
+.ant-upload-drag{
+  height: 50px !important;
+  .ant-upload-btn{
+    padding: 0px !important;
+  }
+}
+
+.attachment-drawer {
+  .ant-drawer-wrapper-body {
+    display: flex;
+    flex-direction: column;
+    .ant-drawer-body {
+      flex: 1;
+    }
+ 
+  }
+}
+
+.timesheet-attachment-drawer.ant-drawer-open {
+  .ant-drawer-content-wrapper {
+    right: 30vw;
+  }
+}
+
+.timesheet-list-drawer.ant-drawer-open {
+  .ant-drawer-content-wrapper {
+    right: 30vw;
+  }
+}
+
+.timesheet-detail-drawer.ant-drawer-open {
+  .ant-drawer-content-wrapper {
+    right: 30vw;
+  }
+}
+
+.ant-checkbox-group.attachment-selection-list {
+  display: flex;
+  flex-direction: column;
+  .ant-checkbox-group-item {
+    margin-bottom: 10px;
+  }
+}
+
+ul.pagination {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  li {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #bababa;
+    margin: 5px;
+    background: white;
+    &.active {
+      background: green;
+      a {
+        color: white;
+      }
+    }
+  }
+}
+
+.react-contextmenu {
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  color: #373a3c;
+  font-size: 16px;
+  margin: 2px 0 0;
+  min-width: 160px;
+  outline: none;
+  opacity: 0;
+  padding: 5px 0;
+  pointer-events: none;
+  text-align: left;
+  transition: opacity 250ms ease !important;
+}
+
+.react-contextmenu.react-contextmenu--visible {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 9999;
+}
+
+.react-contextmenu-item {
+  background: 0 0;
+  border: 0;
+  color: #373a3c;
+  cursor: pointer;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 3px 20px;
+  text-align: inherit;
+  white-space: nowrap;
+}
+
+.react-contextmenu-item.react-contextmenu-item--active,
+.react-contextmenu-item.react-contextmenu-item--selected {
+  color: #fff;
+  background-color: #20a0ff;
+  border-color: #20a0ff;
+  text-decoration: none;
+}
+
+.react-contextmenu-item.react-contextmenu-item--disabled,
+.react-contextmenu-item.react-contextmenu-item--disabled:hover {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #878a8c;
+}
+
+.react-contextmenu-item--divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: inherit;
+  margin-bottom: 3px;
+  padding: 2px 0;
+}
+.react-contextmenu-item--divider:hover {
+  background-color: transparent;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.react-contextmenu-item.react-contextmenu-submenu {
+  padding: 0;
+}
+
+.react-contextmenu-item.react-contextmenu-submenu > .react-contextmenu-item:after {
+  content: '▶';
+  display: inline-block;
+  position: absolute;
+  right: 7px;
+}
+
+.example-multiple-targets::after {
+  content: attr(data-count);
+  display: block;
+}
