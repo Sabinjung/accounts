@@ -117,6 +117,17 @@ export const appRouters: any = [
   },
 
   {
+    path: '/payrollHours',
+    name: 'PayrollHours',
+    permission: '',
+    title: 'Payroll Hours',
+    icon: 'file-text',
+    showInMenu: true,
+    exact: true,
+    component: LoadableComponent(() => import('../../scenes/PayrollHours')),
+  },
+
+  {
     path: '/users',
     permission: 'Pages.Users',
     title: 'Users',
@@ -152,15 +163,6 @@ export const appRouters: any = [
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Test')),
   },
-  // {
-  //   path: '/about',
-  //   permission: '',
-  //   title: 'About',
-  //   name: 'about',
-  //   icon: 'info-circle',
-  //   showInMenu: true,
-  //   component: LoadableComponent(() => import('../../scenes/About')),
-  // },
   {
     path: '/logout',
     permission: '',

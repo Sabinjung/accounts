@@ -126,11 +126,10 @@ namespace Accounts.HourLogEntries
 
         public async Task<List<ProjectHourLogReport>> GetPayrollHourLogsReport(ProjectParameter queryParameter)
         {
-            
-            var startDay = new DateTime(queryParameter.Year,queryParameter.Month,1);
+            var startDay = new DateTime(queryParameter.Year, queryParameter.Month, 1);
             var endDay = startDay.AddMonths(1);
 
-            List<DailyHourLogDetails> hourLogs = await Repository.GetAll().Where(x => x.TimesheetId != null && x.Day >= startDay && x.Day < endDay)
+            List<DailyHourLogDetails> hourLogs = await Repository.GetAll().Where(x => x.Day >= startDay && x.Day < endDay)
                 .Select(y => new DailyHourLogDetails()
                 {
                     Day = y.Day,
@@ -141,20 +140,34 @@ namespace Accounts.HourLogEntries
                     Status = y.Timesheet.Status.Name
                 }).ToListAsync();
 
-            var projectHourLogReports = hourLogs.GroupBy(h => new {h.ProjectId, h.ConsultantName, h.CompanyName})
-                .Select(y => new ProjectHourLogReport()
-                {
-                    ProjectId = y.Key.ProjectId, CompanyName = y.Key.CompanyName, ConsultantName = y.Key.ConsultantName
-                }).ToList();
 
-            foreach (var projectHourLogReport in projectHourLogReports)
+            var activeProjects = ProjectRepository.QueryActiveProjectsByDate(startDay, endDay);
+            var activeProjectsHourLogReports = (from ac in activeProjects
+                                                join hl in hourLogs on ac.Id equals hl.ProjectId into ah
+                                                from p in ah.DefaultIfEmpty()
+                                                group new { ac, p } by new { ac.Id, ConsultantName = ac.Consultant.DisplayName, CompanyName = ac.Company.DisplayName, IsActive = ac.EndDt >= DateTime.Now || ac.EndDt == null }
+                                                into ach
+                                                select new ProjectHourLogReport
+                                                {
+                                                    ProjectId = ach.Key.Id,
+                                                    CompanyName = ach.Key.CompanyName,
+                                                    ConsultantName = ach.Key.ConsultantName,
+                                                    IsActive = ach.Key.IsActive
+                                                }).ToList();
+
+            foreach (var projectHourLogReport in activeProjectsHourLogReports)
             {
                 var dailyhourlogs = hourLogs.Where(x => x.ProjectId == projectHourLogReport.ProjectId)
-                    .Select(y => new DailyHourLog() {Day = y.Day, Hours = y.Hours, Status = y.Status});
+                    .Select(y => new DailyHourLog()
+                    {
+                        Day = y.Day,
+                        Hours = y.Hours,
+                        Status = y.Status
+                    });
                 projectHourLogReport.DailyHourLogs.AddRange(dailyhourlogs);
             }
 
-            return projectHourLogReports;
+            return activeProjectsHourLogReports;
         }
 
         public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs

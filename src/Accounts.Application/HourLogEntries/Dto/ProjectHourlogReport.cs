@@ -1,6 +1,4 @@
-﻿using Abp.AutoMapper;
-using Accounts.Migrations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +13,7 @@ namespace Accounts.HourLogEntries.Dto
         public int ProjectId { get; internal set; }
         public string ConsultantName { get; set; }
         public string CompanyName { get; set; }
+        public bool IsActive { get; set; }
         public List<DailyHourLog> DailyHourLogs { get; set; }
     }
 
@@ -24,16 +23,15 @@ namespace Accounts.HourLogEntries.Dto
         public DateTime Day { get; set; }
         public string Status { get; set; }
     }
-    
+
     public class DailyHourLogDetails
     {
-       
+
         public double? Hours { get; set; }
         public DateTime Day { get; set; }
         public int ProjectId { get; set; }
         public string ConsultantName { get; set; }
         public string CompanyName { get; set; }
-        public string  Status { get; set; }
+        public string Status { get; set; }
     }
-
 }
