@@ -5,13 +5,13 @@
 ### Solution Architect - Anuj Malla
 ### Project Manager - Prajit Shrestha
 ### Scrum Master - Prajit Shrestha
-### Business Analyst - Pratt Pokhrel
+### R & D Manager - Adam Sapkota
 ---
-### Backend Developer - Andrew Neupane
+### Backend Developer Lead - Andrew Neupane
 ### Backend Developer - Suraj Ghatraj
 ### Backend Developer - Sanjok Gyawali
+### UI Developer Lead - Sabin Chhetri
 ### UI Developer - Ashish Thapa
-### UI Developer - Sabin Chettri
-### UI Developer - Khagendra Adhikari
+# UI Developer - Khagendra Adhikari
 ---
 ### QA           - Birajan Shrestha
