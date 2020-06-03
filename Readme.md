@@ -12,6 +12,6 @@
 ### Backend Developer - Sanjok Gyawali
 ### UI Developer Lead - Sabin Chhetri
 ### UI Developer - Ashish Thapa
-# UI Developer - Khagendra Adhikari
+### UI Developer - Khagendra Adhikari
 ---
 ### QA           - Birajan Shrestha
