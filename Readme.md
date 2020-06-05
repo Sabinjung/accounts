@@ -15,3 +15,5 @@
 ### UI Developer - Khagendra Adhikari
 ---
 ### QA           - Birajan Shrestha
+---
+### UI/UX Designer- Bibas Khadka
