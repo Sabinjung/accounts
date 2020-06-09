@@ -16,4 +16,4 @@
 ---
 ### QA           - Birajan Shrestha
 ---
-### UI/UX Designer- Bibas Khadka
+### UI/UX Designer- Bibash Khadka
