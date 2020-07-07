@@ -7,12 +7,12 @@
 ### Scrum Master - Prajit Shrestha
 ### R & D Manager - Adam Sapkota
 ---
-### Backend Developer Lead - Andrew Neupane
-### Backend Developer - Suraj Ghatraj
-### Backend Developer - Sanjok Gyawali
-### UI Developer Lead - Sabin Chhetri
-### UI Developer - Ashish Thapa
-### UI Developer - Khagendra Adhikari
+### BackEnd Developer Lead - Andrew Neupane
+### BackEnd Developer - Suraj Ghatraj
+### BackEnd Developer - Sanjok Gyawali
+### FrontEnd Developer Lead - Sabin Chhetri
+### FrontEnd Developer - Ashish Thapa
+### FrontEnd Developer - Khagendra Adhikari
 ---
 ### QA           - Birajan Shrestha
 ---
