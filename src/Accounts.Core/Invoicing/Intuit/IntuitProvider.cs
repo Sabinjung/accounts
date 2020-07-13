@@ -43,7 +43,7 @@ namespace Accounts.Intuit
             var serviceContext = GetServiceContext();
             // Create a QuickBooks QueryService using ServiceContext
             var customerService = new QueryService<Customer>(serviceContext);
-            var customers = customerService.ExecuteIdsQuery("SELECT * FROM Customer WHERE active = true");
+            var customers = customerService.ExecuteIdsQuery("SELECT * FROM Customer WHERE active = true maxresults 1000");
             return customers;
         }
 
