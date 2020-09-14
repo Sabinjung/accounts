@@ -8,12 +8,10 @@
 ### R & D Manager - Adam Sapkota
 ---
 ### BackEnd Developer Lead - Andrew Neupane
-### BackEnd Developer - Suraj Ghatraj
-### BackEnd Developer - Sanjok Gyawali
+### BackEnd Developer - Suraj Gahatraj
 ### FrontEnd Developer Lead - Sabin Chhetri
-### FrontEnd Developer - Ashish Thapa
-### FrontEnd Developer - Khagendra Adhikari
+### FrontEnd Developer - Sudip Raj Kunwar
 ---
-### QA           - Birajan Shrestha
+### QA           - 
 ---
-### UI/UX Designer- Bibash Khadka
+### UI/UX Designer- Aakash Sah
