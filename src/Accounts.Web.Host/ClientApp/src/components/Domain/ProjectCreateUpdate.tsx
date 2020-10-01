@@ -30,23 +30,23 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
 
   const validateDiscount = (rule: any, value: any, callback: any) => {
     if (value.discountType && !value.discountValue) {
-      callback('Please input the discount!')
+      callback('Please input the discount!');
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 
   return (
     <React.Fragment>
       <Form {...formItemLayout}>
         <Form.Item label="Company">
           {getFieldDecorator('companyId', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<EntityPicker url="/api/services/app/Company/Search" mapFun={r => ({ value: r.id, text: r.displayName })} />)}
+            rules: [{ required: true, message: 'Please input your Company!' }],
+          })(<EntityPicker url="/api/services/app/Company/Search" mapFun={(r) => ({ value: r.id, text: r.displayName })} />)}
         </Form.Item>
         <Form.Item label="Consultant">
           {getFieldDecorator('consultantId', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
+            rules: [{ required: true, message: 'Please input your Consultant!' }],
           })(
             <ConnectedEntityPicker
               loader={(store: any) => store.getConsultants()}
@@ -59,12 +59,12 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
             rules: [{ required: true, message: 'Select correct Term' }],
-          })(<EntityPicker url="/api/services/app/Term/GetAll" mapFun={r => ({ value: r.id, text: r.name })} />)}
+          })(<EntityPicker url="/api/services/app/Term/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
         </Form.Item>
         <Form.Item label="Invoice Cycle">
           {getFieldDecorator('invoiceCycleId', {
             rules: [{ required: true, message: 'Select right invoice cycle!' }],
-          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={r => ({ value: r.id, text: r.name })} />)}
+          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
         </Form.Item>
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
@@ -79,7 +79,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         </Form.Item>
         <Form.Item label="Discount">
           {getFieldDecorator('discount', {
-            rules: [{ validator: validateDiscount }]
+            rules: [{ validator: validateDiscount }],
           })(<DiscountInput />)}
         </Form.Item>
         <Form.Item label="Rate">
@@ -101,7 +101,14 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           textAlign: 'right',
         }}
       >
-        <Button style={{ marginRight: 8 }} onClick={() => { onClose() }}>Cancel</Button>
+        <Button
+          style={{ marginRight: 8 }}
+          onClick={() => {
+            onClose();
+          }}
+        >
+          Cancel
+        </Button>
 
         <ActionButton
           permissions={['Project.Create', 'Project.Update']}
