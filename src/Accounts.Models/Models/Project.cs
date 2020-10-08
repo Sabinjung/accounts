@@ -25,6 +25,8 @@ namespace Accounts.Models
 
         public double Rate { get; set; }
 
+        public bool IsSendMail { get; set; }
+
         public DiscountType? DiscountType { get; set; }
 
         public decimal? DiscountValue { get; set; }

@@ -59,6 +59,22 @@ namespace Accounts
                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
+                    cfg.CreateMap<Project, UnsyncedProjectData>()
+                        .ForMember("FirstName", x => x.MapFrom(y => y.Consultant.FirstName))
+                        .ForMember("LastName", x => x.MapFrom(y => y.Consultant.LastName))
+                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
+                        .ForMember("StartDate", x => x.MapFrom(y => y.StartDt))
+                        .ForMember("EndDate", x => x.MapFrom(y => y.EndDt));
+
+                    cfg.CreateMap<Project, IhrmsProjectDto>()
+                        .ForMember("FirstName", x => x.MapFrom(y => y.Consultant.FirstName))
+                        .ForMember("LastName", x => x.MapFrom(y => y.Consultant.LastName))
+                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
+                        .ForMember("StartDate", x => x.MapFrom(y => y.StartDt))
+                        .ForMember("EndDate", x => x.MapFrom(y => y.EndDt));
+
+
+
                     cfg.CreateMap<ProjectDto, Project>()
                         .ForMember("StartDt", x => x.MapFrom(y => y.StartDt.Date))
                         .ForMember("EndDt", x => x.MapFrom(y => y.EndDt.HasValue ? y.EndDt.Value.Date : y.EndDt))

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, DatePicker, Input, notification } from 'antd';
+import { Form, Button, DatePicker, Input, notification, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EntityPicker from '../EntityPicker';
 import ConnectedEntityPicker from '../ConnectedEntityPicker';
@@ -87,6 +87,9 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             rules: [{ required: true, message: 'Please input rate!' }],
           })(<Input style={{ width: '5em' }} />)}
         </Form.Item>
+        <Form.Item label="Send Mail" >
+              {getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}
+        </Form.Item>
       </Form>
 
       <div
@@ -166,6 +169,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
+      isSendMail: Form.createFormField({ value: project.isSendMail }),
       discount: Form.createFormField({
         value: {
           discountType: project.discountType,
@@ -184,6 +188,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.endDt = _.get(fields, 'endDt.value');
     project.consultantId = _.get(fields, 'consultantId.value');
     project.rate = _.get(fields, 'rate.value');
+    project.isSendMail = _.get(fields, 'isSendMail.value');
     project.discountType = _.get(fields, 'discount.value.discountType');
     project.discountValue = _.get(fields, 'discount.value.discountValue');
     project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');

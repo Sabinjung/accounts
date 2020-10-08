@@ -9,6 +9,7 @@ import AppConsts from '../../lib/appconst';
 import ActionButton from '../ActionButton';
 import Authorize from '../Authorize';
 import useAxios from '../../lib/axios/useAxios';
+import { isGranted } from '../../lib/abpUtility';
 
 const { TextArea } = Input;
 
@@ -162,7 +163,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           Cancel
         </Button>
         {!qboInvoiceId && (
-          <Authorize permissions={['Invoicing.Submit']}>
+          <Authorize permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}>
             <Popconfirm
               title={
                 <div>
@@ -183,24 +184,43 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
             </Popconfirm>
           </Authorize>
         )}
-        {!qboInvoiceId && (
+
+        {!qboInvoiceId && invoice.isSendMail && isGranted('Invoicing.SubmitAndMail') ? (
           <ActionButton
-            url="/api/services/app/Invoice/GenerateAndSubmit"
+            url="/api/services/app/Invoice/GenerateAndMailInvoice"
             params={{ timesheetId }}
             onSuccess={() => {
               onClose && onClose();
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
-              //
             }}
             onError={(err: AxiosError) => {
               if (err && err.response && err.response.status == 403) {
                 window.location.href = `${AppConsts.remoteServiceBaseUrl}/Intuit/Login?returnUrl=${window.location.href}`;
               }
             }}
-            permissions={['Invoicing.Submit']}
           >
-            Submit Invoice
+            Submit and Mail
           </ActionButton>
+        ) : (
+          !qboInvoiceId && (
+            <ActionButton
+              url="/api/services/app/Invoice/GenerateAndSubmit"
+              params={{ timesheetId }}
+              style={{ marginRight: 8 }}
+              onSuccess={() => {
+                onClose && onClose();
+                setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
+              }}
+              onError={(err: AxiosError) => {
+                if (err && err.response && err.response.status == 403) {
+                  window.location.href = `${AppConsts.remoteServiceBaseUrl}/Intuit/Login?returnUrl=${window.location.href}`;
+                }
+              }}
+              permissions={['Invoicing.Submit']}
+            >
+              Submit Invoice
+            </ActionButton>
+          )
         )}
       </div>
     </React.Fragment>

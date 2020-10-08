@@ -43,6 +43,8 @@ namespace Accounts.Projects.Dto
 
         public double Rate { get; set; }
 
+        public bool IsSendMail { get; set; }
+
         public double PastTimesheetDays { get; set; }
         
         public TimesheetStatuses TimesheetStatus { get; set; }
@@ -56,5 +58,8 @@ namespace Accounts.Projects.Dto
         public DateTime? LastApprovedDate { get; set; }
 
         public DateTime? LastInvoicedDate { get; set; }
+        public bool IsSync { get; set; }
+
+        public List<IhrmsProjectDto> UnSyncedData { get; set; }
     }
 }

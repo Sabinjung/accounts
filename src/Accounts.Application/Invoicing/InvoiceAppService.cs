@@ -27,9 +27,11 @@ namespace Accounts.Invoicing
         private readonly OAuth2Client OAuth2Client;
         private readonly IntuitDataProvider IntuitDataProvider;
         private readonly QueryBuilderFactory QueryBuilder;
+        private readonly IRepository<Project> ProjectRepository;
+        private readonly IRepository<Timesheet> TimesheetRepository;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
-            OAuth2Client oAuth2Client,
+            OAuth2Client oAuth2Client, IRepository<Project> projectRepository, IRepository<Timesheet> timesheetRepository,
              IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
            )
             : base(repository)
@@ -38,7 +40,8 @@ namespace Accounts.Invoicing
             Mapper = mapper;
             OAuth2Client = oAuth2Client;
             IntuitDataProvider = intuitDataProvider;
-
+            ProjectRepository = projectRepository;
+            TimesheetRepository = timesheetRepository;
             QueryBuilder = queryBuilderFactory;
             CreatePermissionName = "Invoice.Create";
             UpdatePermissionName = "Invoice.Update";
@@ -52,8 +55,10 @@ namespace Accounts.Invoicing
         {
             var currentUserId = Convert.ToInt32(AbpSession.UserId);
             var invoice = await InvoicingService.GenerateInvoice(timesheetId, currentUserId);
+            var projectId = TimesheetRepository.Get(timesheetId).ProjectId;
             var dto = Mapper.Map<InvoiceDto>(invoice);
             dto.TimesheetId = timesheetId;
+            dto.IsSendMail = ProjectRepository.Get(projectId).IsSendMail;
             return dto;
         }
 
@@ -83,6 +88,17 @@ namespace Accounts.Invoicing
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
                 await InvoicingService.Submit(invoiceId, currentUserId);
+            }
+        }
+        
+        [AbpAuthorize("Invoicing.SubmitAndMail")]
+        public async Task GenerateAndMailInvoice(int timesheetId)
+        {
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
+            {
+                var currentUserId = Convert.ToInt32(AbpSession.UserId);
+                await InvoicingService.GenerateAndMailInvoice(timesheetId, currentUserId);
             }
         }
 

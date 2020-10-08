@@ -10,11 +10,15 @@ using Accounts.Models;
 using Accounts.Projects.Dto;
 using Accounts.Timesheets;
 using AutoMapper;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using PQ;
 using PQ.Pagination;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,6 +41,7 @@ namespace Accounts.Projects
         private readonly IList<ProjectQueryParameters> SavedQueries;
 
         private readonly ITimesheetService TimesheetService;
+        private readonly IConfiguration Configuration;
 
         public ProjectAppService(
             IRepository<Project> repository,
@@ -44,6 +49,7 @@ namespace Accounts.Projects
             IAzureBlobService azureBlobService,
             QueryBuilderFactory queryBuilderFactory,
             ITimesheetService timesheetService,
+            IConfiguration _Configuration,
             IMapper mapper)
        : base(repository)
         {
@@ -52,6 +58,7 @@ namespace Accounts.Projects
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
             TimesheetService = timesheetService;
+            Configuration = _Configuration;
             SavedQueries = new List<ProjectQueryParameters>
             {
                 new ProjectQueryParameters
@@ -69,6 +76,18 @@ namespace Accounts.Projects
             CreatePermissionName = "Project.Create";
             UpdatePermissionName = "Project.Update";
             DeletePermissionName = "Project.Delete";
+        }
+
+        private List<IhrmsProjectDto> GetIhrmsProjectList()
+        {
+            var url = Configuration.GetValue<string>("Ihrms:ProjectBaseUrl");
+            RestClient client = new RestClient(url);
+            RestRequest restRequest = new RestRequest(Method.GET);
+            restRequest.AddHeader("Content-Type", "application/json");
+
+            var output = client.Execute(restRequest);
+            var result = JsonConvert.DeserializeObject<List<IhrmsProjectDto>>(output.Content);
+            return result;
         }
 
         public async Task UploadAttachment(int projectId, IFormFile file, int? timehsheetId)

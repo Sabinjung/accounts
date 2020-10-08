@@ -86,6 +86,13 @@ namespace Accounts.Intuit
             return added;
         }
 
+        public void SendEmail<T>(T entity, Customer customer) where T : IEntity
+        {
+            var serviceContext = GetServiceContext();
+
+            DataService service = new DataService(serviceContext);
+            service.SendEmail<T>(entity, customer.PrimaryEmailAddr.Address);
+        }
 
         public List<T> FindAll<T>(T entity, int startPosition = 1, int maxResults = 100) where T : IEntity
         {
