@@ -19,6 +19,8 @@ namespace Accounts.Core.Invoicing
 
         private readonly IRepository<Timesheet> TimesheetRepository;
 
+        private readonly IRepository<Project> ProjectRepository;
+
         private readonly IObjectMapper Mapper;
 
         private readonly IInvoiceProcessor InvoiceProcessor;
@@ -26,11 +28,13 @@ namespace Accounts.Core.Invoicing
             IRepository<Invoice> invoiceRepository,
             IRepository<Timesheet> timesheetRepository,
             IInvoiceProcessor invoiceProcessor,
-            IObjectMapper mapper)
+            IRepository<Project> projectRepository,
+        IObjectMapper mapper)
         {
             InvoiceRepository = invoiceRepository;
             TimesheetRepository = timesheetRepository;
             InvoiceProcessor = invoiceProcessor;
+            ProjectRepository = projectRepository;
             Mapper = mapper;
         }
         public async Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate= false)
@@ -88,6 +92,29 @@ namespace Accounts.Core.Invoicing
         public async Task ReadInvoice(int invoiceId)
         {
             await Task.CompletedTask;
+        }
+
+        public async Task<string> GenerateAndMailInvoice(int timesheetId, int userId)
+        {
+            var timesheet = await TimesheetRepository.FirstOrDefaultAsync(timesheetId);
+            if (timesheet.InvoiceId.HasValue && !string.IsNullOrEmpty(timesheet.Invoice.QBOInvoiceId))
+            {
+                throw new UserFriendlyException("Invoice is already submitted.");
+            }
+            if(timesheet.Project.IsSendMail == false)
+            {
+                throw new UserFriendlyException("Send invoice maile is not enabled.");
+            }
+            var invoice = await GenerateInvoice(timesheetId, userId);
+            timesheet.Invoice = invoice;
+            timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;
+            var referenceNo = await InvoiceProcessor.SendMailAndInvoice(invoice);
+            invoice.QBOInvoiceId = referenceNo;
+            timesheet.StatusId = (int)TimesheetStatuses.Invoiced;
+            timesheet.InvoiceGeneratedByUserId = userId;
+            timesheet.InvoiceGeneratedDate = DateTime.UtcNow;
+
+            return await Task.FromResult(referenceNo);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace Accounts.Core.Invoicing
     public interface IInvoiceProcessor
     {
         Task<string> Send(Invoice invoice);
+        Task<string> SendMailAndInvoice(Invoice invoice);
     }
 }

@@ -23,6 +23,7 @@ namespace Accounts.Authorization
             // Invoice Permissions
             var invoicePermission = context.CreatePermission("Invoicing", L("Invoicing"));
             invoicePermission.CreateChildPermission("Invoicing.Submit", L("Submit Invoice"));
+            invoicePermission.CreateChildPermission("Invoicing.SubmitAndMail", L("Submit And Mail"));
 
             // Consultant Permissions
             var consultantPermission = context.CreatePermission("Consultant", L("Consultant"));

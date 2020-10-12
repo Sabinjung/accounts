@@ -11,6 +11,7 @@ namespace Accounts.Core.Invoicing
         Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate = false);
         Task<string> Submit(int invoiceId, int userId);
         Task<string> Save(int timesheetId, int userId, string referenceNo);
+        Task<string> GenerateAndMailInvoice(int timesheetId, int userId);
         Task ReadInvoice(int invoiceId);
     }
 }

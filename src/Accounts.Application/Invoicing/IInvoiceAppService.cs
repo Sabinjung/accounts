@@ -12,7 +12,9 @@ namespace Accounts.Invoicing
 
         Task Submit(int invoiceId);
 
+        Task GenerateAndMailInvoice(int timesheetId);
         Task<Page<IncoiceListItemDto>> Search(InvoiceQueryParameter queryParameter);
+        
         Task<IEnumerable<InvoiceMonthReportDto>> GetInvoicesByMonthReport(InvoiceQueryParameter queryParameter);
     }
 }

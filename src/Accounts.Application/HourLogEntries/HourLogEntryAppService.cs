@@ -91,7 +91,6 @@ namespace Accounts.HourLogEntries
             query.WhereIf(h => h.EndDt.HasValue, h => x => x.Day.Date <= h.EndDt.Value.Date);
             query.WhereIf(h => true, h => x => x.Timesheet != null && (x.Timesheet.ApprovedDate.HasValue));
 
-
             return await query.ExecuteAsync((originalQuery) =>
                     from proj in ProjectRepository.GetAll()
                     join p in (from hl in originalQuery
@@ -140,7 +139,6 @@ namespace Accounts.HourLogEntries
                     Status = y.Timesheet.Status.Name
                 }).ToListAsync();
 
-
             var activeProjects = ProjectRepository.QueryActiveProjectsByDate(startDay, endDay);
             var activeProjectsHourLogReports = (from ac in activeProjects
                                                 join hl in hourLogs on ac.Id equals hl.ProjectId into ah
@@ -152,8 +150,14 @@ namespace Accounts.HourLogEntries
                                                     ProjectId = ach.Key.Id,
                                                     CompanyName = ach.Key.CompanyName,
                                                     ConsultantName = ach.Key.ConsultantName,
-                                                    IsActive = ach.Key.IsActive
+                                                    IsActive = ach.Key.IsActive,
                                                 }).ToList();
+
+            var lastApprovedTimeSheetQuery = from t in TimesheetRepository.GetAll()
+                                             where activeProjects.Any(x => x.Id == t.ProjectId) && t.ApprovedDate.HasValue
+                                             group t by t.ProjectId into g
+                                             select g.OrderByDescending(x => x.EndDt).First();
+            var lastApproved = await lastApprovedTimeSheetQuery.ToListAsync();
 
             foreach (var projectHourLogReport in activeProjectsHourLogReports)
             {
@@ -164,6 +168,7 @@ namespace Accounts.HourLogEntries
                         Hours = y.Hours,
                         Status = y.Status
                     });
+                projectHourLogReport.LastApprovedDate = lastApproved.FirstOrDefault(t => t != null && t.ProjectId == projectHourLogReport.ProjectId) != null ? lastApproved.FirstOrDefault(t => t != null && t.ProjectId == projectHourLogReport.ProjectId).ApprovedDate : (DateTime?)null;
                 projectHourLogReport.DailyHourLogs.AddRange(dailyhourlogs);
             }
 
@@ -207,7 +212,6 @@ namespace Accounts.HourLogEntries
                                 ProjectId = plog.ProjectId,
                                 IsAssociatedWithTimesheet = plog.TimesheetId.HasValue && plog.Timesheet.StatusId != (int)TimesheetStatuses.Created ? true : false,
                                 TimesheetStatusesId = plog.TimesheetId.HasValue ? plog.Timesheet.StatusId : (int)TimesheetStatuses.TimeSheetOpen
-
                             })
                         };
 

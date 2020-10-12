@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, DatePicker, Input, notification } from 'antd';
+import { Form, Button, DatePicker, Input, notification, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EntityPicker from '../EntityPicker';
 import ConnectedEntityPicker from '../ConnectedEntityPicker';
@@ -30,23 +30,23 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
 
   const validateDiscount = (rule: any, value: any, callback: any) => {
     if (value.discountType && !value.discountValue) {
-      callback('Please input the discount!')
+      callback('Please input the discount!');
     } else {
-      callback()
+      callback();
     }
-  }
+  };
 
   return (
     <React.Fragment>
       <Form {...formItemLayout}>
         <Form.Item label="Company">
           {getFieldDecorator('companyId', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
-          })(<EntityPicker url="/api/services/app/Company/Search" mapFun={r => ({ value: r.id, text: r.displayName })} />)}
+            rules: [{ required: true, message: 'Please input your Company!' }],
+          })(<EntityPicker url="/api/services/app/Company/Search" mapFun={(r) => ({ value: r.id, text: r.displayName })} />)}
         </Form.Item>
         <Form.Item label="Consultant">
           {getFieldDecorator('consultantId', {
-            rules: [{ required: true, message: 'Please input your phone number!' }],
+            rules: [{ required: true, message: 'Please input your Consultant!' }],
           })(
             <ConnectedEntityPicker
               loader={(store: any) => store.getConsultants()}
@@ -59,12 +59,12 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
             rules: [{ required: true, message: 'Select correct Term' }],
-          })(<EntityPicker url="/api/services/app/Term/GetAll" mapFun={r => ({ value: r.id, text: r.name })} />)}
+          })(<EntityPicker url="/api/services/app/Term/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
         </Form.Item>
         <Form.Item label="Invoice Cycle">
           {getFieldDecorator('invoiceCycleId', {
             rules: [{ required: true, message: 'Select right invoice cycle!' }],
-          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={r => ({ value: r.id, text: r.name })} />)}
+          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
         </Form.Item>
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
@@ -79,13 +79,16 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         </Form.Item>
         <Form.Item label="Discount">
           {getFieldDecorator('discount', {
-            rules: [{ validator: validateDiscount }]
+            rules: [{ validator: validateDiscount }],
           })(<DiscountInput />)}
         </Form.Item>
         <Form.Item label="Rate">
           {getFieldDecorator('rate', {
             rules: [{ required: true, message: 'Please input rate!' }],
           })(<Input style={{ width: '5em' }} />)}
+        </Form.Item>
+        <Form.Item label="Send Mail" >
+              {getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}
         </Form.Item>
       </Form>
 
@@ -101,7 +104,14 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           textAlign: 'right',
         }}
       >
-        <Button style={{ marginRight: 8 }} onClick={() => { onClose() }}>Cancel</Button>
+        <Button
+          style={{ marginRight: 8 }}
+          onClick={() => {
+            onClose();
+          }}
+        >
+          Cancel
+        </Button>
 
         <ActionButton
           permissions={['Project.Create', 'Project.Update']}
@@ -159,6 +169,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
+      isSendMail: Form.createFormField({ value: project.isSendMail }),
       discount: Form.createFormField({
         value: {
           discountType: project.discountType,
@@ -177,6 +188,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.endDt = _.get(fields, 'endDt.value');
     project.consultantId = _.get(fields, 'consultantId.value');
     project.rate = _.get(fields, 'rate.value');
+    project.isSendMail = _.get(fields, 'isSendMail.value');
     project.discountType = _.get(fields, 'discount.value.discountType');
     project.discountValue = _.get(fields, 'discount.value.discountValue');
     project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');
