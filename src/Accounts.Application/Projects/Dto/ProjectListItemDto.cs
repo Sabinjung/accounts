@@ -19,6 +19,10 @@ namespace Accounts.Projects.Dto
 
         public int CompanyId { get; set; }
 
+        public string ClientName { get; set; }
+
+        public int EndClientId { get; set; }
+
         public DateTime StartDt { get; set; }
 
         public DateTime? EndDt { get; set; }

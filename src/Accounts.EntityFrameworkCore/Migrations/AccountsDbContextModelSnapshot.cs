@@ -1034,6 +1034,33 @@ namespace Accounts.Migrations
                     b.ToTable("AbpUsers");
                 });
 
+            modelBuilder.Entity("Accounts.Data.Models.EndClient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientName");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EndClients");
+                });
+
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -1446,6 +1473,8 @@ namespace Accounts.Migrations
 
                     b.Property<decimal?>("DiscountValue");
 
+                    b.Property<int?>("EndClientId");
+
                     b.Property<DateTime?>("EndDt");
 
                     b.Property<int>("InvoiceCycleId");
@@ -1471,6 +1500,8 @@ namespace Accounts.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("ConsultantId");
+
+                    b.HasIndex("EndClientId");
 
                     b.HasIndex("InvoiceCycleId");
 
@@ -1916,6 +1947,10 @@ namespace Accounts.Migrations
                         .WithMany()
                         .HasForeignKey("ConsultantId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Accounts.Data.Models.EndClient", "EndClient")
+                        .WithMany()
+                        .HasForeignKey("EndClientId");
 
                     b.HasOne("Accounts.Models.InvoiceCycle", "InvoiceCycle")
                         .WithMany()

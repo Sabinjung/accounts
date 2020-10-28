@@ -53,6 +53,11 @@ const columns = [
     width: 140,
   },
   {
+    title: 'End Client',
+    dataIndex: 'clientName',
+    width: 140,
+  },
+  {
     title: 'Start Date',
     dataIndex: 'startDt',
     render: (val: string) => moment(val).format('MM/DD/YYYY'),
@@ -105,7 +110,6 @@ const columns = [
     },
   },
 ];
-
 
 export const ProjectTable = ({
   isLoading,

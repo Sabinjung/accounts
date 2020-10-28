@@ -99,6 +99,11 @@ const AllInvoiceList = (props: any) => {
       dataIndex: 'consultantName',
     },
     {
+      title: 'End Client',
+      key: 'clientName',
+      dataIndex: 'clientName',
+    },
+    {
       title: 'Issue Date',
       key: 'invoiceDate',
       render: (val: string) => (val !== null ? moment(val).format('MM/DD/YYYY') : '--'),

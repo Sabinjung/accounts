@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -142,6 +142,7 @@ namespace Accounts.Core.Invoicing.Intuit
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
             var consultant = invoice.Consultant;
+            var client = invoice.Project.EndClientId !=null ? invoice.Project.EndClient.ClientName : null;
             var customFields = new List<IntuitData.CustomField>();
 
             var customerFields = customer.CustomField;
@@ -154,6 +155,15 @@ namespace Accounts.Core.Invoicing.Intuit
             candidateCustomField.DefinitionId = "1";
 
             customFields.Add(candidateCustomField);
+
+            var clientCustomField = new IntuitData.CustomField();
+            clientCustomField.Name = "End Client Name";
+            clientCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
+            clientCustomField.AnyIntuitObject = client;
+            clientCustomField.DefinitionId = "2";
+            
+            customFields.Add(clientCustomField);
+
             intuitInvoice.CustomField = customFields.ToArray();
         }
 
