@@ -83,6 +83,18 @@ export const appRouters: any = [
     showInMenu: true,
     component: LoadableComponent(() => import('../../scenes/Companies')),
   },
+
+  {
+    path: '/endClients',
+    name: 'EndClinets',
+    permission: '',
+    title: 'End Clients',
+    icon: 'team',
+    showInMenu: true,
+    exact: true,
+    component: LoadableComponent(() => import('../../scenes/EndClients')),
+  },
+
   {
     path: '/projects/:projectId/detail',
     name: 'Project Details',

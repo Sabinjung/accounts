@@ -39,6 +39,8 @@ namespace Accounts.Invoicing.Dto
 
         public string CompanyName { get; set; }
 
+        public string ClientName { get; set; }
+
         public string TermName { get; set; }
 
         public string CompanyEmail { get; set; }

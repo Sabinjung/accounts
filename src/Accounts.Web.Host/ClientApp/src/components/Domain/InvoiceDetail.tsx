@@ -68,6 +68,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     lineItems,
     attachments,
     qboInvoiceId,
+    clientName,
   } = invoice;
 
   return (
@@ -75,13 +76,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
       <Descriptions layout="vertical" column={4} size="small">
         <Descriptions.Item label="Customer">{companyName}</Descriptions.Item>
         <Descriptions.Item label="Customer Email">{companyEmail}</Descriptions.Item>
-        <Descriptions.Item label="Billing Address" span={2}>
+        <Descriptions.Item label="Billing Address">
           <code> Populated from Intuit</code>
         </Descriptions.Item>
         <Descriptions.Item label="Term">{termName}</Descriptions.Item>
         <Descriptions.Item label="Invoice Date">{moment(invoiceDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Due Date">{moment(dueDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Consultant">{consultantName}</Descriptions.Item>
+        {clientName && <Descriptions.Item label="End Client">{clientName}</Descriptions.Item>}
       </Descriptions>
       <table css={tableStyles}>
         <tr>

@@ -56,6 +56,11 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             />
           )}
         </Form.Item>
+        <Form.Item label="End Client">
+          {getFieldDecorator('endClientId')(
+            <EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.id, text: r.clientName })} />
+          )}
+        </Form.Item>
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
             rules: [{ required: true, message: 'Select correct Term' }],
@@ -71,7 +76,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             rules: [{ required: true, message: 'Please input Start Date!' }],
           })(<DatePicker />)}
         </Form.Item>
-        <Form.Item label="End  Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
+        <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
         <Form.Item label="InvoiceCycle Start Date">
           {getFieldDecorator('invoiceCycleStartDt', {
             rules: [{ required: true, message: 'Please input InvoiceCycle Start Date!' }],
@@ -87,9 +92,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             rules: [{ required: true, message: 'Please input rate!' }],
           })(<Input style={{ width: '5em' }} />)}
         </Form.Item>
-        <Form.Item label="Send Mail" >
-              {getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}
-        </Form.Item>
+        <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}</Form.Item>
       </Form>
 
       <div
@@ -120,7 +123,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           onSuccess={(response: any) => {
             notification.open({
               message: 'Success',
-              description: 'Project successfully added.',
+              description: project && project.id ? 'Project successfully updated.' : 'Project successfully created.',
             });
             onProjectAdded && onProjectAdded();
           }}
@@ -170,6 +173,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
       isSendMail: Form.createFormField({ value: project.isSendMail }),
+      endClientId: Form.createFormField({ value: project.endClientId }),
       discount: Form.createFormField({
         value: {
           discountType: project.discountType,
@@ -192,6 +196,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.discountType = _.get(fields, 'discount.value.discountType');
     project.discountValue = _.get(fields, 'discount.value.discountValue');
     project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');
+    project.endClientId = _.get(fields, 'endClientId');
   },
 })(ProjectForm);
 
