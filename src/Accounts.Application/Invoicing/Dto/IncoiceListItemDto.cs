@@ -17,5 +17,6 @@ namespace Accounts.Invoicing.Dto
         public DateTime DueDate { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal Total { get; set; }
+        public decimal? Balance { get; set; }
     }
 }

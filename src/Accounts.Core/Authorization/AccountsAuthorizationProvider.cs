@@ -47,6 +47,12 @@ namespace Accounts.Authorization
             expensePermission.CreateChildPermission("Expense.Update", L("Expense.Update"));
             expensePermission.CreateChildPermission("Expense.Delete", L("Expense.Delete"));
 
+            //Endclient Premissions
+            var endClientPermission = context.CreatePermission("Endclient", L("Endclient"));
+            endClientPermission.CreateChildPermission("Endclient.Create", L("Endclient.Create"));
+            endClientPermission.CreateChildPermission("Endclient.Update", L("Endclient.Update"));
+            endClientPermission.CreateChildPermission("Endclient.Delete", L("Endclient.Delete"));
+
         }
 
         private static ILocalizableString L(string name)

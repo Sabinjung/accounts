@@ -87,7 +87,7 @@ export const appRouters: any = [
   {
     path: '/endClients',
     name: 'EndClinets',
-    permission: '',
+    permission: 'Endclient',
     title: 'End Clients',
     icon: 'team',
     showInMenu: true,

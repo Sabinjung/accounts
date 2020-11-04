@@ -4,6 +4,7 @@ using Accounts.Models;
 using AutoMapper;
 using Intuit.Ipp.OAuth2PlatformClient;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Accounts.Intuit
@@ -17,6 +18,8 @@ namespace Accounts.Intuit
 
         private readonly IRepository<Term> TermRepository;
 
+        private readonly IRepository<Invoice> InvoiceRepository;
+
         private readonly IMapper Mapper;
 
         private readonly OAuth2Client OAuth2Client;
@@ -25,12 +28,14 @@ namespace Accounts.Intuit
             IntuitDataProvider intuitDataProvider,
             IRepository<Company> companyRepository,
             IRepository<Term> termRepository,
+            IRepository<Invoice> invoiceRepository,
             OAuth2Client oAuth2CLient,
             IMapper mapper)
         {
             IntuitDataProvider = intuitDataProvider;
             CompanyRepository = companyRepository;
             TermRepository = termRepository;
+            InvoiceRepository = invoiceRepository;
             Mapper = mapper;
             OAuth2Client = oAuth2CLient;
         }
@@ -78,5 +83,24 @@ namespace Accounts.Intuit
             }
         }
 
+        [HttpGet]
+        public async Task SyncInvoices()
+        {
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
+            {
+                var invoices = IntuitDataProvider.GetInvoices();
+                foreach (var invoice in invoices)
+                {
+                    var existingInvoice = await InvoiceRepository.FirstOrDefaultAsync(x => x.QBOInvoiceId == invoice.Id);
+                    if(existingInvoice != null)
+                    {
+                        var updatedInvoice = Mapper.Map(invoice, existingInvoice);
+                        updatedInvoice.Id = existingInvoice.Id;
+                        InvoiceRepository.Update(updatedInvoice);
+                    }
+                }
+            }
+        }
     }
 }

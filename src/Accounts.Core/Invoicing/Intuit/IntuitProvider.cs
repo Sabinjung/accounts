@@ -57,7 +57,14 @@ namespace Accounts.Intuit
             return terms;
         }
 
-
+        public IEnumerable<Invoice> GetInvoices()
+        {
+            var serviceContext = GetServiceContext();
+            // Create a QuickBooks QueryService using ServiceContext
+            var invoiceService = new QueryService<Invoice>(serviceContext);
+            var invoices = invoiceService.ExecuteIdsQuery("SELECT * FROM Invoice maxresults 1000");
+            return invoices;
+        }
 
 
         private ServiceContext GetServiceContext()

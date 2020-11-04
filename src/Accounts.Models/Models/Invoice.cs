@@ -35,6 +35,8 @@ namespace Accounts.Models
 
         public string QBOInvoiceId { get; set; }
 
+        public decimal? Balance { get; set; }
+
         public int ConsultantId { get; set; }
 
         public int ProjectId { get; set; }

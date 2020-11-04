@@ -19,6 +19,9 @@ namespace Accounts.EndClients
         : base(repository)
         {
             QueryBuilder = queryBuilderFactory;
+            CreatePermissionName = "Endclient.Create";
+            UpdatePermissionName = "Endclient.Update";
+            DeletePermissionName = "Endclient.Delete";
         }
 
         [HttpGet]
