@@ -19,7 +19,7 @@ namespace Accounts.Models
 
         public int InvoiceCycleId { get; set; }
 
-        public int? EndClientId { get; set; }
+        public string EndClient { get; set; }
 
         public int CompanyId { get; set; }
 
@@ -32,8 +32,6 @@ namespace Accounts.Models
         public DiscountType? DiscountType { get; set; }
 
         public decimal? DiscountValue { get; set; }
-
-        public virtual EndClient EndClient { get; set; }
 
         public virtual Company Company { get; set; }
 
