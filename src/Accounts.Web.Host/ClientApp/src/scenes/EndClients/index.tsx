@@ -4,6 +4,7 @@ import useAxios from '../../lib/axios/useAxios';
 import styled from '@emotion/styled';
 import EndClientCreateUpdate from './components/EndClientCreateUpdate';
 import ConfirmActionButton from '../../components/ConfirmActionButton';
+import Authorize from '../../components/Authorize';
 
 const { Search } = Input;
 
@@ -37,7 +38,9 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       key: 'action',
       render: (record: any) => (
         <>
-          <StyledEditButton icon="edit" type="primary" onClick={() => (setVisible(true), (rowData = record))} />
+          <Authorize permissions={['Endclient.Update']}>
+            <StyledEditButton icon="edit" type="primary" onClick={() => (setVisible(true), (rowData = record))} />
+          </Authorize>
           <ConfirmActionButton
             url="/api/services/app/EndClient/Delete"
             params={{ Id: record.id }}
@@ -65,9 +68,11 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
         <Col>
           <h2>End Clients</h2>
         </Col>
-        <Col>
-          <Button type="primary" shape="circle" icon="plus" onClick={() => (setVisible(true), (rowData = ''))}></Button>
-        </Col>
+        <Authorize permissions={['Endclient.Create']}>
+          <Col>
+            <Button type="primary" shape="circle" icon="plus" onClick={() => (setVisible(true), (rowData = ''))}></Button>
+          </Col>
+        </Authorize>
       </Row>
       <StyledSearch placeholder="Filter" onSearch={setSearchText} allowClear />
       <Table dataSource={results} columns={columns} loading={loading} />
