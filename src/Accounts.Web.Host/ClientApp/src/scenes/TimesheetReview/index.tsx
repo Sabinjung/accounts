@@ -64,7 +64,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
 
   const filterTimesheet = (startTime: any, endTime: any, consultantId: number, companyId: number) => {
     makeRequest({ params: { startTime: startTime, endTime: endTime, consultantId: consultantId, companyId: companyId } });
-  }
+  };
   // debugger;
 
   return (
@@ -78,6 +78,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
             isLoading={loading}
             selectedTimesheetId={selectedTimesheetId}
             filterTimesheet={filterTimesheet}
+            selectedFilter={selectedFilter}
             onFilterChanged={(filter: string) => {
               setSelectedFilter(filter);
             }}
