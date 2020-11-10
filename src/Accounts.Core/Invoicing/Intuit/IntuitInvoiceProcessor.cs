@@ -160,7 +160,7 @@ namespace Accounts.Core.Invoicing.Intuit
             clientCustomField.Name = "End Client Name";
             clientCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
             clientCustomField.AnyIntuitObject = client;
-            clientCustomField.DefinitionId = "2";
+            clientCustomField.DefinitionId = "3";
             
             customFields.Add(clientCustomField);
 
