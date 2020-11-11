@@ -21,7 +21,9 @@ namespace Accounts.Projects.Dto
 
         public int CompanyId { get; set; }
 
-        public string EndClient { get; set; }
+        public string EndClientName { get; set; }
+
+        public int? EndClientId { get; set; }
 
         public string Email { get; set; }
 

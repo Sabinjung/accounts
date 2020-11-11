@@ -43,6 +43,8 @@ namespace Accounts.Models
 
         public int CompanyId { get; set; }
 
+        public string EndClientName { get; set; }
+
         public virtual Project Project { get; set; }
 
         public virtual Company Company { get; set; }

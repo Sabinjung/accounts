@@ -1322,6 +1322,8 @@ namespace Accounts.Migrations
 
                     b.Property<DateTime>("DueDate");
 
+                    b.Property<string>("EndClientName");
+
                     b.Property<DateTime>("InvoiceDate");
 
                     b.Property<bool>("IsDeleted");
@@ -1475,7 +1477,7 @@ namespace Accounts.Migrations
 
                     b.Property<decimal?>("DiscountValue");
 
-                    b.Property<string>("EndClient");
+                    b.Property<int?>("EndClientId");
 
                     b.Property<DateTime?>("EndDt");
 
@@ -1502,6 +1504,8 @@ namespace Accounts.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("ConsultantId");
+
+                    b.HasIndex("EndClientId");
 
                     b.HasIndex("InvoiceCycleId");
 
@@ -1947,6 +1951,10 @@ namespace Accounts.Migrations
                         .WithMany()
                         .HasForeignKey("ConsultantId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Accounts.Models.EndClient", "EndClient")
+                        .WithMany()
+                        .HasForeignKey("EndClientId");
 
                     b.HasOne("Accounts.Models.InvoiceCycle", "InvoiceCycle")
                         .WithMany()

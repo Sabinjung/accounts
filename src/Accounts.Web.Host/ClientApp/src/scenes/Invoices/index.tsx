@@ -120,8 +120,8 @@ const AllInvoiceList = (props: any) => {
     },
     {
       title: 'End Client',
-      key: 'clientName',
-      dataIndex: 'clientName',
+      key: 'endClientName',
+      dataIndex: 'endClientName',
     },
     {
       title: 'Issue Date',

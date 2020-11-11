@@ -42,8 +42,8 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
             <StyledEditButton icon="edit" type="primary" onClick={() => (setVisible(true), (rowData = record))} />
           </Authorize>
           <ConfirmActionButton
-            url="/api/services/app/EndClient/Delete"
-            params={{ Id: record.id }}
+            url="/api/services/app/EndClient/DeleteClient"
+            params={{ id: record.id }}
             method="Delete"
             type="danger"
             icon="delete"

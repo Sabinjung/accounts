@@ -57,8 +57,8 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           )}
         </Form.Item>
         <Form.Item label="End Client">
-          {getFieldDecorator('endClient')(
-            <EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.clientName, text: r.clientName })} />
+          {getFieldDecorator('endClientId')(
+            <EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.id, text: r.clientName })} />
           )}
         </Form.Item>
         <Form.Item label="Term">
@@ -173,7 +173,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
       isSendMail: Form.createFormField({ value: project.isSendMail }),
-      endClient: Form.createFormField({ value: project.endClient }),
+      endClientId: Form.createFormField({ value: project.endClientId }),
       discount: Form.createFormField({
         value: {
           discountType: project.discountType,
@@ -196,7 +196,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.discountType = _.get(fields, 'discount.value.discountType');
     project.discountValue = _.get(fields, 'discount.value.discountValue');
     project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');
-    project.endClient = _.get(fields, 'endClient');
+    project.endClientId = _.get(fields, 'endClientId.value');
   },
 })(ProjectForm);
 

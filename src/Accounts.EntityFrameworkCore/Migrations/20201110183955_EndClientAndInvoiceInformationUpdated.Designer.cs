@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounts.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    [Migration("20201103151047_BalanceColumnAdded")]
-    partial class BalanceColumnAdded
+    [Migration("20201110183955_EndClientAndInvoiceInformationUpdated")]
+    partial class EndClientAndInvoiceInformationUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1323,6 +1323,8 @@ namespace Accounts.Migrations
                     b.Property<decimal?>("DiscountValue");
 
                     b.Property<DateTime>("DueDate");
+
+                    b.Property<string>("EndClientName");
 
                     b.Property<DateTime>("InvoiceDate");
 

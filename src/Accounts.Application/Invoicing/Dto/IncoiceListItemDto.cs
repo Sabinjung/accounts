@@ -12,7 +12,7 @@ namespace Accounts.Invoicing.Dto
     {
         public string QBOInvoiceId { get; set; }
         public string CompanyName { get; set; }
-        public string ClientName { get; set; }
+        public string EndClientName { get; set; }
         public string ConsultantName { get; set; }
         public DateTime DueDate { get; set; }
         public DateTime InvoiceDate { get; set; }

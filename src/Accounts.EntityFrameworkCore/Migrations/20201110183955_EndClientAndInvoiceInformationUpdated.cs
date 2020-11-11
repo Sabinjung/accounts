@@ -4,13 +4,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Accounts.Migrations
 {
-    public partial class EndClientsTableAdded : Migration
+    public partial class EndClientAndInvoiceInformationUpdated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
                 name: "EndClientId",
                 table: "Projects",
+                nullable: true);
+
+            migrationBuilder.AddColumn<decimal>(
+                name: "Balance",
+                table: "Invoices",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "EndClientName",
+                table: "Invoices",
                 nullable: true);
 
             migrationBuilder.CreateTable(
@@ -44,7 +54,7 @@ namespace Accounts.Migrations
                 column: "EndClientId",
                 principalTable: "EndClients",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.SetNull);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -63,6 +73,14 @@ namespace Accounts.Migrations
             migrationBuilder.DropColumn(
                 name: "EndClientId",
                 table: "Projects");
+
+            migrationBuilder.DropColumn(
+                name: "Balance",
+                table: "Invoices");
+
+            migrationBuilder.DropColumn(
+                name: "EndClientName",
+                table: "Invoices");
         }
     }
 }
