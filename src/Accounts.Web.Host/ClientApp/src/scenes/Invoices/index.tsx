@@ -16,7 +16,7 @@ const StyledTable = styled(Table)`
     background: unset;
   }
   .overdue {
-    background: #f1dbdb;
+    background: #f1dbdb !important;
   }
 `;
 
@@ -77,7 +77,7 @@ const AllInvoiceList = (props: any) => {
     },
   });
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCompanySearchText(undefined);

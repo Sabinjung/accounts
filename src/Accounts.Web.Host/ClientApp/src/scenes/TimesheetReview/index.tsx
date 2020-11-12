@@ -23,6 +23,7 @@ interface ITimesheetReviewProps {
   makeRequest: (props: any) => void;
 }
 
+let reload: any = null;
 const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
   const [selectedFilter, setSelectedFilter] = useState<string>('Pending Apprv');
   const [{ data, loading }, makeRequest] = useAxios({
@@ -65,7 +66,10 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
   const filterTimesheet = (startTime: any, endTime: any, consultantId: number, companyId: number) => {
     makeRequest({ params: { startTime: startTime, endTime: endTime, consultantId: consultantId, companyId: companyId } });
   };
-  // debugger;
+
+  const handleRefetch = (refetch: any) => {
+    reload = refetch;
+  };
 
   return (
     <React.Fragment>
@@ -107,6 +111,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                 <TimesheetViewer
                   ref={viewerRef}
                   path={`/timesheets/${params.timesheetId}`}
+                  handleRefetch={handleRefetch}
                   timesheetId={params.timesheetId}
                   onTimesheetApproved={() => {
                     const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id === params.timesheetId);
@@ -148,7 +153,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                     onClose={onClose}
                     onInvoiceSubmitted={() => {
                       refetch();
-                      viewerRef.current && viewerRef.current.refetch();
+                      reload && reload();
                     }}
                   />
                 );
@@ -163,7 +168,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                           onClose={onClose}
                           onInvoiceSubmitted={() => {
                             refetch();
-                            viewerRef.current && viewerRef.current.refetch();
+                            reload && reload();
                           }}
                         />
                       );
