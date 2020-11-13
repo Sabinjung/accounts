@@ -67,19 +67,29 @@ namespace Accounts.Core.Invoicing.Intuit
             AddLines(intuitInvoice, invoice, accountForDiscount);
             var savedInvoice = IntuitDataProvider.Add(intuitInvoice);
 
-            // Include Attachments
-            var invoiceAttachments = new List<FileForIntuitUploadDTO>();
-            foreach (var attachment in invoice.Attachments)
+            try
             {
-                var dto = new FileForIntuitUploadDTO();
-                var blob = await AzureBlobService.DownloadFilesAsync(attachment.Name);
-                dto.Stream = await blob.OpenReadAsync();
-                dto.ContentType = attachment.ContentType;
-                dto.FileName = attachment.Name;
-                invoiceAttachments.Add(dto);
+                // Include Attachments
+                var invoiceAttachments = new List<FileForIntuitUploadDTO>();
+                foreach (var attachment in invoice.Attachments)
+                {
+                    var dto = new FileForIntuitUploadDTO();
+                    var blob = await AzureBlobService.DownloadFilesAsync(attachment.Name);
+                    dto.Stream = await blob.OpenReadAsync();
+                    dto.ContentType = attachment.ContentType;
+                    dto.FileName = attachment.Name;
+                    invoiceAttachments.Add(dto);
+                }
+                IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
+
+                IntuitDataProvider.SendEmail(savedInvoice, customer);
             }
-            IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
-            IntuitDataProvider.SendEmail(savedInvoice, customer);
+            catch (Exception e)
+            {
+                //log to db and display to user
+            }
+
+
             return savedInvoice.Id;
         }
 
