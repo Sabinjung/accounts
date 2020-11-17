@@ -12,6 +12,7 @@ namespace Accounts.EntityFrameworkCore.Repositories
     public interface IHourLogEntryRepository : IRepository<HourLogEntry>
     {
         IQueryable<HourLogEntry> GetHourLogEntriesByProjectIdAsync(int projectId, DateTime startDt, DateTime endDt);
+        IQueryable<HourLogEntry> GetAllHourLogEntriesByProjectIdAsync(int projectId, DateTime startDt);
     }
     public class HourLogEntryRepository : AccountsRepositoryBase<HourLogEntry>, IHourLogEntryRepository
     {
@@ -25,6 +26,10 @@ namespace Accounts.EntityFrameworkCore.Repositories
             return GetAll().Where(p => p.ProjectId == projectId && p.Day >= startDateOnly && p.Day <= endDateOnly);
         }
 
-
+        public IQueryable<HourLogEntry> GetAllHourLogEntriesByProjectIdAsync(int projectId, DateTime startDt)
+        {
+            var startDateOnly = startDt.Date;
+            return GetAll().Where(p => p.ProjectId == projectId && p.Day >= startDateOnly);
+        }
     }
 }

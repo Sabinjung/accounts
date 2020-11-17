@@ -32,9 +32,10 @@ class TimesheetModel {
 
   constructor({ hourLogEntries, totalHrs, ...args }: any) {
     assign(this, args);
+    let length: number = hourLogEntries.length;
     this.hourLogEntries = hourLogEntries.map((x: any) => new HourLogEntryModel(x));
     this.originalStartDt = this.startDt;
-    this.originalEndDt = this.endDt;
+    this.originalEndDt = hourLogEntries[length - 1].day;
   }
 }
 

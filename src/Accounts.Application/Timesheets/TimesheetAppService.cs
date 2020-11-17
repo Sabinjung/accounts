@@ -109,6 +109,8 @@ namespace Accounts.Projects
             var project = await ProjectRepository.GetAsync(input.ProjectId);
             var lastTimesheet = await Repository.GetAll().Where(x => x.ProjectId == input.ProjectId).OrderByDescending(x => x.EndDt).FirstOrDefaultAsync();
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
+            if (input.EndDt > endDt)
+                endDt = input.EndDt;
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
@@ -237,7 +239,7 @@ namespace Accounts.Projects
             timesheetInfo.EndDt = endDt;
 
             // Fill in Timesheet Hour Log Entries
-            var hourLogEntries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt, timesheetInfo.EndDt).ToListAsync();
+            var hourLogEntries = await HourLogEntryRepository.GetAllHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt).ToListAsync();
 
             if (!TimesheetService.AllTimesheetHoursEntered(project.StartDt > startDt ? project.StartDt : startDt, timesheetInfo.EndDt, hourLogEntries))
             {

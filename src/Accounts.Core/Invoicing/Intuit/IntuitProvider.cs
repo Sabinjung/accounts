@@ -96,9 +96,20 @@ namespace Accounts.Intuit
         public void SendEmail<T>(T entity, Customer customer) where T : IEntity
         {
             var serviceContext = GetServiceContext();
-
+            var address = customer.PrimaryEmailAddr.Address;
             DataService service = new DataService(serviceContext);
-            service.SendEmail<T>(entity, customer.PrimaryEmailAddr.Address);
+
+            if (address.Contains(','))
+            {
+                foreach (string email in address.Split(','))
+                {
+                    service.SendEmail<T>(entity, email.Trim());
+                }
+            }
+            else
+            {
+                service.SendEmail<T>(entity, address);
+            }
         }
 
         public List<T> FindAll<T>(T entity, int startPosition = 1, int maxResults = 100) where T : IEntity

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, Spin, Descriptions, Checkbox, Row, Col, Popconfirm, Input, notification, Alert } from 'antd';
+import { Button, Typography, Spin, Descriptions, Checkbox, Row, Col, Popconfirm, Input, notification, Alert, DatePicker } from 'antd';
 import moment from 'moment';
 import _ from 'lodash';
 import { inject, observer } from 'mobx-react';
@@ -9,9 +9,16 @@ import { useHistory } from 'react-router-dom';
 import Stores from '../../../stores/storeIdentifier';
 import HourLogEntryModel from '../../../models/Timesheet/hourLogEntryModel';
 import AttachmentModel from '../../../models/Timesheet/attachmentModel';
+import styled from '@emotion/styled';
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
+
+const StyledDiscription = styled(Descriptions)`
+  .ant-descriptions-row {
+    vertical-align: baseline;
+  }
+`;
 
 export default inject(
   Stores.TimesheetStore,
@@ -32,9 +39,7 @@ export default inject(
     const { upcomingTimesheet } = timesheetStore;
 
     const history = useHistory();
-
     const { attachments } = projectStore;
-
     const attachmentList =
       (attachments && attachments.map((a: AttachmentModel) => ({ label: a.originalName, value: a.id, checked: a.isSelected }))) || [];
 
@@ -69,6 +74,17 @@ export default inject(
         .forEach(selectAttachment(false));
     }
 
+    const handleDateChange = (date: any) => {
+      upcomingTimesheet.endDt = date.format('YYYY-MM-DD');
+    };
+
+    const disabledDate: any = (current: any) => {
+      let startDate = upcomingTimesheet && upcomingTimesheet.originalStartDt;
+      let endDate = upcomingTimesheet && upcomingTimesheet.originalEndDt;
+      console.log('EndDate', endDate);
+      return current < moment(startDate) || current >= moment(endDate).endOf('days');
+    };
+
     return (
       <React.Fragment>
         <Spin spinning={isLoading || upcomingTimesheet == null}>
@@ -94,20 +110,29 @@ export default inject(
                 Total Hours (<Text>{upcomingTimesheet.totalHrs}</Text> hrs)
               </Title>
 
-              <Descriptions>
+              <StyledDiscription column={2}>
                 <Descriptions.Item label="Start Date">
                   <Text>{moment(upcomingTimesheet.startDt).format('MM/DD/YYYY')}</Text>
                 </Descriptions.Item>
                 <Descriptions.Item label="End Date">
-                  <Text>{moment(upcomingTimesheet.endDt).format('MM/DD/YYYY')}</Text>
+                  <DatePicker
+                    allowClear={false}
+                    disabledDate={disabledDate}
+                    style={{ width: '115px' }}
+                    value={moment(upcomingTimesheet.endDt)}
+                    format="MM/DD/YYYY"
+                    size="small"
+                    onChange={handleDateChange}
+                  />
                 </Descriptions.Item>
-              </Descriptions>
+              </StyledDiscription>
+
               <AutoSizer disableHeight>
                 {({ width }) => (
                   <BarChart
                     width={width}
                     height={250}
-                    data={_.orderBy(upcomingTimesheet.filteredHourLogEntries, x => moment(x.day), ['asc']).map((l: HourLogEntryModel) => ({
+                    data={_.orderBy(upcomingTimesheet.filteredHourLogEntries, (x) => moment(x.day), ['asc']).map((l: HourLogEntryModel) => ({
                       day: moment(l.day).format('M/D'),
                       hrs: l.hours,
                     }))}
@@ -137,16 +162,17 @@ export default inject(
                   </Button>
                 </Col>
               </Row>
-              
-              {attachmentList.length === 0 ? 
-                <Alert message="Upload at least 1 attaachment first" type="warning" /> : 
+
+              {attachmentList.length === 0 ? (
+                <Alert message="Upload at least 1 attachment first" type="warning" />
+              ) : (
                 <Checkbox.Group
                   options={attachmentList}
                   value={selectedAttachmentList}
                   onChange={onAttachmentSelection}
                   className="attachment-selection-list"
                 />
-              }
+              )}
             </React.Fragment>
           )}
         </Spin>
@@ -162,8 +188,15 @@ export default inject(
             textAlign: 'right',
           }}
         >
-          <Button style={{ marginRight: 8 }} onClick={() => { onClose() }}>Cancel</Button>
-          {attachmentList.length !== 0 && selectedAttachmentList.length !== 0 ? 
+          <Button
+            style={{ marginRight: 8 }}
+            onClick={() => {
+              onClose();
+            }}
+          >
+            Cancel
+          </Button>
+          {attachmentList.length !== 0 && selectedAttachmentList.length !== 0 ? (
             <Popconfirm
               title={
                 <div>
@@ -180,9 +213,12 @@ export default inject(
               onConfirm={onCreateTimesheet}
             >
               <Button type="primary">Submit</Button>
-            </Popconfirm> : 
-            <Button type="primary" disabled>Submit</Button>
-          }
+            </Popconfirm>
+          ) : (
+            <Button type="primary" disabled>
+              Submit
+            </Button>
+          )}
         </div>
       </React.Fragment>
     );

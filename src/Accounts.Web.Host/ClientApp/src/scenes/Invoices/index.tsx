@@ -145,6 +145,7 @@ const AllInvoiceList = (props: any) => {
       title: 'Balance',
       key: 'balance',
       dataIndex: 'balance',
+      render: (val: number) => (val === null ? null : '$ ' + val.toLocaleString('en-US')),
     },
   ];
 
