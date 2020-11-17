@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input } from 'antd';
+import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col } from 'antd';
 import { jsx, css } from '@emotion/core';
+import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
 import AppConsts from '../../lib/appconst';
 import ActionButton from '../ActionButton';
@@ -27,8 +28,19 @@ const tableStyles = css`
   }
 `;
 
+const StyledRow = styled(Row)`
+  margin-bottom: 10px;
+`;
+
+const StyledInput = styled(Input)`
+  width: 40px;
+`;
+
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
+  const [isEdit, setIsEdit] = useState(false);
+  const [form, setForm] = useState({ rate: 0, discountAmount: 0 });
+
   const [{}, makeRequest] = useAxios(
     {
       url: '/api/services/app/Invoice/GenerateAndSave',
@@ -71,8 +83,32 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     endClientName,
   } = invoice;
 
+  let initialAmount = serviceTotal;
+  let TotalAmount = total;
+
+  const updateField = (e: any) => {
+    setForm({
+      ...form,
+      [e.target.name]: parseFloat(e.target.value),
+    });
+  };
+
+  if (form.rate) {
+    initialAmount = form.rate * totalHours;
+    TotalAmount = initialAmount - discountAmount;
+  }
+
+  console.log(form);
+
   return (
     <React.Fragment>
+      <StyledRow type="flex" justify="end">
+        <Col>
+          <Button type="primary" onClick={() => setIsEdit((prevState: boolean) => !prevState)}>
+            Edit
+          </Button>
+        </Col>
+      </StyledRow>
       <Descriptions layout="vertical" column={4} size="small">
         <Descriptions.Item label="Customer">{companyName}</Descriptions.Item>
         <Descriptions.Item label="Customer Email">{companyEmail}</Descriptions.Item>
@@ -97,8 +133,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           <td>Services</td>
           <td>{description}</td>
           <td>{totalHours}</td>
-          <td>${rate}</td>
-          <td>${serviceTotal}</td>
+          {isEdit ? (
+            <td>
+              <StyledInput name="rate" size="small" defaultValue={rate} onChange={updateField} />
+            </td>
+          ) : (
+            <td>${rate}</td>
+          )}
+          <td>${initialAmount}</td>
         </tr>
         {lineItems &&
           lineItems.map((l: any) => (
@@ -117,20 +159,26 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           <td colSpan={4} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             Sub total :
           </td>
-          <td>${subTotal}</td>
+          <td>${initialAmount}</td>
         </tr>
         <tr>
           <td colSpan={3} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             {discountType == 1 ? 'Discount Percentage' : 'Discount Value'}
           </td>
-          <td>{discountValue && (discountType == 1 ? `${discountValue}%` : `$${discountValue}`)}</td>
+          {isEdit ? (
+            <td>
+              <StyledInput name="discountAmount" size="small" defaultValue={discountAmount} onChange={updateField} />
+            </td>
+          ) : (
+            <td>{discountValue && (discountType == 1 ? `${discountValue}%` : `$${discountValue}`)}</td>
+          )}
           <td>{discountAmount && `-$${discountAmount}`}</td>
         </tr>
         <tr>
           <td colSpan={4} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             Total :
           </td>
-          <td>${total}</td>
+          <td>${TotalAmount}</td>
         </tr>
       </table>
       <List
