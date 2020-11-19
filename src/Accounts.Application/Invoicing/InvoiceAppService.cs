@@ -118,11 +118,9 @@ namespace Accounts.Invoicing
             invoice.DiscountAmount = input.Invoice.DiscountAmount;
             invoice.SubTotal = input.Invoice.SubTotal;
             invoice.Total = input.Invoice.Total;
-            //if(input.Invoice.IsSendMail == true)
-            //{
-
-            //}
             await Repository.UpdateAsync(invoice);
+            if (input.Invoice.IsSendMail == true)
+                await InvoicingService.SendMail(invoice.Id);
 
             Parallel.ForEach(distinctHourLogs, log =>
             {
