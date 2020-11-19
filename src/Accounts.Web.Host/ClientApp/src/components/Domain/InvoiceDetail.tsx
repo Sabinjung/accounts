@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col } from 'antd';
+import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert } from 'antd';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
@@ -37,7 +37,7 @@ const StyledInput = styled(Input)`
   width: 40px;
 `;
 
-const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
+const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [form, setForm] = useState({ rate: 0, discountValue: 0 });
@@ -83,6 +83,8 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     attachments,
     qboInvoiceId,
     endClientName,
+    isSendMail,
+    id,
   } = invoice;
 
   let initialAmount = serviceTotal;
@@ -90,19 +92,11 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
   let discount = discountAmount;
   let totalHrs = totalHours;
 
-  const hourlogs = [
-    { hours: 8, day: '2020-11-12' },
-    { hours: 8, day: '2020-11-13' },
-    { hours: 8, day: '2020-11-14' },
-    { hours: 8, day: '2020-11-15' },
-    { hours: 8, day: '2020-11-16' },
-    { hours: 8, day: '2020-11-17' },
-  ];
-
   const handleEdit = () => {
-    setIsEdit((prevState: boolean) => !prevState);
+    let hourlogs = hourEntries && hourEntries.result.hourLogEntries;
     setForm({ rate, discountValue });
     setLogedHours(hourlogs);
+    setIsEdit((prevState: boolean) => !prevState);
   };
 
   const updateField = (e: any) => {
@@ -112,7 +106,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     });
   };
 
-  if (form.rate || form.discountValue) {
+  if (form.rate || form.discountValue || logedHours) {
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
     initialAmount = form.rate * totalHrs;
@@ -120,17 +114,19 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     TotalAmount = initialAmount - discount;
   }
 
-  console.log(invoice.isSendMail);
+  console.log(form.rate);
 
   return (
     <React.Fragment>
-      <StyledRow type="flex" justify="end">
-        <Col>
-          <Button type="primary" onClick={handleEdit}>
-            Edit
-          </Button>
-        </Col>
-      </StyledRow>
+      {!timesheetId && isGranted('Invoicing.Edit') && (
+        <StyledRow type="flex" justify="end">
+          <Col>
+            <Button type="primary" onClick={handleEdit}>
+              Edit
+            </Button>
+          </Col>
+        </StyledRow>
+      )}
       <Descriptions layout="vertical" column={4} size="small">
         <Descriptions.Item label="Customer">{companyName}</Descriptions.Item>
         <Descriptions.Item label="Customer Email">{companyEmail}</Descriptions.Item>
@@ -212,6 +208,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           </List.Item>
         )}
       />
+      {isEdit && !form.rate && <Alert message="Rate can't be null or 0" type="error" />}
 
       <div
         style={{
@@ -251,7 +248,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           </Authorize>
         )}
 
-        {(!qboInvoiceId || isEdit) && invoice.isSendMail && isGranted('Invoicing.SubmitAndMail') ? (
+        {!qboInvoiceId && isSendMail && isGranted('Invoicing.SubmitAndMail') ? (
           <ActionButton
             url="/api/services/app/Invoice/GenerateAndMailInvoice"
             params={{ timesheetId }}
@@ -268,8 +265,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
             Submit and Mail
           </ActionButton>
         ) : (
-          !qboInvoiceId ||
-          (isEdit && (
+          !qboInvoiceId && (
             <ActionButton
               url="/api/services/app/Invoice/GenerateAndSubmit"
               params={{ timesheetId }}
@@ -287,7 +283,39 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
             >
               Submit Invoice
             </ActionButton>
-          ))
+          )
+        )}
+        {isEdit && (
+          <ActionButton
+            url="/api/services/app/Invoice/UpdateInvoice"
+            permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}
+            method="Put"
+            onSuccess={() => {
+              onClose && onClose();
+            }}
+            onSubmit={({ setFormData, setIsReady }: any) => {
+              if (form.rate && totalHrs) {
+                setFormData({
+                  invoice: {
+                    totalHours: totalHrs,
+                    rate: form.rate,
+                    discountAmount: form.discountValue,
+                    serviceTotal: initialAmount,
+                    subTotal: initialAmount,
+                    total: TotalAmount,
+                    isSendMail,
+                    id,
+                  },
+                  updatedHourLogEntries: logedHours,
+                });
+                setIsReady(true);
+              } else {
+                setIsReady(false);
+              }
+            }}
+          >
+            {isGranted('Invoicing.SubmitAndMail') ? 'Submit and Mail' : 'Submit Invoice'}
+          </ActionButton>
         )}
       </div>
     </React.Fragment>
@@ -295,11 +323,16 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
 };
 
 const ConnectedInvoiceDetail = ({ invoiceId, onClose, onInvoiceSubmitted }: any) => {
+  const [{ data: hourEntries }] = useAxios({
+    url: '/api/services/app/HourLogEntry/GetInvoicedHourLogs',
+    params: { invoiceId },
+  });
+
   return (
     <Get url={'/api/services/app/Invoice/Get'} params={{ id: invoiceId }}>
       {({ error, data, isLoading }: any) => {
         const result = data && data.result;
-        return <InvoiceDetail invoice={result} onClose={onClose} onInvoiceSubmitted={onInvoiceSubmitted} />;
+        return <InvoiceDetail invoice={result} onClose={onClose} onInvoiceSubmitted={onInvoiceSubmitted} hourEntries={hourEntries} />;
       }}
     </Get>
   );
