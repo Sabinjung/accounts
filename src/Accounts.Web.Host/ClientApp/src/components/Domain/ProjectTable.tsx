@@ -54,7 +54,7 @@ const columns = [
   },
   {
     title: 'End Client',
-    dataIndex: 'clientName',
+    dataIndex: 'endClientName',
     width: 140,
   },
   {

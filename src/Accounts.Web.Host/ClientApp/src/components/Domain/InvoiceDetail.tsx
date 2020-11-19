@@ -68,7 +68,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
     lineItems,
     attachments,
     qboInvoiceId,
-    clientName,
+    endClientName,
   } = invoice;
 
   return (
@@ -83,7 +83,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
         <Descriptions.Item label="Invoice Date">{moment(invoiceDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Due Date">{moment(dueDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Consultant">{consultantName}</Descriptions.Item>
-        {clientName && <Descriptions.Item label="End Client">{clientName}</Descriptions.Item>}
+        {endClientName && <Descriptions.Item label="End Client">{endClientName}</Descriptions.Item>}
       </Descriptions>
       <table css={tableStyles}>
         <tr>

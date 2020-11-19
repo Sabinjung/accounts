@@ -8,7 +8,7 @@ import { jsx, ClassNames } from '@emotion/core';
 import { Get } from '../../../lib/axios';
 import TimesheetStore from '../../../stores/timesheetStore';
 import EntityPicker from '../../../components/EntityPicker';
-import PredefinedQueryPills from "../../../components/PredefinedQueryPills";
+import PredefinedQueryPills from '../../../components/PredefinedQueryPills';
 import styles from './timesheet.module.scss';
 import { AutoSizer } from 'react-virtualized';
 
@@ -51,6 +51,7 @@ export const TimesheetList = ({
   onSelectionChange,
   selectedTimesheetId,
   filterTimesheet,
+  selectedFilter,
 }: any) => {
   const [startTime, setStartTime] = useState();
   const [consultantId, setConsultantId] = useState();
@@ -76,7 +77,12 @@ export const TimesheetList = ({
               header={
                 <Row gutter={10} type="flex" justify="space-between">
                   <Col>
-                    <PredefinedQueryPills className="highlight-tab" size="small" dataSource={predefinedQueries} onClick={(name) => onFilterChanged(name)} />
+                    <PredefinedQueryPills
+                      selectedFilter={selectedFilter}
+                      size="small"
+                      dataSource={predefinedQueries}
+                      onClick={(name) => onFilterChanged(name)}
+                    />
                   </Col>
                   <Col>
                     <Popover
@@ -94,31 +100,28 @@ export const TimesheetList = ({
                                 'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                                 'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                                 'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                'Last Month': [
-                                  moment()
-                                    .subtract(1, 'month')
-                                    .startOf('month'),
-                                  moment()
-                                    .subtract(1, 'month')
-                                    .endOf('month'),
-                                ],
+                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                               }}
                             />
                           </Form.Item>
                           <Form.Item label="Consultant">
                             <EntityPicker
                               url="/api/services/app/Consultant/Search"
-                              mapFun={r => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
+                              mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
                               value={consultantId}
-                              onChange={(value) => { setConsultantId(value) }}
+                              onChange={(value) => {
+                                setConsultantId(value);
+                              }}
                             />
                           </Form.Item>
                           <Form.Item label="Company">
                             <EntityPicker
                               url="/api/services/app/Company/Search"
-                              mapFun={r => ({ value: r.id, text: r.displayName })}
+                              mapFun={(r) => ({ value: r.id, text: r.displayName })}
                               value={companyId}
-                              onChange={(value) => { setCompanyId(value) }}
+                              onChange={(value) => {
+                                setCompanyId(value);
+                              }}
                             />
                           </Form.Item>
                           <Form.Item>
@@ -178,8 +181,8 @@ export const TimesheetList = ({
                           {moment.utc(timesheet.createdDt).fromNow()}
                         </Text>
                       ) : (
-                          <Text code>{moment.utc(timesheet.createdDt).fromNow()}</Text>
-                        )}
+                        <Text code>{moment.utc(timesheet.createdDt).fromNow()}</Text>
+                      )}
 
                       <Text style={{ color: '#008dff' }}>{timesheet.totalHrs} hrs</Text>
                     </div>
@@ -194,10 +197,9 @@ export const TimesheetList = ({
   );
 };
 
-const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = props => {
+const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = (props) => {
   const { onSelectionChange, projectId } = props;
   const [selectedFilter, setSelectedFilter] = useState('Pending Apprv');
-
   return (
     <Get url="api/services/app/Timesheet/GetTimesheets" params={{ name: selectedFilter, isActive: true, projectId }}>
       {({ error, data, isLoading }: any) => {

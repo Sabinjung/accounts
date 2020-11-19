@@ -18,7 +18,6 @@ import { jsx, css, ClassNames } from '@emotion/core';
 import { useHistory } from 'react-router-dom';
 import Authorize from '../../../components/Authorize';
 
-
 const { TabPane } = Tabs;
 const { Text } = Typography;
 const { Step } = Steps;
@@ -29,6 +28,7 @@ export type ITimesheetViewerProps = FormComponentProps<{}> & {
   onTimesheetApproved?: () => void;
   onTimesheetDeleted?: () => void;
   path: string;
+  handleRefetch?: any;
 };
 
 export type ITimesheetViewerHandles = {
@@ -78,7 +78,7 @@ const timesheetViewerStyles = css`
 `;
 
 const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITimesheetViewerProps> = (
-  { timesheetId, onTimesheetApproved, onTimesheetDeleted, path, form },
+  { timesheetId, onTimesheetApproved, onTimesheetDeleted, path, form, handleRefetch },
   ref
 ) => {
   const history = useHistory();
@@ -91,7 +91,6 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
   const { getFieldDecorator, validateFields } = form;
 
   return (
-
     <Get url="/api/services/app/Timesheet/Detail" params={{ timesheetId }}>
       {({ data, refetch }: any) => {
         const DeleteButton = (
@@ -112,7 +111,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                 if (!errors) {
                   const { noteText } = values;
                   setFormData({
-                    noteText: noteText
+                    noteText: noteText,
                   });
                   shouldProceed = true;
                 } else {
@@ -138,6 +137,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             }}
           </ConfirmActionbutton>
         );
+        handleRefetch(refetch);
 
         refetchFn = refetch;
         if (data && data.result) {
@@ -199,7 +199,9 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                     </Condition>,
                     <Condition val={statusId == 4}>
                       <Authorize permissions={['Timesheet']}>
-                        <Button onClick={() => history.push(`${path}/invoice/${invoiceId}`)} type="primary"> View Invoice</Button>
+                        <Button onClick={() => history.push(`${path}/invoice/${invoiceId}`)} type="primary">
+                          View Invoice
+                        </Button>
                       </Authorize>
                     </Condition>,
                   ]}
@@ -214,16 +216,20 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                         }
                         key="1"
                       >
-                        {data.result.attachments.length !== 0 ? <AttachmentViewer attachments={attachments} /> : <Empty description="No Attachments"/>}
+                        {data.result.attachments.length !== 0 ? (
+                          <AttachmentViewer attachments={attachments} />
+                        ) : (
+                          <Empty description="No Attachments" />
+                        )}
                       </TabPane>
                       <TabPane tab="Timesheet History" key="3">
                         Coming Soon
                       </TabPane>
-                      {(statusId === 1 || statusId === 2) &&
+                      {(statusId === 1 || statusId === 2) && (
                         <TabPane tab="Expense" key="2">
                           <Expenses path={path} timesheetId={timesheetId} />
                         </TabPane>
-                      }
+                      )}
                     </Tabs>
                   }
                 >
@@ -238,7 +244,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                       <Descriptions.Item
                         label="Timesheet Period"
                         className={css`
-                        text-align: center;
+                          text-align: center;
                         `}
                       >
                         <div style={{ textAlign: 'right', fontWeight: 'bolder', fontSize: '1em' }}>
@@ -300,15 +306,14 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                     </Steps>
                   </div>
                 </PageHeader>
-              )
-              }
+              )}
             </ClassNames>
           );
         } else {
           return null;
         }
       }}
-    </Get >
+    </Get>
   );
 };
 

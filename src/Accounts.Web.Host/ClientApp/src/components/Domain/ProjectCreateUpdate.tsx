@@ -196,7 +196,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.discountType = _.get(fields, 'discount.value.discountType');
     project.discountValue = _.get(fields, 'discount.value.discountValue');
     project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');
-    project.endClientId = _.get(fields, 'endClientId');
+    project.endClientId = _.get(fields, 'endClientId.value');
   },
 })(ProjectForm);
 

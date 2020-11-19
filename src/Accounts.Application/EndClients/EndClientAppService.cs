@@ -9,16 +9,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
+using System.Linq;
 
 namespace Accounts.EndClients
 {
     public class EndClientAppService : AsyncCrudAppService<EndClient, EndClientDto>
     {
         private readonly QueryBuilderFactory QueryBuilder;
-        public EndClientAppService(IRepository<EndClient> repository, QueryBuilderFactory queryBuilderFactory)
+        private readonly IRepository<EndClient> EndClientRepository;
+        private readonly IRepository<Project> ProjectRepository;
+        public EndClientAppService(IRepository<EndClient> repository, QueryBuilderFactory queryBuilderFactory, IRepository<EndClient> endClientRepository, IRepository<Project> projectRepository)
         : base(repository)
         {
             QueryBuilder = queryBuilderFactory;
+            EndClientRepository = endClientRepository;
+            ProjectRepository = projectRepository;
+            CreatePermissionName = "Endclient.Create";
+            UpdatePermissionName = "Endclient.Update";
+            DeletePermissionName = "Endclient.Delete";
         }
 
         [HttpGet]
@@ -31,6 +40,19 @@ namespace Accounts.EndClients
             query.ApplySorts(sorts);
             var result = await query.ExecuteAsync<EndClientDto>(queryParameter);
             return result;
+        }
+
+        [HttpDelete]
+        public async Task DeleteClient(int id)
+        {
+            var projects = ProjectRepository.GetAllList().Where(x => x.EndClientId == id);
+            foreach(var pro in projects)
+            {
+                pro.EndClientId = null;
+                await ProjectRepository.UpdateAsync(pro);
+            }
+            await EndClientRepository.DeleteAsync(id);
+
         }
     }
 }

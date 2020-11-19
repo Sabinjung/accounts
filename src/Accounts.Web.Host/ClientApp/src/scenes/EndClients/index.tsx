@@ -3,6 +3,8 @@ import { Row, Col, Card, Table, Button, Modal, Input } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
 import styled from '@emotion/styled';
 import EndClientCreateUpdate from './components/EndClientCreateUpdate';
+import ConfirmActionButton from '../../components/ConfirmActionButton';
+import Authorize from '../../components/Authorize';
 
 const { Search } = Input;
 
@@ -17,6 +19,9 @@ const StyledSearch = styled(Search)`
   width: 500px;
   margin-bottom: 20px;
 `;
+const StyledEditButton = styled(Button)`
+  margin-right: 8px;
+`;
 
 let rowData: any;
 const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearchText, makeRequest }) => {
@@ -29,12 +34,30 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       dataIndex: 'clientName',
     },
     {
-      title: 'Action',
+      title: 'Actions',
       key: 'action',
       render: (record: any) => (
-        <Button type="primary" onClick={() => (setVisible(true), (rowData = record))}>
-          Edit
-        </Button>
+        <>
+          <Authorize permissions={['Endclient.Update']}>
+            <StyledEditButton icon="edit" type="primary" onClick={() => (setVisible(true), (rowData = record))} />
+          </Authorize>
+          <ConfirmActionButton
+            url="/api/services/app/EndClient/DeleteClient"
+            params={{ id: record.id }}
+            method="Delete"
+            type="danger"
+            icon="delete"
+            placement="top"
+            onSuccess={() => {
+              makeRequest({});
+            }}
+            permissions={['Endclient.Delete']}
+          >
+            {() => {
+              return <div>Do you want to delete this End Client?</div>;
+            }}
+          </ConfirmActionButton>
+        </>
       ),
     },
   ];
@@ -45,9 +68,11 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
         <Col>
           <h2>End Clients</h2>
         </Col>
-        <Col>
-          <Button type="primary" shape="circle" icon="plus" onClick={() => (setVisible(true), (rowData = ''))}></Button>
-        </Col>
+        <Authorize permissions={['Endclient.Create']}>
+          <Col>
+            <Button type="primary" shape="circle" icon="plus" onClick={() => (setVisible(true), (rowData = ''))}></Button>
+          </Col>
+        </Authorize>
       </Row>
       <StyledSearch placeholder="Filter" onSearch={setSearchText} allowClear />
       <Table dataSource={results} columns={columns} loading={loading} />

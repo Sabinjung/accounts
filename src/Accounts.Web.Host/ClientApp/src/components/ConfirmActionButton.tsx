@@ -18,6 +18,7 @@ export type ConfirmActionButtonProps = {
   type?: any;
   title?: string;
   icon?: any;
+  placement?: string;
 };
 
 const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
@@ -32,6 +33,7 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
   method = 'Post',
   style,
   type = 'primary',
+  placement = 'topRight',
   title,
   icon,
 }: any) => {
@@ -53,7 +55,7 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
         setIsVisible(false);
         onSuccess(response);
       },
-      onError: err => {
+      onError: (err) => {
         onError && onError(err);
         setIsReady(false);
       },
@@ -65,9 +67,11 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
         title={children(setFormData, formData)}
         okText="Yes"
         cancelText="No"
-        placement="topRight"
+        placement={placement}
         visible={isVisible}
-        onCancel={() => { setIsVisible(false) }}
+        onCancel={() => {
+          setIsVisible(false);
+        }}
         onConfirm={() => {
           if (onSubmit) {
             const returnVal = onSubmit({ setFormData });

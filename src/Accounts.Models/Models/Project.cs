@@ -34,7 +34,6 @@ namespace Accounts.Models
         public decimal? DiscountValue { get; set; }
 
         public virtual EndClient EndClient { get; set; }
-
         public virtual Company Company { get; set; }
 
         public virtual Term Term { get; set; }

@@ -34,15 +34,17 @@ export default () => {
 
   const history = useHistory();
   useEffect(() => {
-    makeRequest({ params: { pageSize, pageNumber: skipCount, keyword: searchText, name: queryName, TermId: termFilterText, InvoiceCyclesId: invoiceCycleId } });
+    makeRequest({
+      params: { pageSize, pageNumber: skipCount, keyword: searchText, name: queryName, TermId: termFilterText, InvoiceCyclesId: invoiceCycleId },
+    });
   }, [searchText, skipCount, queryName, termFilterText, invoiceCycleId]);
 
   const handleTermFilter = (value: any) => {
     setTermFilterText(value);
-  }
+  };
   const handleInvoiceCycleFilter = (value: any) => {
     setInvoiceCycleId(value);
-  }
+  };
 
   return (
     <StoreProvider
@@ -92,26 +94,26 @@ export default () => {
             {predefinedQueries.map((q: any) => (
               <Col>
                 <Badge count={q.count}>
-                  <Button type="primary" shape="round" size="small" onClick={() => (setQueryName(q.name))}>
+                  <Button type="primary" shape="round" size="small" onClick={() => setQueryName(q.name)}>
                     {q.name}
                   </Button>
                 </Badge>
               </Col>
             ))}
-            <Col lg={{span: 3, offset:  15}}>
+            <Col lg={{ span: 3, offset: 15 }}>
               <EntityPicker
                 url="api/services/app/Term/GetAll"
-                mapFun={r => ({ value: r.id, text: `${r.name}` })}
+                mapFun={(r) => ({ value: r.id, text: `${r.name}` })}
                 style={{ width: '180px' }}
                 value={termFilterText}
                 placeholder="Filter Term"
                 onChange={handleTermFilter}
               />
             </Col>
-            <Col lg={{span: 3}}>
+            <Col lg={{ span: 3 }}>
               <EntityPicker
                 url="api/services/app/InvoiceCycle/GetAll"
-                mapFun={r => ({ value: r.id, text: `${r.name}` })}
+                mapFun={(r) => ({ value: r.id, text: `${r.name}` })}
                 style={{ width: '180px' }}
                 value={invoiceCycleId}
                 placeholder="Filter Invoice Cycle"
@@ -119,8 +121,8 @@ export default () => {
               />
             </Col>
           </Row>
-          <Row type="flex" >
-            <Col style={{ overflowX: "auto" }}>
+          <Row type="flex">
+            <Col style={{ overflowX: 'auto' }}>
               <ProjectTable
                 dataSource={dataSource}
                 predefinedQueries={predefinedQueries}
@@ -182,7 +184,8 @@ export default () => {
                 {({ onClose }: any) => {
                   return (
                     <ConsultantCreateUpdate
-                      onConsultantAddedOrUpdated={consultant => {
+                      onClose={onClose}
+                      onConsultantAddedOrUpdated={(consultant) => {
                         onClose();
                         store.getConsultants();
                         store.newProject.consultantId = consultant.id;

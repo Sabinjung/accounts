@@ -1034,33 +1034,6 @@ namespace Accounts.Migrations
                     b.ToTable("AbpUsers");
                 });
 
-            modelBuilder.Entity("Accounts.Data.Models.EndClient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClientName");
-
-                    b.Property<DateTime>("CreationTime");
-
-                    b.Property<long?>("CreatorUserId");
-
-                    b.Property<long?>("DeleterUserId");
-
-                    b.Property<DateTime?>("DeletionTime");
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime");
-
-                    b.Property<long?>("LastModifierUserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EndClients");
-                });
-
             modelBuilder.Entity("Accounts.Models.Attachment", b =>
                 {
                     b.Property<int>("Id")
@@ -1187,6 +1160,33 @@ namespace Accounts.Migrations
                     b.ToTable("Consultants");
                 });
 
+            modelBuilder.Entity("Accounts.Models.EndClient", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClientName");
+
+                    b.Property<DateTime>("CreationTime");
+
+                    b.Property<long?>("CreatorUserId");
+
+                    b.Property<long?>("DeleterUserId");
+
+                    b.Property<DateTime?>("DeletionTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime");
+
+                    b.Property<long?>("LastModifierUserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EndClients");
+                });
+
             modelBuilder.Entity("Accounts.Models.Expense", b =>
                 {
                     b.Property<int>("Id")
@@ -1298,6 +1298,8 @@ namespace Accounts.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<decimal?>("Balance");
+
                     b.Property<int>("CompanyId");
 
                     b.Property<int>("ConsultantId");
@@ -1319,6 +1321,8 @@ namespace Accounts.Migrations
                     b.Property<decimal?>("DiscountValue");
 
                     b.Property<DateTime>("DueDate");
+
+                    b.Property<string>("EndClientName");
 
                     b.Property<DateTime>("InvoiceDate");
 
@@ -1948,7 +1952,7 @@ namespace Accounts.Migrations
                         .HasForeignKey("ConsultantId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Accounts.Data.Models.EndClient", "EndClient")
+                    b.HasOne("Accounts.Models.EndClient", "EndClient")
                         .WithMany()
                         .HasForeignKey("EndClientId");
 

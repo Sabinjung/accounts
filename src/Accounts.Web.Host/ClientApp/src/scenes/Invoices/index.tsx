@@ -9,6 +9,16 @@ import RouteableDrawer from '../../components/RouteableDrawer';
 import EntityPicker from '../../components/EntityPicker';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
 import { Get } from '../../lib/axios';
+import styled from '@emotion/styled';
+
+const StyledTable = styled(Table)`
+  .ant-table-tbody > tr.ant-table-row:hover > td {
+    background: unset;
+  }
+  .overdue {
+    background: #f1dbdb !important;
+  }
+`;
 
 const CustomTooltip = ({ payload, active, label }: any) => {
   if (active) {
@@ -36,7 +46,7 @@ const RenderBarChart = (props: any) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="monthName"
-          tickFormatter={label =>
+          tickFormatter={(label) =>
             `${moment()
               .month(label - 1)
               .format('MMM')}`
@@ -53,20 +63,30 @@ const RenderBarChart = (props: any) => {
 const AllInvoiceList = (props: any) => {
   const [companySearchText, setCompanySearchText] = useState(undefined);
   const [consultantSearchText, setConsultantSearchText] = useState(undefined);
-  const [dateSearchText, setDateSearchText] = useState('');
+  const [dateSearchText, setDateSearchText] = useState([]);
   const { RangePicker } = DatePicker;
   const history = useHistory();
   const [{ data, loading }, makeRequest] = useAxios({
     url: 'api/services/app/Invoice/Search',
-    params: { isActive: true, companyId: companySearchText, consultantId: consultantSearchText },
+    params: {
+      isActive: true,
+      companyId: companySearchText,
+      consultantId: consultantSearchText,
+      startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
+      endDate: dateSearchText[1] && moment(dateSearchText[1]).format('YYYY-MM-DD'),
+    },
   });
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
 
   useEffect(() => {
-    makeRequest({
-      params: { companyId: companySearchText, consultantId: consultantSearchText, startDate: dateSearchText[0], endDate: dateSearchText[1] },
-    });
-  }, [companySearchText, consultantSearchText, dateSearchText]);
+    const interval = setInterval(() => {
+      setCompanySearchText(undefined);
+      setConsultantSearchText(undefined);
+      setDateSearchText([]);
+      makeRequest({});
+    }, 300000);
+    return () => clearInterval(interval);
+  }, []);
 
   const columns = [
     {
@@ -79,14 +99,14 @@ const AllInvoiceList = (props: any) => {
       ),
       dataIndex: 'id',
       width: 90,
-      align: 'center' as const
+      align: 'center' as const,
     },
     {
       title: 'QB Invoice ID',
       key: 'qboInvoiceId',
       dataIndex: 'qboInvoiceId',
       width: 130,
-      align: 'center' as const
+      align: 'center' as const,
     },
     {
       title: 'Company',
@@ -100,8 +120,8 @@ const AllInvoiceList = (props: any) => {
     },
     {
       title: 'End Client',
-      key: 'clientName',
-      dataIndex: 'clientName',
+      key: 'endClientName',
+      dataIndex: 'endClientName',
     },
     {
       title: 'Issue Date',
@@ -121,6 +141,11 @@ const AllInvoiceList = (props: any) => {
       render: (val: number) => '$ ' + val.toLocaleString('en-US'),
       dataIndex: 'total',
     },
+    {
+      title: 'Balance',
+      key: 'balance',
+      dataIndex: 'balance',
+    },
   ];
 
   const handleCompanySearch = (value: any) => {
@@ -131,8 +156,8 @@ const AllInvoiceList = (props: any) => {
     setConsultantSearchText(value);
   };
 
-  const handleDateSearch = (date: any, datestring: any) => {
-    setDateSearchText(datestring);
+  const handleDateSearch = (date: any) => {
+    setDateSearchText(date);
   };
 
   const headerRender = () => {
@@ -141,7 +166,7 @@ const AllInvoiceList = (props: any) => {
         <Col lg={{ span: 4 }}>
           <EntityPicker
             url="api/services/app/Company/Search"
-            mapFun={r => ({ value: r.id, text: `${r.displayName}` })}
+            mapFun={(r) => ({ value: r.id, text: `${r.displayName}` })}
             style={{ width: '220px' }}
             value={companySearchText}
             placeholder="Search Company"
@@ -151,7 +176,7 @@ const AllInvoiceList = (props: any) => {
         <Col lg={{ span: 4 }}>
           <EntityPicker
             url="api/services/app/Consultant/Search"
-            mapFun={r => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
+            mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
             style={{ width: '220px' }}
             value={consultantSearchText}
             placeholder="Search Consultant"
@@ -159,7 +184,7 @@ const AllInvoiceList = (props: any) => {
           />
         </Col>
         <Col lg={{ span: 4 }}>
-          <RangePicker onChange={handleDateSearch} />
+          <RangePicker onChange={handleDateSearch} value={dateSearchText} />
         </Col>
       </Row>
     );
@@ -181,8 +206,8 @@ const AllInvoiceList = (props: any) => {
             isActive: true,
             companyId: companySearchText,
             consultantId: consultantSearchText,
-            startDate: dateSearchText[0],
-            endDate: dateSearchText[1],
+            startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
+            endDate: dateSearchText[1] && moment(dateSearchText[1]).format('YYYY-MM-DD'),
           }}
         >
           {({ error, data, isLoading }: any) => {
@@ -190,8 +215,13 @@ const AllInvoiceList = (props: any) => {
           }}
         </Get>
 
-        <Table
+        <StyledTable
           dataSource={result !== undefined ? result.results : []}
+          rowClassName={(record: any) => {
+            let isSame: boolean = moment(moment().format('YYYY-MM-DD')).isSame(record.dueDate);
+            let isBefore: boolean = moment().isBefore(record.dueDate);
+            return isSame || record.balance === null || record.balance === 0 ? '' : isBefore ? '' : 'overdue';
+          }}
           columns={columns}
           bordered
           pagination={{ pageSize: 10, total: 0, defaultCurrent: 1 }}
@@ -202,7 +232,7 @@ const AllInvoiceList = (props: any) => {
           onRow={(record: any, rowIndex: any) => ({
             onDoubleClick: () => history.push(`/invoices/${record.id}`),
           })}
-        ></Table>
+        ></StyledTable>
       </Card>
 
       <Portal>

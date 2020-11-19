@@ -43,7 +43,7 @@ namespace Accounts
                        .ForMember("Email", x => x.MapFrom(y => y.Consultant.Email))
                        .ForMember("PhoneNumber", x => x.MapFrom(y => y.Consultant.PhoneNumber))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
-                       .ForMember("ClientName", x => x.MapFrom(y => y.EndClient.ClientName))
+                       .ForMember("EndClientName", x => x.MapFrom(y => y.EndClient.ClientName))
                        .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
                        .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
                        .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
@@ -51,7 +51,7 @@ namespace Accounts
                     cfg.CreateMap<Project, ProjectListItemDto>()
                        .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
-                       .ForMember("ClientName", x => x.MapFrom(y => y.EndClient.ClientName))
+                       .ForMember("EndClientName", x => x.MapFrom(y => y.EndClient.ClientName))
                        .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
                        .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
                         .ForMember("TermName", x => x.MapFrom(y => y.Term.Name))
@@ -59,7 +59,6 @@ namespace Accounts
 
                     cfg.CreateMap<Invoice, IncoiceListItemDto>()
                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
-                       .ForMember(x => x.ClientName, y => y.MapFrom(z => $"{z.Project.EndClient.ClientName}"))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
                     cfg.CreateMap<Project, UnsyncedProjectData>()
@@ -93,6 +92,30 @@ namespace Accounts
                         .ForMember("ExternalTermId", x => x.MapFrom(y => y.Id))
                         .ForMember("Id", x => x.Ignore());
 
+                    cfg.CreateMap<IntuitData.Invoice, Invoice>()
+                        .ForMember("Id", x => x.Ignore())
+                        .ForMember("TermId", x => x.Ignore())
+                        .ForMember("Memo", x => x.Ignore())
+                        .ForMember("Description", x => x.Ignore())
+                        .ForMember("InvoiceDate", x => x.Ignore())
+                        .ForMember("DueDate", x => x.Ignore())
+                        .ForMember("TotalHours", x => x.Ignore())
+                        .ForMember("Rate", x => x.Ignore())
+                        .ForMember("ServiceTotal", x => x.Ignore())
+                        .ForMember("SubTotal", x => x.Ignore())
+                        .ForMember("DiscountType", x => x.Ignore())
+                        .ForMember("DiscountValue", x => x.Ignore())
+                        .ForMember("Total", x => x.Ignore())
+                        .ForMember("QBOInvoiceId", x => x.Ignore())
+                        .ForMember("ConsultantId", x => x.Ignore())
+                        .ForMember("ProjectId", x => x.Ignore())
+                        .ForMember("CompanyId", x => x.Ignore())
+                        .ForMember("DiscountAmount", x => x.Ignore())
+                        .ForMember("LastModificationTime", x => x.Ignore())
+                        .ForMember("LastModifierUserId", x => x.Ignore())
+                        .ForMember("DeletionTime", x => x.Ignore())
+                        .ForMember("DeleterUserId", x => x.Ignore());
+
                     cfg.CreateMap<Timesheet, TimesheetDto>()
                         .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
@@ -110,7 +133,6 @@ namespace Accounts
                         .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))
                         .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
                         .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"))
-                        .ForMember(x => x.ClientName, y => y.MapFrom(z => $"{z.Project.EndClient.ClientName}"))
                         .ForMember(x => x.CompanyEmail, y => y.MapFrom(z => $"{z.Company.Email}"));
 
                     cfg.CreateMap<HourLogEntryDto, HourLogEntry>()

@@ -152,7 +152,7 @@ namespace Accounts.Core.Invoicing.Intuit
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
             var consultant = invoice.Consultant;
-            var client = invoice.Project.EndClientId !=null ? invoice.Project.EndClient.ClientName : null;
+            var client = invoice.EndClientName;
             var customFields = new List<IntuitData.CustomField>();
 
             var customerFields = customer.CustomField;

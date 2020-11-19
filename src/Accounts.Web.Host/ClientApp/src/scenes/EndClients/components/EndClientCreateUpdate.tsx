@@ -18,6 +18,7 @@ const StyledForm = styled(Form)`
 
 const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, rowData, makeRequest, setVisible }) => {
   const { getFieldDecorator, validateFields } = form;
+  let permission: string = rowData ? 'Endclient.Update' : 'Endclient.Create';
 
   return (
     <>
@@ -29,6 +30,7 @@ const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, row
         </Form.Item>
       </StyledForm>
       <ActionButton
+        permissions={[permission]}
         method={rowData ? 'Put' : 'Post'}
         url={`api/services/app/EndClient/${rowData ? 'Update' : 'Create'}`}
         style={{

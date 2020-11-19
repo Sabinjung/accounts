@@ -46,6 +46,7 @@ namespace Accounts.Core.Invoicing
                 throw new UserFriendlyException("Invoice is already generated.");
             }
             var generatedInvoice = Mapper.Map<Invoice>(timesheet);
+            generatedInvoice.EndClientName = timesheet.Project.EndClientId != null ? timesheet.Project.EndClient.ClientName : null;
 
             return generatedInvoice;
 
