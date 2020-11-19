@@ -11,6 +11,7 @@ import ActionButton from '../ActionButton';
 import Authorize from '../Authorize';
 import useAxios from '../../lib/axios/useAxios';
 import { isGranted } from '../../lib/abpUtility';
+import EditHourlog from './EditHourlog';
 
 const { TextArea } = Input;
 
@@ -39,7 +40,8 @@ const StyledInput = styled(Input)`
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  const [form, setForm] = useState({ rate: 0, discountAmount: 0 });
+  const [form, setForm] = useState({ rate: 0, discountValue: 0 });
+  const [logedHours, setLogedHours]: any = useState();
 
   const [{}, makeRequest] = useAxios(
     {
@@ -85,26 +87,46 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
 
   let initialAmount = serviceTotal;
   let TotalAmount = total;
+  let discount = discountAmount;
+  let totalHrs = totalHours;
+
+  const hourlogs = [
+    { hours: 8, day: '2020-11-12' },
+    { hours: 8, day: '2020-11-13' },
+    { hours: 8, day: '2020-11-14' },
+    { hours: 8, day: '2020-11-15' },
+    { hours: 8, day: '2020-11-16' },
+    { hours: 8, day: '2020-11-17' },
+  ];
+
+  const handleEdit = () => {
+    setIsEdit((prevState: boolean) => !prevState);
+    setForm({ rate, discountValue });
+    setLogedHours(hourlogs);
+  };
 
   const updateField = (e: any) => {
     setForm({
       ...form,
-      [e.target.name]: parseFloat(e.target.value),
+      [e.target.name]: e.target.value === '' ? null : parseFloat(e.target.value),
     });
   };
 
-  if (form.rate) {
-    initialAmount = form.rate * totalHours;
-    TotalAmount = initialAmount - discountAmount;
+  if (form.rate || form.discountValue) {
+    totalHrs = 0;
+    logedHours.map((item: any) => (totalHrs += item.hours));
+    initialAmount = form.rate * totalHrs;
+    discount = discountType === 1 ? initialAmount * (form.discountValue / 100) : form.discountValue;
+    TotalAmount = initialAmount - discount;
   }
 
-  console.log(form);
+  console.log(invoice.isSendMail);
 
   return (
     <React.Fragment>
       <StyledRow type="flex" justify="end">
         <Col>
-          <Button type="primary" onClick={() => setIsEdit((prevState: boolean) => !prevState)}>
+          <Button type="primary" onClick={handleEdit}>
             Edit
           </Button>
         </Col>
@@ -131,15 +153,9 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
         </tr>
         <tr>
           <td>Services</td>
-          <td>{description}</td>
-          <td>{totalHours}</td>
-          {isEdit ? (
-            <td>
-              <StyledInput name="rate" size="small" defaultValue={rate} onChange={updateField} />
-            </td>
-          ) : (
-            <td>${rate}</td>
-          )}
+          <td>{isEdit ? <EditHourlog description={description} logedHours={logedHours} setLogedHours={setLogedHours} /> : description}</td>
+          <td>{totalHrs}</td>
+          <td>{isEdit ? <StyledInput name="rate" size="small" value={form.rate} onChange={updateField} /> : `$${rate}`}</td>
           <td>${initialAmount}</td>
         </tr>
         {lineItems &&
@@ -165,14 +181,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           <td colSpan={3} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             {discountType == 1 ? 'Discount Percentage' : 'Discount Value'}
           </td>
-          {isEdit ? (
-            <td>
-              <StyledInput name="discountAmount" size="small" defaultValue={discountAmount} onChange={updateField} />
-            </td>
-          ) : (
-            <td>{discountValue && (discountType == 1 ? `${discountValue}%` : `$${discountValue}`)}</td>
-          )}
-          <td>{discountAmount && `-$${discountAmount}`}</td>
+          <td>
+            {isEdit ? (
+              <StyledInput name="discountValue" size="small" value={form.discountValue} onChange={updateField} />
+            ) : (
+              discountValue && (discountType == 1 ? `${discountValue}%` : `$${discountValue}`)
+            )}
+          </td>
+          <td>-${discount}</td>
         </tr>
         <tr>
           <td colSpan={4} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
@@ -235,7 +251,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
           </Authorize>
         )}
 
-        {!qboInvoiceId && invoice.isSendMail && isGranted('Invoicing.SubmitAndMail') ? (
+        {(!qboInvoiceId || isEdit) && invoice.isSendMail && isGranted('Invoicing.SubmitAndMail') ? (
           <ActionButton
             url="/api/services/app/Invoice/GenerateAndMailInvoice"
             params={{ timesheetId }}
@@ -252,7 +268,8 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
             Submit and Mail
           </ActionButton>
         ) : (
-          !qboInvoiceId && (
+          !qboInvoiceId ||
+          (isEdit && (
             <ActionButton
               url="/api/services/app/Invoice/GenerateAndSubmit"
               params={{ timesheetId }}
@@ -270,7 +287,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted }: any) => {
             >
               Submit Invoice
             </ActionButton>
-          )
+          ))
         )}
       </div>
     </React.Fragment>
