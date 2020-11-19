@@ -83,6 +83,7 @@ namespace Accounts.Intuit
             }
         }
 
+        [AbpAllowAnonymous]
         [HttpGet]
         public async Task SyncInvoices()
         {
