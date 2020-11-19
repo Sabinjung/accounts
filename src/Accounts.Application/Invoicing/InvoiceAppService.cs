@@ -111,6 +111,17 @@ namespace Accounts.Invoicing
             var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId });
             var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
             var invoice = await Repository.GetAsync(input.Invoice.Id);
+            invoice.Rate = input.Invoice.Rate;
+            invoice.TotalHours = input.Invoice.TotalHours;
+            invoice.DiscountValue = input.Invoice.DiscountValue;
+            invoice.ServiceTotal = input.Invoice.ServiceTotal;
+            invoice.DiscountAmount = input.Invoice.DiscountAmount;
+            invoice.SubTotal = input.Invoice.SubTotal;
+            invoice.Total = input.Invoice.Total;
+            //if(input.Invoice.IsSendMail == true)
+            //{
+
+            //}
             await Repository.UpdateAsync(invoice);
 
             Parallel.ForEach(distinctHourLogs, log =>

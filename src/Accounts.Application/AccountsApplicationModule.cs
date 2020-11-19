@@ -133,7 +133,8 @@ namespace Accounts
                         .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))
                         .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
                         .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"))
-                        .ForMember(x => x.CompanyEmail, y => y.MapFrom(z => $"{z.Company.Email}"));
+                        .ForMember(x => x.CompanyEmail, y => y.MapFrom(z => $"{z.Company.Email}"))
+                        .ForMember(x => x.IsSendMail, y => y.MapFrom(z => $"{z.Project.IsSendMail}"));
 
                     cfg.CreateMap<HourLogEntryDto, HourLogEntry>()
                         .ForMember("Day", x => x.MapFrom(y => y.Day.Date));

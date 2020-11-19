@@ -29,7 +29,7 @@ namespace Accounts.Invoicing.Dto
 
         public DiscountType? DiscountType { get; set; }
 
-        public double? DiscountValue { get; set; }
+        public decimal? DiscountValue { get; set; }
 
         public decimal DiscountAmount { get; set; }
 
