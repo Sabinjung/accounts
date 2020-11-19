@@ -117,5 +117,11 @@ namespace Accounts.Core.Invoicing
 
             return await Task.FromResult(referenceNo);
         }
+
+        public async Task SendMail(int invoiceId)
+        {
+            var invoice = await InvoiceRepository.GetAsync(invoiceId);
+            await InvoiceProcessor.SendMailAndInvoice(invoice);
+        }
     }
 }

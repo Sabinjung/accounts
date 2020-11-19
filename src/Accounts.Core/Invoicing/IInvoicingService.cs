@@ -12,6 +12,7 @@ namespace Accounts.Core.Invoicing
         Task<string> Submit(int invoiceId, int userId);
         Task<string> Save(int timesheetId, int userId, string referenceNo);
         Task<string> GenerateAndMailInvoice(int timesheetId, int userId);
+        Task<string> SendMail(int invoiceId);
         Task ReadInvoice(int invoiceId);
     }
 }
