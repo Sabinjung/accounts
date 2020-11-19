@@ -114,8 +114,6 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     TotalAmount = initialAmount - discount;
   }
 
-  console.log(form.rate);
-
   return (
     <React.Fragment>
       {!timesheetId && isGranted('Invoicing.Edit') && (
@@ -295,6 +293,19 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
               if (form.rate && totalHrs) {
+                console.log({
+                  invoice: {
+                    totalHours: totalHrs,
+                    rate: form.rate,
+                    discountAmount: form.discountValue,
+                    serviceTotal: initialAmount,
+                    subTotal: initialAmount,
+                    total: TotalAmount,
+                    isSendMail,
+                    id,
+                  },
+                  updatedHourLogEntries: logedHours,
+                });
                 setFormData({
                   invoice: {
                     totalHours: totalHrs,
