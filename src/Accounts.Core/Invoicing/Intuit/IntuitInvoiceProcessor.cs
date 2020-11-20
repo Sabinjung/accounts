@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
+using Abp.UI;
 using Accounts.Blob;
 using Accounts.Intuit;
 using Accounts.Models;
@@ -86,9 +87,8 @@ namespace Accounts.Core.Invoicing.Intuit
             }
             catch (Exception e)
             {
-                //log to db and display to user
+                throw new UserFriendlyException(e.Message);
             }
-
 
             return savedInvoice.Id;
         }
