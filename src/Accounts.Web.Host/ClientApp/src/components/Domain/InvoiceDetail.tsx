@@ -111,7 +111,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     logedHours.map((item: any) => (totalHrs += item.hours));
     initialAmount = form.rate * totalHrs;
     discount = !form.discountValue
-      ? form.discountValue
+      ? 0
       : discountType === 1
       ? parseFloat((initialAmount * (form.discountValue / 100)).toFixed(2))
       : parseFloat(form.discountValue.toFixed(2));
