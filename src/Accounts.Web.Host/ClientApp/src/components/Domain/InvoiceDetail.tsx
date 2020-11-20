@@ -102,7 +102,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   const updateField = (e: any) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value === '' ? null : parseFloat(e.target.value),
+      [e.target.name]: isNaN(parseFloat(e.target.value)) ? null : parseFloat(e.target.value),
     });
   };
 
@@ -110,10 +110,15 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
     initialAmount = form.rate * totalHrs;
-    discount = discountType === 1 ? initialAmount * (form.discountValue / 100) : form.discountValue;
+    discount = !form.discountValue
+      ? form.discountValue
+      : discountType === 1
+      ? parseFloat((initialAmount * (form.discountValue / 100)).toFixed(2))
+      : parseFloat(form.discountValue.toFixed(2));
     TotalAmount = initialAmount - discount;
   }
 
+  console.log(isSendMail);
   return (
     <React.Fragment>
       {!timesheetId && isGranted('Invoicing.Edit') && (
@@ -302,7 +307,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
                     serviceTotal: initialAmount,
                     subTotal: initialAmount,
                     total: TotalAmount,
-                    isSendMail,
+                    isSendMail: isGranted('Invoicing.SubmitAndMail') && isSendMail,
                     id,
                   },
                   updatedHourLogEntries: logedHours,
@@ -313,7 +318,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               }
             }}
           >
-            {isGranted('Invoicing.SubmitAndMail') ? 'Submit and Mail' : 'Submit Invoice'}
+            {isGranted('Invoicing.SubmitAndMail') && isSendMail ? 'Submit and Mail' : 'Submit Invoice'}
           </ActionButton>
         )}
       </div>
