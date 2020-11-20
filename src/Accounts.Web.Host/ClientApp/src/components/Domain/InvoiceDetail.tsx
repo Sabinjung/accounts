@@ -74,7 +74,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     totalHours,
     rate,
     serviceTotal,
-    subTotal,
+    //subTotal,
     total,
     discountType,
     discountValue,
