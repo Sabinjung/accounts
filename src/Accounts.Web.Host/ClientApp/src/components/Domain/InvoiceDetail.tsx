@@ -34,7 +34,7 @@ const StyledRow = styled(Row)`
 `;
 
 const StyledInput = styled(Input)`
-  width: 40px;
+  width: 40px !important;
 `;
 
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
@@ -121,7 +121,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   console.log(isSendMail);
   return (
     <React.Fragment>
-      {!timesheetId && isGranted('Invoicing.Edit') && (
+      {!timesheetId && qboInvoiceId && isGranted('Invoicing.Edit') && (
         <StyledRow type="flex" justify="end">
           <Col>
             <Button type="primary" onClick={handleEdit}>
