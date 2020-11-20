@@ -110,6 +110,7 @@ namespace Accounts.Invoicing
         {
             var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId });
             var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
+
             var invoice = await Repository.GetAsync(input.Invoice.Id);
             invoice.Rate = input.Invoice.Rate;
             invoice.TotalHours = input.Invoice.TotalHours;
@@ -118,10 +119,7 @@ namespace Accounts.Invoicing
             invoice.DiscountAmount = input.Invoice.DiscountAmount;
             invoice.SubTotal = input.Invoice.SubTotal;
             invoice.Total = input.Invoice.Total;
-            await Repository.UpdateAsync(invoice);
-            if (input.Invoice.IsSendMail == true)
-                await InvoicingService.SendMail(invoice.Id);
-
+            //await Repository.UpdateAsync(invoice);
             Parallel.ForEach(distinctHourLogs, log =>
             {
                 var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
@@ -130,6 +128,7 @@ namespace Accounts.Invoicing
                     if (log.Hours.HasValue)
                     {
                         existingHourLog.Hours = log.Hours;
+                        HourLogRepository.Update(existingHourLog);
                     }
                 }
                 else
@@ -137,6 +136,16 @@ namespace Accounts.Invoicing
                     throw new UserFriendlyException("Could not find existing hours to updated.");
                 }
             });
+
+            if (input.Invoice.IsSendMail == true)
+            {
+                var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+                if (isConnectionEstablished)
+                {
+                    var currentUserId = Convert.ToInt32(AbpSession.UserId);
+                    await InvoicingService.SendMail(invoice.Id);
+                }
+            }
         }
         private QueryBuilder<Invoice, InvoiceQueryParameter> GetQuery(InvoiceQueryParameter queryParameter)
         {
