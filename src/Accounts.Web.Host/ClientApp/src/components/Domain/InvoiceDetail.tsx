@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert } from 'antd';
+import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert, notification } from 'antd';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
@@ -294,6 +294,10 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
             permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}
             method="Put"
             onSuccess={() => {
+              notification.open({
+                message: 'Success',
+                description: 'Updated and Submitted successfully.',
+              });
               onClose && onClose();
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
