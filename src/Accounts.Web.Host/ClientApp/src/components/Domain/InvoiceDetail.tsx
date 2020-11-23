@@ -118,7 +118,6 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     TotalAmount = initialAmount - discount;
   }
 
-  console.log(isSendMail);
   return (
     <React.Fragment>
       {!timesheetId && qboInvoiceId && isGranted('Invoicing.Edit') && (
@@ -299,6 +298,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
                 description: 'Updated and Submitted successfully.',
               });
               onClose && onClose();
+              setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
               if (form.rate && totalHrs) {
