@@ -262,5 +262,22 @@ namespace Accounts.HourLogEntries
 
             return result.OrderBy(x => x.Project.ConsultantName);
         }
+
+        public async Task<InvoicedHourLogEntryDto> GetInvoicedHourLogs(int invoiceId)
+        {
+            var timesheetId = TimesheetRepository.GetAll().Where(x => x.InvoiceId == invoiceId).FirstOrDefault().Id;
+            var hourentries = await Repository.GetAll().Where(x => x.TimesheetId == timesheetId).Select(y => new HourLogDto
+            {
+                Hours = y.Hours,
+                Day = y.Day,
+                ProjectId = y.ProjectId
+            })
+            .OrderBy(x => x.Day)
+            .ToListAsync();
+            return new InvoicedHourLogEntryDto
+            {
+                HourLogEntries = hourentries
+            };
+        }
     }
 }

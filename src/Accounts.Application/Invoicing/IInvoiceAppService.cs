@@ -12,6 +12,8 @@ namespace Accounts.Invoicing
 
         Task Submit(int invoiceId);
 
+        Task UpdateInvoice(UpdateInvoiceInputDto input);
+
         Task GenerateAndMailInvoice(int timesheetId);
         Task<Page<IncoiceListItemDto>> Search(InvoiceQueryParameter queryParameter);
         

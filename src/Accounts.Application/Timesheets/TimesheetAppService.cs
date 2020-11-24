@@ -239,7 +239,7 @@ namespace Accounts.Projects
             timesheetInfo.EndDt = endDt;
 
             // Fill in Timesheet Hour Log Entries
-            var hourLogEntries = await HourLogEntryRepository.GetAllHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt).ToListAsync();
+            var hourLogEntries = await HourLogEntryRepository.GetAllHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt).OrderBy(x => x.Day).ToListAsync();
 
             if (!TimesheetService.AllTimesheetHoursEntered(project.StartDt > startDt ? project.StartDt : startDt, timesheetInfo.EndDt, hourLogEntries))
             {

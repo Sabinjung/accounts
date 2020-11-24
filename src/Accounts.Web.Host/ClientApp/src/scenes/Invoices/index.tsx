@@ -195,8 +195,6 @@ const AllInvoiceList = (props: any) => {
     makeRequest({ params: { isActive: true } });
   };
 
-  const viewerRef = React.createRef<any>();
-
   return (
     <>
       <Card>
@@ -251,7 +249,6 @@ const AllInvoiceList = (props: any) => {
                   onClose={onClose}
                   onInvoiceSubmitted={() => {
                     refetch();
-                    viewerRef.current && viewerRef.current.refetch();
                   }}
                 />
               );
