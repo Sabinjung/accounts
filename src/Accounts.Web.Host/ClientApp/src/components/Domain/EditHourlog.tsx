@@ -49,7 +49,7 @@ type EditHourlogProps = {
 const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setLogedHours }) => {
   const handleHourEdit = (e: any) => {
     let newLogedHour = logedHours;
-    let val: any = e.target.value === '' ? null : parseFloat(e.target.value);
+    let val: any = isNaN(parseFloat(e.target.value)) ? null : parseFloat(e.target.value);
     newLogedHour[e.target.name].hours = val;
     setLogedHours([...newLogedHour]);
   };
@@ -69,7 +69,7 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
           <StyledDiv>
             <StyledHeader className={weekEnd(item.day)}>{moment(item.day).format('MM/DD')}</StyledHeader>
             <StyledHour className={weekEnd(item.day)}>
-              <StyledInput className={weekEnd(item.day)} name={index} defaultValue={item.hours} onChange={handleHourEdit} />
+              <StyledInput className={weekEnd(item.day)} name={index} value={item.hours} onChange={handleHourEdit} />
             </StyledHour>
           </StyledDiv>
         </Col>

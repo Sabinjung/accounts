@@ -154,8 +154,8 @@ namespace Accounts.Web.Host.Startup
             app.UseSwaggerUI(options =>
             {
                 options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json", "Accounts API V1");
-                //options.IndexStream = () => Assembly.GetExecutingAssembly()
-                //    .GetManifestResourceStream("Accounts.Web.Host.wwwroot.swagger.ui.index.html");
+                options.IndexStream = () => Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("Accounts.Web.Host.wwwroot.swagger.ui.index.html");
             }); // URL: /swagger
 
             app.UseSpa(spa =>

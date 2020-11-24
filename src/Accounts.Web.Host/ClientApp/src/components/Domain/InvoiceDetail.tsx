@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert } from 'antd';
+import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert, notification } from 'antd';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
@@ -34,7 +34,7 @@ const StyledRow = styled(Row)`
 `;
 
 const StyledInput = styled(Input)`
-  width: 40px;
+  width: 40px !important;
 `;
 
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
@@ -111,17 +111,16 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     logedHours.map((item: any) => (totalHrs += item.hours));
     initialAmount = form.rate * totalHrs;
     discount = !form.discountValue
-      ? form.discountValue
+      ? 0
       : discountType === 1
       ? parseFloat((initialAmount * (form.discountValue / 100)).toFixed(2))
       : parseFloat(form.discountValue.toFixed(2));
     TotalAmount = initialAmount - discount;
   }
 
-  console.log(isSendMail);
   return (
     <React.Fragment>
-      {!timesheetId && isGranted('Invoicing.Edit') && (
+      {!timesheetId && qboInvoiceId && isGranted('Invoicing.Edit') && (
         <StyledRow type="flex" justify="end">
           <Col>
             <Button type="primary" onClick={handleEdit}>
@@ -294,7 +293,12 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
             permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}
             method="Put"
             onSuccess={() => {
+              notification.open({
+                message: 'Success',
+                description: 'Updated and Submitted successfully.',
+              });
               onClose && onClose();
+              setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
               if (form.rate && totalHrs) {
