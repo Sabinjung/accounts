@@ -1,4 +1,5 @@
-﻿using Accounts.Models;
+﻿using Accounts.Intuit;
+using Accounts.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,6 @@ namespace Accounts.Core.Invoicing
 {
     public interface IInvoiceProcessor
     {
-        Task<string> Send(Invoice invoice);
-        Task<string> SendMailAndInvoice(Invoice invoice);
+        Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing);
     }
 }

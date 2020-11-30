@@ -9,10 +9,9 @@ namespace Accounts.Core.Invoicing
     public interface IInvoicingService
     {
         Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate = false);
-        Task<string> Submit(int invoiceId, int userId);
+        Task Submit(int invoiceId, int userId, bool isMailing);
+        Task SendMail(int invoiceId, bool isMailing);
         Task<string> Save(int timesheetId, int userId, string referenceNo);
-        Task<string> GenerateAndMailInvoice(int timesheetId, int userId);
-        Task SendMail(int invoiceId);
         Task ReadInvoice(int invoiceId);
     }
 }

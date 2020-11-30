@@ -47,6 +47,8 @@ namespace Accounts.Invoicing.Dto
 
         public string QBOInvoiceId { get; set; }
 
+        public string EInvoiceId { get; set; }
+
         public bool IsSendMail { get; set; }
 
         public List<LineItemDto> LineItems { get; set; }

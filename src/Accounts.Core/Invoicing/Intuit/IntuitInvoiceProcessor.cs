@@ -30,7 +30,7 @@ namespace Accounts.Core.Invoicing.Intuit
 
         }
 
-        public async Task<string> SendMailAndInvoice (Invoice invoice)
+        public async Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing)
         {
             var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
             var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
@@ -44,7 +44,7 @@ namespace Accounts.Core.Invoicing.Intuit
                 TxnDateSpecified = true,
                 TotalAmt = invoice.Total,
                 TotalAmtSpecified = true,
-                EmailStatus = IntuitData.EmailStatusEnum.NeedToSend,
+                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
                 BillEmail = customer.PrimaryEmailAddr,
 
             };
@@ -83,69 +83,19 @@ namespace Accounts.Core.Invoicing.Intuit
                 }
                 IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
 
-                IntuitDataProvider.SendEmail(savedInvoice, customer);
+                if(isMailing == true)
+                    IntuitDataProvider.SendEmail(savedInvoice, customer);
             }
             catch (Exception e)
             {
                 throw new UserFriendlyException(e.Message);
             }
-
-            return savedInvoice.Id;
-        }
-
-        public async Task<string> Send(Invoice invoice)
-        {
-            var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
-            var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
-
-
-            var intuitInvoice = new IntuitData.Invoice
+            var invoiceInfo = new IntuitInvoiceDto
             {
-                Deposit = 0,
-                DepositSpecified = true,
-                TxnDate = invoice.InvoiceDate,
-                TxnDateSpecified = true,
-                TotalAmt = invoice.Total,
-                TotalAmtSpecified = true,
-                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
-                BillEmail = customer.PrimaryEmailAddr,
-
+                EInvoiceId = savedInvoice.DocNumber,
+                QBOInvoiceId = savedInvoice.Id
             };
-
-            intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
-            {
-                name = invoice.Company.DisplayName,
-                Value = invoice.Company.ExternalCustomerId.ToString()
-            };
-
-            intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
-            {
-                name = invoice.Term.Name,
-                Value = invoice.Term.ExternalTermId.ToString()
-            };
-
-
-
-            AddCustomFields(intuitInvoice, invoice, customer);
-            var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
-            AddLines(intuitInvoice, invoice, accountForDiscount);
-            var savedInvoice = IntuitDataProvider.Add(intuitInvoice);
-
-            // Include Attachments
-            var invoiceAttachments = new List<FileForIntuitUploadDTO>();
-            foreach (var attachment in invoice.Attachments)
-            {
-                var dto = new FileForIntuitUploadDTO();
-                var blob = await AzureBlobService.DownloadFilesAsync(attachment.Name);
-                dto.Stream = await blob.OpenReadAsync();
-                dto.ContentType = attachment.ContentType;
-                dto.FileName = attachment.Name;
-                invoiceAttachments.Add(dto);
-            }
-            IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
-            
-            return savedInvoice.Id;
-
+            return invoiceInfo;
         }
 
 
