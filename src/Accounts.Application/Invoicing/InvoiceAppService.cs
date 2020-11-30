@@ -70,10 +70,11 @@ namespace Accounts.Invoicing
         public async Task GenerateAndSubmit(int timesheetId)
         {
             var currentUserId = Convert.ToInt32(AbpSession.UserId);
+            bool isMailing = false;
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
-                await InvoicingService.Submit(timesheetId, currentUserId);
+                await InvoicingService.Submit(timesheetId, currentUserId, isMailing);
             }
         }
 
@@ -88,10 +89,11 @@ namespace Accounts.Invoicing
         public async Task Submit(int invoiceId)
         {
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            bool isMailing = false;
             if (isConnectionEstablished)
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                await InvoicingService.Submit(invoiceId, currentUserId);
+                await InvoicingService.Submit(invoiceId, currentUserId, isMailing);
             }
         }
         
@@ -99,10 +101,11 @@ namespace Accounts.Invoicing
         public async Task GenerateAndMailInvoice(int timesheetId)
         {
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            bool isMailing = true;
             if (isConnectionEstablished)
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                await InvoicingService.GenerateAndMailInvoice(timesheetId, currentUserId);
+                await InvoicingService.Submit(timesheetId, currentUserId, isMailing);
             }
         }
         [AbpAuthorize("Invoicing.Edit")]
@@ -143,7 +146,7 @@ namespace Accounts.Invoicing
                 if (isConnectionEstablished)
                 {
                     var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                    await InvoicingService.SendMail(invoice.Id);
+                    await InvoicingService.SendMail(invoice.Id, input.Invoice.IsSendMail);
                 }
             }
         }

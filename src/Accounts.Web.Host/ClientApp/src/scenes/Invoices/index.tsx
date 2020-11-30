@@ -102,9 +102,16 @@ const AllInvoiceList = (props: any) => {
       align: 'center' as const,
     },
     {
-      title: 'QB Invoice ID',
+      title: 'eTrans ID',
       key: 'qboInvoiceId',
       dataIndex: 'qboInvoiceId',
+      width: 130,
+      align: 'center' as const,
+    },
+    {
+      title: 'eInvoice ID',
+      key: 'eInvoiceID',
+      dataIndex: 'eInvoiceId',
       width: 130,
       align: 'center' as const,
     },

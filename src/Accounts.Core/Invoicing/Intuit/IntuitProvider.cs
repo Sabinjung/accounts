@@ -222,4 +222,10 @@ namespace Accounts.Intuit
         public string FileName { get; set; }
 
     }
+
+    public class IntuitInvoiceDto
+    {
+        public string QBOInvoiceId { get; set; }
+        public string EInvoiceId { get; set; }
+    }
 }
