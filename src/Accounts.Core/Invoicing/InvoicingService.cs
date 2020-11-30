@@ -47,6 +47,7 @@ namespace Accounts.Core.Invoicing
             }
             var generatedInvoice = Mapper.Map<Invoice>(timesheet);
             generatedInvoice.EndClientName = timesheet.Project.EndClientId != null ? timesheet.Project.EndClient.ClientName : null;
+            generatedInvoice.DueDate = generatedInvoice.InvoiceDate.AddDays(generatedInvoice.Term.DueDays);
 
             return generatedInvoice;
 
