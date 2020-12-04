@@ -100,10 +100,10 @@ namespace Accounts.Core.Invoicing
             await Task.CompletedTask;
         }
 
-        public async Task SendMail(int invoiceId, bool isMailing)
+        public async Task UpdateAndSendMail(int invoiceId, bool isMailing)
         {
             var invoice = await InvoiceRepository.GetAsync(invoiceId);
-            await InvoiceProcessor.Send(invoice, isMailing);
+            await InvoiceProcessor.UpdateAndSend(invoice, isMailing);
         }
     }
 }

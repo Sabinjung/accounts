@@ -140,15 +140,13 @@ namespace Accounts.Invoicing
                 }
             });
 
-            if (input.Invoice.IsSendMail == true)
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if (isConnectionEstablished)
             {
-                var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
-                if (isConnectionEstablished)
-                {
-                    var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                    await InvoicingService.SendMail(invoice.Id, input.Invoice.IsSendMail);
-                }
+                var currentUserId = Convert.ToInt32(AbpSession.UserId);
+                await InvoicingService.UpdateAndSendMail(invoice.Id, input.Invoice.IsSendMail);
             }
+
         }
         private QueryBuilder<Invoice, InvoiceQueryParameter> GetQuery(InvoiceQueryParameter queryParameter)
         {
