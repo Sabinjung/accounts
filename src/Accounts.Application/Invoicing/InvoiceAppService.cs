@@ -117,6 +117,7 @@ namespace Accounts.Invoicing
             var invoice = await Repository.GetAsync(input.Invoice.Id);
             invoice.Rate = input.Invoice.Rate;
             invoice.TotalHours = input.Invoice.TotalHours;
+            invoice.DiscountType = input.Invoice.DiscountType;
             invoice.DiscountValue = input.Invoice.DiscountValue;
             invoice.ServiceTotal = input.Invoice.ServiceTotal;
             invoice.DiscountAmount = input.Invoice.DiscountAmount;

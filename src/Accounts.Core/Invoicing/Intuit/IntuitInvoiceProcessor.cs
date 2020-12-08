@@ -106,79 +106,40 @@ namespace Accounts.Core.Invoicing.Intuit
                 var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
                 var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
                 var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
-                existinginvoice.TxnDate = invoice.InvoiceDate;
-                existinginvoice.TotalAmt = invoice.Total;
-                //Line
-                var line = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.SalesItemLineDetail).FirstOrDefault();
 
-                line.Amount = invoice.ServiceTotal;
-                line.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                var intuitInvoice = new IntuitData.Invoice
                 {
-                    Qty = new Decimal(invoice.TotalHours),
-                    QtySpecified = true,
-                    AnyIntuitObject = invoice.Rate,
-                    ItemElementName = IntuitData.ItemChoiceType.UnitPrice,
+                    Deposit = 0,
+                    DepositSpecified = true,
+                    TxnDate = invoice.InvoiceDate,
+                    TxnDateSpecified = true,
+                    TotalAmt = invoice.Total,
+                    TotalAmtSpecified = true,
+                    EmailStatus = IntuitData.EmailStatusEnum.NotSet,
+                    BillEmail = customer.PrimaryEmailAddr,
+                    DocNumber = invoice.EInvoiceId,
+                    Id = invoice.QBOInvoiceId,
+                    SyncToken = existinginvoice.SyncToken,
+                    domain = "QBO"
                 };
-                    
-                // Sub Total
-                var subTotalLine = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.SubTotalLineDetail).FirstOrDefault();
-                var discountLine = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.DiscountLineDetail).FirstOrDefault();
-                if (subTotalLine != null)
-                    subTotalLine.Amount = invoice.SubTotal;
-                // Discount
-                if (discountLine != null)
+
+                intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
                 {
+                    name = invoice.Company.DisplayName,
+                    Value = invoice.Company.ExternalCustomerId.ToString()
+                };
 
-                    discountLine.Amount = 0;
-                    discountLine.AmountSpecified = true;
-                    var discountLineDetail = new IntuitData.DiscountLineDetail();
-                    discountLine.Amount = invoice.DiscountAmount;
-                    if (invoice.DiscountType == Data.DiscountType.Percentage)
-                    {
-                        discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
-                        discountLineDetail.DiscountPercentSpecified = true;
-                        discountLineDetail.PercentBased = true;
-                        discountLineDetail.PercentBasedSpecified = true;
-                    }
-                    else
-                    {
-                        discountLine.AmountSpecified = true;
-                        discountLine.Amount = invoice.DiscountAmount;
-                        discountLineDetail.PercentBased = false;
-                    }
-                    discountLine.AnyIntuitObject = discountLineDetail;
-                }
-                if(discountLine == null && invoice.DiscountAmount != 0)
+                intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
                 {
-                    //New Discount
-                    var discount = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.DiscountLineDetail).DefaultIfEmpty().ToList();
-                    var newDiscountLine = new IntuitData.Line();
-                    newDiscountLine.Id = (existinginvoice.Line.Count() + 1).ToString();
-                    newDiscountLine.LineNum = (existinginvoice.Line.Count() + 1).ToString();
-                    newDiscountLine.DetailType = IntuitData.LineDetailTypeEnum.DiscountLineDetail;
-                    newDiscountLine.DetailTypeSpecified = true;
+                    name = invoice.Term.Name,
+                    Value = invoice.Term.ExternalTermId.ToString()
+                };
 
-                    newDiscountLine.Amount = 0;
-                    newDiscountLine.AmountSpecified = true;
-                    var discountLineDetail = new IntuitData.DiscountLineDetail();
+                AddCustomFields(intuitInvoice, invoice, customer);
+                var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
+                AddLines(intuitInvoice, invoice, accountForDiscount);
+                var savedInvoice = IntuitDataProvider.Update(intuitInvoice);
 
-                    if (invoice.DiscountType == Data.DiscountType.Percentage)
-                    {
-                        discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
-                        discountLineDetail.DiscountPercentSpecified = true;
-                        discountLineDetail.PercentBased = true;
-                        discountLineDetail.PercentBasedSpecified = true;
-                    }
-                    else
-                    {
-                        newDiscountLine.AmountSpecified = true;
-                        newDiscountLine.Amount = invoice.DiscountAmount;
-                        discountLineDetail.PercentBased = false;
-                    }
-                    newDiscountLine.AnyIntuitObject = discountLineDetail;
-                    existinginvoice.Line.Concat(new[] { newDiscountLine });
-                }
-                var savedInvoice = IntuitDataProvider.Update(existinginvoice);
                 if (isMailing == true)
                     IntuitDataProvider.SendEmail(savedInvoice, customer);
             }
@@ -187,6 +148,104 @@ namespace Accounts.Core.Invoicing.Intuit
                 throw new UserFriendlyException(e.Message);
             }
         }
+        //public async Task UpdateAndSend(Invoice invoice, bool isMailing)
+        //{
+        //    try
+        //    {
+        //        var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
+        //        var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
+        //        var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
+        //        var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
+        //        existinginvoice.TxnDate = invoice.InvoiceDate;
+        //        existinginvoice.TotalAmt = invoice.Total;
+        //        //Line
+        //        var line = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.SalesItemLineDetail).FirstOrDefault();
+
+        //        line.Amount = invoice.ServiceTotal;
+        //        line.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+        //        {
+        //            Qty = new Decimal(invoice.TotalHours),
+        //            QtySpecified = true,
+        //            AnyIntuitObject = invoice.Rate,
+        //            ItemElementName = IntuitData.ItemChoiceType.UnitPrice,
+        //        };
+
+        //        // Sub Total
+        //        var subTotalLine = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.SubTotalLineDetail).FirstOrDefault();
+        //        if (subTotalLine != null)
+        //            subTotalLine.Amount = invoice.SubTotal;
+
+        //        // Discount
+        //        var discountLine = existinginvoice.Line.Where(x => x.DetailType == IntuitData.LineDetailTypeEnum.DiscountLineDetail).FirstOrDefault();
+        //        var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
+        //        if (discountLine != null)
+        //        {
+        //            var discountLineDetail = new IntuitData.DiscountLineDetail();
+        //            if (invoice.DiscountType == Data.DiscountType.Percentage)
+        //            {
+        //                discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
+        //                discountLineDetail.DiscountPercentSpecified = true;
+        //                discountLineDetail.PercentBased = true;
+        //                discountLineDetail.PercentBasedSpecified = true;
+        //            }
+        //            else
+        //            {
+        //                discountLine.AmountSpecified = true;
+        //                discountLine.Amount = invoice.DiscountAmount;
+        //                discountLineDetail.PercentBased = false;
+        //            }
+
+        //            discountLine.AnyIntuitObject = discountLineDetail;
+        //            discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
+        //            {
+        //                name = "Discounts given",
+        //                Value = accountForDiscount.Id
+        //            };
+        //        }
+        //        if (discountLine == null && invoice.DiscountAmount != 0)
+        //        {
+        //            //New Discount
+        //            var newDiscountLine = new IntuitData.Line();
+        //            newDiscountLine.Id = (existinginvoice.Line.Count() + 1).ToString();
+        //            newDiscountLine.LineNum = (existinginvoice.Line.Count() + 1).ToString();
+        //            newDiscountLine.DetailType = IntuitData.LineDetailTypeEnum.DiscountLineDetail;
+        //            newDiscountLine.DetailTypeSpecified = true;
+
+        //            newDiscountLine.Amount = 0;
+        //            newDiscountLine.AmountSpecified = true;
+        //            var discountLineDetail = new IntuitData.DiscountLineDetail();
+
+        //            if (invoice.DiscountType == Data.DiscountType.Percentage)
+        //            {
+        //                discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
+        //                discountLineDetail.DiscountPercentSpecified = true;
+        //                discountLineDetail.PercentBased = true;
+        //                discountLineDetail.PercentBasedSpecified = true;
+        //            }
+        //            else
+        //            {
+        //                newDiscountLine.AmountSpecified = true;
+        //                newDiscountLine.Amount = invoice.DiscountAmount;
+        //                discountLineDetail.PercentBased = false;
+        //            }
+        //            newDiscountLine.AnyIntuitObject = discountLineDetail;
+        //            discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
+        //            {
+        //                name = "Discounts given",
+        //                Value = accountForDiscount.Id
+        //            };
+        //            //existinginvoice.Line.Append(newDiscountLine);
+        //            existinginvoice.Line.Concat(new[] { newDiscountLine });
+        //        }
+        //        var savedInvoice = IntuitDataProvider.Update(existinginvoice);
+        //        if (isMailing == true)
+        //            IntuitDataProvider.SendEmail(savedInvoice, customer);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new UserFriendlyException(e.Message);
+        //    }
+        //}
 
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
