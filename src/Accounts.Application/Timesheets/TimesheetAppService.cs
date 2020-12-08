@@ -109,20 +109,18 @@ namespace Accounts.Projects
             var project = await ProjectRepository.GetAsync(input.ProjectId);
             var lastTimesheet = await Repository.GetAll().Where(x => x.ProjectId == input.ProjectId).OrderByDescending(x => x.EndDt).FirstOrDefaultAsync();
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
-            if (input.EndDt > endDt)
-                endDt = input.EndDt;
+            endDt = input.EndDt;
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
 
-            if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
-               (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
-               (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
-            {
-                startDt = input.StartDt;
-                endDt = input.EndDt;
-            }
-
+            //if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
+            //   (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
+            //   (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
+            //{
+            //    startDt = input.StartDt;
+            //    endDt = input.EndDt;
+            //}
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {

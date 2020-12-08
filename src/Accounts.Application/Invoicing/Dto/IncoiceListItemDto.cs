@@ -11,6 +11,7 @@ namespace Accounts.Invoicing.Dto
     public class IncoiceListItemDto : EntityDto
     {
         public string QBOInvoiceId { get; set; }
+        public string EInvoiceId { get; set; }
         public string CompanyName { get; set; }
         public string EndClientName { get; set; }
         public string ConsultantName { get; set; }

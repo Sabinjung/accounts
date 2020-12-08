@@ -30,7 +30,7 @@ namespace Accounts.Core.Invoicing.Intuit
 
         }
 
-        public async Task<string> SendMailAndInvoice (Invoice invoice)
+        public async Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing)
         {
             var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
             var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
@@ -44,7 +44,7 @@ namespace Accounts.Core.Invoicing.Intuit
                 TxnDateSpecified = true,
                 TotalAmt = invoice.Total,
                 TotalAmtSpecified = true,
-                EmailStatus = IntuitData.EmailStatusEnum.NeedToSend,
+                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
                 BillEmail = customer.PrimaryEmailAddr,
 
             };
@@ -83,72 +83,72 @@ namespace Accounts.Core.Invoicing.Intuit
                 }
                 IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
 
-                IntuitDataProvider.SendEmail(savedInvoice, customer);
+                if(isMailing == true)
+                    IntuitDataProvider.SendEmail(savedInvoice, customer);
             }
             catch (Exception e)
             {
                 throw new UserFriendlyException(e.Message);
             }
-
-            return savedInvoice.Id;
+            var invoiceInfo = new IntuitInvoiceDto
+            {
+                EInvoiceId = savedInvoice.DocNumber,
+                QBOInvoiceId = savedInvoice.Id
+            };
+            return invoiceInfo;
         }
 
-        public async Task<string> Send(Invoice invoice)
+        public async Task UpdateAndSend(Invoice invoice, bool isMailing)
         {
-            var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
-            var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
-
-
-            var intuitInvoice = new IntuitData.Invoice
+            try
             {
-                Deposit = 0,
-                DepositSpecified = true,
-                TxnDate = invoice.InvoiceDate,
-                TxnDateSpecified = true,
-                TotalAmt = invoice.Total,
-                TotalAmtSpecified = true,
-                EmailStatus = IntuitData.EmailStatusEnum.NotSet,
-                BillEmail = customer.PrimaryEmailAddr,
+                var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
+                var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
+                var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
+                var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
 
-            };
+                var intuitInvoice = new IntuitData.Invoice
+                {
+                    Deposit = 0,
+                    DepositSpecified = true,
+                    TxnDate = invoice.InvoiceDate,
+                    TxnDateSpecified = true,
+                    TotalAmt = invoice.Total,
+                    TotalAmtSpecified = true,
+                    EmailStatus = IntuitData.EmailStatusEnum.NotSet,
+                    BillEmail = customer.PrimaryEmailAddr,
+                    DocNumber = invoice.EInvoiceId,
+                    Id = invoice.QBOInvoiceId,
+                    SyncToken = existinginvoice.SyncToken,
+                    domain = "QBO"
+                };
 
-            intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
-            {
-                name = invoice.Company.DisplayName,
-                Value = invoice.Company.ExternalCustomerId.ToString()
-            };
+                intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
+                {
+                    name = invoice.Company.DisplayName,
+                    Value = invoice.Company.ExternalCustomerId.ToString()
+                };
 
-            intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
-            {
-                name = invoice.Term.Name,
-                Value = invoice.Term.ExternalTermId.ToString()
-            };
+                intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
+                {
+                    name = invoice.Term.Name,
+                    Value = invoice.Term.ExternalTermId.ToString()
+                };
 
+                AddCustomFields(intuitInvoice, invoice, customer);
+                var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
+                AddLines(intuitInvoice, invoice, accountForDiscount);
+                var savedInvoice = IntuitDataProvider.Update(intuitInvoice);
 
-
-            AddCustomFields(intuitInvoice, invoice, customer);
-            var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
-            AddLines(intuitInvoice, invoice, accountForDiscount);
-            var savedInvoice = IntuitDataProvider.Add(intuitInvoice);
-
-            // Include Attachments
-            var invoiceAttachments = new List<FileForIntuitUploadDTO>();
-            foreach (var attachment in invoice.Attachments)
-            {
-                var dto = new FileForIntuitUploadDTO();
-                var blob = await AzureBlobService.DownloadFilesAsync(attachment.Name);
-                dto.Stream = await blob.OpenReadAsync();
-                dto.ContentType = attachment.ContentType;
-                dto.FileName = attachment.Name;
-                invoiceAttachments.Add(dto);
+                if (isMailing == true)
+                    IntuitDataProvider.SendEmail(savedInvoice, customer);
             }
-            IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
-            
-            return savedInvoice.Id;
-
+            catch (Exception e)
+            {
+                throw new UserFriendlyException(e.Message);
+            }
         }
-
-
+        
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
             var consultant = invoice.Consultant;

@@ -93,6 +93,19 @@ namespace Accounts.Intuit
             return added;
         }
 
+        public T Update<T>(T entity) where T : IEntity
+        {
+            var serviceContext = GetServiceContext();
+            //Initializing the Dataservice object with ServiceContext
+            DataService service = new DataService(serviceContext);
+
+            //Adding the Bill using Dataservice object
+
+            T updated = service.Update<T>(entity);
+
+            return updated;
+        }
+
         public void SendEmail<T>(T entity, Customer customer) where T : IEntity
         {
             var serviceContext = GetServiceContext();
@@ -221,5 +234,11 @@ namespace Accounts.Intuit
 
         public string FileName { get; set; }
 
+    }
+
+    public class IntuitInvoiceDto
+    {
+        public string QBOInvoiceId { get; set; }
+        public string EInvoiceId { get; set; }
     }
 }
