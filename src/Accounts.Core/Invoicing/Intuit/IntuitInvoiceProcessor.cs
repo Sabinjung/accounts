@@ -98,7 +98,57 @@ namespace Accounts.Core.Invoicing.Intuit
             return invoiceInfo;
         }
 
+        public async Task UpdateAndSend(Invoice invoice, bool isMailing)
+        {
+            try
+            {
+                var cus = new IntuitData.Customer { Id = invoice.Company.ExternalCustomerId };
+                var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
+                var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
+                var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
 
+                var intuitInvoice = new IntuitData.Invoice
+                {
+                    Deposit = 0,
+                    DepositSpecified = true,
+                    TxnDate = invoice.InvoiceDate,
+                    TxnDateSpecified = true,
+                    TotalAmt = invoice.Total,
+                    TotalAmtSpecified = true,
+                    EmailStatus = IntuitData.EmailStatusEnum.NotSet,
+                    BillEmail = customer.PrimaryEmailAddr,
+                    DocNumber = invoice.EInvoiceId,
+                    Id = invoice.QBOInvoiceId,
+                    SyncToken = existinginvoice.SyncToken,
+                    domain = "QBO"
+                };
+
+                intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
+                {
+                    name = invoice.Company.DisplayName,
+                    Value = invoice.Company.ExternalCustomerId.ToString()
+                };
+
+                intuitInvoice.SalesTermRef = new IntuitData.ReferenceType()
+                {
+                    name = invoice.Term.Name,
+                    Value = invoice.Term.ExternalTermId.ToString()
+                };
+
+                AddCustomFields(intuitInvoice, invoice, customer);
+                var accountForDiscount = IntuitDataProvider.FindOrAddAccount(IntuitData.AccountTypeEnum.Income, "DiscountsRefundsGiven", "Discount given");
+                AddLines(intuitInvoice, invoice, accountForDiscount);
+                var savedInvoice = IntuitDataProvider.Update(intuitInvoice);
+
+                if (isMailing == true)
+                    IntuitDataProvider.SendEmail(savedInvoice, customer);
+            }
+            catch (Exception e)
+            {
+                throw new UserFriendlyException(e.Message);
+            }
+        }
+        
         private void AddCustomFields(IntuitData.Invoice intuitInvoice, Invoice invoice, IntuitData.Customer customer)
         {
             var consultant = invoice.Consultant;

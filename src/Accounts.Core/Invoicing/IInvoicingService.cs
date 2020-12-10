@@ -10,7 +10,7 @@ namespace Accounts.Core.Invoicing
     {
         Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate = false);
         Task Submit(int invoiceId, int userId, bool isMailing);
-        Task SendMail(int invoiceId, bool isMailing);
+        Task UpdateAndSendMail(int invoiceId, bool isMailing);
         Task<string> Save(int timesheetId, int userId, string referenceNo);
         Task ReadInvoice(int invoiceId);
     }

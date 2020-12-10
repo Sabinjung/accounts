@@ -10,5 +10,6 @@ namespace Accounts.Core.Invoicing
     public interface IInvoiceProcessor
     {
         Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing);
+        Task UpdateAndSend(Invoice invoice, bool isMailing);
     }
 }
