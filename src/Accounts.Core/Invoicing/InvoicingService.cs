@@ -60,10 +60,6 @@ namespace Accounts.Core.Invoicing
             {
                 throw new UserFriendlyException("Invoice is already submitted.");
             }
-            if (timesheet.Project.IsSendMail == false)
-            {
-                throw new UserFriendlyException("Send invoice maile is not enabled.");
-            }
             var invoice = await GenerateInvoice(timesheetId, userId);         
             timesheet.Invoice = invoice;
             timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;   
