@@ -29,7 +29,7 @@ namespace Accounts.Invoicing.Dto
 
         public DiscountType? DiscountType { get; set; }
 
-        public double? DiscountValue { get; set; }
+        public decimal? DiscountValue { get; set; }
 
         public decimal DiscountAmount { get; set; }
 
@@ -46,6 +46,8 @@ namespace Accounts.Invoicing.Dto
         public string CompanyEmail { get; set; }
 
         public string QBOInvoiceId { get; set; }
+
+        public string EInvoiceId { get; set; }
 
         public bool IsSendMail { get; set; }
 

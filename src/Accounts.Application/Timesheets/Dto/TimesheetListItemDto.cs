@@ -33,5 +33,7 @@ namespace Accounts.Timesheets.Dto
         public string ApprovedByUserName { get; set; }
 
         public string QBOInvoiceId { get; set; }
+
+        public string EInvoiceId { get; set; }
     }
 }

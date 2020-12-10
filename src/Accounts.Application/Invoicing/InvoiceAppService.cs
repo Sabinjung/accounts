@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using MoreLinq;
+using System.Collections.Concurrent;
+using Abp.UI;
 
 namespace Accounts.Invoicing
 {
@@ -29,10 +31,11 @@ namespace Accounts.Invoicing
         private readonly QueryBuilderFactory QueryBuilder;
         private readonly IRepository<Project> ProjectRepository;
         private readonly IRepository<Timesheet> TimesheetRepository;
+        private readonly IRepository<HourLogEntry> HourLogRepository;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
             OAuth2Client oAuth2Client, IRepository<Project> projectRepository, IRepository<Timesheet> timesheetRepository,
-             IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
+             IRepository<HourLogEntry> hourLogRepository, IntuitDataProvider intuitDataProvider, QueryBuilderFactory queryBuilderFactory
            )
             : base(repository)
         {
@@ -42,6 +45,7 @@ namespace Accounts.Invoicing
             IntuitDataProvider = intuitDataProvider;
             ProjectRepository = projectRepository;
             TimesheetRepository = timesheetRepository;
+            HourLogRepository = hourLogRepository;
             QueryBuilder = queryBuilderFactory;
             CreatePermissionName = "Invoice.Create";
             UpdatePermissionName = "Invoice.Update";
@@ -66,10 +70,11 @@ namespace Accounts.Invoicing
         public async Task GenerateAndSubmit(int timesheetId)
         {
             var currentUserId = Convert.ToInt32(AbpSession.UserId);
+            bool isMailing = false;
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
-                await InvoicingService.Submit(timesheetId, currentUserId);
+                await InvoicingService.Submit(timesheetId, currentUserId, isMailing);
             }
         }
 
@@ -84,10 +89,11 @@ namespace Accounts.Invoicing
         public async Task Submit(int invoiceId)
         {
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            bool isMailing = false;
             if (isConnectionEstablished)
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                await InvoicingService.Submit(invoiceId, currentUserId);
+                await InvoicingService.Submit(invoiceId, currentUserId, isMailing);
             }
         }
         
@@ -95,13 +101,55 @@ namespace Accounts.Invoicing
         public async Task GenerateAndMailInvoice(int timesheetId)
         {
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            bool isMailing = true;
             if (isConnectionEstablished)
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
-                await InvoicingService.GenerateAndMailInvoice(timesheetId, currentUserId);
+                await InvoicingService.Submit(timesheetId, currentUserId, isMailing);
             }
         }
+        [AbpAuthorize("Invoicing.Edit")]
+        public async Task UpdateInvoice(UpdateInvoiceInputDto input)
+        {
+            var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId });
+            var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
 
+            var invoice = await Repository.GetAsync(input.Invoice.Id);
+            invoice.Rate = input.Invoice.Rate;
+            invoice.TotalHours = input.Invoice.TotalHours;
+            invoice.DiscountValue = input.Invoice.DiscountValue;
+            invoice.ServiceTotal = input.Invoice.ServiceTotal;
+            invoice.DiscountAmount = input.Invoice.DiscountAmount;
+            invoice.SubTotal = input.Invoice.SubTotal;
+            invoice.Total = input.Invoice.Total;
+            //await Repository.UpdateAsync(invoice);
+            Parallel.ForEach(distinctHourLogs, log =>
+            {
+                var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
+                if (existingHourLog != null)
+                {
+                    if (log.Hours.HasValue)
+                    {
+                        existingHourLog.Hours = log.Hours;
+                        HourLogRepository.Update(existingHourLog);
+                    }
+                }
+                else
+                {
+                    throw new UserFriendlyException("Could not find existing hours to updated.");
+                }
+            });
+
+            if (input.Invoice.IsSendMail == true)
+            {
+                var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+                if (isConnectionEstablished)
+                {
+                    var currentUserId = Convert.ToInt32(AbpSession.UserId);
+                    await InvoicingService.SendMail(invoice.Id, input.Invoice.IsSendMail);
+                }
+            }
+        }
         private QueryBuilder<Invoice, InvoiceQueryParameter> GetQuery(InvoiceQueryParameter queryParameter)
         {
             var query = QueryBuilder.Create<Invoice, InvoiceQueryParameter>(Repository.GetAll());

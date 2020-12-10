@@ -109,18 +109,18 @@ namespace Accounts.Projects
             var project = await ProjectRepository.GetAsync(input.ProjectId);
             var lastTimesheet = await Repository.GetAll().Where(x => x.ProjectId == input.ProjectId).OrderByDescending(x => x.EndDt).FirstOrDefaultAsync();
             var (startDt, endDt) = TimesheetService.CalculateTimesheetPeriod(project, lastTimesheet);
+            endDt = input.EndDt;
             var hourLogentries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, startDt, endDt).ToListAsync();
             var attachments = await AttachmentRepository.GetAll().Where(a => input.AttachmentIds.Any(x => x == a.Id)).ToListAsync();
             var distinctHourLogEntries = hourLogentries.DistinctBy(x => x.Day).ToList();
 
-            if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
-               (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
-               (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
-            {
-                startDt = input.StartDt;
-                endDt = input.EndDt;
-            }
-
+            //if ((input.StartDt.Date >= startDt.Date && input.StartDt.Date <= endDt.Date) &&
+            //   (input.EndDt.Date >= startDt.Date && input.EndDt.Date <= endDt.Date) &&
+            //   (input.StartDt.Date < endDt.Date && input.EndDt.Date > startDt.Date))
+            //{
+            //    startDt = input.StartDt;
+            //    endDt = input.EndDt;
+            //}
             // Construct new Timesheet
             var newTimesheet = new Timesheet
             {
@@ -237,7 +237,7 @@ namespace Accounts.Projects
             timesheetInfo.EndDt = endDt;
 
             // Fill in Timesheet Hour Log Entries
-            var hourLogEntries = await HourLogEntryRepository.GetHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt, timesheetInfo.EndDt).ToListAsync();
+            var hourLogEntries = await HourLogEntryRepository.GetAllHourLogEntriesByProjectIdAsync(project.Id, timesheetInfo.StartDt).OrderBy(x => x.Day).ToListAsync();
 
             if (!TimesheetService.AllTimesheetHoursEntered(project.StartDt > startDt ? project.StartDt : startDt, timesheetInfo.EndDt, hourLogEntries))
             {

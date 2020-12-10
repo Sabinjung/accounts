@@ -15,6 +15,18 @@ namespace Accounts.HourLogEntries.Dto
         public IEnumerable<HourLogEntryDto> HourLogEntries { get; set; }
     }
 
+    public class InvoicedHourLogEntryDto
+    {
+        public List<HourLogDto> HourLogEntries { get; set; }
+    }
+
+    public class HourLogDto
+    {
+        public int ProjectId { get; set; }
+        public DateTime Day { get; set; }
+        public double? Hours { get; set; }
+    }
+
     [AutoMap(typeof(HourLogEntry))]
     public class HourLogEntryDto : EntityDto
     {

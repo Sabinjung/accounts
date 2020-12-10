@@ -90,7 +90,7 @@ namespace Accounts.Intuit
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
-                var invoices = IntuitDataProvider.GetInvoices();
+                var invoices = IntuitDataProvider.GetInvoices().Select(x => new { x.Balance, x.Id });
                 foreach (var invoice in invoices)
                 {
                     var existingInvoice = await InvoiceRepository.FirstOrDefaultAsync(x => x.QBOInvoiceId == invoice.Id);

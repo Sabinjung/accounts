@@ -102,9 +102,16 @@ const AllInvoiceList = (props: any) => {
       align: 'center' as const,
     },
     {
-      title: 'QB Invoice ID',
+      title: 'eTrans ID',
       key: 'qboInvoiceId',
       dataIndex: 'qboInvoiceId',
+      width: 130,
+      align: 'center' as const,
+    },
+    {
+      title: 'eInvoice ID',
+      key: 'eInvoiceID',
+      dataIndex: 'eInvoiceId',
       width: 130,
       align: 'center' as const,
     },
@@ -145,6 +152,7 @@ const AllInvoiceList = (props: any) => {
       title: 'Balance',
       key: 'balance',
       dataIndex: 'balance',
+      render: (val: number) => (val === null ? null : '$ ' + val.toLocaleString('en-US')),
     },
   ];
 
@@ -193,8 +201,6 @@ const AllInvoiceList = (props: any) => {
   const refetch = () => {
     makeRequest({ params: { isActive: true } });
   };
-
-  const viewerRef = React.createRef<any>();
 
   return (
     <>
@@ -250,7 +256,6 @@ const AllInvoiceList = (props: any) => {
                   onClose={onClose}
                   onInvoiceSubmitted={() => {
                     refetch();
-                    viewerRef.current && viewerRef.current.refetch();
                   }}
                 />
               );
