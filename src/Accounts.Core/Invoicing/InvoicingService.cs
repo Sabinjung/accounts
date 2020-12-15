@@ -60,10 +60,6 @@ namespace Accounts.Core.Invoicing
             {
                 throw new UserFriendlyException("Invoice is already submitted.");
             }
-            if (timesheet.Project.IsSendMail == false)
-            {
-                throw new UserFriendlyException("Send invoice maile is not enabled.");
-            }
             var invoice = await GenerateInvoice(timesheetId, userId);         
             timesheet.Invoice = invoice;
             timesheet.StatusId = (int)TimesheetStatuses.InvoiceGenerated;   
@@ -100,10 +96,10 @@ namespace Accounts.Core.Invoicing
             await Task.CompletedTask;
         }
 
-        public async Task SendMail(int invoiceId, bool isMailing)
+        public async Task UpdateAndSendMail(int invoiceId, bool isMailing)
         {
             var invoice = await InvoiceRepository.GetAsync(invoiceId);
-            await InvoiceProcessor.Send(invoice, isMailing);
+            await InvoiceProcessor.UpdateAndSend(invoice, isMailing);
         }
     }
 }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert, notification } from 'antd';
+import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert, notification, Select } from 'antd';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
@@ -14,6 +14,7 @@ import { isGranted } from '../../lib/abpUtility';
 import EditHourlog from './EditHourlog';
 
 const { TextArea } = Input;
+const { Option } = Select;
 
 const tableStyles = css`
   width: 100%;
@@ -37,10 +38,15 @@ const StyledInput = styled(Input)`
   width: 40px !important;
 `;
 
+const StyledSelect = styled(Select)`
+  width: 54px !important;
+`;
+
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [form, setForm] = useState({ rate: 0, discountValue: 0 });
+  const [disType, setDisType] = useState(null);
   const [logedHours, setLogedHours]: any = useState();
 
   const [{}, makeRequest] = useAxios(
@@ -74,7 +80,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     totalHours,
     rate,
     serviceTotal,
-    //subTotal,
+    subTotal,
     total,
     discountType,
     discountValue,
@@ -91,10 +97,15 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   let TotalAmount = total;
   let discount = discountAmount;
   let totalHrs = totalHours;
+  let sTotal = subTotal;
+  let totalExpense: number = 0;
+
+  lineItems.length > 0 && lineItems.map((val: any) => (totalExpense += val.amount));
 
   const handleEdit = () => {
     let hourlogs = hourEntries && hourEntries.result.hourLogEntries;
     setForm({ rate, discountValue });
+    setDisType(discountType ? discountType : 2);
     setLogedHours(hourlogs);
     setIsEdit((prevState: boolean) => !prevState);
   };
@@ -106,16 +117,17 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     });
   };
 
-  if (form.rate || form.discountValue || logedHours) {
+  if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
     initialAmount = form.rate * totalHrs;
+    sTotal = initialAmount + totalExpense;
     discount = !form.discountValue
       ? 0
-      : discountType === 1
-      ? parseFloat((initialAmount * (form.discountValue / 100)).toFixed(2))
+      : disType === 1
+      ? parseFloat((sTotal * (form.discountValue / 100)).toFixed(2))
       : parseFloat(form.discountValue.toFixed(2));
-    TotalAmount = initialAmount - discount;
+    TotalAmount = sTotal - discount;
   }
 
   return (
@@ -173,11 +185,25 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           <td colSpan={4} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             Sub total :
           </td>
-          <td>${initialAmount}</td>
+          <td>${sTotal}</td>
         </tr>
         <tr>
           <td colSpan={3} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
-            {discountType == 1 ? 'Discount Percentage' : 'Discount Value'}
+            {isEdit ? (
+              <Row type="flex" gutter={4} align="bottom" justify="end">
+                <Col>Discount</Col>
+                <Col>
+                  <StyledSelect size="small" value={disType} onChange={(val: any) => setDisType(val)}>
+                    <Option value={1}>%</Option>
+                    <Option value={2}>val</Option>
+                  </StyledSelect>
+                </Col>
+              </Row>
+            ) : discountType == 1 ? (
+              'Discount Percentage'
+            ) : (
+              'Discount Value'
+            )}
           </td>
           <td>
             {isEdit ? (
@@ -308,8 +334,9 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
                     rate: form.rate,
                     discountValue: form.discountValue,
                     discountAmount: discount,
+                    discountType: disType,
                     serviceTotal: initialAmount,
-                    subTotal: initialAmount,
+                    subTotal: sTotal,
                     total: TotalAmount,
                     isSendMail: isGranted('Invoicing.SubmitAndMail') && isSendMail,
                     id,
