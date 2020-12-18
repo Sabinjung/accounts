@@ -111,9 +111,13 @@ const AllInvoiceList = (props: any) => {
     {
       title: 'eInvoice ID',
       key: 'eInvoiceID',
-      dataIndex: 'eInvoiceId',
       width: 130,
       align: 'center' as const,
+      render: (val: any) => (
+        <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${val.qboInvoiceId}`} target="_blank">
+          {val.eInvoiceId && (val.eInvoiceId + ' ')}
+        </a>
+      )
     },
     {
       title: 'Company',

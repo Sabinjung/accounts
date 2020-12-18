@@ -163,7 +163,7 @@ export const TimesheetList = ({
                         {timesheet.qboInvoiceId && (
                           <Text>
                             eTrans ID:
-                            <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${timesheet.qbInvoiceId}`} target="_blank">
+                            <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${timesheet.qboInvoiceId}`} target="_blank">
                               {'  ' + timesheet.qboInvoiceId}
                             </a>
                           </Text>
