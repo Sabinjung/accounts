@@ -11,6 +11,7 @@ import EntityPicker from '../../../components/EntityPicker';
 import PredefinedQueryPills from '../../../components/PredefinedQueryPills';
 import styles from './timesheet.module.scss';
 import { AutoSizer } from 'react-virtualized';
+import styled from '@emotion/styled';
 
 console.log(styles.title);
 const { Text } = Typography;
@@ -23,6 +24,16 @@ export type ITimesheetListProps = {
   projectId?: number;
   reload?: boolean;
 };
+
+const StyledForm = styled(Form)`
+  .ant-form-item {
+    margin-bottom: 0 !important;
+  }
+
+  .ant-form-item-label {
+    line-height: unset;
+  }
+`;
 
 const timesheetListStyles = (theme: any) => ({
   'overflow-y': 'auto',
@@ -75,7 +86,7 @@ export const TimesheetList = ({
               style={{ height, width, minHeight: 500 }}
               loading={isLoading}
               header={
-                <Row gutter={10} type="flex" justify="space-between">
+                <Row gutter={10} type="flex">
                   <Col>
                     <PredefinedQueryPills
                       selectedFilter={selectedFilter}
@@ -90,7 +101,7 @@ export const TimesheetList = ({
                       visible={visible}
                       onVisibleChange={() => setVisible(!visible)}
                       content={
-                        <Form layout="horizontal" className="timesheet-filters">
+                        <StyledForm layout="horizontal">
                           <Form.Item label="Period">
                             <RangePicker
                               onChange={handleDateRange}
@@ -138,7 +149,7 @@ export const TimesheetList = ({
                               Apply
                             </Button>
                           </Form.Item>
-                        </Form>
+                        </StyledForm>
                       }
                       title="Filters"
                     >
