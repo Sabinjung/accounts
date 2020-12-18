@@ -4,6 +4,7 @@ using Accounts.Models;
 using AutoMapper;
 using Intuit.Ipp.OAuth2PlatformClient;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -96,6 +97,14 @@ namespace Accounts.Intuit
                     var existingInvoice = await InvoiceRepository.FirstOrDefaultAsync(x => x.QBOInvoiceId == invoice.Id);
                     if(existingInvoice != null)
                     {
+                        if (invoice.DueDate < DateTime.UtcNow)
+                        {
+                            existingInvoice.DueDays = (DateTime.UtcNow - invoice.DueDate).Days;
+                        }
+                        if (invoice.Balance != existingInvoice.Balance)
+                        {
+                            existingInvoice.LastUpdated = DateTime.UtcNow;
+                        }
                         var updatedInvoice = Mapper.Map(invoice, existingInvoice);
                         updatedInvoice.Id = existingInvoice.Id;
                         InvoiceRepository.Update(updatedInvoice);

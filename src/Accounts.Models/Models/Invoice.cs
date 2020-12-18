@@ -39,6 +39,10 @@ namespace Accounts.Models
 
         public decimal? Balance { get; set; }
 
+        public int? DueDays { get; set; }
+
+        public DateTime? LastUpdated { get; set; }
+
         public int ConsultantId { get; set; }
 
         public int ProjectId { get; set; }

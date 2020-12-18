@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Table, DatePicker, Button } from 'antd';
+import { Card, Row, Col, Table, DatePicker, Button, Popover, Typography, Icon } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import useAxios from '../../lib/axios/useAxios';
 import moment from 'moment';
@@ -10,6 +10,8 @@ import EntityPicker from '../../components/EntityPicker';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
 import { Get } from '../../lib/axios';
 import styled from '@emotion/styled';
+
+const { Text } = Typography;
 
 const StyledTable = styled(Table)`
   .ant-table-tbody > tr.ant-table-row:hover > td {
@@ -88,6 +90,42 @@ const AllInvoiceList = (props: any) => {
     return () => clearInterval(interval);
   }, []);
 
+  const isOverdue = (record: any) => {
+    let isSame: boolean = moment(moment().format('YYYY-MM-DD')).isSame(record.dueDate);
+    let isBefore: boolean = moment().isBefore(record.dueDate);
+    return isSame || record.balance === null || record.balance === 0 ? false : isBefore ? false : true;
+  };
+
+  const handleCompanySearch = (value: any) => {
+    setCompanySearchText(value);
+  };
+
+  const handleConsultantSearch = (value: any) => {
+    setConsultantSearchText(value);
+  };
+
+  const handleDateSearch = (date: any) => {
+    setDateSearchText(date);
+  };
+
+  const content = (item: any) => (
+    <>
+      {item.companyPhoneNumber && (
+        <div>
+          <Icon type="phone" theme="filled" style={{ color: '#1DA57A', marginRight: '5px' }} />
+          <Text copyable>{item.companyPhoneNumber}</Text>
+        </div>
+      )}
+      {item.companyEmail &&
+        item.companyEmail.map((val: any) => (
+          <div>
+            <Icon type="mail" theme="filled" style={{ color: '#1DA57A', marginRight: '5px' }} />
+            <Text copyable>{val}</Text>
+          </div>
+        ))}
+    </>
+  );
+
   const columns = [
     {
       title: 'Invoice ID',
@@ -122,7 +160,7 @@ const AllInvoiceList = (props: any) => {
     {
       title: 'Company',
       key: 'companyName',
-      dataIndex: 'companyName',
+      render: (item: any) => <Popover content={content(item)}>{item.companyName}</Popover>,
     },
     {
       title: 'Consultant',
@@ -158,19 +196,18 @@ const AllInvoiceList = (props: any) => {
       dataIndex: 'balance',
       render: (val: number) => (val === null ? null : '$ ' + val.toLocaleString('en-US')),
     },
+    {
+      title: 'Overdue By',
+      key: 'overdueBy',
+      render: (item: any) => {
+        let dueDate = moment(item.dueDate).format('YYYY-MM-DD');
+        return isOverdue(item) ? moment(dueDate).fromNow() : '';
+      },
+      sorter: (a: any, b: any) =>
+        moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days'),
+      defaultSortOrder: 'descend' as 'descend',
+    },
   ];
-
-  const handleCompanySearch = (value: any) => {
-    setCompanySearchText(value);
-  };
-
-  const handleConsultantSearch = (value: any) => {
-    setConsultantSearchText(value);
-  };
-
-  const handleDateSearch = (date: any) => {
-    setDateSearchText(date);
-  };
 
   const headerRender = () => {
     return (
@@ -206,6 +243,8 @@ const AllInvoiceList = (props: any) => {
     makeRequest({ params: { isActive: true } });
   };
 
+  result.listItemDto && console.log(result.listItemDto.results);
+
   return (
     <>
       <Card>
@@ -226,11 +265,9 @@ const AllInvoiceList = (props: any) => {
         </Get>
 
         <StyledTable
-          dataSource={result !== undefined ? result.results : []}
+          dataSource={result.listItemDto && result.listItemDto.results}
           rowClassName={(record: any) => {
-            let isSame: boolean = moment(moment().format('YYYY-MM-DD')).isSame(record.dueDate);
-            let isBefore: boolean = moment().isBefore(record.dueDate);
-            return isSame || record.balance === null || record.balance === 0 ? '' : isBefore ? '' : 'overdue';
+            return isOverdue(record) ? 'overdue' : '';
           }}
           columns={columns}
           bordered
@@ -243,6 +280,9 @@ const AllInvoiceList = (props: any) => {
             onDoubleClick: () => history.push(`/invoices/${record.id}`),
           })}
         ></StyledTable>
+        <Row type="flex" justify="end">
+          <Col>{result.lastUpdated && <h4>Last Updated on : {moment(result.lastUpdated).format('MM/DD/YYYY hh:mm:ss A')} </h4>}</Col>
+        </Row>
       </Card>
 
       <Portal>

@@ -13,6 +13,7 @@ using System.Linq;
 using Accounts.Companies.Dto;
 using Accounts.Invoicing.Dto;
 using Abp.FluentValidation;
+using System;
 
 namespace Accounts
 {
@@ -59,6 +60,8 @@ namespace Accounts
 
                     cfg.CreateMap<Invoice, IncoiceListItemDto>()
                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
+                       .ForMember(x => x.CompanyEmail, y => y.MapFrom(z => z.Company.Email.Split(",", StringSplitOptions.None).ToList()))
+                       .ForMember(x => x.CompanyPhoneNumber, y => y.MapFrom(z => z.Company.PhoneNumber))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
                     cfg.CreateMap<Project, UnsyncedProjectData>()
