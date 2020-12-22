@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState } from 'react';
 import { Button, Row, Col, List, Typography, DatePicker, Form, Popover, Checkbox } from 'antd';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import _ from 'lodash';
 import classNames from 'classnames';
 import { jsx, ClassNames } from '@emotion/core';
@@ -190,10 +190,10 @@ export const TimesheetList = ({
                     <div>
                       {timesheet.statusId == 1 ? (
                         <Text code className={classNames({ danger: moment().diff(moment(timesheet.createdDt), 'days') > 5 })}>
-                          {moment.utc(timesheet.createdDt).fromNow()}
+                          {moment(timesheet.createdDt).fromNow()}
                         </Text>
                       ) : (
-                        <Text code>{moment.utc(timesheet.createdDt).fromNow()}</Text>
+                        <Text code>{moment(timesheet.createdDt).fromNow()}</Text>
                       )}
 
                       <Text style={{ color: '#008dff' }}>{timesheet.totalHrs} hrs</Text>
