@@ -66,6 +66,8 @@ const AllInvoiceList = (props: any) => {
   const [companySearchText, setCompanySearchText] = useState(undefined);
   const [consultantSearchText, setConsultantSearchText] = useState(undefined);
   const [dateSearchText, setDateSearchText] = useState([]);
+  const [order, setOrder] = useState('descend');
+  const [currentPage, setCurrentPage] = useState(1);
   const { RangePicker } = DatePicker;
   const history = useHistory();
   const [{ data, loading }, makeRequest] = useAxios({
@@ -153,9 +155,9 @@ const AllInvoiceList = (props: any) => {
       align: 'center' as const,
       render: (val: any) => (
         <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${val.qboInvoiceId}`} target="_blank">
-          {val.eInvoiceId && (val.eInvoiceId + ' ')}
+          {val.eInvoiceId && val.eInvoiceId + ' '}
         </a>
-      )
+      ),
     },
     {
       title: 'Company',
@@ -206,6 +208,7 @@ const AllInvoiceList = (props: any) => {
       sorter: (a: any, b: any) =>
         moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days'),
       defaultSortOrder: 'descend' as 'descend',
+      sortDirections: ['descend', 'ascend', 'descend'] as ['descend', 'ascend', 'descend'],
     },
   ];
 
@@ -243,8 +246,6 @@ const AllInvoiceList = (props: any) => {
     makeRequest({ params: { isActive: true } });
   };
 
-  result.listItemDto && console.log(result.listItemDto.results);
-
   return (
     <>
       <Card>
@@ -271,7 +272,7 @@ const AllInvoiceList = (props: any) => {
           }}
           columns={columns}
           bordered
-          pagination={{ pageSize: 10, total: 0, defaultCurrent: 1 }}
+          pagination={{ pageSize: 10, total: 0, current: currentPage }}
           loading={loading}
           size="small"
           tableLayout="auto"
@@ -279,6 +280,13 @@ const AllInvoiceList = (props: any) => {
           onRow={(record: any, rowIndex: any) => ({
             onDoubleClick: () => history.push(`/invoices/${record.id}`),
           })}
+          onChange={(pagination: any, filters: any, sorter: any) => {
+            setCurrentPage(pagination.current);
+            if (sorter.order !== order) {
+              setOrder(sorter.order);
+              setCurrentPage(1);
+            }
+          }}
         ></StyledTable>
         <Row type="flex" justify="end">
           <Col>{result.lastUpdated && <h4>Last Updated on : {moment(result.lastUpdated).format('MM/DD/YYYY hh:mm:ss A')} </h4>}</Col>
