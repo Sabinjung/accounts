@@ -204,10 +204,18 @@ const AllInvoiceList = (props: any) => {
       key: 'overdueBy',
       render: (item: any) => {
         let dueDate = moment(item.dueDate).format('YYYY-MM-DD');
-        return isOverdue(item) ? moment(dueDate).fromNow() : '';
+        return isOverdue(item) ? moment(dueDate).fromNow(true) : '';
       },
-      sorter: (a: any, b: any) =>
-        moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days'),
+      sorter: (a: any, b: any) => {
+        if (a.balance === 0 || !a.balance) {
+          return 0 - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days');
+        } else if (b.balance === 0 || !b.balance) {
+          return moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - 0;
+        } else {
+          return moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days');
+        }
+      },
+
       defaultSortOrder: 'descend' as 'descend',
       sortDirections: ['descend', 'ascend', 'descend'] as ['descend', 'ascend', 'descend'],
     },
