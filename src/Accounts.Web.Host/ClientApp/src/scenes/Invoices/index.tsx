@@ -93,8 +93,10 @@ const AllInvoiceList = (props: any) => {
   }, []);
 
   const isOverdue = (record: any) => {
-    let isSame: boolean = moment(moment().format('YYYY-MM-DD')).isSame(record.dueDate);
-    let isBefore: boolean = moment().isBefore(record.dueDate);
+    let currentDate = moment().format('YYYY-MM-DD');
+    let dueDate = moment(record.dueDate).format('YYYY-MM-DD');
+    let isSame: boolean = moment(currentDate).isSame(dueDate);
+    let isBefore: boolean = moment(currentDate).isBefore(dueDate);
     return isSame || record.balance === null || record.balance === 0 ? false : isBefore ? false : true;
   };
 
@@ -207,12 +209,16 @@ const AllInvoiceList = (props: any) => {
         return isOverdue(item) ? moment(dueDate).fromNow(true) : '';
       },
       sorter: (a: any, b: any) => {
+        let currentDate = moment().format('YYYY-MM-DD');
         if (a.balance === 0 || !a.balance) {
-          return 0 - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days');
+          return -1 - moment(currentDate).diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days');
         } else if (b.balance === 0 || !b.balance) {
-          return moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - 0;
+          return moment(currentDate).diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') + 1;
         } else {
-          return moment().diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') - moment().diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days');
+          return (
+            moment(currentDate).diff(moment(a.dueDate).format('YYYY-MM-DD'), 'days') -
+            moment(currentDate).diff(moment(b.dueDate).format('YYYY-MM-DD'), 'days')
+          );
         }
       },
 
