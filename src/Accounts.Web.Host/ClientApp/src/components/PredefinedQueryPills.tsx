@@ -23,7 +23,7 @@ const PredefinedQueryPills: React.SFC<PredefinedQueryPillsProps> = ({
   selectedFilter,
 }: any) => {
   return (
-    <Row gutter={10} type="flex">
+    <Row gutter={[10,10]} type="flex">
       {dataSource.map((d: any) => (
         <Col>
           <Badge count={d.count}>

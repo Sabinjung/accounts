@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState } from 'react';
 import { Button, Row, Col, List, Typography, DatePicker, Form, Popover, Checkbox } from 'antd';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import _ from 'lodash';
 import classNames from 'classnames';
 import { jsx, ClassNames } from '@emotion/core';
@@ -11,6 +11,7 @@ import EntityPicker from '../../../components/EntityPicker';
 import PredefinedQueryPills from '../../../components/PredefinedQueryPills';
 import styles from './timesheet.module.scss';
 import { AutoSizer } from 'react-virtualized';
+import styled from '@emotion/styled';
 
 console.log(styles.title);
 const { Text } = Typography;
@@ -23,6 +24,16 @@ export type ITimesheetListProps = {
   projectId?: number;
   reload?: boolean;
 };
+
+const StyledForm = styled(Form)`
+  .ant-form-item {
+    margin-bottom: 0 !important;
+  }
+
+  .ant-form-item-label {
+    line-height: unset;
+  }
+`;
 
 const timesheetListStyles = (theme: any) => ({
   'overflow-y': 'auto',
@@ -75,7 +86,7 @@ export const TimesheetList = ({
               style={{ height, width, minHeight: 500 }}
               loading={isLoading}
               header={
-                <Row gutter={10} type="flex" justify="space-between">
+                <Row gutter={10} type="flex">
                   <Col>
                     <PredefinedQueryPills
                       selectedFilter={selectedFilter}
@@ -90,7 +101,7 @@ export const TimesheetList = ({
                       visible={visible}
                       onVisibleChange={() => setVisible(!visible)}
                       content={
-                        <Form layout="horizontal" className="timesheet-filters">
+                        <StyledForm layout="horizontal">
                           <Form.Item label="Period">
                             <RangePicker
                               onChange={handleDateRange}
@@ -138,7 +149,7 @@ export const TimesheetList = ({
                               Apply
                             </Button>
                           </Form.Item>
-                        </Form>
+                        </StyledForm>
                       }
                       title="Filters"
                     >
@@ -163,7 +174,7 @@ export const TimesheetList = ({
                         {timesheet.qboInvoiceId && (
                           <Text>
                             eTrans ID:
-                            <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${timesheet.qbInvoiceId}`} target="_blank">
+                            <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${timesheet.qboInvoiceId}`} target="_blank">
                               {'  ' + timesheet.qboInvoiceId}
                             </a>
                           </Text>
@@ -179,10 +190,10 @@ export const TimesheetList = ({
                     <div>
                       {timesheet.statusId == 1 ? (
                         <Text code className={classNames({ danger: moment().diff(moment(timesheet.createdDt), 'days') > 5 })}>
-                          {moment.utc(timesheet.createdDt).fromNow()}
+                          {moment(timesheet.createdDt).fromNow()}
                         </Text>
                       ) : (
-                        <Text code>{moment.utc(timesheet.createdDt).fromNow()}</Text>
+                        <Text code>{moment(timesheet.createdDt).fromNow()}</Text>
                       )}
 
                       <Text style={{ color: '#008dff' }}>{timesheet.totalHrs} hrs</Text>

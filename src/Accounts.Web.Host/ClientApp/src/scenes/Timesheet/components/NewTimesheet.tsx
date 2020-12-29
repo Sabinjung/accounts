@@ -20,6 +20,13 @@ const StyledDiscription = styled(Descriptions)`
   }
 `;
 
+const StyledSpin = styled(Spin)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export default inject(
   Stores.TimesheetStore,
   Stores.ProjectStore
@@ -87,7 +94,7 @@ export default inject(
 
     return (
       <React.Fragment>
-        <Spin spinning={isLoading || upcomingTimesheet == null}>
+        <StyledSpin size="large" spinning={isLoading || upcomingTimesheet == null}>
           {upcomingTimesheet && (
             <React.Fragment>
               <Title level={4}>Project Info</Title>
@@ -98,13 +105,16 @@ export default inject(
                 <Descriptions.Item label="Company" span={3}>
                   {upcomingTimesheet.project.companyName}
                 </Descriptions.Item>
+              </Descriptions>
+
+              <StyledDiscription column={2}>
                 <Descriptions.Item label="Start Date">
                   <Text>{moment(upcomingTimesheet.project.startDt).format('MM/DD/YYYY')}</Text>
                 </Descriptions.Item>
-                <Descriptions.Item label="End Date" span={2}>
+                <Descriptions.Item label="End Date">
                   <Text>{(upcomingTimesheet.project.endDt && moment(upcomingTimesheet.project.endDt).format('MM/DD/YYYY')) || ''}</Text>
                 </Descriptions.Item>
-              </Descriptions>
+              </StyledDiscription>
 
               <Title level={4}>
                 Total Hours (<Text>{upcomingTimesheet.totalHrs}</Text> hrs)
@@ -175,7 +185,7 @@ export default inject(
               )}
             </React.Fragment>
           )}
-        </Spin>
+        </StyledSpin>
         <div
           style={{
             position: 'absolute',

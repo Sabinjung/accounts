@@ -7,6 +7,7 @@ import ActionButton from '../ActionButton';
 import moment from 'moment';
 import _ from 'lodash';
 import DiscountInput from './DiscountInput';
+import styled from '@emotion/styled';
 
 const formItemLayout = {
   labelCol: {
@@ -18,6 +19,13 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
+
+const StyledForm = styled(Form)`
+  .ant-form-item {
+    display: flex;
+    align-items: center;
+  }
+`;
 
 export type IProjectFormProps = FormComponentProps<{}> & {
   onProjectAdded?: () => void;
@@ -38,7 +46,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
 
   return (
     <React.Fragment>
-      <Form {...formItemLayout}>
+      <StyledForm {...formItemLayout}>
         <Form.Item label="Company">
           {getFieldDecorator('companyId', {
             rules: [{ required: true, message: 'Please input your Company!' }],
@@ -93,7 +101,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           })(<Input style={{ width: '5em' }} />)}
         </Form.Item>
         <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}</Form.Item>
-      </Form>
+      </StyledForm>
 
       <div
         style={{

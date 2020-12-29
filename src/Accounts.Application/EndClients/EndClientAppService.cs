@@ -11,19 +11,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using System.Linq;
+using Abp.UI;
 
 namespace Accounts.EndClients
 {
     public class EndClientAppService : AsyncCrudAppService<EndClient, EndClientDto>
     {
         private readonly QueryBuilderFactory QueryBuilder;
-        private readonly IRepository<EndClient> EndClientRepository;
         private readonly IRepository<Project> ProjectRepository;
         public EndClientAppService(IRepository<EndClient> repository, QueryBuilderFactory queryBuilderFactory, IRepository<EndClient> endClientRepository, IRepository<Project> projectRepository)
         : base(repository)
         {
             QueryBuilder = queryBuilderFactory;
-            EndClientRepository = endClientRepository;
             ProjectRepository = projectRepository;
             CreatePermissionName = "Endclient.Create";
             UpdatePermissionName = "Endclient.Update";
@@ -51,8 +50,28 @@ namespace Accounts.EndClients
                 pro.EndClientId = null;
                 await ProjectRepository.UpdateAsync(pro);
             }
-            await EndClientRepository.DeleteAsync(id);
+            await Repository.DeleteAsync(id);
 
+        }
+
+        public override async Task<EndClientDto> Create(EndClientDto input)
+        {
+            var existingEndClients = await Repository.CountAsync(x => x.ClientName == input.ClientName);
+            if (existingEndClients > 0)
+            {
+                throw new UserFriendlyException("Create EndClient Failed!!","EndClient already exists. ");
+            }
+            return await base.Create(input);
+        }
+
+        public override async Task<EndClientDto> Update(EndClientDto input)
+        {
+            var existingEndClients = await Repository.CountAsync(x => x.ClientName == input.ClientName);
+            if (existingEndClients > 0)
+            {
+                throw new UserFriendlyException("Update EndClient Failed!!","EndClient already exists. ");
+            }
+            return await base.Update(input);
         }
     }
 }

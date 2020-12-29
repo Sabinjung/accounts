@@ -167,10 +167,15 @@ namespace Accounts.Invoicing
         }
 
         [HttpGet]
-        public async Task<Page<IncoiceListItemDto>> Search(InvoiceQueryParameter queryParameter)
+        public async Task<InvoiceListItemDto> Search(InvoiceQueryParameter queryParameter)
         {
             var query = GetQuery(queryParameter);
-            var results = await query.ExecuteAsync<IncoiceListItemDto>(queryParameter);
+            var details = await query.ExecuteAsync<IncoiceListItemDto>(queryParameter);
+            var results = new InvoiceListItemDto
+            {
+                LastUpdated = Repository.GetAllList().Max(x => x.LastUpdated),
+                ListItemDto = details
+            };
             return results;
         }
 

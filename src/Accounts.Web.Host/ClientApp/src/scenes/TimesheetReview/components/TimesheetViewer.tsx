@@ -292,10 +292,10 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                             <Text>{invoiceGeneratedDate && moment(invoiceGeneratedDate).format('MM/DD/YYYY')}</Text>
                             {qbInvoiceId && (
                               <Text>
-                                Intuit Id:
+                                eTrans ID:
                                 {qbInvoiceId ? (
                                   <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${qbInvoiceId}`} target="_blank">
-                                    {qbInvoiceId}
+                                    {' ' + qbInvoiceId}
                                   </a>
                                 ) : null}
                               </Text>

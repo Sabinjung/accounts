@@ -15,7 +15,7 @@ namespace Accounts.Invoicing
         Task UpdateInvoice(UpdateInvoiceInputDto input);
 
         Task GenerateAndMailInvoice(int timesheetId);
-        Task<Page<IncoiceListItemDto>> Search(InvoiceQueryParameter queryParameter);
+        Task<InvoiceListItemDto> Search(InvoiceQueryParameter queryParameter);
         
         Task<IEnumerable<InvoiceMonthReportDto>> GetInvoicesByMonthReport(InvoiceQueryParameter queryParameter);
     }

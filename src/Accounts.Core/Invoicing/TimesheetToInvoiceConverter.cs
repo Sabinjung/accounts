@@ -24,8 +24,8 @@ namespace Accounts.Invoicing
                 Company = source.Project.Company,
                 Term = source.Project.Term,
                 Consultant = source.Project.Consultant,
-                Project = source.Project
-
+                Project = source.Project,
+                EndClientName = source.Project.EndClientId != null ? source.Project.EndClient.ClientName : null
             };
             invoice.LineItems = context.Mapper.Map<IList<LineItem>>(source.Expenses);
             CalculateTotal(source.Project, invoice);

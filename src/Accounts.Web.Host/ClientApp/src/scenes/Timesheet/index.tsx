@@ -136,13 +136,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     function shiftDateRange(val: any, type: string, direction: number, unitOfTime: any) {
       const methodName = direction == 1 ? 'add' : 'subtract';
       const newStartDt = direction == 1 ? endDt.clone().add(1, 'days') : startDt.clone()[methodName](val, type);
-      const newEnddt =
-        direction == 1
-          ? endDt
-            .clone()
-          [methodName](val, type)
-            .endOf(unitOfTime)
-          : startDt.clone().subtract(1, 'days');
+      const newEnddt = direction == 1 ? endDt.clone()[methodName](val, type).endOf(unitOfTime) : startDt.clone().subtract(1, 'days');
       return [newStartDt, newEnddt];
     }
     switch (invoiceCycle) {
@@ -177,9 +171,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
 
   setStartDate = () => {
     if (moment().date() <= 7) {
-      return moment()
-        .startOf('month')
-        .subtract(1, 'month');
+      return moment().startOf('month').subtract(1, 'month');
     } else {
       return moment().startOf('month');
     }
@@ -187,8 +179,8 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
 
   handleSelect = (value: number) => {
     this.setState({ selectedQuery: value });
-    console.log(this.state.selectedQuery)
-  }
+    console.log(this.state.selectedQuery);
+  };
 
   render() {
     const { startDt, endDt, selectedRowKeys, selectedQuery } = this.state;
@@ -196,25 +188,30 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     let filteredProjectHourLogEntries;
     const hasSelected = selectedRowKeys.length > 0;
     if (selectedQuery == 0) {
-      filteredProjectHourLogEntries = (projectHourLogEntries && projectHourLogEntries.filter((data: any) => {
-        return data.project.pastTimesheetDays == 0
-      }))
+      filteredProjectHourLogEntries =
+        projectHourLogEntries &&
+        projectHourLogEntries.filter((data: any) => {
+          return data.project.pastTimesheetDays == 0;
+        });
     } else if (selectedQuery == 1) {
-      filteredProjectHourLogEntries = (projectHourLogEntries && projectHourLogEntries.filter((data: any) => {
-        return data.project.pastTimesheetDays > 0 && data.project.pastTimesheetDays < 7
-      }))
+      filteredProjectHourLogEntries =
+        projectHourLogEntries &&
+        projectHourLogEntries.filter((data: any) => {
+          return data.project.pastTimesheetDays > 0 && data.project.pastTimesheetDays < 7;
+        });
     } else if (selectedQuery == 2) {
-      filteredProjectHourLogEntries = (projectHourLogEntries && projectHourLogEntries.filter((data: any) => {
-        return data.project.pastTimesheetDays > 7
-      }))
-    }
-    else {
+      filteredProjectHourLogEntries =
+        projectHourLogEntries &&
+        projectHourLogEntries.filter((data: any) => {
+          return data.project.pastTimesheetDays > 7;
+        });
+    } else {
       filteredProjectHourLogEntries = projectHourLogEntries;
     }
     return (
       <div>
         <div style={{ marginBottom: 16 }}>
-          <Row type="flex" justify="space-between">
+          <Row type="flex" justify="space-between" align="middle">
             <Col>
               <Button type="primary" style={{ marginRight: 10 }} disabled={!hasSelected} onClick={this.saveProjects}>
                 Save Entries
@@ -222,43 +219,46 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
               <span style={{ marginLeft: 8 }}>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</span>
             </Col>
             <Col>
-              <Select allowClear={true} style={{ width: "200px", marginRight: "20px" }} placeholder="Search Query" onChange={this.handleSelect}>
-                <Option value="0">Timesheet Created</Option>
-                <Option value="1">{"Past Due < 7D"}</Option>
-                <Option value="2">{"Past Due > 7D"}</Option>
-              </Select>
-              <Button type="default" onClick={() => this.changeRange(-1)}>
-                <Icon type="left" />
-              </Button>
-              <RangePicker
-                ranges={{
-                  Today: [moment(), moment()],
-                  Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                  'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                  'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                  'This Month': [moment().startOf('month'), moment().endOf('month')],
-                  'Last Month': [
-                    moment()
-                      .subtract(1, 'month')
-                      .startOf('month'),
-                    moment()
-                      .subtract(1, 'month')
-                      .endOf('month'),
-                  ],
-                }}
-                renderExtraFooter={() => (
-                  <Radio.Group onChange={this.onInvoiceCycleChange} defaultValue="3" size="small">
-                    <Radio.Button value="1">Weekly</Radio.Button>
-                    <Radio.Button value="2">Bi-Weekly</Radio.Button>
-                    <Radio.Button value="3">Monthly</Radio.Button>
-                  </Radio.Group>
-                )}
-                value={[startDt, endDt]}
-                onChange={this.onDateSelectionChange}
-              />
-              <Button type="default" onClick={() => this.changeRange(1)}>
-                <Icon type="right" />
-              </Button>
+              <Row type="flex" align="middle">
+                <Col>
+                  <Select allowClear={true} style={{ width: '200px', marginRight: '20px' }} placeholder="Search Query" onChange={this.handleSelect}>
+                    <Option value="0">Timesheet Created</Option>
+                    <Option value="1">{'Past Due < 7D'}</Option>
+                    <Option value="2">{'Past Due > 7D'}</Option>
+                  </Select>
+                </Col>
+                <Col>
+                  <Button type="default" onClick={() => this.changeRange(-1)}>
+                    <Icon type="left" />
+                  </Button>
+                </Col>
+                <Col>
+                  <RangePicker
+                    ranges={{
+                      Today: [moment(), moment()],
+                      Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                      'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                      'This Month': [moment().startOf('month'), moment().endOf('month')],
+                      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    }}
+                    renderExtraFooter={() => (
+                      <Radio.Group onChange={this.onInvoiceCycleChange} defaultValue="3" size="small">
+                        <Radio.Button value="1">Weekly</Radio.Button>
+                        <Radio.Button value="2">Bi-Weekly</Radio.Button>
+                        <Radio.Button value="3">Monthly</Radio.Button>
+                      </Radio.Group>
+                    )}
+                    value={[startDt, endDt]}
+                    onChange={this.onDateSelectionChange}
+                  />
+                </Col>
+                <Col>
+                  <Button type="default" onClick={() => this.changeRange(1)}>
+                    <Icon type="right" />
+                  </Button>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </div>
@@ -282,18 +282,18 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                 params: { projectId },
               },
             }: any) => (
-                <Text>
-                  New Timesheet
+              <Text>
+                {'New Timesheet '}
                 <Button
-                    size="small"
-                    onClick={() => {
-                      history.push(`${this.props.match!.path}/${projectId}/new/timesheets`);
-                    }}
-                  >
-                    Show Previous Timesheets
+                  size="small"
+                  onClick={() => {
+                    history.push(`${this.props.match!.path}/${projectId}/new/timesheets`);
+                  }}
+                >
+                  Show Previous Timesheets
                 </Button>
-                </Text>
-              )}
+              </Text>
+            )}
           >
             {({
               match: {
@@ -318,7 +318,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
               return (
                 <ConnectedTimesheetList
                   projectId={projectId}
-                  onSelectionChange={timesheetId => {
+                  onSelectionChange={(timesheetId) => {
                     history.push(`${url}/${timesheetId}`);
                   }}
                 />

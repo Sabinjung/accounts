@@ -90,7 +90,13 @@ export class HourLogEntryInput extends React.Component<any> {
       moment(day).isBefore(moment());
 
     return isEditable ? (
-      <Form.Item style={{ margin: 0 }} validateStatus={isEntryError ? 'error' : ''} help="">
+      <Form.Item
+        css={css`
+          margin: -1px -5px;
+        `}
+        validateStatus={isEntryError ? 'error' : ''}
+        help=""
+      >
         {form.getFieldDecorator(fieldId, {
           rules: [
             {
@@ -104,25 +110,31 @@ export class HourLogEntryInput extends React.Component<any> {
             },
           ],
           initialValue: cellContent,
-        })(<Input ref={node => (this.input = node)} type="number" onPressEnter={this.save} onBlur={this.save} maxLength={5} />)}
+        })(<Input ref={(node) => (this.input = node)} type="number" onPressEnter={this.save} onBlur={this.save} maxLength={5} />)}
       </Form.Item>
     ) : (
-        <div
-          css={css`
+      <div
+        css={css`
           min-width: 1em;
           min-height: 1em;
-         `}
-          className={classNames('editable-cell-value-wrap')}
-        >
-          <Input css={css`
+        `}
+        className={classNames('editable-cell-value-wrap')}
+      >
+        <Input
+          css={css`
             border: none !important;
             background-color: inherit !important;
-            &:focus{
+            &:focus {
               box-shadow: none !important;
-            } 
-          `} value={cellContent} type="button" onClick={this.toggleEdit} onFocus={this.toggleEdit} />
-        </div>
-      );
+            }
+          `}
+          value={cellContent}
+          type="button"
+          onClick={this.toggleEdit}
+          onFocus={this.toggleEdit}
+        />
+      </div>
+    );
   };
 
   render() {
@@ -145,17 +157,21 @@ export class HourLogEntryInput extends React.Component<any> {
       ...restProps
     } = this.props;
 
-    const btw = upcomingTimesheetSummary && (moment(day).isSame(upcomingTimesheetSummary.startDt) || moment(day).isSame(upcomingTimesheetSummary.endDt) || moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt));
+    const btw =
+      upcomingTimesheetSummary &&
+      (moment(day).isSame(upcomingTimesheetSummary.startDt) ||
+        moment(day).isSame(upcomingTimesheetSummary.endDt) ||
+        moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt));
     return (
       <td
         className={classNames(className, {
           'is-modified': hourEntry && hourEntry.isModified,
           'is-associated': hourEntry && hourEntry.isAssociatedWithTimesheet,
-          'is-current-date': day && (moment(day).format("MM/DD/YYYY") === moment().format("MM/DD/YYYY")), 
+          'is-current-date': day && moment(day).format('MM/DD/YYYY') === moment().format('MM/DD/YYYY'),
           'is-upcoming-startDt': upcomingTimesheetSummary && moment(day).isSame(upcomingTimesheetSummary.startDt),
           'is-upcoming-endDt': upcomingTimesheetSummary && moment(day).isSame(upcomingTimesheetSummary.endDt),
           'is-upcoming-btw': upcomingTimesheetSummary && moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt),
-          'btw': btw,
+          btw: btw,
           'is-disabled':
             dataIndex === 'hourLogEntries' &&
             (moment(day).isBefore(projectStartDt) || (projectEndDt && moment(day).isAfter(projectEndDt)) || moment(day).isAfter(moment())),
@@ -163,7 +179,7 @@ export class HourLogEntryInput extends React.Component<any> {
         {...restProps}
       >
         {editable ? <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer> : children}
-        {(btw && <div className="upcoming-timesheet-totalhrs">{upcomingTimesheetSummary.totalHrs} hrs</div>)}
+        {btw && <div className="upcoming-timesheet-totalhrs">{upcomingTimesheetSummary.totalHrs} hrs</div>}
       </td>
     );
   }

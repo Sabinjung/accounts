@@ -46,10 +46,7 @@ const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, row
           makeRequest({});
         }}
         onError={(err: any) => {
-          notification.open({
-            message: 'Error',
-            description: err.message,
-          });
+          console.log(err);
         }}
         onSubmit={({ setFormData, setIsReady }: any) => {
           validateFields((errors, values: any) => {
