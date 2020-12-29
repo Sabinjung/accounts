@@ -33,6 +33,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Accounts.Core.Invoicing.Intuit;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Options;
+using Accounts.Invoicing;
 
 namespace Accounts.Web.Host.Startup
 {
@@ -52,6 +53,7 @@ namespace Accounts.Web.Host.Startup
             services.AddApplicationInsightsTelemetry();
             services.Configure<AzureBlobSettings>(_appConfiguration.GetSection("AzureBlob"));
             services.Configure<IntuitSettings>(_appConfiguration.GetSection("Intuit"));
+            services.Configure<DefaultEmailSetting>(_appConfiguration.GetSection("DefaultEmail"));
 
             services.AddSingleton(prov =>
             {

@@ -82,9 +82,7 @@ namespace Accounts.Core.Invoicing.Intuit
                     invoiceAttachments.Add(dto);
                 }
                 IntuitDataProvider.UploadFiles(savedInvoice.Id, invoiceAttachments);
-
-                if(isMailing == true)
-                    IntuitDataProvider.SendEmail(savedInvoice, customer);
+                IntuitDataProvider.SendEmail(savedInvoice, customer, isMailing);
             }
             catch (Exception e)
             {
@@ -140,8 +138,7 @@ namespace Accounts.Core.Invoicing.Intuit
                 AddLines(intuitInvoice, invoice, accountForDiscount);
                 var savedInvoice = IntuitDataProvider.Update(intuitInvoice);
 
-                if (isMailing == true)
-                    IntuitDataProvider.SendEmail(savedInvoice, customer);
+                IntuitDataProvider.SendEmail(savedInvoice, customer, isMailing);
             }
             catch (Exception e)
             {
