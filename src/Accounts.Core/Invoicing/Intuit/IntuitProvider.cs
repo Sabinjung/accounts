@@ -2,6 +2,7 @@
 using Abp.Dependency;
 using Accounts.Core;
 using Accounts.Core.Invoicing.Intuit;
+using Accounts.Invoicing;
 using Intuit.Ipp.Core;
 using Intuit.Ipp.Core.Configuration;
 using Intuit.Ipp.Data;
@@ -30,12 +31,15 @@ namespace Accounts.Intuit
 
         private readonly IntuitSettings IntuitSettings;
 
+        private readonly DefaultEmailSetting DefaultEmailSetting;
 
 
-        public IntuitDataProvider(AccountsAppSession accountsAppSession, IOptions<IntuitSettings> options)
+
+        public IntuitDataProvider(AccountsAppSession accountsAppSession, IOptions<IntuitSettings> options, IOptions<DefaultEmailSetting> email)
         {
             AccountsAppSession = accountsAppSession;
             IntuitSettings = options.Value;
+            DefaultEmailSetting = email.Value;
         }
 
         public IEnumerable<Customer> GetCustomers()
@@ -106,10 +110,14 @@ namespace Accounts.Intuit
             return updated;
         }
 
-        public void SendEmail<T>(T entity, Customer customer) where T : IEntity
+        public void SendEmail<T>(T entity, Customer customer, bool isMailing) where T : IEntity
         {
             var serviceContext = GetServiceContext();
-            var address = customer.PrimaryEmailAddr.Address;
+            var address = "";
+            if (isMailing)
+                address = customer.PrimaryEmailAddr.Address;
+            
+            address = String.IsNullOrEmpty(address) ? DefaultEmailSetting.EmailAddress : DefaultEmailSetting.EmailAddress + "," + address;
             DataService service = new DataService(serviceContext);
 
             if (address.Contains(','))
