@@ -129,6 +129,17 @@ export const appRouters: any = [
   },
 
   {
+    path: '/agingReport',
+    name: 'agingReport',
+    permission: 'AgingReport',
+    title: 'Aging Report',
+    icon: 'file-text',
+    showInMenu: true,
+    exact: true,
+    component: LoadableComponent(() => import('../../scenes/AgingReport')),
+  },
+
+  {
     path: '/payrollHours',
     name: 'PayrollHours',
     permission: '',

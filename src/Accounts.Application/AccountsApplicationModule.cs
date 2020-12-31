@@ -64,6 +64,10 @@ namespace Accounts
                        .ForMember(x => x.CompanyPhoneNumber, y => y.MapFrom(z => z.Company.PhoneNumber))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
+                    cfg.CreateMap<Invoice, Children>()
+                       .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
+                       .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
+
                     cfg.CreateMap<Project, UnsyncedProjectData>()
                         .ForMember("FirstName", x => x.MapFrom(y => y.Consultant.FirstName))
                         .ForMember("LastName", x => x.MapFrom(y => y.Consultant.LastName))
