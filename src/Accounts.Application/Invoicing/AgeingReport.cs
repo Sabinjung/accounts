@@ -215,7 +215,7 @@ namespace Accounts.Invoicing
             var twenthChild = new AgeingReportDto
             {
                 Key = 20,
-                Days = "1 days",
+                Days = "1 day",
                 Children = childrens.Where(x => x.DueDate < DateTime.Now.Date && x.DueDate > DateTime.Now.Date.AddDays(-1) && x.Balance != 0).OrderBy(y => y.CompanyName).ToList()
             };
             result.Add(twenthChild);
