@@ -39,13 +39,13 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledSelect = styled(Select)`
-  width: 54px !important;
+  width: 107px !important;
 `;
 
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
-  const [form, setForm] = useState({ rate: 0, discountValue: 0 });
+  const [form, setForm]: any = useState({ rate: 0, discountValue: 0 });
   const [disType, setDisType] = useState(null);
   const [logedHours, setLogedHours]: any = useState();
 
@@ -113,20 +113,20 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   const updateField = (e: any) => {
     setForm({
       ...form,
-      [e.target.name]: isNaN(parseFloat(e.target.value)) ? null : parseFloat(e.target.value),
+      [e.target.name]: isNaN(e.target.value) ? null : e.target.value,
     });
   };
 
   if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
-    initialAmount = form.rate * totalHrs;
+    initialAmount = !form.rate ? 0 : parseFloat(form.rate) * totalHrs;
     sTotal = initialAmount + totalExpense;
     discount = !form.discountValue
       ? 0
       : disType === 1
-      ? parseFloat((sTotal * (form.discountValue / 100)).toFixed(2))
-      : parseFloat(form.discountValue.toFixed(2));
+      ? parseFloat((sTotal * (parseFloat(form.discountValue) / 100)).toFixed(2))
+      : parseFloat(parseFloat(form.discountValue).toFixed(2));
     TotalAmount = sTotal - discount;
   }
 
@@ -190,12 +190,12 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
         <tr>
           <td colSpan={3} style={{ textAlign: 'right', padding: 5, fontWeight: 'bold' }}>
             {isEdit ? (
-              <Row type="flex" gutter={4} align="bottom" justify="end">
+              <Row type="flex" gutter={4} align="middle" justify="end">
                 <Col>Discount</Col>
                 <Col>
                   <StyledSelect size="small" value={disType} onChange={(val: any) => setDisType(val)}>
-                    <Option value={1}>%</Option>
-                    <Option value={2}>val</Option>
+                    <Option value={1}>Percentage</Option>
+                    <Option value={2}>Value</Option>
                   </StyledSelect>
                 </Col>
               </Row>

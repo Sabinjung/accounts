@@ -258,7 +258,7 @@ namespace Accounts.Core.Invoicing.Intuit
 
             if (invoice.DiscountType == Data.DiscountType.Percentage)
             {
-                discountLineDetail.DiscountPercent = Decimal.Round(invoice.DiscountValue.Value, 1);
+                discountLineDetail.DiscountPercent = invoice.DiscountValue.Value;
                 discountLineDetail.DiscountPercentSpecified = true;
                 discountLineDetail.PercentBased = true;
                 discountLineDetail.PercentBasedSpecified = true;
