@@ -205,8 +205,10 @@ const AllInvoiceList = (props: any) => {
       title: 'Overdue By',
       key: 'overdueBy',
       render: (item: any) => {
+        let currentDate = moment().format('YYYY-MM-DD');
         let dueDate = moment(item.dueDate).format('YYYY-MM-DD');
-        return isOverdue(item) ? moment(dueDate).fromNow(true) : '';
+        let days = moment(currentDate).diff(dueDate, 'days');
+        return !isOverdue(item) ? '' : days === 1 ? days + ' day' : days + ' days';
       },
       sorter: (a: any, b: any) => {
         let currentDate = moment().format('YYYY-MM-DD');

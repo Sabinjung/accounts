@@ -111,23 +111,24 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   };
 
   const updateField = (e: any) => {
+    let rx = /^\d*\.?\d{0,2}$/;
     setForm({
       ...form,
-      [e.target.name]: isNaN(e.target.value) ? null : e.target.value,
+      [e.target.name]: rx.test(e.target.value) ? e.target.value : form[e.target.name],
     });
   };
 
   if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
-    initialAmount = !form.rate ? 0 : parseFloat(form.rate) * totalHrs;
-    sTotal = initialAmount + totalExpense;
+    initialAmount = !form.rate ? 0 : (parseFloat(form.rate) * totalHrs).toFixed(2);
+    sTotal = parseFloat(initialAmount + totalExpense).toFixed(2);
     discount = !form.discountValue
       ? 0
       : disType === 1
       ? parseFloat((sTotal * (parseFloat(form.discountValue) / 100)).toFixed(2))
-      : parseFloat(parseFloat(form.discountValue).toFixed(2));
-    TotalAmount = sTotal - discount;
+      : parseFloat(form.discountValue).toFixed(2);
+    TotalAmount = Math.trunc((sTotal - discount) * 100) / 100;
   }
 
   return (
