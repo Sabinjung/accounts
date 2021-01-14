@@ -1,10 +1,12 @@
 ﻿using Abp.Configuration;
+using Accounts.Core.Invoicing;
+using Accounts.Core.Invoicing.Intuit;
 using Intuit.Ipp.OAuth2PlatformClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Accounts.Controllers
@@ -14,11 +16,13 @@ namespace Accounts.Controllers
         private readonly OAuth2Client OAuth2Client;
         private readonly ISettingManager SettingManager;
         private readonly IAuthorizationService AuthorizationService;
-        public IntuitController(OAuth2Client oAuth2Client, ISettingManager settingManager, IAuthorizationService authorizationService)
+        private readonly IntuitSettings IntuitSettings;
+        public IntuitController(OAuth2Client oAuth2Client, ISettingManager settingManager, IAuthorizationService authorizationService, IOptions<IntuitSettings> options)
         {
             OAuth2Client = oAuth2Client;
             SettingManager = settingManager;
             AuthorizationService = authorizationService;
+            IntuitSettings = options.Value;
         }
 
 
@@ -31,8 +35,6 @@ namespace Accounts.Controllers
             scopes.Add(OidcScopes.Accounting);
             string authorizeUrl = OAuth2Client.GetAuthorizationURL(scopes, returnUrl);
             return Redirect(authorizeUrl);
-
-
         }
 
         [HttpGet]

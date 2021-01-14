@@ -1,7 +1,8 @@
-import * as React from 'react';
-import { Popover, Row, Col, Input } from 'antd';
+import React, { useState } from 'react';
+import { Popover, Row, Col, Input, DatePicker } from 'antd';
 import styled from '@emotion/styled';
 import moment from 'moment';
+import { isGranted } from '../../lib/abpUtility';
 
 const StyledDiv = styled.div`
   height: 82px;
@@ -31,6 +32,7 @@ const StyledRow = styled(Row)`
   flex-flow: row nowrap;
   max-width: 600px;
   overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const StyledInput = styled(Input)`
@@ -40,18 +42,40 @@ const StyledInput = styled(Input)`
   }
 `;
 
+const StyledDatepicker = styled(DatePicker)`
+  width: 106px;
+  .ant-calendar-picker-input {
+    color: #1da57a;
+  }
+`;
+
 type EditHourlogProps = {
   description: string;
   logedHours: any;
   setLogedHours: any;
+  originalHours: any;
 };
 
-const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setLogedHours }) => {
+const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setLogedHours, originalHours }) => {
+  let startDt = originalHours[0].day;
+  let endDt = originalHours[originalHours.length - 1].day;
+  const [endDate, setEndDate] = useState(moment(endDt));
+  let filteredLogedHours = logedHours;
+
+  const disabledDate: any = (current: any) => {
+    return current < moment(startDt) || current >= moment(endDt).endOf('days');
+  };
+
+  const handleDate = (date: any) => {
+    filteredLogedHours = originalHours.filter((data: any) => moment(data.day).isBetween(startDt, date, 'day', '[]'));
+    setEndDate(date);
+    setLogedHours([...filteredLogedHours]);
+  };
+
   const handleHourEdit = (e: any) => {
-    let newLogedHour = logedHours;
     let val: any = isNaN(parseFloat(e.target.value)) ? null : parseFloat(e.target.value);
-    newLogedHour[e.target.name].hours = val;
-    setLogedHours([...newLogedHour]);
+    filteredLogedHours[e.target.name].hours = val;
+    setLogedHours([...filteredLogedHours]);
   };
 
   const weekEnd = (day: any) => {
@@ -64,7 +88,7 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
 
   const content = (
     <StyledRow type="flex">
-      {logedHours.map((item: any, index: any) => (
+      {filteredLogedHours.map((item: any, index: any) => (
         <Col key={index}>
           <StyledDiv>
             <StyledHeader className={weekEnd(item.day)}>{moment(item.day).format('MM/DD')}</StyledHeader>
@@ -78,9 +102,14 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
   );
 
   return (
-    <Popover content={content} placement="bottom" trigger="click">
-      <a>{description}</a>
-    </Popover>
+    <>
+      <Popover content={content} placement="bottom" trigger="click">
+        {isGranted('Invoicing.EditEndDate') ? <a>{'Billing Period ' + moment(startDt).format('MM/DD/YYYY') + '-'}</a> : <a>{description}</a>}
+      </Popover>
+      {isGranted('Invoicing.EditEndDate') && (
+        <StyledDatepicker size="small" allowClear={false} value={endDate} disabledDate={disabledDate} onChange={handleDate} format="MM/DD/YYYY" />
+      )}
+    </>
   );
 };
 
