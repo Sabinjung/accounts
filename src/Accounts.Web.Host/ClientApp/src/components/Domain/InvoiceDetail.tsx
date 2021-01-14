@@ -243,7 +243,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           </List.Item>
         )}
       />
-      {isEdit && !form.rate && <Alert message="Rate can't be null or 0" type="error" />}
+      {isEdit && !parseInt(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
 
       <div
         style={{
@@ -334,7 +334,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
-              if (form.rate && totalHrs) {
+              if (parseInt(form.rate) && totalHrs) {
                 setFormData({
                   invoice: {
                     totalHours: totalHrs,
