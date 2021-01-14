@@ -208,6 +208,7 @@ namespace Accounts.Projects
                 queryParameter.IsActive && !string.IsNullOrEmpty(queryParameter.Name) ?
                 SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList() : new[] { queryParameter }.ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
+            result.RecordCounts.Where(x => x.Name == "Invoiced").FirstOrDefault().Count = 0;
             return result;
         }
 
