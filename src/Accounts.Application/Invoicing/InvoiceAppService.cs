@@ -199,5 +199,15 @@ namespace Accounts.Invoicing
                      MonthAmount = g.Sum(y => y.Total),
                  }, queryParameter);
         }
+
+        [AbpAuthorize("AgingReport")]
+        public async Task<IEnumerable<AgeingReportDto>> GetAgeingReport()
+        {
+            var details = await Repository.GetAllListAsync();
+            var childrens = Mapper.Map<List<Children>>(details);
+            AgeingReport report = new AgeingReport();
+            var result = await report.GetAgeingReport(childrens);
+            return result;
+        }
     }
 }

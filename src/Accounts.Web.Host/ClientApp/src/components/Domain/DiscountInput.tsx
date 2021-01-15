@@ -26,8 +26,9 @@ export default class DiscountInput extends React.Component<any, any> {
   }
 
   handleDiscountValueChange = (e: any) => {
-    const discountValue = (e.target.value);
-    if (isNaN(discountValue)) {
+    let discountValue = e.target.value;
+    let rx = /^\d*\.?\d{0,2}$/;
+    if (!rx.test(discountValue)) {
       return;
     }
     if (!('value' in this.props)) {

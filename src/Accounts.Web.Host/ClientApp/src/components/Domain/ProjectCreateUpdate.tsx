@@ -44,6 +44,15 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
     }
   };
 
+  const handleRate = (val: any, prevVal: any) => {
+    let rx = /^\d*\.?\d{0,2}$/;
+    if (rx.test(val)) {
+      return val;
+    } else {
+      return prevVal;
+    }
+  };
+
   return (
     <React.Fragment>
       <StyledForm {...formItemLayout}>
@@ -98,6 +107,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Rate">
           {getFieldDecorator('rate', {
             rules: [{ required: true, message: 'Please input rate!' }],
+            normalize: handleRate,
           })(<Input style={{ width: '5em' }} />)}
         </Form.Item>
         <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}</Form.Item>
