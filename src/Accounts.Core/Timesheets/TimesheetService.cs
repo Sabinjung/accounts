@@ -93,7 +93,7 @@ namespace Accounts.Timesheets
 
         public bool AllTimesheetHoursEntered(DateTime startDt, DateTime endDt, IEnumerable<HourLogEntry> hourLogEntries)
         {
-            var billableDays = BusinessDaysUntil(startDt, endDt);
+            var billableDays = (endDt.Date - startDt.Date).TotalDays + 1;
             if (hourLogEntries.Count() < billableDays) return false;
             return true;
         }
