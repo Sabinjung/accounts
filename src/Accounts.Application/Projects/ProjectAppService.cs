@@ -131,7 +131,7 @@ namespace Accounts.Projects
             ? x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true
             : x.EndDt.HasValue && x.EndDt < DateTime.UtcNow);
 
-            query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.Contains(p.Keyword.ToUpper()) || x.Consultant.DisplayName.ToUpper().Contains(p.Keyword.ToUpper()));
+            query.WhereIf(p => !p.Keyword.IsNullOrWhiteSpace(), p => x => x.Company.DisplayName.ToUpper().Contains(p.Keyword.ToUpper()) || x.Consultant.DisplayName.ToUpper().Contains(p.Keyword.ToUpper()) || x.EndClient.ClientName.ToUpper().Contains(p.Keyword.ToUpper()));
 
             query.WhereIf(p => p.InvoiceCyclesId.HasValue, p => x => p.InvoiceCyclesId == x.InvoiceCycleId);
 

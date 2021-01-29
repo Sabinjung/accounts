@@ -74,9 +74,9 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           )}
         </Form.Item>
         <Form.Item label="End Client">
-          {getFieldDecorator('endClientId')(
-            <EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.id, text: r.clientName })} />
-          )}
+          {getFieldDecorator('endClientId', {
+            rules: [{ required: true, message: 'Please input the end client!' }],
+          })(<EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.id, text: r.clientName })} />)}
         </Form.Item>
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
@@ -190,7 +190,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
-      isSendMail: Form.createFormField({ value: project.isSendMail }),
+      isSendMail: Form.createFormField({ value: project.companyId ? project.isSendMail : true }),
       endClientId: Form.createFormField({ value: project.endClientId }),
       discount: Form.createFormField({
         value: {
