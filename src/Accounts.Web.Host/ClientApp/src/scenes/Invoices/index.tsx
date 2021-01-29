@@ -10,6 +10,7 @@ import EntityPicker from '../../components/EntityPicker';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
 import { Get } from '../../lib/axios';
 import styled from '@emotion/styled';
+import PredefinedQueryPills from '../../components/PredefinedQueryPills';
 
 const { Text } = Typography;
 type sortableType = ['descend', 'ascend', 'descend'];
@@ -67,6 +68,7 @@ const RenderBarChart = (props: any) => {
 const AllInvoiceList = (props: any) => {
   const [companySearchText, setCompanySearchText] = useState(undefined);
   const [consultantSearchText, setConsultantSearchText] = useState(undefined);
+  const [queryName, setQueryName] = useState('All');
   const [dateSearchText, setDateSearchText] = useState([]);
   const [order, setOrder] = useState('descend');
   const [columnKey, setColumnKey] = useState('overdueBy');
@@ -77,6 +79,7 @@ const AllInvoiceList = (props: any) => {
     url: 'api/services/app/Invoice/Search',
     params: {
       isActive: true,
+      name: queryName,
       companyId: companySearchText,
       consultantId: consultantSearchText,
       startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
@@ -84,6 +87,12 @@ const AllInvoiceList = (props: any) => {
     },
   });
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
+  let predefinedQueries = result.listItemDto && result.listItemDto.recordCounts || [];
+  predefinedQueries && predefinedQueries.map((item: any) => {
+    if (item.name === 'All') {
+      item.count = null;
+    }
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -270,29 +279,45 @@ const AllInvoiceList = (props: any) => {
 
   const headerRender = () => {
     return (
-      <Row type="flex" justify="start" align="middle" style={{ height: 45 }}>
-        <Col lg={{ span: 4 }}>
-          <EntityPicker
-            url="api/services/app/Company/Search"
-            mapFun={(r) => ({ value: r.id, text: `${r.displayName}` })}
-            style={{ width: '220px' }}
-            value={companySearchText}
-            placeholder="Search Company"
-            onChange={handleCompanySearch}
-          />
+      <Row type="flex" justify="space-between" align="middle" style={{ height: 45 }}>
+        <Col>
+          <Row type="flex" align="middle">
+            <Col>
+              <PredefinedQueryPills
+                selectedFilter={queryName}
+                size = 'small'
+                dataSource={predefinedQueries}
+                onClick={(name: any) => setQueryName(name)}
+              />
+            </Col>
+          </Row>
         </Col>
-        <Col lg={{ span: 4 }}>
-          <EntityPicker
-            url="api/services/app/Consultant/Search"
-            mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
-            style={{ width: '220px' }}
-            value={consultantSearchText}
-            placeholder="Search Consultant"
-            onChange={handleConsultantSearch}
-          />
-        </Col>
-        <Col lg={{ span: 4 }}>
-          <RangePicker onChange={handleDateSearch} value={dateSearchText} />
+        <Col>
+          <Row type="flex" align="middle" gutter={8}>
+            <Col>
+              <EntityPicker
+                url="api/services/app/Company/Search"
+                mapFun={(r) => ({ value: r.id, text: `${r.displayName}` })}
+                style={{ width: '220px' }}
+                value={companySearchText}
+                placeholder="Search Company"
+                onChange={handleCompanySearch}
+              />
+            </Col>
+            <Col>
+              <EntityPicker
+                url="api/services/app/Consultant/Search"
+                mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
+                style={{ width: '220px' }}
+                value={consultantSearchText}
+                placeholder="Search Consultant"
+                onChange={handleConsultantSearch}
+              />
+            </Col>
+            <Col>
+              <RangePicker onChange={handleDateSearch} value={dateSearchText} />
+            </Col>
+          </Row>
         </Col>
       </Row>
     );

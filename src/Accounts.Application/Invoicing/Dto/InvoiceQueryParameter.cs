@@ -18,6 +18,7 @@ namespace Accounts.Invoicing.Dto
         public string CompanyName { get; set; }
 
         public string ClientName { get; set; }
+        public bool IsInvoiceEdited { get; set; }
 
         public DateTime? StartDate { get; set; }
 

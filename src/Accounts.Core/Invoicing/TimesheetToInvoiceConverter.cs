@@ -25,6 +25,7 @@ namespace Accounts.Invoicing
                 Term = source.Project.Term,
                 Consultant = source.Project.Consultant,
                 Project = source.Project,
+                IsInvoiceEdited =false,
                 EndClientName = source.Project.EndClientId != null ? source.Project.EndClient.ClientName : null
             };
             invoice.LineItems = context.Mapper.Map<IList<LineItem>>(source.Expenses);
