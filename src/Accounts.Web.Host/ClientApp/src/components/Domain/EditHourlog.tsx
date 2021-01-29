@@ -73,7 +73,7 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
   };
 
   const handleHourEdit = (e: any) => {
-    let val: any = isNaN(parseFloat(e.target.value)) ? null : parseFloat(e.target.value);
+    let val: any = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value);
     filteredLogedHours[e.target.name].hours = val;
     setLogedHours([...filteredLogedHours]);
   };

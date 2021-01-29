@@ -104,6 +104,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
 
   const handleEdit = () => {
     originalHours = hourEntries && hourEntries.result.hourLogEntries;
+    originalHours.map((item: any) => !item.hours && (item.hours = 0));
     setForm({ rate, discountValue });
     setDisType(discountType ? discountType : 2);
     setLogedHours(originalHours);
@@ -128,7 +129,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
       : disType === 1
       ? parseFloat((sTotal * (parseFloat(form.discountValue) / 100)).toFixed(2))
       : parseFloat(form.discountValue).toFixed(2);
-    TotalAmount = Math.trunc((sTotal - discount) * 100) / 100;
+    TotalAmount = (sTotal - discount).toFixed(2);
   }
 
   return (

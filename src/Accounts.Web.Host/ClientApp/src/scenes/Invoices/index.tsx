@@ -12,6 +12,8 @@ import { Get } from '../../lib/axios';
 import styled from '@emotion/styled';
 
 const { Text } = Typography;
+type sortableType = ['descend', 'ascend', 'descend'];
+const defaultSortOrder: sortableType = ['descend', 'ascend', 'descend'];
 
 const StyledTable = styled(Table)`
   .ant-table-tbody > tr.ant-table-row:hover > td {
@@ -67,6 +69,7 @@ const AllInvoiceList = (props: any) => {
   const [consultantSearchText, setConsultantSearchText] = useState(undefined);
   const [dateSearchText, setDateSearchText] = useState([]);
   const [order, setOrder] = useState('descend');
+  const [columnKey, setColumnKey] = useState('overdueBy');
   const [currentPage, setCurrentPage] = useState(1);
   const { RangePicker } = DatePicker;
   const history = useHistory();
@@ -112,6 +115,12 @@ const AllInvoiceList = (props: any) => {
     setDateSearchText(date);
   };
 
+  const CheckNull = (a: string, b: string, sortOrder: string) => {
+    let initialConsultant: string = a ? a : sortOrder === 'ascend' ? 'z' : 'a';
+    let nextConsultant: string = b ? b : sortOrder === 'ascend' ? 'z' : 'a';
+    return [initialConsultant, nextConsultant];
+  };
+
   const content = (item: any) => (
     <>
       {item.companyPhoneNumber && (
@@ -140,8 +149,10 @@ const AllInvoiceList = (props: any) => {
         </Button>
       ),
       dataIndex: 'id',
-      width: 90,
+      width: 120,
       align: 'center' as const,
+      sorter: (a: any, b: any) => a.id - b.id,
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'eTrans ID',
@@ -149,6 +160,8 @@ const AllInvoiceList = (props: any) => {
       dataIndex: 'qboInvoiceId',
       width: 130,
       align: 'center' as const,
+      sorter: (a: any, b: any) => a.qboInvoiceId - b.qboInvoiceId,
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'eInvoice ID',
@@ -161,45 +174,71 @@ const AllInvoiceList = (props: any) => {
             {val.eInvoiceId}
           </a>
         ),
+      sorter: (a: any, b: any) => a.eInvoiceId - b.eInvoiceId,
+      sortDirections: defaultSortOrder,
     },
+
     {
       title: 'Company',
       key: 'companyName',
       render: (item: any) => <Popover content={content(item)}>{item.companyName}</Popover>,
+      sorter: (a: any, b: any, sortOrder: any) => {
+        let values = CheckNull(a.companyName, b.companyName, sortOrder);
+        return values[0].localeCompare(values[1]);
+      },
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Consultant',
       key: 'consultantName',
       dataIndex: 'consultantName',
+      sorter: (a: any, b: any, sortOrder: any) => {
+        let values = CheckNull(a.consultantName, b.consultantName, sortOrder);
+        return values[0].localeCompare(values[1]);
+      },
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'End Client',
       key: 'endClientName',
       dataIndex: 'endClientName',
+      sorter: (a: any, b: any, sortOrder: any) => {
+        let values = CheckNull(a.endClientName, b.endClientName, sortOrder);
+        return values[0].localeCompare(values[1]);
+      },
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Issue Date',
       key: 'invoiceDate',
       render: (val: string) => (val !== null ? moment(val).format('MM/DD/YYYY') : '--'),
       dataIndex: 'invoiceDate',
+      sorter: (a: any, b: any) => moment(a.invoiceDate).diff(b.invoiceDate),
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Due Date',
       key: 'dueDate',
       render: (val: string) => (val !== null ? moment(val).format('MM/DD/YYYY') : '--'),
       dataIndex: 'dueDate',
+      sorter: (a: any, b: any) => moment(a.dueDate).diff(b.dueDate),
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Amount',
       key: 'total',
       render: (val: number) => '$ ' + val.toLocaleString('en-US'),
       dataIndex: 'total',
+      sorter: (a: any, b: any) => a.total - b.total,
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Balance',
       key: 'balance',
       dataIndex: 'balance',
       render: (val: number) => (val === null ? null : '$ ' + val.toLocaleString('en-US')),
+      sorter: (a: any, b: any) => a.balance - b.balance,
+      sortDirections: defaultSortOrder,
     },
     {
       title: 'Overdue By',
@@ -225,7 +264,7 @@ const AllInvoiceList = (props: any) => {
       },
 
       defaultSortOrder: 'descend' as 'descend',
-      sortDirections: ['descend', 'ascend', 'descend'] as ['descend', 'ascend', 'descend'],
+      sortDirections: defaultSortOrder,
     },
   ];
 
@@ -299,8 +338,9 @@ const AllInvoiceList = (props: any) => {
           })}
           onChange={(pagination: any, filters: any, sorter: any) => {
             setCurrentPage(pagination.current);
-            if (sorter.order !== order) {
+            if (sorter.order !== order || sorter.columnKey !== columnKey) {
               setOrder(sorter.order);
+              setColumnKey(sorter.columnKey);
               setCurrentPage(1);
             }
           }}
