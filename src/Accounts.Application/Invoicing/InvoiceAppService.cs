@@ -128,7 +128,7 @@ namespace Accounts.Invoicing
             if(input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
             {
                 timesheet.EndDt = input.UpdatedHourLogEntries.Max(x => x.Day);
-                invoice.Description = "Billing Period" + input.UpdatedHourLogEntries.Min(x => x.Day).ToShortDateString() + "-" + input.UpdatedHourLogEntries.Max(x => x.Day).ToShortDateString();
+                invoice.Description = "Billing Period " + input.UpdatedHourLogEntries.Min(x => x.Day).ToShortDateString() + "-" + input.UpdatedHourLogEntries.Max(x => x.Day).ToShortDateString();
             }
             var removedHourLogs = await HourLogRepository.GetAllListAsync(x => x.TimesheetId == timesheet.Id && hourLogEntries.Max(y => y.Day) < x.Day);
             foreach (var hour in removedHourLogs)
