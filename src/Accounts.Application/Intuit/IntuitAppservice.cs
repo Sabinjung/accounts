@@ -106,6 +106,7 @@ namespace Accounts.Intuit
                             existingInvoice.LastUpdated = DateTime.UtcNow;
                         }
                         var updatedInvoice = Mapper.Map(invoice, existingInvoice);
+                        updatedInvoice.EInvoiceId = invoice.DocNumber;
                         updatedInvoice.Id = existingInvoice.Id;
                         InvoiceRepository.Update(updatedInvoice);
                     }
