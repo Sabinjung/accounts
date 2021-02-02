@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Table, Button, Modal, Input } from 'antd';
+import { Row, Col, Card, Table, Button, Input } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
 import styled from '@emotion/styled';
 import EndClientCreateUpdate from './components/EndClientCreateUpdate';
 import ConfirmActionButton from '../../components/ConfirmActionButton';
 import Authorize from '../../components/Authorize';
+import { useHistory } from 'react-router';
+import { Portal } from 'react-portal';
+import { Get } from '../../lib/axios';
+import RouteableDrawer from '../../components/RouteableDrawer';
 
 const { Search } = Input;
 
@@ -23,9 +27,8 @@ const StyledEditButton = styled(Button)`
   margin-right: 8px;
 `;
 
-let rowData: any;
 const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearchText, makeRequest }) => {
-  const [visible, setVisible] = useState(false);
+  const history = useHistory();
   const results: any = data && data.result.results;
   const columns = [
     {
@@ -39,7 +42,7 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       render: (record: any) => (
         <>
           <Authorize permissions={['Endclient.Update']}>
-            <StyledEditButton icon="edit" type="primary" onClick={() => (setVisible(true), (rowData = record))} />
+            <StyledEditButton icon="edit" type="primary" onClick={() => history.push(`/endClients/${record.id}/edit`)} />
           </Authorize>
           <ConfirmActionButton
             url="/api/services/app/EndClient/DeleteClient"
@@ -70,15 +73,56 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
         </Col>
         <Authorize permissions={['Endclient.Create']}>
           <Col>
-            <Button type="primary" shape="circle" icon="plus" onClick={() => (setVisible(true), (rowData = ''))}></Button>
+            <Button type="primary" shape="circle" icon="plus" onClick={() => history.push('/endClients/new')}></Button>
           </Col>
         </Authorize>
       </Row>
       <StyledSearch placeholder="Filter" onSearch={setSearchText} allowClear />
       <Table dataSource={results} columns={columns} loading={loading} />
-      <Modal title="End Client" visible={visible} footer={false} destroyOnClose={true} onCancel={() => setVisible(false)}>
-        <EndClientCreateUpdate setVisible={setVisible} makeRequest={makeRequest} rowData={rowData} />
-      </Modal>
+      <Portal>
+        <Authorize permissions={['Endclient.Create', 'Endclient.Update']}>
+          <RouteableDrawer path={[`/endClients/new`]} width={'25vw'} title="EndClient">
+            {({ onClose }: any) => {
+              return (
+                <EndClientCreateUpdate
+                  onClose={onClose}
+                  onEndClientAddedOrUpdated={() => {
+                    onClose();
+                    makeRequest({});
+                  }}
+                />
+              );
+            }}
+          </RouteableDrawer>
+        </Authorize>
+        <Authorize permissions={['Endclient.Update']}>
+          <RouteableDrawer path={['/endClients/:endClientId/edit']} width={'25vw'} title="EndClient" exact={true}>
+            {({
+              match: {
+                params: { endClientId },
+              },
+              onClose,
+            }: any) => {
+              return (
+                <Get url="/api/services/app/EndClient/Get" params={{ id: endClientId }}>
+                  {({ error, data, isLoading }: any) => {
+                    return (
+                      <EndClientCreateUpdate
+                        onClose={onClose}
+                        endClient={data && data.result}
+                        onEndClientAddedOrUpdated={() => {
+                          onClose();
+                          makeRequest({});
+                        }}
+                      />
+                    );
+                  }}
+                </Get>
+              );
+            }}
+          </RouteableDrawer>
+        </Authorize>
+      </Portal>
     </Card>
   );
 };
