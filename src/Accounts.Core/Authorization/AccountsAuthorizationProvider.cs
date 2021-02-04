@@ -25,6 +25,7 @@ namespace Accounts.Authorization
             invoicePermission.CreateChildPermission("Invoicing.Submit", L("Submit Invoice"));
             invoicePermission.CreateChildPermission("Invoicing.Edit", L("Edit Invoice"));
             invoicePermission.CreateChildPermission("Invoicing.SubmitAndMail", L("Submit And Mail"));
+            invoicePermission.CreateChildPermission("Invoicing.EditEndDate", L("Edit EndDate"));
             invoicePermission.CreateChildPermission("AgingReport", L("Aging Report"));
 
             // Consultant Permissions

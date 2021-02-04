@@ -16,6 +16,9 @@
     <RootNamespace>Accounts</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controllers\IntuitController.cs~RF23820087.TMP" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Accounts.Application\Accounts.Application.csproj" />
     <ProjectReference Include="..\Accounts.EntityFrameworkCore\Accounts.EntityFrameworkCore.csproj" />
   </ItemGroup>

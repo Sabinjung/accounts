@@ -111,8 +111,9 @@ namespace Accounts.Invoicing
         [AbpAuthorize("Invoicing.Edit")]
         public async Task UpdateInvoice(UpdateInvoiceInputDto input)
         {
-            var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId });
+            var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId }).OrderBy(x => x.Day);
             var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
+            var timesheet = TimesheetRepository.GetAll().Where(x => x.InvoiceId == input.Invoice.Id).FirstOrDefault();
 
             var invoice = await Repository.GetAsync(input.Invoice.Id);
             invoice.Rate = input.Invoice.Rate;
@@ -123,10 +124,24 @@ namespace Accounts.Invoicing
             invoice.DiscountAmount = input.Invoice.DiscountAmount;
             invoice.SubTotal = input.Invoice.SubTotal;
             invoice.Total = input.Invoice.Total;
-            //await Repository.UpdateAsync(invoice);
+
+            if(input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
+            {
+                timesheet.EndDt = input.UpdatedHourLogEntries.Max(x => x.Day);
+                invoice.Description = "Billing Period " + input.UpdatedHourLogEntries.Min(x => x.Day).ToShortDateString() + " - " + input.UpdatedHourLogEntries.Max(x => x.Day).ToShortDateString();
+            }
+            var removedHourLogs = await HourLogRepository.GetAllListAsync(x => x.TimesheetId == timesheet.Id && hourLogEntries.Max(y => y.Day) < x.Day);
+            foreach (var hour in removedHourLogs)
+            {
+                hour.TimesheetId = null;
+            }
             Parallel.ForEach(distinctHourLogs, log =>
             {
                 var existingHourLog = hourLogEntries.FirstOrDefault(x => x.ProjectId == log.ProjectId && x.Day == log.Day);
+                if(existingHourLog != null && existingHourLog.Day != log.Day)
+                {
+                    existingHourLog.TimesheetId = null;
+                }
                 if (existingHourLog != null)
                 {
                     if (log.Hours.HasValue)

@@ -116,8 +116,9 @@ namespace Accounts.Intuit
             var address = "";
             if (isMailing)
                 address = customer.PrimaryEmailAddr.Address;
-            
-            address = String.IsNullOrEmpty(address) ? DefaultEmailSetting.EmailAddress : DefaultEmailSetting.EmailAddress + "," + address;
+            else
+                address = DefaultEmailSetting.EmailAddress;
+          
             DataService service = new DataService(serviceContext);
 
             if (address.Contains(','))

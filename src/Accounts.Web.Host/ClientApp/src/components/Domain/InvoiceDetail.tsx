@@ -41,7 +41,7 @@ const StyledInput = styled(Input)`
 const StyledSelect = styled(Select)`
   width: 107px !important;
 `;
-
+let originalHours: any;
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
@@ -103,10 +103,11 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   lineItems.length > 0 && lineItems.map((val: any) => (totalExpense += val.amount));
 
   const handleEdit = () => {
-    let hourlogs = hourEntries && hourEntries.result.hourLogEntries;
+    originalHours = hourEntries && hourEntries.result.hourLogEntries;
+    originalHours.map((item: any) => !item.hours && (item.hours = 0));
     setForm({ rate, discountValue });
     setDisType(discountType ? discountType : 2);
-    setLogedHours(hourlogs);
+    setLogedHours(originalHours);
     setIsEdit((prevState: boolean) => !prevState);
   };
 
@@ -128,7 +129,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
       : disType === 1
       ? parseFloat((sTotal * (parseFloat(form.discountValue) / 100)).toFixed(2))
       : parseFloat(form.discountValue).toFixed(2);
-    TotalAmount = Math.trunc((sTotal - discount) * 100) / 100;
+    TotalAmount = (sTotal - discount).toFixed(2);
   }
 
   return (
@@ -164,7 +165,13 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
         </tr>
         <tr>
           <td>Services</td>
-          <td>{isEdit ? <EditHourlog description={description} logedHours={logedHours} setLogedHours={setLogedHours} /> : description}</td>
+          <td>
+            {isEdit ? (
+              <EditHourlog description={description} logedHours={logedHours} setLogedHours={setLogedHours} originalHours={originalHours} />
+            ) : (
+              description
+            )}
+          </td>
           <td>{totalHrs}</td>
           <td>{isEdit ? <StyledInput name="rate" size="small" value={form.rate} onChange={updateField} /> : `$${rate}`}</td>
           <td>${initialAmount}</td>
@@ -237,7 +244,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           </List.Item>
         )}
       />
-      {isEdit && !form.rate && <Alert message="Rate can't be null or 0" type="error" />}
+      {isEdit && !parseInt(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
 
       <div
         style={{
@@ -328,7 +335,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
-              if (form.rate && totalHrs) {
+              if (parseInt(form.rate) && totalHrs) {
                 setFormData({
                   invoice: {
                     totalHours: totalHrs,

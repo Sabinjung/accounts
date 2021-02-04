@@ -6,8 +6,9 @@
         public string ClientSecret { get; set; }
         public string RedirectUrl { get; set; }
         public string Environment { get; set; }
-
         public string ApiUrl { get; set; }
+
+        public string VerifyToken { get; set; }
 
         public string MinorVersion { get; set; }
     }
