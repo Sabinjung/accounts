@@ -104,7 +104,7 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
   return (
     <>
       <Popover content={content} placement="bottom" trigger="click">
-        {isGranted('Invoicing.EditEndDate') ? <a>{'Billing Period ' + moment(startDt).format('MM/DD/YYYY') + '-'}</a> : <a>{description}</a>}
+        {isGranted('Invoicing.EditEndDate') ? <a>{'Billing Period ' + moment(startDt).format('MM/DD/YYYY') + ' - '}</a> : <a>{description}</a>}
       </Popover>
       {isGranted('Invoicing.EditEndDate') && (
         <StyledDatepicker size="small" allowClear={false} value={endDate} disabledDate={disabledDate} onChange={handleDate} format="MM/DD/YYYY" />
