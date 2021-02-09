@@ -69,14 +69,21 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
               loader={(store: any) => store.getConsultants()}
               selector={(store: any) => store.consultants}
               mapFunc={(r: any) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
-              addUrl={'/projects/new/consultants/new'}
+              addUrl={project && project.id ? `/projects/${project.id}/edit/consultants/new` : '/projects/new/consultants/new'}
             />
           )}
         </Form.Item>
         <Form.Item label="End Client">
           {getFieldDecorator('endClientId', {
             rules: [{ required: true, message: 'Please input the end client!' }],
-          })(<EntityPicker url="/api/services/app/EndClient/Search" mapFun={(r) => ({ value: r.id, text: r.clientName })} />)}
+          })(
+            <ConnectedEntityPicker
+              loader={(store: any) => store.getEndClients()}
+              selector={(store: any) => store.endClients}
+              mapFunc={(r: any) => ({ value: r.id, text: r.clientName })}
+              addUrl={project && project.id ? `/projects/${project.id}/edit/endClients/new` : '/projects/new/endClients/new'}
+            />
+          )}
         </Form.Item>
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
@@ -190,7 +197,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
-      isSendMail: Form.createFormField({ value: project.companyId ? project.isSendMail : true }),
+      isSendMail: Form.createFormField({ value: project.id ? project.isSendMail : true }),
       endClientId: Form.createFormField({ value: project.endClientId }),
       discount: Form.createFormField({
         value: {

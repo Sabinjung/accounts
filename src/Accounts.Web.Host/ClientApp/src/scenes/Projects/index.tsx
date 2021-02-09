@@ -15,6 +15,7 @@ import { runInAction } from 'mobx';
 import { L } from '../../lib/abpUtility';
 import { Get } from '../../lib/axios';
 import Authorize from '../../components/Authorize';
+import EndClientCreateUpdate from '../EndClients/components/EndClientCreateUpdate';
 
 const Search = Input.Search;
 
@@ -50,13 +51,21 @@ export default () => {
     <StoreProvider
       store={() => ({
         consultants: [],
+        endClients: [],
         newProject: {
           consultantId: null,
+          endClientId: null,
         },
         async getConsultants() {
           const response = await http.get('api/services/app/consultant/search');
           runInAction(() => {
             this.consultants = response && response.data && response.data.result.results;
+          });
+        },
+        async getEndClients() {
+          const response = await http.get('/api/services/app/EndClient/Search');
+          runInAction(() => {
+            this.endClients = response && response.data && response.data.result.results;
           });
         },
       })}
@@ -153,7 +162,7 @@ export default () => {
               </RouteableDrawer>
             </Authorize>
             <Authorize permissions={['Project.Update']}>
-              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Project" exact={true}>
+              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Project">
                 {({
                   match: {
                     params: { projectId },
@@ -189,6 +198,54 @@ export default () => {
                         onClose();
                         store.getConsultants();
                         store.newProject.consultantId = consultant.id;
+                      }}
+                    />
+                  );
+                }}
+              </RouteableDrawer>
+            </Authorize>
+            <Authorize permissions={['Endclient.Create']}>
+              <RouteableDrawer path={[`/projects/new/endClients/new`]} width={'25vw'} title="EndClient">
+                {({ onClose }: any) => {
+                  return (
+                    <EndClientCreateUpdate
+                      onClose={onClose}
+                      onEndClientAddedOrUpdated={(endClient) => {
+                        onClose();
+                        store.getEndClients();
+                        store.newProject.endClientId = endClient.id;
+                      }}
+                    />
+                  );
+                }}
+              </RouteableDrawer>
+            </Authorize>
+            <Authorize permissions={['Consultant.Create']}>
+              <RouteableDrawer path={[`/projects/:projectId/edit/consultants/new`]} width={'25vw'} title="Consultant">
+                {({ onClose }: any) => {
+                  return (
+                    <ConsultantCreateUpdate
+                      onClose={onClose}
+                      onConsultantAddedOrUpdated={(consultant) => {
+                        onClose();
+                        store.getConsultants();
+                        store.newProject.consultantId = consultant.id;
+                      }}
+                    />
+                  );
+                }}
+              </RouteableDrawer>
+            </Authorize>
+            <Authorize permissions={['Endclient.Create']}>
+              <RouteableDrawer path={[`/projects/:projectId/edit/endClients/new`]} width={'25vw'} title="EndClient">
+                {({ onClose }: any) => {
+                  return (
+                    <EndClientCreateUpdate
+                      onClose={onClose}
+                      onEndClientAddedOrUpdated={(endClient) => {
+                        onClose();
+                        store.getEndClients();
+                        store.newProject.endClientId = endClient.id;
                       }}
                     />
                   );

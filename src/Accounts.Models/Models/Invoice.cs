@@ -51,6 +51,8 @@ namespace Accounts.Models
 
         public string EndClientName { get; set; }
 
+        public bool IsInvoiceEdited { get; set; }
+
         public virtual Project Project { get; set; }
 
         public virtual Company Company { get; set; }

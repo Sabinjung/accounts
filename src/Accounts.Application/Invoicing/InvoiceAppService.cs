@@ -32,6 +32,7 @@ namespace Accounts.Invoicing
         private readonly IRepository<Project> ProjectRepository;
         private readonly IRepository<Timesheet> TimesheetRepository;
         private readonly IRepository<HourLogEntry> HourLogRepository;
+        private readonly IList<InvoiceQueryParameter> SavedQueries;
 
         public InvoiceAppService(IRepository<Invoice> repository, IInvoicingService invoicingService, IObjectMapper mapper,
             OAuth2Client oAuth2Client, IRepository<Project> projectRepository, IRepository<Timesheet> timesheetRepository,
@@ -47,10 +48,26 @@ namespace Accounts.Invoicing
             TimesheetRepository = timesheetRepository;
             HourLogRepository = hourLogRepository;
             QueryBuilder = queryBuilderFactory;
+
+            SavedQueries = new List<InvoiceQueryParameter>
+            {
+                 new InvoiceQueryParameter
+                {
+                    Name="All",
+                    IsInvoiceEdited=false
+                 },
+                new InvoiceQueryParameter
+                {
+                    Name="Edited",
+                    IsInvoiceEdited=true
+                }
+            };
+
             CreatePermissionName = "Invoice.Create";
             UpdatePermissionName = "Invoice.Update";
             DeletePermissionName = "Invoice.Delete";
             IntuitDataProvider = intuitDataProvider;
+
         }
 
         [HttpGet]
@@ -124,6 +141,7 @@ namespace Accounts.Invoicing
             invoice.DiscountAmount = input.Invoice.DiscountAmount;
             invoice.SubTotal = input.Invoice.SubTotal;
             invoice.Total = input.Invoice.Total;
+            invoice.IsInvoiceEdited = true;
 
             if(input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
             {
@@ -174,6 +192,7 @@ namespace Accounts.Invoicing
             query.WhereIf(x => x.CompanyId.HasValue, c => p => p.CompanyId == c.CompanyId);
             query.WhereIf(x => x.StartDate.HasValue && x.EndDate.HasValue, c => p => p.InvoiceDate.Date >= c.StartDate && p.InvoiceDate.Date <= c.EndDate);
             query.WhereIf(x => x.DueDate.HasValue, c => p => p.DueDate.Date == c.DueDate.Value);
+            query.WhereIf(x => x.IsInvoiceEdited, c => p => p.IsInvoiceEdited == c.IsInvoiceEdited);
             var sorts = new Sorts<Invoice>();
             sorts.Add(true, x => x.Consultant.FirstName);
             query.ApplySorts(sorts);
@@ -185,7 +204,8 @@ namespace Accounts.Invoicing
         public async Task<InvoiceListItemDto> Search(InvoiceQueryParameter queryParameter)
         {
             var query = GetQuery(queryParameter);
-            var details = await query.ExecuteAsync<IncoiceListItemDto>(queryParameter);
+            var queryParameters = SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList();
+            var details = await query.ExecuteAsync<IncoiceListItemDto>(queryParameters.ToArray());
             var results = new InvoiceListItemDto
             {
                 LastUpdated = Repository.GetAllList().Max(x => x.LastUpdated),

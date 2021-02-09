@@ -157,6 +157,11 @@ namespace Accounts
                         .ForMember(d => d.IsActive, x => x.Condition((source, dest) => source.Name == dest.Name))
                         .ForAllOtherMembers(opt => opt.Condition((source, dest, sourceMember, destmember) => destmember == null));
 
+                    cfg.CreateMap<InvoiceQueryParameter, InvoiceQueryParameter>()
+                       .ForMember(d => d.Name, x => x.Ignore())
+                       .ForMember(d => d.IsActive, x => x.Condition((source, dest) => source.Name == dest.Name))
+                       .ForAllOtherMembers(opt => opt.Condition((source, dest, sourceMember, destmember) => destmember == null));
+
                     cfg.CreateMap<Company, CompanyDto>()
                         .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty));
 

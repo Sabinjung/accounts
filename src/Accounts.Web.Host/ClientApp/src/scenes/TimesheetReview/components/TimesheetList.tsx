@@ -174,12 +174,17 @@ export const TimesheetList = ({
                         {timesheet.qboInvoiceId && (
                           <Text>
                             eTrans ID:
+                            {'  ' + timesheet.qboInvoiceId}
+                          </Text>
+                        )}
+                        {timesheet.eInvoiceId && (
+                          <Text>
+                            eInvoice ID:
                             <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${timesheet.qboInvoiceId}`} target="_blank">
-                              {'  ' + timesheet.qboInvoiceId}
+                              {'  ' + timesheet.eInvoiceId}
                             </a>
                           </Text>
                         )}
-                        {timesheet.eInvoiceId && <Text>eInvoice ID: {timesheet.eInvoiceId}</Text>}
                       </div>
                     }
                   />
