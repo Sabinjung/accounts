@@ -1,8 +1,9 @@
 import React from 'react';
-import { Input, Form, notification, Button } from 'antd';
+import { Form, notification } from 'antd';
 import ActionButton from '../../../components/ActionButton';
 import { FormComponentProps } from 'antd/lib/form';
-import styled from '@emotion/styled';
+import CustomCancleButton from './../../../components/Custom/CustomCancelButton';
+import CustomInput from './../../../components/Custom/CustomInput';
 
 type EndClientCreateUpdateProps = FormComponentProps<{}> & {
   onEndClientAddedOrUpdated?: (data: any) => void;
@@ -10,11 +11,16 @@ type EndClientCreateUpdateProps = FormComponentProps<{}> & {
   onClose?: any;
 };
 
-const StyledForm = styled(Form)`
-  .ant-form-item-label > label {
-    font-size: 18px;
-  }
-`;
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
 
 const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, onEndClientAddedOrUpdated, endClient, onClose }) => {
   const { getFieldDecorator, validateFields } = form;
@@ -22,36 +28,36 @@ const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, onE
 
   return (
     <>
-      <StyledForm hideRequiredMark name="End Client">
+      <Form {...formItemLayout} hideRequiredMark name="End Client">
         <Form.Item label="Client Name">
           {getFieldDecorator('clientName', {
             rules: [{ required: true, message: 'Please Enter Client Name!' }],
-          })(<Input size={'large'} allowClear />)}
+          })(<CustomInput />)}
         </Form.Item>
-      </StyledForm>
+      </Form>
       <div
         style={{
           position: 'absolute',
           left: 0,
           bottom: 0,
           width: '100%',
-          borderTop: '1px solid #e9e9e9',
           padding: '10px 16px',
           background: '#fff',
           textAlign: 'right',
         }}
       >
-        <Button
+        <CustomCancleButton
           style={{ marginRight: 8 }}
           onClick={() => {
             onClose();
           }}
         >
           Cancel
-        </Button>
+        </CustomCancleButton>
         <ActionButton
           permissions={[permission]}
           method={endClient && endClient.id ? 'Put' : 'Post'}
+          style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
           url={`api/services/app/EndClient/${endClient && endClient.id ? 'Update' : 'Create'}`}
           onSuccess={(response: any) => {
             notification.open({
@@ -78,7 +84,7 @@ const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, onE
             });
           }}
         >
-          Submit
+          Save End Client
         </ActionButton>
       </div>
     </>

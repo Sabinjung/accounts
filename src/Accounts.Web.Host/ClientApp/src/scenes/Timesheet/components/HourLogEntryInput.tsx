@@ -92,7 +92,8 @@ export class HourLogEntryInput extends React.Component<any> {
     return isEditable ? (
       <Form.Item
         css={css`
-          margin: -1px -5px;
+          margin: -1px -5px !important;
+          border-spacing: 0px !important;
         `}
         validateStatus={isEntryError ? 'error' : ''}
         help=""

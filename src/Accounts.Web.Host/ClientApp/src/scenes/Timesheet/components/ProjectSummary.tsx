@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
-import { Table, Button, Icon, Input, Typography } from 'antd';
+import { Button, Icon, Input, Typography } from 'antd';
 import Highlighter from 'react-highlight-words';
 import moment, { Moment } from 'moment';
 import { Get } from '../../../lib/axios';
+import styled from '@emotion/styled';
+import CustomTable from '../../../components/Custom/CustomTable';
 
 const { Text } = Typography;
+
+const StyledTable = styled(CustomTable)`
+  .ant-table-small {
+    border: none;
+  }
+  .ant-table-column-has-actions {
+    .ant-table-header-column {
+      margin-top: 0px;
+    }
+  }
+  .ant-table-header-column {
+    margin-top: 22px;
+  }
+`;
+
+const StyledProject = styled(Text)`
+  color: #2a2a2a !important;
+  font-weight: 600;
+`;
 
 const getMonths = (startDt: Moment, endDt: Moment) => {
   let months = [];
@@ -50,7 +71,8 @@ const getColumnSearchProps = (dataIndex: any, [searchText, setSearchText]: any) 
     ),
     filterIcon: (filtered: any) => <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />,
     onFilter: (value: any, record: any) =>
-    dataIndex.reduce((s: any, di: any) => record[s].concat(record[di], ''))
+      dataIndex
+        .reduce((s: any, di: any) => record[s].concat(record[di], ''))
         .toString()
         .toLowerCase()
         .includes(value.toLowerCase()),
@@ -85,11 +107,11 @@ const ProjectSummary: React.SFC = () => {
         console.log(item);
         return (
           <div>
-            <Text>{item.consultantName}</Text> <br />
+            <StyledProject>{item.consultantName}</StyledProject> <br />
             <Text type="secondary">{item.companyName}</Text>
           </div>
-        )
-      }
+        );
+      },
     },
     ...months.map((d: any) => ({
       title: d.format('MMM YYYY'),
@@ -112,7 +134,9 @@ const ProjectSummary: React.SFC = () => {
     <Get url={'/api/services/app/HourLogEntry/GetProjectMonthlyHourReport'}>
       {({ error, data, loading }: any) => {
         const result = data && data.result;
-        return <Table bordered loading={loading} dataSource={result} columns={columns} tableLayout="auto" size="small" />;
+        return (
+          <StyledTable loading={loading} dataSource={result} columns={columns} tableLayout="auto" size="small" pagination={{ size: 'default' }} />
+        );
       }}
     </Get>
   );

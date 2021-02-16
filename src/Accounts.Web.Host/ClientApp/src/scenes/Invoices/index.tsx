@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Table, DatePicker, Button, Popover, Typography, Icon } from 'antd';
+import { Card, Row, Col, DatePicker, Button, Popover, Typography, Icon } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import useAxios from '../../lib/axios/useAxios';
 import moment from 'moment';
@@ -10,18 +10,32 @@ import EntityPicker from '../../components/EntityPicker';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
 import { Get } from '../../lib/axios';
 import styled from '@emotion/styled';
+import CustomTable from '../../components/Custom/CustomTable';
 import PredefinedQueryPills from '../../components/PredefinedQueryPills';
 
 const { Text } = Typography;
 type sortableType = ['descend', 'ascend', 'descend'];
 const defaultSortOrder: sortableType = ['descend', 'ascend', 'descend'];
 
-const StyledTable = styled(Table)`
-  .ant-table-tbody > tr.ant-table-row:hover > td {
-    background: unset;
+const StyledTable = styled(CustomTable)`
+  .ant-table-title {
+    border-bottom: none !important;
   }
-  .overdue {
-    background: #f1dbdb !important;
+  .ant-table-small {
+    border: none;
+  }
+  .ant-table-column-has-actions {
+    .ant-table-header-column {
+      margin-top: 0px;
+    }
+  }
+  .ant-table-header-column {
+    margin-top: 22px;
+  }
+  .ant-table-tbody {
+    .overdue {
+      background: #f1dbdb !important;
+    }
   }
 `;
 
@@ -57,9 +71,9 @@ const RenderBarChart = (props: any) => {
               .format('MMM')}`
           }
         />
-        <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+        <YAxis yAxisId="left" orientation="left" stroke="#748AA1" />
         <Tooltip content={<CustomTooltip />} />
-        <Bar yAxisId="left" dataKey="monthAmount" fill="#82ca9d" barSize={70} />
+        <Bar yAxisId="left" dataKey="monthAmount" fill="#1C3FAA" barSize={70} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -87,12 +101,13 @@ const AllInvoiceList = (props: any) => {
     },
   });
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
-  let predefinedQueries = result.listItemDto && result.listItemDto.recordCounts || [];
-  predefinedQueries && predefinedQueries.map((item: any) => {
-    if (item.name === 'All') {
-      item.count = null;
-    }
-  });
+  let predefinedQueries = (result.listItemDto && result.listItemDto.recordCounts) || [];
+  predefinedQueries &&
+    predefinedQueries.map((item: any) => {
+      if (item.name === 'All') {
+        item.count = null;
+      }
+    });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -271,7 +286,6 @@ const AllInvoiceList = (props: any) => {
           );
         }
       },
-
       defaultSortOrder: 'descend' as 'descend',
       sortDirections: defaultSortOrder,
     },
@@ -285,7 +299,7 @@ const AllInvoiceList = (props: any) => {
             <Col>
               <PredefinedQueryPills
                 selectedFilter={queryName}
-                size = 'small'
+                size="small"
                 dataSource={predefinedQueries}
                 onClick={(name: any) => setQueryName(name)}
               />
@@ -327,10 +341,12 @@ const AllInvoiceList = (props: any) => {
     makeRequest({ params: { isActive: true } });
   };
 
+  result.listItemDto && console.log(result.listItemDto.results);
+
   return (
     <>
       <Card>
-        <h2>Invoices</h2>
+        <h1>INVOICES</h1>
         <Get
           url="/api/services/app/Invoice/GetInvoicesByMonthReport"
           params={{
@@ -352,10 +368,9 @@ const AllInvoiceList = (props: any) => {
             return isOverdue(record) ? 'overdue' : '';
           }}
           columns={columns}
-          bordered
-          pagination={{ pageSize: 10, total: 0, current: currentPage }}
-          loading={loading}
           size="small"
+          pagination={{ pageSize: 10, total: 0, current: currentPage, size: 'default' }}
+          loading={loading}
           tableLayout="auto"
           title={() => headerRender()}
           onRow={(record: any, rowIndex: any) => ({
@@ -376,7 +391,7 @@ const AllInvoiceList = (props: any) => {
       </Card>
 
       <Portal>
-        <RouteableDrawer path={[`/invoices/:invoiceId`]} width={'50vw'} title="Invoice Detail">
+        <RouteableDrawer path={[`/invoices/:invoiceId`]} width={'60vw'} title="Invoice Detail">
           {({
             match: {
               params: { invoiceId },

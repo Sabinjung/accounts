@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './index.less';
-import { Card, Row, Col, Table, DatePicker, Select } from 'antd';
+import { Card, Row, Col, DatePicker, Select } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import useAxios from '../../../lib/axios/useAxios';
 import { Get } from '../../../lib/axios';
 import moment from 'moment';
+import CustomTable from '../../../components/Custom/CustomTable';
 
 const CustomTooltip = ({ payload, active, label }: any) => {
   if (active) {
@@ -37,9 +38,9 @@ const RenderBarChart = (props: any) => {
               .format('MMM')}`
           }
         />
-        <YAxis yAxisId="left" orientation="left" stroke="#8884d8" label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
+        <YAxis yAxisId="left" orientation="left" stroke="#748AA1" label={{ value: 'Hours', angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomTooltip />} />
-        <Bar yAxisId="left" dataKey="value" fill="#82ca9d" barSize={70} />
+        <Bar yAxisId="left" dataKey="value" fill="#1C3FAA" barSize={70} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -134,15 +135,13 @@ const ProjectTimesheets = (props: any) => {
         }}
       </Get>
 
-      <Table
+      <CustomTable
         dataSource={dataSource}
         columns={columns}
-        bordered
         loading={loading}
         pagination={{ pageSize: 10, total: 0, defaultCurrent: 1 }}
         title={() => headerRender()}
-        size='small'
-      ></Table>
+      ></CustomTable>
     </Card>
   );
 };

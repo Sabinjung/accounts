@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Get } from '../lib/axios';
 import { Select } from 'antd';
-import { debounce } from 'lodash'
+import { debounce } from 'lodash';
 const { Option } = Select;
 
 export interface IEntityPickerProps {
@@ -12,9 +12,10 @@ export interface IEntityPickerProps {
   mode?: 'default' | 'multiple';
   placeholder?: string;
   style?: any;
+  size?: any;
 }
 
-export default ({ onChange, url, mapFun, value, mode = 'default', style, placeholder }: IEntityPickerProps) => {
+export default ({ onChange, url, mapFun, value, mode = 'default', style, placeholder, size }: IEntityPickerProps) => {
   const [searchText, setSearchText] = useState('');
   const debouncedSetSearchText = debounce(setSearchText, 500);
   return (
@@ -25,18 +26,27 @@ export default ({ onChange, url, mapFun, value, mode = 'default', style, placeho
           dataSource = data.result.results ? data.result.results.map(mapFun) : data.result.items.map(mapFun);
         }
         return (
-          <Select showSearch style={style} placeholder={placeholder} optionFilterProp="children" mode={mode} onSearch={debouncedSetSearchText} onChange={onChange} value={value} allowClear >
-            {
-              dataSource.map((d: any) => (
-                <Option key={d.value} value={d.value}>
-                  {d.text}
-                </Option>
-              ))
-            }
+          <Select
+            showSearch
+            size={size}
+            style={{ ...style, boxShadow: '0px 3px 10px #0000000D' }}
+            placeholder={placeholder}
+            optionFilterProp="children"
+            mode={mode}
+            onSearch={debouncedSetSearchText}
+            onChange={onChange}
+            value={value}
+            allowClear
+          >
+            {dataSource.map((d: any) => (
+              <Option key={d.value} value={d.value}>
+                {d.text}
+              </Option>
+            ))}
           </Select>
         );
       }}
-    </Get >
+    </Get>
   );
 };
 

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useImperativeHandle, forwardRef } from 'react';
 import moment from 'moment';
-import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Button, Input, Form, Badge, Empty } from 'antd';
+import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Get } from '../../../lib/axios';
@@ -17,6 +17,8 @@ import { jsx, css, ClassNames } from '@emotion/core';
 
 import { useHistory } from 'react-router-dom';
 import Authorize from '../../../components/Authorize';
+import CustomButton from '../../../components/Custom/CustomButton';
+import styled from '@emotion/styled';
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
@@ -35,10 +37,34 @@ export type ITimesheetViewerHandles = {
   refetch: () => void;
 };
 
+const StyledSteps = styled(Steps)`
+  margin-top: 25px;
+  .ant-steps-item-finish .ant-steps-item-icon {
+    border-color: #7034bd;
+    .ant-steps-icon {
+      color: #7034bd;
+    }
+  }
+  .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after {
+    background-color: #7034bd;
+  }
+  &:not(.ant-steps-label-vertical) .ant-steps-item-description {
+    max-width: unset;
+  }
+
+  .ant-descriptions-row > td {
+    padding-bottom: unset;
+  }
+}
+`;
+
 const timesheetViewerStyles = css`
   background: white !important;
   &.ant-page-header {
     height: 100%;
+    padding: 40px;
+    margin-left: 10px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
 
@@ -56,8 +82,21 @@ const timesheetViewerStyles = css`
   }
 
   .hour-entries-table {
-    .ant-table-body {
-      margin: 0 !important;
+    th {
+      text-align: center;
+    }
+    td {
+      text-align: center;
+    }
+    th.is-holiday {
+      background: #aaa !important;
+    }
+    td.column-sum {
+      background-color: #7034bd !important;
+      color: white;
+    }
+    .ant-table-tbody > tr > td {
+      border: none !important;
     }
   }
 
@@ -70,10 +109,6 @@ const timesheetViewerStyles = css`
     .ant-descriptions-row > td {
       padding-bottom: unset;
     }
-  }
-
-  th.is-holiday {
-    background: #aaa !important;
   }
 `;
 
@@ -98,6 +133,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             url="/api/services/app/Timesheet/Delete"
             params={{ id: timesheetId }}
             method="Delete"
+            style={{ background: '#FF0000', height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             type="danger"
             onSuccess={() => {
               refetch();
@@ -169,6 +205,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                       <ActionButton
                         url="/api/services/app/Timesheet/Approve"
                         params={{ timesheetId }}
+                        style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
                         onSuccess={() => {
                           onTimesheetApproved && onTimesheetApproved();
                           refetch();
@@ -181,27 +218,30 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                     </Condition>,
                     <Condition val={statusId == 2}>
                       <Authorize permissions={['Timesheet.GenerateInvoice']}>
-                        <Button
+                        <CustomButton
                           type="primary"
                           onClick={() => {
                             history.push(`${path}/generate`);
                           }}
                         >
                           Generate Invoice
-                        </Button>
+                        </CustomButton>
                       </Authorize>
                       {DeleteButton}
                     </Condition>,
                     <Condition val={statusId == 5}>
                       <Authorize permissions={['Timesheet.GenerateInvoice']}>
-                        <Button onClick={() => history.push(`${path}/invoice/${invoiceId}`)}> Submit Invoice</Button>
+                        <CustomButton type="primary" onClick={() => history.push(`${path}/invoice/${invoiceId}`)}>
+                          {' '}
+                          Submit Invoice
+                        </CustomButton>
                       </Authorize>
                     </Condition>,
                     <Condition val={statusId == 4}>
                       <Authorize permissions={['Timesheet']}>
-                        <Button onClick={() => history.push(`${path}/invoice/${invoiceId}`)} type="primary">
+                        <CustomButton onClick={() => history.push(`${path}/invoice/${invoiceId}`)} type="primary">
                           View Invoice
-                        </Button>
+                        </CustomButton>
                       </Authorize>
                     </Condition>,
                   ]}
@@ -257,7 +297,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                     </Descriptions>
 
                     <HourEntries hourLogEntries={hourLogEntries} startDt={startDt} endDt={endDt} totalHrs={totalHrs} />
-                    <Steps
+                    <StyledSteps
                       initial={1}
                       current={statusId == 5 ? 3 : statusId}
                       size="small"
@@ -303,7 +343,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                           </div>
                         }
                       />
-                    </Steps>
+                    </StyledSteps>
                   </div>
                 </PageHeader>
               )}

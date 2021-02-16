@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Table, Button, Input } from 'antd';
+import { Row, Col, Card, notification } from 'antd';
+// import { Row, Col, Card, Table, Button, Input } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
-import styled from '@emotion/styled';
 import EndClientCreateUpdate from './components/EndClientCreateUpdate';
 import ConfirmActionButton from '../../components/ConfirmActionButton';
 import Authorize from '../../components/Authorize';
+import CustomSearch from './../../components/Custom/CustomSearch';
+import CustomTable from './../../components/Custom/CustomTable';
+import CustomButton from './../../components/Custom/CustomButton';
+import CustomEditButton from './../../components/Custom/CustomEditButton';
 import { useHistory } from 'react-router';
 import { Portal } from 'react-portal';
 import { Get } from '../../lib/axios';
 import RouteableDrawer from '../../components/RouteableDrawer';
-
-const { Search } = Input;
 
 type DisplayContentProps = {
   data: any;
@@ -18,14 +20,6 @@ type DisplayContentProps = {
   setSearchText: any;
   makeRequest: any;
 };
-
-const StyledSearch = styled(Search)`
-  width: 500px;
-  margin-bottom: 20px;
-`;
-const StyledEditButton = styled(Button)`
-  margin-right: 8px;
-`;
 
 const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearchText, makeRequest }) => {
   const history = useHistory();
@@ -42,9 +36,10 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       render: (record: any) => (
         <>
           <Authorize permissions={['Endclient.Update']}>
-            <StyledEditButton icon="edit" type="primary" onClick={() => history.push(`/endClients/${record.id}/edit`)} />
+            <CustomEditButton icon="edit" type="primary" onClick={() => history.push(`/endClients/${record.id}/edit`)} />
           </Authorize>
           <ConfirmActionButton
+            style={{ border: 'none', background: '#FF00001A', color: '#FF0000' }}
             url="/api/services/app/EndClient/DeleteClient"
             params={{ id: record.id }}
             method="Delete"
@@ -52,6 +47,10 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
             icon="delete"
             placement="top"
             onSuccess={() => {
+              notification.open({
+                message: 'Success',
+                description: 'Deleted successfully.',
+              });
               makeRequest({});
             }}
             permissions={['Endclient.Delete']}
@@ -69,19 +68,25 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
     <Card>
       <Row type="flex" justify="space-between">
         <Col>
-          <h2>End Clients</h2>
+          <h1>END CLIENTS</h1>
         </Col>
         <Authorize permissions={['Endclient.Create']}>
           <Col>
-            <Button type="primary" shape="circle" icon="plus" onClick={() => history.push('/endClients/new')}></Button>
+            <CustomButton type="primary" icon="plus" onClick={() => history.push('/endClients/new')}>
+              Add End Client
+            </CustomButton>
           </Col>
         </Authorize>
       </Row>
-      <StyledSearch placeholder="Filter" onSearch={setSearchText} allowClear />
-      <Table dataSource={results} columns={columns} loading={loading} />
+      <Row style={{ marginBottom: 20 }}>
+        <Col sm={{ span: 8, offset: 0 }}>
+          <CustomSearch placeholder="Search" onSearch={setSearchText} />
+        </Col>
+      </Row>
+      <CustomTable dataSource={results} columns={columns} loading={loading} />
       <Portal>
         <Authorize permissions={['Endclient.Create', 'Endclient.Update']}>
-          <RouteableDrawer path={[`/endClients/new`]} width={'25vw'} title="EndClient">
+          <RouteableDrawer path={[`/endClients/new`]} width={'25vw'} title="End Client">
             {({ onClose }: any) => {
               return (
                 <EndClientCreateUpdate
@@ -96,7 +101,7 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
           </RouteableDrawer>
         </Authorize>
         <Authorize permissions={['Endclient.Update']}>
-          <RouteableDrawer path={['/endClients/:endClientId/edit']} width={'25vw'} title="EndClient" exact={true}>
+          <RouteableDrawer path={['/endClients/:endClientId/edit']} width={'25vw'} title="End Client" exact={true}>
             {({
               match: {
                 params: { endClientId },

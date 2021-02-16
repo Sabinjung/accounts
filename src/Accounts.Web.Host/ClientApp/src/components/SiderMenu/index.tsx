@@ -10,15 +10,20 @@ import { appRouters } from '../../components/Router/router.config';
 
 const { Sider } = Layout;
 
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2286956_rugdmojd5iq.js',
+});
+
 export interface ISiderMenuProps {
   path: any;
   collapsed: boolean;
   onCollapse: any;
   history: any;
+  pathname:any;
 }
 
 const SiderMenu = (props: ISiderMenuProps) => {
-  const { collapsed, history, onCollapse } = props;
+  const { collapsed, history, onCollapse, pathname } = props;
   return (
     <Sider trigger={null} className={'sidebar'} width={256} collapsible collapsed={collapsed} onCollapse={onCollapse}>
       {collapsed ? (
@@ -31,7 +36,7 @@ const SiderMenu = (props: ISiderMenuProps) => {
         </Col>
       )}
 
-      <Menu theme="dark" mode="inline">
+      <Menu mode="inline" defaultSelectedKeys={[pathname]}>
         {appRouters
           .filter((item: any) => !item.isLayout && item.showInMenu)
           .map((route: any, index: number) => {
@@ -39,7 +44,7 @@ const SiderMenu = (props: ISiderMenuProps) => {
 
             return (
               <Menu.Item key={route.path} onClick={() => history.push(route.path)}>
-                <Icon type={route.icon} />
+                <IconFont type={route.icon} />
                 <span>{L(route.title)}</span>
               </Menu.Item>
             );

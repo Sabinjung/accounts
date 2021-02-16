@@ -71,7 +71,11 @@ export default class AttachmentViewer extends Component<any, any> {
 
     return (
       <div style={{ flex: 1, position: 'relative', height: '100%' }}>
-        <object data={attachmentUrl} type={type} style={{ width: '100%', height: '100%' }}></object>
+        {type === 'application/pdf' ? (
+          <object data={attachmentUrl} type={type} style={{ width: '100%', height: '100%' }}></object>
+        ) : (
+          <img src={attachmentUrl} style={{ width: '100%', height: '100%' }} />
+        )}
         <div
           css={css`
             margin-bottom: 15px;

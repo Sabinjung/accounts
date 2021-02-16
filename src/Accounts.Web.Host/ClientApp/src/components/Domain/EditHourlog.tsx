@@ -43,9 +43,9 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledDatepicker = styled(DatePicker)`
-  width: 106px;
+  width: 110px;
   .ant-calendar-picker-input {
-    color: #1da57a;
+    color: #2680eb;
   }
 `;
 

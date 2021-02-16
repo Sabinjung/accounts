@@ -97,6 +97,9 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                     css={css`
                       height: 100%;
                       display: flex;
+                      padding: 40px;
+                      margin-left: 10px;
+                      border-radius: 20px;
                       justify-content: center;
                       align-items: center;
                       background-color: white;
@@ -139,7 +142,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
       </Row>
       <Portal>
         {match && (
-          <RouteableDrawer path={[`${match!.path}/invoice/:invoiceId`, `${match!.path}/generate`]} width={'50vw'} title="Invoice Detail">
+          <RouteableDrawer path={[`${match!.path}/invoice/:invoiceId`, `${match!.path}/generate`]} width={'60vw'} title="Invoice Detail">
             {({
               match: {
                 params: { invoiceId, timesheetId },

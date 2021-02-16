@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from 'react';
-import { Table, Button, Icon, Input, Row, Col, Typography, Descriptions, Popover, Tooltip } from 'antd';
+import { Button, Icon, Input, Row, Col, Typography, Descriptions, Popover, Tooltip } from 'antd';
 import { HourLogEntryRow, HourLogEntryInput } from './HourLogEntryInput';
 import moment from 'moment';
 import { ContextMenuTrigger } from 'react-contextmenu';
@@ -8,18 +8,22 @@ import Highlighter from 'react-highlight-words';
 import { observer } from 'mobx-react';
 import { jsx, css } from '@emotion/core';
 import { withRouter } from 'react-router';
+import CustomHoursTable from './../../../components/Custom/CustomHoursTable';
+import CustomButton from '../../../components/Custom/CustomButton';
+import styled from '@emotion/styled';
 
 const { Text } = Typography;
+
+const StyledProject = styled(Text)`
+  color: #2a2a2a !important;
+  font-weight: 600;
+`;
 
 var enumerateDaysBetweenDates = function (startDate: any, endDate: any) {
   var dates = [];
 
-  var currDate = moment(startDate)
-    .subtract(1, 'day')
-    .startOf('day');
-  var lastDate = moment(endDate)
-    .add(1, 'day')
-    .startOf('day');
+  var currDate = moment(startDate).subtract(1, 'day').startOf('day');
+  var lastDate = moment(endDate).add(1, 'day').startOf('day');
 
   while (currDate.add(1, 'days').diff(lastDate) < 0) {
     dates.push(currDate.clone().toDate());
@@ -65,31 +69,38 @@ function generateColumns(startDt: any, endDt: any, getColumnSearchProps: any) {
       width: 200,
       ...getColumnSearchProps(['consultantName', 'companyName']),
       render: (item: any) => {
-        let mailTo = "mailto:" + item.email;
+        let mailTo = 'mailto:' + item.email;
         let content = (
-          <Descriptions style={{ width: "200px" }}>
+          <Descriptions style={{ width: '200px' }}>
             <Descriptions.Item span={2}>
-              <Text style={{ fontWeight: "bold", fontSize: "16px" }}>{item.consultantName}</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: '16px' }}>{item.consultantName}</Text>
             </Descriptions.Item>
             <Descriptions.Item>
-              <Tooltip title={<Text copyable style={{ color: "#fff" }}>{item.phoneNumber}</Text>}>
-                <Icon type="phone" theme="filled" style={{ color: "#1DA57A", marginRight: "10px", marginLeft: "20px" }} />
+              <Tooltip
+                title={
+                  <Text copyable style={{ color: '#fff' }}>
+                    {item.phoneNumber}
+                  </Text>
+                }
+              >
+                <Icon type="phone" theme="filled" style={{ color: '#1DA57A', marginRight: '10px', marginLeft: '20px' }} />
               </Tooltip>
               <Tooltip title={<a href={mailTo}>{item.email}</a>}>
-                <Icon type="mail" theme="filled" style={{ color: "#1DA57A" }} />
+                <Icon type="mail" theme="filled" style={{ color: '#1DA57A' }} />
               </Tooltip>
             </Descriptions.Item>
             <Descriptions.Item span={3}>{item.companyName}</Descriptions.Item>
             <Descriptions.Item label="Period" span={3}>
-              {moment(item.projectStartDt).format('MM/DD/YYYY')} -{' '}
-              {item.projectEndDt && moment(item.projectEndDt).format('MM/DD/YYYY')}
+              {moment(item.projectStartDt).format('MM/DD/YYYY')} - {item.projectEndDt && moment(item.projectEndDt).format('MM/DD/YYYY')}
             </Descriptions.Item>
-            <Descriptions.Item label="Invoice Cycle" span={3} >{item.invoiceCycleName}</Descriptions.Item>
-            <Descriptions.Item label="Upcoming Timesheet" span={3} >
+            <Descriptions.Item label="Invoice Cycle" span={3}>
+              {item.invoiceCycleName}
+            </Descriptions.Item>
+            <Descriptions.Item label="Upcoming Timesheet" span={3}>
               {moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY')} -{' '}
               {moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY')}
             </Descriptions.Item>
-            <Descriptions.Item label="Upcoming Total Hours" span={3} >
+            <Descriptions.Item label="Upcoming Total Hours" span={3}>
               {item.upcomingTimesheetSummary.totalHrs} hrs
             </Descriptions.Item>
           </Descriptions>
@@ -97,12 +108,12 @@ function generateColumns(startDt: any, endDt: any, getColumnSearchProps: any) {
         return (
           <Popover placement="left" content={content} style={{ backgroundColor: '#000' }}>
             <div>
-              <Text>{item.consultantName}</Text> <br />
+              <StyledProject>{item.consultantName}</StyledProject> <br />
               <Text type="secondary">{item.companyName}</Text>
             </div>
           </Popover>
-        )
-      }
+        );
+      },
     },
     ...dates.map((d: any) => ({
       title: moment(d).format('MM/DD'),
@@ -113,17 +124,11 @@ function generateColumns(startDt: any, endDt: any, getColumnSearchProps: any) {
       key: moment(d),
       className: moment(d).isoWeekday() === 6 || moment(d).isoWeekday() === 7 ? 'is-holiday' : '',
     })),
-    {
-      title: '',
-      dataIndex: '',
-      key: 'x',
-      render: () => null,
-    },
 
     {
       title: 'Hrs',
       dataIndex: 'totalHrs',
-      className: 'column-sum',
+      className: 'total-hrs',
       width: 50,
       fixed: 'right',
     },
@@ -188,7 +193,8 @@ class HourLogEntryTable extends React.Component<any, any> {
     ),
     filterIcon: (filtered: any) => <Icon type="search" style={{ color: filtered ? '#1890ff' : undefined }} />,
     onFilter: (value: any, record: any) =>
-      dataIndex.reduce((s: any, di: any) => record[s].concat(record[di], ''))
+      dataIndex
+        .reduce((s: any, di: any) => record[s].concat(record[di], ''))
         .toString()
         .toLowerCase()
         .includes(value.toLowerCase()),
@@ -216,8 +222,6 @@ class HourLogEntryTable extends React.Component<any, any> {
     clearFilters();
     this.setState({ searchText: '' });
   };
-
-
 
   render() {
     const { entries, startDt, endDt, selectedRowKeys, onSelectChange, handleSave, history, baseUrl } = this.props;
@@ -277,23 +281,22 @@ class HourLogEntryTable extends React.Component<any, any> {
     };
     return (
       <div>
-        <Table
+        <CustomHoursTable
           rowSelection={rowSelection}
           components={components}
           rowClassName={() => 'editable-row'}
-          bordered
           dataSource={dataSource}
           columns={columns}
           size="small"
           scroll={{ x: 470 }}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 10, size: 'default' }}
           footer={() => (
             <Row type="flex" justify="space-between" align="bottom">
               <Col>Total Consultants: {dataSource.length}</Col>
               <Col>
-                <Button type="primary" onClick={() => history.push(`${baseUrl}/projectsummary`)}>
+                <CustomButton type="primary" onClick={() => history.push(`${baseUrl}/projectsummary`)}>
                   Project Summary
-                </Button>
+                </CustomButton>
               </Col>
             </Row>
           )}

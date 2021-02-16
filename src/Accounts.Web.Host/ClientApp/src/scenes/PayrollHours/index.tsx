@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { DatePicker, Table, Row, Col, Typography, Input, Button, Icon, Tag, Select } from 'antd';
+import { DatePicker, Row, Col, Typography, Input, Button, Icon, Select, Card } from 'antd';
 import Date from './components/Date';
 import Highlighter from 'react-highlight-words';
 import styled from '@emotion/styled';
 import moment from 'moment';
 import useAxios from '../../lib/axios/useAxios';
+import CustomHoursTable from './../../components/Custom/CustomHoursTable';
 
 const { MonthPicker } = DatePicker;
 const { Text } = Typography;
@@ -17,17 +18,22 @@ type DisplayHoursProps = {
   selectedDate: any;
 };
 
+type TagProps = {
+  color: string;
+};
+
 const StyledApproved = styled.div`
   display: flex;
-  width: 100px;
   align-items: center;
 `;
 
 const StyledRow = styled(Row)`
   margin-bottom: 20px;
 `;
-const StyledTag = styled(Tag)`
-  padding: 5px !important;
+const StyledTag = styled.div<TagProps>`
+  padding: 9px;
+  border-radius: 5px;
+  background: ${(props) => props.color};
 `;
 const StyledDiv = styled.div`
   padding: 3px !important;
@@ -49,39 +55,59 @@ const StyledSelect = styled(Select)`
 const StyledProject = styled(Text)`
   color: #d83d42 !important;
 `;
+const StyledProj = styled(Text)`
+  color: #2a2a2a !important;
+  font-weight: 600;
+`;
 const StyledSwap = styled.div`
   position: absolute;
   right: 0;
-  background: #dfdfdf;
-  height: 100%;
-  padding: 9px 4px;
+  padding: 18px 6px;
   cursor: pointer;
+  :hover {
+    background: #e5e5e5;
+  }
 `;
 
-const StyledTable = styled(Table)`
+const StyledIcon = styled(Icon)`
+  color: rgba(0, 0, 0, 0.45);
+`;
+
+const StyledTable = styled(CustomHoursTable)`
   .iconrow {
     position: relative;
+  }
+  .ant-table-fixed-right {
+    th {
+      padding: 18px 8px !important;
+    }
   }
   .ant-table-row {
     td {
       &.created {
         background: #fdff93 !important;
         text-align: center;
+        color: #2a2a2a;
       }
       &.approved {
         background: #9dccff !important;
         text-align: center;
+        color: #2a2a2a;
       }
       &.invoiced {
-        background: #7ac78c !important;
+        background: #c6ade5 !important;
         text-align: center;
+        color: #2a2a2a;
       }
       &.entered {
         background: #f98590 !important;
         text-align: center;
+        color: #2a2a2a;
       }
       &.all-invoiced {
-        background: #7ac78c !important;
+        text-align: center;
+        background: #7034bd !important;
+        color: white;
       }
     }
   }
@@ -175,7 +201,7 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
           <div>
             {item.isActive ? (
               <>
-                <Text>{item.consultantName}</Text> <br />
+                <StyledProj>{item.consultantName}</StyledProj> <br />
                 <Text type="secondary">{item.companyName}</Text>
               </>
             ) : (
@@ -193,13 +219,13 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
         <StyledApproved>
           <div>Last Approved</div>
           <StyledSwap onClick={handleAllDate}>
-            <Icon type="swap" />
+            <StyledIcon type="swap" />
           </StyledSwap>
         </StyledApproved>
       ),
       className: 'iconrow',
       key: 'lastApproved',
-      width: 125,
+      width: 150,
       fixed: 'left' as 'left',
       render: (item: any) => {
         return (
@@ -301,7 +327,8 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
   ];
 
   return (
-    <>
+    <Card>
+      <h1>PAYROLL HOURS</h1>
       <Row type="flex" justify="space-between">
         <Col>
           <MonthPicker value={selectedDate} format={'MMMM YYYY'} allowClear={false} onChange={(date: any) => setSelectedDate(date)} />
@@ -329,43 +356,62 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
         </Col>
       </StyledRow>
       <StyledTable
-        bordered
         loading={loading}
         size="small"
         dataSource={result}
         columns={columns}
-        scroll={{ x: 1300 }}
-        pagination={{ pageSize: pageSize }}
+        scroll={{ x: 470 }}
+        pagination={{ pageSize: pageSize, size: 'default' }}
         footer={() => (
           <Row gutter={48} type="flex" align="middle">
             <Col span={9}>
-              <StyledTag color="#d83d42" />
-              Inactive
+              <Row type="flex" gutter={8} align="middle">
+                <Col>
+                  <StyledTag color="#d83d42" />
+                </Col>
+                <Col>Inactive</Col>
+              </Row>
             </Col>
             <Col>
-              <StyledTag color="#f98590" />
-              Entered
+              <Row type="flex" gutter={8} align="middle">
+                <Col>
+                  <StyledTag color="#f98590" />
+                </Col>
+                <Col>Entered</Col>
+              </Row>
             </Col>
             <Col>
-              <StyledTag color="#fdff93" />
-              Pending
+              <Row type="flex" gutter={8} align="middle">
+                <Col>
+                  <StyledTag color="#fdff93" />
+                </Col>
+                <Col>Pending</Col>
+              </Row>
             </Col>
             <Col>
-              <StyledTag color="#9dccff" />
-              Approved
+              <Row type="flex" gutter={8} align="middle">
+                <Col>
+                  <StyledTag color="#9dccff" />
+                </Col>
+                <Col>Approved</Col>
+              </Row>
             </Col>
             <Col>
-              <StyledTag color="#7ac78c" />
-              Invoiced
+              <Row type="flex" gutter={8} align="middle">
+                <Col>
+                  <StyledTag color="#C6ADE5" />
+                </Col>
+                <Col>Invoiced</Col>
+              </Row>
             </Col>
           </Row>
         )}
       />
-    </>
+    </Card>
   );
 };
 
-const PayrollHours: React.SFC = () => {
+const PayrollHours: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState(moment().subtract(1, 'months'));
   const month = selectedDate.month() + 1;
   const year = selectedDate.year();

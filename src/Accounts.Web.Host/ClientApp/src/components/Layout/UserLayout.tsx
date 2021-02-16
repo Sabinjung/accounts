@@ -6,7 +6,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import { Col } from 'antd';
 import DocumentTitle from 'react-document-title';
-import Footer from '../Footer';
 import LanguageSelect from '../LanguageSelect';
 import { userRouter } from '../Router/router.config';
 import utils from '../../utils/utils';
@@ -32,7 +31,6 @@ class UserLayout extends React.Component<any> {
 
             <Redirect from="/user" to="/user/login" />
           </Switch>
-          <Footer />
         </Col>
       </DocumentTitle>
     );

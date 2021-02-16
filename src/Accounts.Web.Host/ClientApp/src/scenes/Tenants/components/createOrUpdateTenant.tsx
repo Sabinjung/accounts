@@ -1,11 +1,25 @@
 import * as React from 'react';
 
-import { Checkbox, Col, Form, Input, Modal } from 'antd';
+import { Checkbox, Col, Form } from 'antd';
 
 import { FormComponentProps } from 'antd/lib/form';
 import FormItem from 'antd/lib/form/FormItem';
 import { L } from '../../../lib/abpUtility';
 import rules from './createOrUpdateTenant.validation';
+import CustomModal from './../../../components/Custom/CustomModal';
+import CustomInput from './../../../components/Custom/CustomInput';
+
+import styled from '@emotion/styled';
+import CustomCancleButton from '../../../components/Custom/CustomCancelButton';
+import CustomButton from '../../../components/Custom/CustomButton';
+
+const StyledCheckBox = styled(Checkbox)`
+  .ant-checkbox-inner {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0px 3px 10px #0000000d;
+  }
+`;
 
 export interface ICreateOrUpdateTenantProps extends FormComponentProps {
   visible: boolean;
@@ -18,39 +32,39 @@ class CreateOrUpdateTenant extends React.Component<ICreateOrUpdateTenantProps> {
   render() {
     const formItemLayout = {
       labelCol: {
-        xs: { span: 6 },
-        sm: { span: 6 },
-        md: { span: 6 },
-        lg: { span: 6 },
-        xl: { span: 6 },
-        xxl: { span: 6 },
+        xs: { span: 10 },
+        sm: { span: 10 },
+        md: { span: 10 },
+        lg: { span: 10 },
+        xl: { span: 10 },
+        xxl: { span: 10 },
       },
       wrapperCol: {
-        xs: { span: 18 },
-        sm: { span: 18 },
-        md: { span: 18 },
-        lg: { span: 18 },
-        xl: { span: 18 },
-        xxl: { span: 18 },
+        xs: { span: 14 },
+        sm: { span: 14 },
+        md: { span: 14 },
+        lg: { span: 14 },
+        xl: { span: 14 },
+        xxl: { span: 14 },
       },
     };
 
     const tailFormItemLayout = {
       labelCol: {
-        xs: { span: 6 },
-        sm: { span: 6 },
-        md: { span: 6 },
-        lg: { span: 6 },
-        xl: { span: 6 },
-        xxl: { span: 6 },
+        xs: { span: 10 },
+        sm: { span: 10 },
+        md: { span: 10 },
+        lg: { span: 10 },
+        xl: { span: 10 },
+        xxl: { span: 10 },
       },
       wrapperCol: {
-        xs: { span: 18 },
-        sm: { span: 18 },
-        md: { span: 18 },
-        lg: { span: 18 },
-        xl: { span: 18 },
-        xxl: { span: 18 },
+        xs: { span: 14 },
+        sm: { span: 14 },
+        md: { span: 14 },
+        lg: { span: 14 },
+        xl: { span: 14 },
+        xxl: { span: 14 },
       },
     };
 
@@ -58,30 +72,40 @@ class CreateOrUpdateTenant extends React.Component<ICreateOrUpdateTenantProps> {
     const { visible, onCancel, onCreate } = this.props;
 
     return (
-      <Modal visible={visible} onCancel={onCancel} onOk={onCreate} title={L('Tenants')} width={550}>
+      <CustomModal
+        visible={visible}
+        cancelText={<CustomCancleButton>Cancel</CustomCancleButton>}
+        cancelButtonProps={{ style: { border: 'none', padding: '0', marginBottom: '20px' } }}
+        okButtonProps={{ style: { padding: '0', border: 'none' } }}
+        okText={<CustomButton type="primary">Save</CustomButton>}
+        onCancel={onCancel}
+        onOk={onCreate}
+        title={this.props.modalType === 'create' ? 'Add New Tenant' : 'Edit Tenant'}
+        width={550}
+      >
         <Form>
           <FormItem label={L('TenancyName')} {...formItemLayout}>
-            {this.props.form.getFieldDecorator('tenancyName', { rules: rules.tenancyName })(<Input />)}
+            {this.props.form.getFieldDecorator('tenancyName', { rules: rules.tenancyName })(<CustomInput />)}
           </FormItem>
           <FormItem label={L('Name')} {...formItemLayout}>
-            {getFieldDecorator('name', { rules: rules.name })(<Input />)}
+            {getFieldDecorator('name', { rules: rules.name })(<CustomInput />)}
           </FormItem>
-          {this.props.modalType === 'edit' ? (
+          {this.props.modalType === 'create' ? (
             <FormItem label={L('AdminEmailAddress')} {...formItemLayout}>
-              {getFieldDecorator('adminEmailAddress', { rules: rules.adminEmailAddress })(<Input />)}
+              {getFieldDecorator('adminEmailAddress', { rules: rules.adminEmailAddress })(<CustomInput />)}
             </FormItem>
           ) : null}
-          {this.props.modalType === 'edit' ? (
+          {this.props.modalType === 'create' ? (
             <FormItem label={L('DatabaseConnectionString')} {...formItemLayout}>
-              {getFieldDecorator('connectionString')(<Input />)}
+              {getFieldDecorator('connectionString')(<CustomInput />)}
             </FormItem>
           ) : null}
           <FormItem label={L('IsActive')} {...tailFormItemLayout}>
-            {getFieldDecorator('isActive', { valuePropName: 'checked' })(<Checkbox />)}
+            {getFieldDecorator('isActive', { valuePropName: 'checked' })(<StyledCheckBox />)}
           </FormItem>
           <Col>{L('Default password is  123qwe')}</Col>
         </Form>
-      </Modal>
+      </CustomModal>
     );
   }
 }

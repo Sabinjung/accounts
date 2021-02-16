@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { Table, Card, Row, Col, Input, notification } from 'antd';
+import { Card, Row, Col, notification } from 'antd';
 
 import useAxios from '../../lib/axios/useAxios';
 import { L } from '../../lib/abpUtility';
 import ActionButton from '../../components/ActionButton';
 import { AxiosError } from 'axios';
 import AppConsts from '../../lib/appconst';
-
-const Search = Input.Search;
+import CustomTable from '../../components/Custom/CustomTable';
+import CustomSearch from '../../components/Custom/CustomSearch';
 
 const columns = [
   {
@@ -47,14 +47,14 @@ export default () => {
     <Card>
       <Row type="flex" justify="space-between">
         <Col>
-          <h2>{L('Companies')}</h2>
+          <h1>{L('COMPANIES')}</h1>
         </Col>
         <Col>
           <ActionButton
             permissions={['Company.Sync']}
             method="GET"
             url={`/api/services/app/Intuit/SyncTerms`}
-            style={{ marginRight: 15 }}
+            style={{ marginRight: 15, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             onSuccess={(response: any) => {
               notification.open({
                 message: 'Success',
@@ -72,6 +72,7 @@ export default () => {
           <ActionButton
             method="GET"
             permissions={['Company.Sync']}
+            style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             url={`/api/services/app/Intuit/SyncCompanies`}
             onSuccess={(response: any) => {
               notification.open({
@@ -91,13 +92,13 @@ export default () => {
         </Col>
       </Row>
       <Row>
-        <Col sm={{ span: 10, offset: 0 }}>
-          <Search placeholder={L('Filter')} onSearch={setSearchText} allowClear />
+        <Col sm={{ span: 8, offset: 0 }}>
+          <CustomSearch placeholder={L('Search')} onSearch={setSearchText} />
         </Col>
       </Row>
       <Row style={{ marginTop: 20 }}>
         <Col>
-          <Table
+          <CustomTable
             loading={loading}
             dataSource={items}
             columns={columns}

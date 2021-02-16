@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Button, Card, Col, Dropdown, Input, Menu, Modal, Row, Table, Tag } from 'antd';
+import { Card, Col, Modal, Row } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
@@ -9,6 +9,29 @@ import { EntityDto } from '../../services/dto/entityDto';
 import { L } from '../../lib/abpUtility';
 import Stores from '../../stores/storeIdentifier';
 import TenantStore from '../../stores/tenantStore';
+import CustomSearch from '../../components/Custom/CustomSearch';
+import CustomTable from './../../components/Custom/CustomTable';
+import CustomButton from '../../components/Custom/CustomButton';
+import styled from '@emotion/styled';
+import CustomEditButton from './../../components/Custom/CustomEditButton';
+import CustomDeleteButton from '../../components/Custom/CustomDeleteButton';
+
+const StyledYesTag = styled.div`
+  padding: 8px;
+  width: 56px;
+  color: #2680eb;
+  background: #2680eb1a;
+  text-align: center;
+  border-radius: 5px;
+`;
+const StyledNoTag = styled.div`
+  padding: 8px;
+  width: 56px;
+  color: #ff0000;
+  background: #ff00001a;
+  text-align: center;
+  border-radius: 5px;
+`;
 
 export interface ITenantProps {
   tenantStore: TenantStore;
@@ -23,7 +46,6 @@ export interface ITenantState {
 }
 
 const confirm = Modal.confirm;
-const Search = Input.Search;
 
 @inject(Stores.TenantStore)
 @observer
@@ -123,59 +145,35 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
         dataIndex: 'isActive',
         key: 'isActive',
         width: 150,
-        render: (text: boolean) => (text === true ? <Tag color="#2db7f5">{L('Yes')}</Tag> : <Tag color="red">{L('No')}</Tag>),
+        render: (text: boolean) => (text === true ? <StyledYesTag>{L('Yes')}</StyledYesTag> : <StyledNoTag>{L('No')}</StyledNoTag>),
       },
       {
         title: L('Actions'),
         width: 150,
-        render: (text: string, item: any) => (
-          <div>
-            <Dropdown
-              trigger={['click']}
-              overlay={
-                <Menu>
-                  <Menu.Item onClick={() => this.createOrUpdateModalOpen({ id: item.id })}>{L('Edit')}</Menu.Item>
-                  <Menu.Item onClick={() => this.delete({ id: item.id })}>{L('Delete')}</Menu.Item>
-                </Menu>
-              }
-              placement="bottomLeft"
-            >
-              <Button type="primary" icon="setting">
-                {L('Actions')}
-              </Button>
-            </Dropdown>
-          </div>
+        render: (item: any) => (
+          <>
+            <CustomEditButton onClick={() => this.createOrUpdateModalOpen({ id: item.id })} />
+            <CustomDeleteButton onClick={() => this.delete({ id: item.id })} />
+          </>
         ),
       },
     ];
 
     return (
       <Card>
-        <Row>
-          <Col
-            xs={{ span: 4, offset: 0 }}
-            sm={{ span: 4, offset: 0 }}
-            md={{ span: 4, offset: 0 }}
-            lg={{ span: 2, offset: 0 }}
-            xl={{ span: 2, offset: 0 }}
-            xxl={{ span: 2, offset: 0 }}
-          >
-            <h2>{L('Tenants')}</h2>
+        <Row type="flex" justify="space-between" align="middle">
+          <Col>
+            <h1>{L('TENANTS')}</h1>
           </Col>
-          <Col
-            xs={{ span: 14, offset: 0 }}
-            sm={{ span: 15, offset: 0 }}
-            md={{ span: 15, offset: 0 }}
-            lg={{ span: 1, offset: 21 }}
-            xl={{ span: 1, offset: 21 }}
-            xxl={{ span: 1, offset: 21 }}
-          >
-            <Button type="primary" shape="circle" icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })} />
+          <Col>
+            <CustomButton type="primary" icon="plus" onClick={() => this.createOrUpdateModalOpen({ id: 0 })}>
+              Add Tenant
+            </CustomButton>
           </Col>
         </Row>
         <Row>
-          <Col sm={{ span: 10, offset: 0 }}>
-            <Search placeholder={this.L('Filter')} onSearch={this.handleSearch} />
+          <Col sm={{ span: 8, offset: 0 }}>
+            <CustomSearch placeholder={this.L('Search')} onSearch={this.handleSearch} />
           </Col>
         </Row>
         <Row style={{ marginTop: 20 }}>
@@ -187,10 +185,9 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
             xl={{ span: 24, offset: 0 }}
             xxl={{ span: 24, offset: 0 }}
           >
-            <Table
+            <CustomTable
               rowKey="id"
               size={'default'}
-              bordered={true}
               pagination={{ pageSize: this.state.maxResultCount, total: tenants === undefined ? 0 : tenants.totalCount, defaultCurrent: 1 }}
               columns={columns}
               loading={tenants === undefined ? true : false}
@@ -207,7 +204,7 @@ class Tenant extends AppComponentBase<ITenantProps, ITenantState> {
               modalVisible: false,
             })
           }
-          modalType={this.state.tenantId === 0 ? 'edit' : 'create'}
+          modalType={this.state.tenantId === 0 ? 'create' : 'edit'}
           onCreate={this.handleCreate}
         />
       </Card>

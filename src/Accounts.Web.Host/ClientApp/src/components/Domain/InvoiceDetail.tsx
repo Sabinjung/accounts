@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import { Get } from '../../lib/axios';
-import { Descriptions, Button, List, Tag, Popconfirm, Input, Row, Col, Alert, notification, Select } from 'antd';
+import { Descriptions, List, Tag, Popconfirm, Input, Row, Col, Alert, notification, Select } from 'antd';
 import { jsx, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import { AxiosError } from 'axios';
@@ -12,6 +12,8 @@ import Authorize from '../Authorize';
 import useAxios from '../../lib/axios/useAxios';
 import { isGranted } from '../../lib/abpUtility';
 import EditHourlog from './EditHourlog';
+import CustomButton from './../Custom/CustomButton';
+import CustomCancleButton from './../Custom/CustomCancelButton';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -137,9 +139,9 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
       {!timesheetId && qboInvoiceId && isGranted('Invoicing.Edit') && (
         <StyledRow type="flex" justify="end">
           <Col>
-            <Button type="primary" onClick={handleEdit}>
+            <CustomButton type="primary" onClick={handleEdit}>
               Edit
-            </Button>
+            </CustomButton>
           </Col>
         </StyledRow>
       )}
@@ -252,15 +254,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           left: 0,
           bottom: 0,
           width: '100%',
-          borderTop: '1px solid #e9e9e9',
           padding: '10px 16px',
           background: '#fff',
           textAlign: 'right',
         }}
       >
-        <Button style={{ marginRight: 8 }} onClick={onClose}>
+        <CustomCancleButton style={{ marginRight: 8 }} onClick={onClose}>
           Cancel
-        </Button>
+        </CustomCancleButton>
         {!qboInvoiceId && (
           <Authorize permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}>
             <Popconfirm
@@ -277,9 +278,9 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
                 makeRequest({});
               }}
             >
-              <Button type="primary" style={{ marginRight: 8 }}>
+              <CustomButton type="primary" style={{ marginRight: 8 }}>
                 Save
-              </Button>
+              </CustomButton>
             </Popconfirm>
           </Authorize>
         )}
@@ -288,6 +289,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           <ActionButton
             url="/api/services/app/Invoice/GenerateAndMailInvoice"
             params={{ timesheetId }}
+            style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             onSuccess={() => {
               onClose && onClose();
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
@@ -305,7 +307,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
             <ActionButton
               url="/api/services/app/Invoice/GenerateAndSubmit"
               params={{ timesheetId }}
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 8, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
               onSuccess={() => {
                 onClose && onClose();
                 setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
@@ -325,6 +327,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           <ActionButton
             url="/api/services/app/Invoice/UpdateInvoice"
             permissions={['Invoicing.Submit', 'Invoicing.SubmitAndMail']}
+            style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             method="Put"
             onSuccess={() => {
               notification.open({

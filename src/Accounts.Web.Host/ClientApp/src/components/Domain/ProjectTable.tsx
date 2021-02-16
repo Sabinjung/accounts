@@ -1,10 +1,11 @@
 /** @jsx jsx */
-import { Table, Icon, Dropdown, Menu } from 'antd';
+import { Icon, Dropdown, Menu } from 'antd';
 import _ from 'lodash';
 import { jsx, css } from '@emotion/core';
 import moment from 'moment';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
+import CustomTable from './../Custom/CustomTable';
 
 const createProjectMenu = (projectId: number) => (
   <Menu>
@@ -55,25 +56,25 @@ const columns = [
   {
     title: 'End Client',
     dataIndex: 'endClientName',
-    width: 140,
+    width: 120,
   },
   {
     title: 'Start Date',
     dataIndex: 'startDt',
     render: (val: string) => moment(val).format('MM/DD/YYYY'),
-    width: 120,
+    width: 100,
   },
   {
     title: 'End Date',
     dataIndex: 'endDt',
     render: (val: string) => val && moment(val).format('MM/DD/YYYY'),
-    width: 120,
+    width: 100,
   },
 
   {
     title: 'Term',
     dataIndex: 'termName',
-    width: 120,
+    width: 80,
   },
   {
     title: 'Invoice Cycle',
@@ -89,7 +90,7 @@ const columns = [
   {
     title: 'Total Hrs',
     dataIndex: 'totalHoursBilled',
-    width: 70,
+    width: 100,
   },
   {
     title: 'Invoiced Amount',
@@ -125,7 +126,7 @@ export const ProjectTable = ({
   const history = useHistory();
 
   return (
-    <Table
+    <CustomTable
       tableLayout="fixed"
       loading={isLoading}
       dataSource={dataSource}

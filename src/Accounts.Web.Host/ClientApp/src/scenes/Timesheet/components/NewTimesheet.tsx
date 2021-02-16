@@ -10,6 +10,8 @@ import Stores from '../../../stores/storeIdentifier';
 import HourLogEntryModel from '../../../models/Timesheet/hourLogEntryModel';
 import AttachmentModel from '../../../models/Timesheet/attachmentModel';
 import styled from '@emotion/styled';
+import CustomCancleButton from '../../../components/Custom/CustomCancelButton';
+import CustomButton from './../../../components/Custom/CustomButton';
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -150,9 +152,9 @@ export default inject(
                   >
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="day" />
-                    <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+                    <YAxis yAxisId="left" orientation="left" stroke="#748AA1" />
                     <Tooltip />
-                    <Bar yAxisId="left" dataKey="hrs" fill="#82ca9d" />
+                    <Bar yAxisId="left" dataKey="hrs" fill="#1C3FAA" />
                   </BarChart>
                 )}
               </AutoSizer>
@@ -192,25 +194,24 @@ export default inject(
             left: 0,
             bottom: 0,
             width: '100%',
-            borderTop: '1px solid #e9e9e9',
             padding: '10px 16px',
             background: '#fff',
             textAlign: 'right',
           }}
         >
-          <Button
+          <CustomCancleButton
             style={{ marginRight: 8 }}
             onClick={() => {
               onClose();
             }}
           >
             Cancel
-          </Button>
+          </CustomCancleButton>
           {attachmentList.length !== 0 && selectedAttachmentList.length !== 0 ? (
             <Popconfirm
               title={
                 <div>
-                  Do you want to submit this timesheet?
+                  <p>Do you want to submit this timesheet?</p>
                   <TextArea
                     value={upcomingTimesheet && upcomingTimesheet.noteText}
                     onChange={(e: any) => (upcomingTimesheet.noteText = e.target.value)}
@@ -222,12 +223,12 @@ export default inject(
               placement="topRight"
               onConfirm={onCreateTimesheet}
             >
-              <Button type="primary">Submit</Button>
+              <CustomButton type="primary">Submit</CustomButton>
             </Popconfirm>
           ) : (
-            <Button type="primary" disabled>
+            <CustomButton type="primary" disabled>
               Submit
-            </Button>
+            </CustomButton>
           )}
         </div>
       </React.Fragment>

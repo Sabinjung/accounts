@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, DatePicker, Input, notification, Checkbox } from 'antd';
+import { Form, DatePicker, notification, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EntityPicker from '../EntityPicker';
 import ConnectedEntityPicker from '../ConnectedEntityPicker';
@@ -8,15 +8,25 @@ import moment from 'moment';
 import _ from 'lodash';
 import DiscountInput from './DiscountInput';
 import styled from '@emotion/styled';
+import CustomCancleButton from '../Custom/CustomCancelButton';
+import CustomInput from './../Custom/CustomInput';
 
 const formItemLayout = {
   labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
+    xs: { span: 9 },
+    sm: { span: 9 },
+    md: { span: 9 },
+    lg: { span: 9 },
+    xl: { span: 9 },
+    xxl: { span: 9 },
   },
   wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
+    xs: { span: 15 },
+    sm: { span: 15 },
+    md: { span: 15 },
+    lg: { span: 15 },
+    xl: { span: 15 },
+    xxl: { span: 15 },
   },
 };
 
@@ -25,6 +35,17 @@ const StyledForm = styled(Form)`
     display: flex;
     align-items: center;
   }
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  .ant-checkbox-inner {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0px 3px 10px #0000000d;
+  }
+`;
+const StyledDatePicker = styled(DatePicker)`
+  box-shadow: 0px 3px 10px #0000000d;
 `;
 
 export type IProjectFormProps = FormComponentProps<{}> & {
@@ -51,6 +72,13 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
     } else {
       return prevVal;
     }
+  };
+
+  const checkRate = (rule: any, value: any, callback: any) => {
+    if (value > 0) {
+      return callback();
+    }
+    callback('Rate must be greater than 0!');
   };
 
   return (
@@ -98,13 +126,13 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
-          })(<DatePicker />)}
+          })(<StyledDatePicker />)}
         </Form.Item>
         <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
         <Form.Item label="InvoiceCycle Start Date">
           {getFieldDecorator('invoiceCycleStartDt', {
             rules: [{ required: true, message: 'Please input InvoiceCycle Start Date!' }],
-          })(<DatePicker />)}
+          })(<StyledDatePicker />)}
         </Form.Item>
         <Form.Item label="Discount">
           {getFieldDecorator('discount', {
@@ -113,11 +141,11 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         </Form.Item>
         <Form.Item label="Rate">
           {getFieldDecorator('rate', {
-            rules: [{ required: true, message: 'Please input rate!' }],
+            rules: [{ required: true, message: ' ' }, { validator: checkRate }],
             normalize: handleRate,
-          })(<Input style={{ width: '5em' }} />)}
+          })(<CustomInput style={{ width: '5em' }} />)}
         </Form.Item>
-        <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<Checkbox></Checkbox>)}</Form.Item>
+        <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<StyledCheckbox></StyledCheckbox>)}</Form.Item>
       </StyledForm>
 
       <div
@@ -126,24 +154,24 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           left: 0,
           bottom: 0,
           width: '100%',
-          borderTop: '1px solid #e9e9e9',
           padding: '10px 16px',
           background: '#fff',
           textAlign: 'right',
         }}
       >
-        <Button
+        <CustomCancleButton
           style={{ marginRight: 8 }}
           onClick={() => {
             onClose();
           }}
         >
           Cancel
-        </Button>
+        </CustomCancleButton>
 
         <ActionButton
           permissions={['Project.Create', 'Project.Update']}
           method={project && project.id ? 'Put' : 'Post'}
+          style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
           url={`/api/services/app/Project/${project && project.id ? 'Update' : 'Create'}`}
           onSuccess={(response: any) => {
             notification.open({
@@ -171,7 +199,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             });
           }}
         >
-          Save
+          Save Project
         </ActionButton>
       </div>
     </React.Fragment>

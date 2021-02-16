@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Table, Row, Col, DatePicker } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, DatePicker, Card } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import useAxios from '../../../lib/axios/useAxios';
 import { useHistory } from 'react-router';
@@ -9,6 +9,7 @@ import RouteableDrawer from '../../../components/RouteableDrawer';
 import EntityPicker from '../../../components/EntityPicker';
 import InvoiceDetail from '../../../components/Domain/InvoiceDetail';
 import moment from 'moment';
+import CustomTable from '../../../components/Custom/CustomTable';
 
 const CustomTooltip = ({ payload, active, label }: any) => {
   if (active) {
@@ -36,15 +37,15 @@ const RenderBarChart = (props: any) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="monthName"
-          tickFormatter={label =>
+          tickFormatter={(label) =>
             `${moment()
               .month(label - 1)
               .format('MMM')}`
           }
         />
-        <YAxis yAxisId="left" orientation="left" stroke="#8884d8" label={{ value: 'Amount', angle: -90, position: 'insideLeft' }} />
+        <YAxis yAxisId="left" orientation="left" stroke="#748AA1" label={{ value: 'Amount', angle: -90, position: 'insideLeft' }} />
         <Tooltip content={<CustomTooltip />} />
-        <Bar yAxisId="left" dataKey="monthAmount" fill="#82ca9d" barSize={70} />
+        <Bar yAxisId="left" dataKey="monthAmount" fill="#1C3FAA" barSize={70} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -75,7 +76,7 @@ const ProjectInvoices = (props: any) => {
       key: 'qboInvoiceId',
       dataIndex: 'qboInvoiceId',
       width: 130,
-       align: 'center' as const
+      align: 'center' as const,
     },
     {
       title: 'Company',
@@ -96,7 +97,7 @@ const ProjectInvoices = (props: any) => {
     {
       title: 'Amount',
       key: 'total',
-      render: (val: number) => "$ " + val.toLocaleString('en-US'),
+      render: (val: number) => '$ ' + val.toLocaleString('en-US'),
       dataIndex: 'total',
     },
   ];
@@ -111,11 +112,11 @@ const ProjectInvoices = (props: any) => {
 
   const headerRender = () => {
     return (
-      <Row type='flex' justify='start' align='middle' style={{height: 45}}>
+      <Row type="flex" justify="start" align="middle" style={{ height: 45 }}>
         <Col lg={{ span: 4 }}>
           <EntityPicker
             url="api/services/app/Consultant/Search"
-            mapFun={r => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
+            mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
             style={{ width: '220px' }}
             value={searchId}
             placeholder="Search Consultant"
@@ -123,7 +124,7 @@ const ProjectInvoices = (props: any) => {
           />
         </Col>
         <Col lg={{ span: 4 }}>
-          <RangePicker onChange={handleDateSearch} style={{width: 220}}/>
+          <RangePicker onChange={handleDateSearch} style={{ width: 220 }} />
         </Col>
       </Row>
     );
@@ -136,7 +137,7 @@ const ProjectInvoices = (props: any) => {
   const viewerRef = React.createRef<any>();
 
   return (
-    <Fragment>
+    <Card>
       <Get
         url="/api/services/app/Invoice/GetInvoicesByMonthReport"
         params={{ ProjectId: projectId, consultantId: searchId, startDate: dateSearchText[0], endDate: dateSearchText[1] }}
@@ -146,18 +147,16 @@ const ProjectInvoices = (props: any) => {
         }}
       </Get>
 
-      <Table
-        dataSource={result !== undefined ? result.results : []}
+      <CustomTable
+        dataSource={result !== undefined ? result.listItemDto.results : []}
         columns={columns}
-        bordered
         loading={loading}
         pagination={{ pageSize: 10, total: 0, defaultCurrent: 1 }}
         title={() => headerRender()}
-        size='small'
         onRow={(record: any, rowIndex: any) => ({
           onDoubleClick: () => history.push(`/invoices/${record.id}`),
         })}
-      ></Table>
+      ></CustomTable>
 
       <Portal>
         <RouteableDrawer path={[`/invoices/:invoiceId`]} width={'50vw'} title="Invoice Detail" exact="true">
@@ -184,7 +183,7 @@ const ProjectInvoices = (props: any) => {
           }}
         </RouteableDrawer>
       </Portal>
-    </Fragment>
+    </Card>
   );
 };
 
