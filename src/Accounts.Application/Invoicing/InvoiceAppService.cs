@@ -18,6 +18,7 @@ using System.Linq;
 using MoreLinq;
 using System.Collections.Concurrent;
 using Abp.UI;
+using Abp.Collections.Extensions;
 
 namespace Accounts.Invoicing
 {
@@ -236,9 +237,9 @@ namespace Accounts.Invoicing
         }
 
         [AbpAuthorize("AgingReport")]
-        public async Task<IEnumerable<AgeingReportDto>> GetAgeingReport()
+        public async Task<IEnumerable<AgeingReportDto>> GetAgeingReport(int? companyId)
         {
-            var details = await Repository.GetAllListAsync();
+            var details = Repository.GetAll().WhereIf(companyId.HasValue, x => x.CompanyId == companyId).ToList();
             var childrens = Mapper.Map<List<Children>>(details);
             AgeingReport report = new AgeingReport();
             var result = await report.GetAgeingReport(childrens);
