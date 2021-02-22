@@ -225,7 +225,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
       rate: Form.createFormField({ value: project.rate }),
-      isSendMail: Form.createFormField({ value: project.id ? project.isSendMail : true }),
+      isSendMail: Form.createFormField({ value: project.isSendMail === undefined ? true : project.isSendMail }),
       endClientId: Form.createFormField({ value: project.endClientId }),
       discount: Form.createFormField({
         value: {
@@ -237,19 +237,20 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     };
   },
   onFieldsChange(props, fields) {
+    const returnVal = (val: string) => (_.get(fields, `${val}.value`) ? _.get(fields, `${val}.value`) : project[val]);
     const { project } = props;
-    project.companyId = _.get(fields, 'companyId.value');
-    project.termId = _.get(fields, 'termId.value');
-    project.invoiceCycleId = _.get(fields, 'invoiceCycleId.value');
-    project.startDt = _.get(fields, 'startDt.value');
-    project.endDt = _.get(fields, 'endDt.value');
-    project.consultantId = _.get(fields, 'consultantId.value');
-    project.rate = _.get(fields, 'rate.value');
+    project.companyId = returnVal('companyId');
+    project.termId = returnVal('termId');
+    project.invoiceCycleId = returnVal('invoiceCycleId');
+    project.startDt = returnVal('startDt');
+    project.endDt = returnVal('endDt');
+    project.consultantId = returnVal('consultantId');
+    project.rate = returnVal('rate');
     project.isSendMail = _.get(fields, 'isSendMail.value');
-    project.discountType = _.get(fields, 'discount.value.discountType');
-    project.discountValue = _.get(fields, 'discount.value.discountValue');
-    project.invoiceCycleStartDt = _.get(fields, 'invoiceCycleStartDt.value');
-    project.endClientId = _.get(fields, 'endClientId.value');
+    project.discountType = _.get(fields, 'discount.value.discountType') ? _.get(fields, 'discount.value.discountType') : project.discountType;
+    project.discountValue = _.get(fields, 'discount.value.discountValue') ? _.get(fields, 'discount.value.discountValue') : project.discountValue;
+    project.invoiceCycleStartDt = returnVal('invoiceCycleStartDt');
+    project.endClientId = returnVal('endClientId');
   },
 })(ProjectForm);
 

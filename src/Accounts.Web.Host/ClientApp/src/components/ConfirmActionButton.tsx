@@ -39,7 +39,6 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
 }: any) => {
   const [isReady, setIsReady] = useState(false);
   const [formData, setFormData] = useState({});
-  const [isVisible, setIsVisible] = useState(false);
 
   const [{ loading }] = useAxios(
     {
@@ -52,7 +51,6 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
       isReady,
       onSuccess: (response: any) => {
         setIsReady(false);
-        setIsVisible(false);
         onSuccess(response);
       },
       onError: (err) => {
@@ -68,10 +66,6 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
         okText="Yes"
         cancelText="No"
         placement={placement}
-        visible={isVisible}
-        onCancel={() => {
-          setIsVisible(false);
-        }}
         onConfirm={() => {
           if (onSubmit) {
             const returnVal = onSubmit({ setFormData });
@@ -81,7 +75,7 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
           }
         }}
       >
-        <Button style={style} type={type} icon={icon} loading={loading} onClick={() => setIsVisible(true)}>
+        <Button style={style} type={type} icon={icon} loading={loading}>
           {title}
         </Button>
       </Popconfirm>

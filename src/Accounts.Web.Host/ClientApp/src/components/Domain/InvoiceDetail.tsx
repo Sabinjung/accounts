@@ -124,15 +124,16 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
   if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
     logedHours.map((item: any) => (totalHrs += item.hours));
-    initialAmount = !form.rate ? 0 : (parseFloat(form.rate) * totalHrs).toFixed(2);
-    sTotal = parseFloat(initialAmount + totalExpense).toFixed(2);
+    initialAmount = !form.rate ? 0 : parseFloat((parseFloat(form.rate) * totalHrs).toFixed(2));
+    sTotal = parseFloat(parseFloat(initialAmount).toFixed(2)) + totalExpense;
     discount = !form.discountValue
       ? 0
       : disType === 1
       ? parseFloat((sTotal * (parseFloat(form.discountValue) / 100)).toFixed(2))
-      : parseFloat(form.discountValue).toFixed(2);
-    TotalAmount = (sTotal - discount).toFixed(2);
+      : parseFloat(parseFloat(form.discountValue).toFixed(2));
+    TotalAmount = parseFloat((sTotal - discount).toFixed(2));
   }
+  debugger;
 
   return (
     <React.Fragment>
@@ -246,7 +247,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           </List.Item>
         )}
       />
-      {isEdit && !parseInt(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
+      {isEdit && !parseFloat(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
 
       <div
         style={{
@@ -338,7 +339,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
-              if (parseInt(form.rate) && totalHrs) {
+              if (parseFloat(form.rate) && totalHrs) {
                 setFormData({
                   invoice: {
                     totalHours: totalHrs,
