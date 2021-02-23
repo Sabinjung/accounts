@@ -1,9 +1,5 @@
 @import '~antd/lib/style/themes/default.less';
 
-.ant-table-fixed {
-  table-layout: fixed;
-}
-
 .ant-popover-inner-content {
   .ant-descriptions-title {
     margin-bottom: 5px !important;
@@ -22,17 +18,9 @@
     height: 10px;
   }
 }
-.hour-log-entry-input {
-  width: 50px;
-}
 
 th.is-holiday {
   background: #ddd !important;
-}
-
-td,
-th {
-  background: white;
 }
 
 .upcoming-timesheet-totalhrs {
@@ -94,15 +82,20 @@ th {
   }
   td {
     &.is-holiday {
-      background: #f6f6f6;
+      background: #f6f6f6 !important;
     }
     &.is-associated {
-      background: #a5b3fa8f !important;
+      background: #7034bd66 !important;
       cursor: not-allowed;
     }
     &.is-disabled {
-      background: #ccc0 !important;
+      background: #f6f6f6 !important;
       cursor: not-allowed;
+    }
+    &.total-hrs {
+      background: #7034bd !important;
+      text-align: center;
+      color: white;
     }
     &.is-modified {
       border-left: 2px solid blue;

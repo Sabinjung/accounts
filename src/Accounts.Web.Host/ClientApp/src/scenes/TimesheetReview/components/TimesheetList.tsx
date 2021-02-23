@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState } from 'react';
 import { Button, Row, Col, List, Typography, DatePicker, Form, Popover, Checkbox } from 'antd';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import _ from 'lodash';
 import classNames from 'classnames';
 import { jsx, ClassNames } from '@emotion/core';
@@ -9,11 +9,9 @@ import { Get } from '../../../lib/axios';
 import TimesheetStore from '../../../stores/timesheetStore';
 import EntityPicker from '../../../components/EntityPicker';
 import PredefinedQueryPills from '../../../components/PredefinedQueryPills';
-import styles from './timesheet.module.scss';
 import { AutoSizer } from 'react-virtualized';
 import styled from '@emotion/styled';
 
-console.log(styles.title);
 const { Text } = Typography;
 
 const { RangePicker } = DatePicker;
@@ -25,6 +23,10 @@ export type ITimesheetListProps = {
   reload?: boolean;
 };
 
+const StyledText = styled(Text)`
+  margin-right: 3px;
+`;
+
 const StyledForm = styled(Form)`
   .ant-form-item {
     margin-bottom: 0 !important;
@@ -35,18 +37,36 @@ const StyledForm = styled(Form)`
   }
 `;
 
+const StyledRow = styled(Row)`
+  margin-bottom: 5px;
+`;
+
+const StyledSearch = styled(Button)`
+  color: #7034bd;
+  font-size: 22px;
+  :hover,
+  :active,
+  :focus {
+    color: #7034bd;
+  }
+`;
+
 const timesheetListStyles = (theme: any) => ({
   'overflow-y': 'auto',
   'overflow-x': 'hidden',
   '.ant-list-item': {
-    padding: '5px 10px',
+    padding: '16px 22px',
+    background: '#fff',
+    marginBottom: '10px',
+    borderRadius: '20px',
+    border: 'none',
     color: 'black',
     '&:hover': {
       cursor: 'pointer',
-      background: '#e8e8e8',
+      background: '#DFEAFA',
     },
     '&.active': {
-      background: '#d9d9d9',
+      background: '#DFEAFA',
     },
     '.ant-list-item-meta-title,.ant-list-item-meta-description': {
       color: theme.colors.secondary,
@@ -75,6 +95,69 @@ export const TimesheetList = ({
     setEndTime(dateString[1]);
   };
 
+  const searchFilters = () => (
+    <Popover
+      trigger="click"
+      visible={visible}
+      onVisibleChange={() => setVisible(!visible)}
+      content={
+        <StyledForm layout="horizontal">
+          <Form.Item label="Period">
+            <RangePicker
+              style={{ width: '300px' }}
+              onChange={handleDateRange}
+              ranges={{
+                Today: [moment(), moment()],
+                Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+              }}
+            />
+          </Form.Item>
+          <Form.Item label="Consultant">
+            <EntityPicker
+              url="/api/services/app/Consultant/Search"
+              mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
+              value={consultantId}
+              onChange={(value) => {
+                setConsultantId(value);
+              }}
+            />
+          </Form.Item>
+          <Form.Item label="Company">
+            <EntityPicker
+              url="/api/services/app/Company/Search"
+              mapFun={(r) => ({ value: r.id, text: r.displayName })}
+              value={companyId}
+              onChange={(value) => {
+                setCompanyId(value);
+              }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Checkbox>Include Timesheet Not Created</Checkbox>
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              onClick={() => {
+                filterTimesheet(startTime, endTime, consultantId, companyId);
+                setVisible(false);
+              }}
+            >
+              Apply
+            </Button>
+          </Form.Item>
+        </StyledForm>
+      }
+      title="Filters"
+    >
+      <StyledSearch type="link" shape="circle" icon="search" />
+    </Popover>
+  );
+
   return (
     <ClassNames>
       {({ css }) => (
@@ -82,81 +165,17 @@ export const TimesheetList = ({
           {({ height, width }) => (
             <List
               css={timesheetListStyles}
-              size="small"
+              split={false}
               style={{ height, width, minHeight: 500 }}
               loading={isLoading}
               header={
-                <Row gutter={10} type="flex">
-                  <Col>
-                    <PredefinedQueryPills
-                      selectedFilter={selectedFilter}
-                      size="small"
-                      dataSource={predefinedQueries}
-                      onClick={(name) => onFilterChanged(name)}
-                    />
-                  </Col>
-                  <Col>
-                    <Popover
-                      trigger="click"
-                      visible={visible}
-                      onVisibleChange={() => setVisible(!visible)}
-                      content={
-                        <StyledForm layout="horizontal">
-                          <Form.Item label="Period">
-                            <RangePicker
-                              onChange={handleDateRange}
-                              ranges={{
-                                Today: [moment(), moment()],
-                                Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                              }}
-                            />
-                          </Form.Item>
-                          <Form.Item label="Consultant">
-                            <EntityPicker
-                              url="/api/services/app/Consultant/Search"
-                              mapFun={(r) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
-                              value={consultantId}
-                              onChange={(value) => {
-                                setConsultantId(value);
-                              }}
-                            />
-                          </Form.Item>
-                          <Form.Item label="Company">
-                            <EntityPicker
-                              url="/api/services/app/Company/Search"
-                              mapFun={(r) => ({ value: r.id, text: r.displayName })}
-                              value={companyId}
-                              onChange={(value) => {
-                                setCompanyId(value);
-                              }}
-                            />
-                          </Form.Item>
-                          <Form.Item>
-                            <Checkbox>Include Timesheet Not Created</Checkbox>
-                          </Form.Item>
-                          <Form.Item>
-                            <Button
-                              type="primary"
-                              onClick={() => {
-                                filterTimesheet(startTime, endTime, consultantId, companyId);
-                                setVisible(false);
-                              }}
-                            >
-                              Apply
-                            </Button>
-                          </Form.Item>
-                        </StyledForm>
-                      }
-                      title="Filters"
-                    >
-                      <Button type="link" shape="circle" icon="search" />
-                    </Popover>
-                  </Col>
-                </Row>
+                <PredefinedQueryPills
+                  selectedFilter={selectedFilter}
+                  size="small"
+                  dataSource={predefinedQueries}
+                  onClick={(name) => onFilterChanged(name)}
+                  searchFilters={searchFilters}
+                />
               }
               dataSource={dataSource}
               renderItem={(timesheet: any) => (
@@ -166,17 +185,41 @@ export const TimesheetList = ({
                   }}
                   className={classNames({ active: selectedTimesheetId == timesheet.id })}
                 >
-                  <List.Item.Meta
-                    title={timesheet.project.consultantName}
-                    description={
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ width: '100%' }}>
+                    <StyledRow type="flex" justify="space-between" align="middle">
+                      <Col style={{ fontWeight: 600 }}>{timesheet.project.consultantName}</Col>
+                      <Col>
+                        <Text>
+                          {moment(timesheet.startDt).format('MM/DD')} - {moment(timesheet.endDt).format('MM/DD')}
+                        </Text>
+                      </Col>
+                    </StyledRow>
+                    <Row type="flex" justify="space-between" align="middle">
+                      <Col>
                         <Text>{timesheet.project.companyName}</Text>
+                      </Col>
+                      <Col>
+                        {timesheet.statusId == 1 ? (
+                          <StyledText code className={classNames({ danger: moment().diff(moment(timesheet.createdDt), 'days') > 5 })}>
+                            {moment(timesheet.createdDt).fromNow()}
+                          </StyledText>
+                        ) : (
+                          <StyledText code>{moment(timesheet.createdDt).fromNow()}</StyledText>
+                        )}
+
+                        <Text style={{ color: '#008dff' }}>{timesheet.totalHrs} hrs</Text>
+                      </Col>
+                    </Row>
+                    <Row type="flex" justify="space-between" align="middle">
+                      <Col>
                         {timesheet.qboInvoiceId && (
                           <Text>
                             eTrans ID:
-                            {'  ' + timesheet.qboInvoiceId}
+                            {' ' + timesheet.qboInvoiceId}
                           </Text>
                         )}
+                      </Col>
+                      <Col>
                         {timesheet.eInvoiceId && (
                           <Text>
                             eInvoice ID:
@@ -185,24 +228,8 @@ export const TimesheetList = ({
                             </a>
                           </Text>
                         )}
-                      </div>
-                    }
-                  />
-                  <div>
-                    <div style={{ textAlign: 'right' }}>
-                      {moment(timesheet.startDt).format('MM/DD')} - {moment(timesheet.endDt).format('MM/DD')}
-                    </div>
-                    <div>
-                      {timesheet.statusId == 1 ? (
-                        <Text code className={classNames({ danger: moment().diff(moment(timesheet.createdDt), 'days') > 5 })}>
-                          {moment(timesheet.createdDt).fromNow()}
-                        </Text>
-                      ) : (
-                        <Text code>{moment(timesheet.createdDt).fromNow()}</Text>
-                      )}
-
-                      <Text style={{ color: '#008dff' }}>{timesheet.totalHrs} hrs</Text>
-                    </div>
+                      </Col>
+                    </Row>
                   </div>
                 </List.Item>
               )}
@@ -219,7 +246,7 @@ const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = (pr
   const [selectedFilter, setSelectedFilter] = useState('Pending Apprv');
   return (
     <Get url="api/services/app/Timesheet/GetTimesheets" params={{ name: selectedFilter, isActive: true, projectId }}>
-      {({ error, data, isLoading }: any) => {
+      {({ data, loading }: any) => {
         const result = (data && data.result) || { results: [], recordCounts: [] };
         const { results: dataSource, recordCounts: predefinedQueries } = result;
 
@@ -228,8 +255,9 @@ const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = (pr
             dataSource={dataSource}
             predefinedQueries={predefinedQueries}
             onSelectionChange={onSelectionChange}
-            isLoading={isLoading}
-            onFilterChanged={(filter: any) => setSelectedFilter(filter)}
+            isLoading={loading}
+            selectedFilter={selectedFilter}
+            onFilterChanged={(filter: string) => setSelectedFilter(filter)}
           />
         );
       }}

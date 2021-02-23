@@ -3,6 +3,26 @@ import React from 'react';
 import { Drawer } from 'antd';
 import { Route } from 'react-router';
 import $ from 'jquery';
+import styled from '@emotion/styled';
+
+const StyledDrawer = styled(Drawer)`
+  .ant-drawer-header {
+    padding: 28px 43px;
+    border: none;
+    .ant-drawer-title {
+      font-size: 20px;
+    }
+    .ant-drawer-close {
+      box-shadow: 1px 1px 6px #00000029;
+      border-radius: 50%;
+      top: 21px;
+      right: 20px;
+      width: 35px;
+      height: 35px;
+      line-height: 0px;
+    }
+  }
+`;
 
 function calculate() {
   const drawers = $('.ant-drawer-open .ant-drawer-content-wrapper');
@@ -24,7 +44,7 @@ const RouteableDrawer = (props: any) => {
   const { title, exact, ...rest } = props;
   return (
     <Route path={props.path} exact={exact}>
-      {para => {
+      {(para) => {
         if (!para.match) return null;
         const drawerProps = {
           ...rest,
@@ -44,7 +64,7 @@ const RouteableDrawer = (props: any) => {
             para.history.goBack();
           },
         };
-        return <Drawer {...drawerProps}>{props.children({ ...para, onClose: drawerProps.onClose })}</Drawer>;
+        return <StyledDrawer {...drawerProps}>{props.children({ ...para, onClose: drawerProps.onClose })}</StyledDrawer>;
       }}
     </Route>
   );

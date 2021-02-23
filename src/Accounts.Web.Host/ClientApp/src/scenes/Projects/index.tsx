@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Portal } from 'react-portal';
 import { ProjectTable } from '../../components/Domain/ProjectTable';
-import { Row, Col, Button, Card, Input, Badge } from 'antd';
+import { Row, Col, Card } from 'antd';
 import { useHistory } from 'react-router';
 import useAxios from '../../lib/axios/useAxios';
 import RouteableDrawer from '../../components/RouteableDrawer';
@@ -15,9 +15,10 @@ import { runInAction } from 'mobx';
 import { L } from '../../lib/abpUtility';
 import { Get } from '../../lib/axios';
 import Authorize from '../../components/Authorize';
+import CustomSearch from '../../components/Custom/CustomSearch';
+import CustomButton from '../../components/Custom/CustomButton';
+import PredefinedQueryPills from '../../components/PredefinedQueryPills';
 import EndClientCreateUpdate from '../EndClients/components/EndClientCreateUpdate';
-
-const Search = Input.Search;
 
 export default () => {
   const pageSize = 10;
@@ -72,56 +73,38 @@ export default () => {
     >
       {({ store }: any) => (
         <Card>
-          <Row>
-            <Col
-              xs={{ span: 4, offset: 0 }}
-              sm={{ span: 4, offset: 0 }}
-              md={{ span: 4, offset: 0 }}
-              lg={{ span: 2, offset: 0 }}
-              xl={{ span: 2, offset: 0 }}
-              xxl={{ span: 2, offset: 0 }}
-            >
-              <h2>{L('Projects')}</h2>
+          <Row type="flex" align="middle" justify="space-between">
+            <Col>
+              <h1>{L('PROJECTS')}</h1>
             </Col>
-            <Col
-              xs={{ span: 14, offset: 0 }}
-              sm={{ span: 15, offset: 0 }}
-              md={{ span: 15, offset: 0 }}
-              lg={{ span: 1, offset: 21 }}
-              xl={{ span: 1, offset: 21 }}
-              xxl={{ span: 1, offset: 21 }}
-            >
-              <Button type="primary" shape="circle" icon="plus" onClick={() => history.push('/projects/new')}></Button>
+            <Col>
+              <CustomButton type="primary" icon="plus" onClick={() => history.push('/projects/new')}>
+                Add Project
+              </CustomButton>
             </Col>
           </Row>
           <Row>
-            <Col sm={{ span: 10, offset: 0 }}>
-              <Search placeholder={L('Filter')} onSearch={setSearchText} allowClear />
+            <Col sm={{ span: 8, offset: 0 }}>
+              <CustomSearch placeholder={L('Search')} onSearch={setSearchText} allowClear />
             </Col>
           </Row>
-          <Row gutter={16} type="flex" style={{ margin: '25px 0px 15px 0px' }}>
-            {predefinedQueries.map((q: any) => (
-              <Col>
-                <Badge count={q.count}>
-                  <Button type="primary" shape="round" size="small" onClick={() => setQueryName(q.name)}>
-                    {q.name}
-                  </Button>
-                </Badge>
-              </Col>
-            ))}
-            <Col lg={{ span: 3, offset: 15 }}>
+          <Row gutter={16} type="flex" justify="space-between" style={{ margin: '25px 0px 15px 0px' }} align="middle">
+            <Col>
+              <PredefinedQueryPills selectedFilter={queryName} size="small" dataSource={predefinedQueries} onClick={(name) => setQueryName(name)} />
+            </Col>
+            <Col>
               <EntityPicker
                 url="api/services/app/Term/GetAll"
+                size="large"
                 mapFun={(r) => ({ value: r.id, text: `${r.name}` })}
-                style={{ width: '180px' }}
+                style={{ width: '180px', marginRight: '20px' }}
                 value={termFilterText}
                 placeholder="Filter Term"
                 onChange={handleTermFilter}
               />
-            </Col>
-            <Col lg={{ span: 3 }}>
               <EntityPicker
                 url="api/services/app/InvoiceCycle/GetAll"
+                size="large"
                 mapFun={(r) => ({ value: r.id, text: `${r.name}` })}
                 style={{ width: '180px' }}
                 value={invoiceCycleId}
@@ -130,22 +113,18 @@ export default () => {
               />
             </Col>
           </Row>
-          <Row type="flex">
-            <Col style={{ overflowX: 'auto' }}>
-              <ProjectTable
-                dataSource={dataSource}
-                predefinedQueries={predefinedQueries}
-                isLoading={loading}
-                pagination={{ pageSize, total: data === undefined ? 0 : recordCount, defaultCurrent: 1 }}
-                onChange={(pagination: any) => {
-                  setSkipCount(pagination.current);
-                }}
-              />
-            </Col>
-          </Row>
+          <ProjectTable
+            dataSource={dataSource}
+            predefinedQueries={predefinedQueries}
+            isLoading={loading}
+            pagination={{ pageSize, total: data === undefined ? 0 : recordCount, defaultCurrent: 1 }}
+            onChange={(pagination: any) => {
+              setSkipCount(pagination.current);
+            }}
+          />
           <Portal>
             <Authorize permissions={['Project.Create']}>
-              <RouteableDrawer path={[`/projects/new`]} width={'30vw'} title="Project">
+              <RouteableDrawer path={[`/projects/new`]} width={'30vw'} title="Add New Project">
                 {({ onClose }: any) => {
                   return (
                     <ProjectCreateUpdate

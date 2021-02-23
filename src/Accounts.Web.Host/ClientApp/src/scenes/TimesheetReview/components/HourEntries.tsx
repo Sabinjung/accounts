@@ -1,17 +1,13 @@
 import React from 'react';
-import { Table } from 'antd';
 import moment from 'moment';
 import HourLogEntryModel from '../../../models/Timesheet/hourLogEntryModel';
+import CustomHoursTable from './../../../components/Custom/CustomHoursTable';
 
-var enumerateDaysBetweenDates = function(startDate: any, endDate: any) {
+var enumerateDaysBetweenDates = function (startDate: any, endDate: any) {
   var dates = [];
 
-  var currDate = moment(startDate)
-    .subtract(1, 'day')
-    .startOf('day');
-  var lastDate = moment(endDate)
-    .add(1, 'day')
-    .startOf('day');
+  var currDate = moment(startDate).subtract(1, 'day').startOf('day');
+  var lastDate = moment(endDate).add(1, 'day').startOf('day');
 
   while (currDate.add(1, 'days').diff(lastDate) < 0) {
     dates.push(currDate.clone().toDate());
@@ -30,7 +26,7 @@ export default ({ hourLogEntries = [], startDt, endDt, totalHrs }: IHourLogEntri
   var dates = enumerateDaysBetweenDates(moment(startDt), moment(endDt));
   const columns: any = dates.map((d: any) => ({
     title: moment(d).format('MM/DD'),
-    width: 50,
+    width: 60,
     dataIndex: moment(d).format('MM/DD'),
     render: (hours: number) => {
       let color = 'black';
@@ -39,14 +35,13 @@ export default ({ hourLogEntries = [], startDt, endDt, totalHrs }: IHourLogEntri
       return <span style={{ color }}>{hours}</span>;
     },
     className: moment(d).isoWeekday() === 6 || moment(d).isoWeekday() === 7 ? 'is-holiday' : '',
-
   }));
   columns.push({
     title: 'Hrs',
     dataIndex: 'totalHrs',
     className: 'column-sum',
-    width: 50,
     fixed: 'right',
+    width: 60,
   });
 
   const dataSource = hourLogEntries.reduce(
@@ -59,7 +54,14 @@ export default ({ hourLogEntries = [], startDt, endDt, totalHrs }: IHourLogEntri
 
   return (
     <div>
-      <Table dataSource={[dataSource]} columns={columns} size="small" pagination={false} className="hour-entries-table" scroll={{ x: 470 }} />
+      <CustomHoursTable
+        size="small"
+        dataSource={[dataSource]}
+        columns={columns}
+        pagination={false}
+        className="hour-entries-table"
+        scroll={{ x: 1000 }}
+      />
     </div>
   );
 };

@@ -17,6 +17,10 @@ import httpService from './services/httpService';
 import AxiosProvider from './lib/axios/AxiosProvider';
 import theme from './theme';
 const globalStyles = css`
+  h1 {
+    font-size: 2em;
+    font-weight: 600;
+  }
   .ant-table-row-cell-break-word {
     word-wrap: inherit !important;
     word-break: inherit !important;
@@ -46,7 +50,7 @@ declare var abp: any;
 
 Utils.setLocalization();
 
-abpUserConfigurationService.getAll().then(data => {
+abpUserConfigurationService.getAll().then((data) => {
   Utils.extend(true, abp, data.data.result);
   abp.clock.provider = Utils.getCurrentClockProvider(data.data.result.clock.provider);
 

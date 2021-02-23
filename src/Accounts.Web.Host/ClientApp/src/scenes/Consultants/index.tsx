@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Portal } from 'react-portal';
 
-import { Button, Table, Card, Row, Col, Input, Dropdown, Icon, Menu } from 'antd';
+import { Card, Row, Col } from 'antd';
 
 import RouteableDrawer from '../../components/RouteableDrawer';
 import ConsultantCreateUpdate from '../../components/Domain/ConsultantCreateUpdate';
@@ -10,48 +10,10 @@ import useAxios from '../../lib/axios/useAxios';
 import { L } from '../../lib/abpUtility';
 import Authorize from '../../components/Authorize';
 import { Get } from '../../lib/axios';
-import { NavLink } from 'react-router-dom';
-
-const Search = Input.Search;
-
-const createConsultantMenu = (consultantId: number) => (
-  <Menu>
-    <Menu.Item>
-      <NavLink to={`/consultants/${consultantId}/edit`}>Edit</NavLink>
-    </Menu.Item>
-  </Menu>
-);
-
-const columns = [
-  {
-    title: 'First Name',
-    dataIndex: 'firstName',
-  },
-  {
-    title: 'Last Name',
-    dataIndex: 'lastName',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Phone Number',
-    dataIndex: 'phoneNumber',
-  },
-  {
-    width: 30,
-    title: '',
-    dataIndex: '',
-    render: (data: any, record: any) => {
-      return (
-        <Dropdown overlay={createConsultantMenu(record.id)}>
-          <Icon type="ellipsis" rotate={90} style={{ cursor: 'pointer' }} />
-        </Dropdown>
-      );
-    },
-  },
-];
+import CustomSearch from './../../components/Custom/CustomSearch';
+import CustomButton from '../../components/Custom/CustomButton';
+import CustomTable from './../../components/Custom/CustomTable';
+import CustomEditButton from './../../components/Custom/CustomEditButton';
 
 export default () => {
   const history = useHistory();
@@ -68,33 +30,45 @@ export default () => {
   const {
     result: { items, totalCount },
   } = data || { result: { items: [], totalCount: 0 } };
+
+  const columns = [
+    {
+      title: 'First Name',
+      dataIndex: 'firstName',
+    },
+    {
+      title: 'Last Name',
+      dataIndex: 'lastName',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+    },
+    {
+      title: 'Actions',
+      render: (record: any) => <CustomEditButton onClick={() => history.push(`/consultants/${record.id}/edit`)} />,
+    },
+  ];
+
   return (
     <Card>
-      <Row>
-        <Col
-          xs={{ span: 4, offset: 0 }}
-          sm={{ span: 4, offset: 0 }}
-          md={{ span: 4, offset: 0 }}
-          lg={{ span: 2, offset: 0 }}
-          xl={{ span: 2, offset: 0 }}
-          xxl={{ span: 2, offset: 0 }}
-        >
-          <h2>{L('Consultants')}</h2>
+      <Row type="flex" justify="space-between" align="middle">
+        <Col>
+          <h1>{L('CONSULTANTS')}</h1>
         </Col>
-        <Col
-          xs={{ span: 14, offset: 0 }}
-          sm={{ span: 15, offset: 0 }}
-          md={{ span: 15, offset: 0 }}
-          lg={{ span: 1, offset: 21 }}
-          xl={{ span: 1, offset: 21 }}
-          xxl={{ span: 1, offset: 21 }}
-        >
-          <Button type="primary" shape="circle" icon="plus" onClick={() => history.push('/consultants/new')}></Button>
+        <Col>
+          <CustomButton type="primary" icon="plus" onClick={() => history.push('/consultants/new')}>
+            Add Consultant
+          </CustomButton>
         </Col>
       </Row>
       <Row>
-        <Col sm={{ span: 10, offset: 0 }}>
-          <Search placeholder={L('Filter')} onSearch={setSearchText} allowClear />
+        <Col sm={{ span: 8, offset: 0 }}>
+          <CustomSearch placeholder={L('Search')} onSearch={setSearchText} />
         </Col>
       </Row>
       <Row style={{ marginTop: 20 }}>
@@ -107,7 +81,7 @@ export default () => {
           xxl={{ span: 24, offset: 0 }}
         ></Col>
         <Col>
-          <Table
+          <CustomTable
             loading={loading}
             dataSource={items}
             columns={columns}
@@ -121,7 +95,7 @@ export default () => {
       </Row>
       <Portal>
         <Authorize permissions={['Consultant.Create', 'Consultant.Update']}>
-          <RouteableDrawer path={[`/consultants/new`]} width={'25vw'} title="Consultant">
+          <RouteableDrawer path={[`/consultants/new`]} width={'25vw'} title="Add New Consultant">
             {({ onClose }: any) => {
               return (
                 <ConsultantCreateUpdate
@@ -136,7 +110,7 @@ export default () => {
           </RouteableDrawer>
         </Authorize>
         <Authorize permissions={['Consultant.Update']}>
-          <RouteableDrawer path={['/consultants/:consultantId/edit']} width={'25vw'} title="Consultant" exact={true}>
+          <RouteableDrawer path={['/consultants/:consultantId/edit']} width={'25vw'} title="Edit Consultant" exact={true}>
             {({
               match: {
                 params: { consultantId },

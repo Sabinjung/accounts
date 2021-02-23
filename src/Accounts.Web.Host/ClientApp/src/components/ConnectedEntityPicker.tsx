@@ -12,8 +12,16 @@ const ConnectedEntityPicker = observer(function <TStore>({ loader, selector, val
   const store = useLoad<TStore>(loader);
   const dataSource = selector(store);
   return (
-    <InputGroup compact style={{ display: 'flex' }}>
-      <Select showSearch optionFilterProp="children" onChange={onChange} value={value} style={{ flex: 1 }} defaultValue={value} allowClear>
+    <InputGroup compact style={{ display: 'flex', boxShadow: '0px 3px 10px #0000000D' }}>
+      <Select
+        showSearch
+        optionFilterProp="children"
+        onChange={onChange}
+        value={value}
+        style={{ flex: 1, boxShadow: '0px 3px 10px #0000000D' }}
+        defaultValue={value}
+        allowClear
+      >
         {dataSource.map(mapFunc).map((d: any) => (
           <Option value={d.value} key={d.value}>
             {d.text}

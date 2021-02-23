@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Form, Input, Modal, Tabs } from 'antd';
+import { Form, Tabs } from 'antd';
 
 import CheckboxGroup from 'antd/lib/checkbox/Group';
 import { FormComponentProps } from 'antd/lib/form';
@@ -9,6 +9,18 @@ import { GetAllPermissionsOutput } from '../../../services/role/dto/getAllPermis
 import { L } from '../../../lib/abpUtility';
 import RoleStore from '../../../stores/roleStore';
 import rules from './createOrUpdateRole.validation';
+import CustomModal from '../../../components/Custom/CustomModal';
+import CustomInput from './../../../components/Custom/CustomInput';
+import styled from '@emotion/styled';
+import CustomCancleButton from '../../../components/Custom/CustomCancelButton';
+import CustomButton from '../../../components/Custom/CustomButton';
+const StyledCheckBoxGroup = styled(CheckboxGroup)`
+  .ant-checkbox-inner {
+    width: 20px;
+    height: 20px;
+    box-shadow: 0px 3px 10px #0000000d;
+  }
+`;
 
 const TabPane = Tabs.TabPane;
 
@@ -74,33 +86,35 @@ class CreateOrUpdateRole extends React.Component<ICreateOrUpdateRoleProps> {
     const { getFieldDecorator } = this.props.form;
 
     return (
-      <Modal
+      <CustomModal
         visible={this.props.visible}
-        cancelText={L('Cancel')}
-        okText={L('OK')}
+        cancelText={<CustomCancleButton>Cancel</CustomCancleButton>}
+        cancelButtonProps={{ style: { border: 'none', padding: '0', marginBottom: '20px' } }}
+        okButtonProps={{ style: { padding: '0', border: 'none' } }}
+        okText={<CustomButton type="primary">Save Role</CustomButton>}
         onCancel={this.props.onCancel}
-        title={L('Role')}
+        title={this.props.modalType === 'create' ? 'Add New Role' : 'Edit Role'}
         onOk={this.props.onOk}
       >
         <Tabs defaultActiveKey={'role'} size={'small'} tabBarGutter={64}>
-          <TabPane tab={L('RoleDetails')} key={'role'}>
+          <TabPane tab={L('Role Details')} key={'role'}>
             <FormItem label={L('RoleName')} {...formItemLayout}>
-              {getFieldDecorator('name', { rules: rules.name })(<Input />)}
+              {getFieldDecorator('name', { rules: rules.name })(<CustomInput />)}
             </FormItem>
             <FormItem label={L('DisplayName')} {...formItemLayout}>
-              {getFieldDecorator('displayName', { rules: rules.displayName })(<Input />)}
+              {getFieldDecorator('displayName', { rules: rules.displayName })(<CustomInput />)}
             </FormItem>
             <FormItem label={L('Description')} {...formItemLayout}>
-              {getFieldDecorator('description')(<Input />)}
+              {getFieldDecorator('description')(<CustomInput />)}
             </FormItem>
           </TabPane>
-          <TabPane tab={L('RolePermission')} key={'permission'}>
+          <TabPane tab={L('Role Permission')} key={'permission'}>
             <FormItem {...tailFormItemLayout}>
-              {getFieldDecorator('grantedPermissions', { valuePropName: 'value' })(<CheckboxGroup options={options} />)}
+              {getFieldDecorator('grantedPermissions', { valuePropName: 'value' })(<StyledCheckBoxGroup options={options} />)}
             </FormItem>
           </TabPane>
         </Tabs>
-      </Modal>
+      </CustomModal>
     );
   }
 }

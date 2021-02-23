@@ -12,8 +12,61 @@ import ProtectedRoute from '../../components/Router/ProtectedRoute';
 import SiderMenu from '../../components/SiderMenu';
 import { appRouters } from '../Router/router.config';
 import utils from '../../utils/utils';
+import styled from '@emotion/styled';
 
 const { Content } = Layout;
+
+const StyledLayout = styled(Layout)`
+  .ant-layout {
+    background: #f4f6fc;
+    .ant-layout-header {
+      background: #f4f6fc !important;
+      .header-container {
+        box-shadow: none;
+      }
+    }
+    .ant-layout-content {
+      margin: 16px 25px !important;
+      .ant-card {
+        border-radius: 20px;
+        background: #fff;
+      }
+      .ant-card-bordered {
+        border: none;
+      }
+    }
+  }
+
+  .ant-layout-sider-children {
+    background: #1c3faa;
+    .ant-menu {
+      background: #1c3faa;
+      border: none;
+      color: white;
+      .ant-menu-item {
+        width: 100%;
+        padding-left: 60px !important;
+        :hover {
+          background: #3353b3;
+          color: #fff;
+        }
+        ::after {
+          border-radius: 5px 0px 0px 5px;
+          border-right: 3px solid #fff;
+        }
+      }
+      .ant-menu-item-selected {
+        background: #3353b3;
+        color: white;
+      }
+    }
+    .ant-menu-inline-collapsed {
+      .ant-menu-item {
+        padding: 0 32px !important;
+      }
+    }
+  }
+`;
 
 class AppLayout extends React.Component<any> {
   state = {
@@ -39,9 +92,11 @@ class AppLayout extends React.Component<any> {
     const { path } = this.props.match;
     const { collapsed } = this.state;
 
+    let initailPath = '/' + pathname.split('/')[1];
+
     const layout = (
-      <Layout style={{ minHeight: '100vh' }}>
-        <SiderMenu path={path} onCollapse={this.onCollapse} history={history} collapsed={collapsed} />
+      <StyledLayout style={{ height: '100vh' }}>
+        <SiderMenu pathname={initailPath} path={path} onCollapse={this.onCollapse} history={history} collapsed={collapsed} />
         <Layout>
           <Layout.Header style={{ background: '#fff', minHeight: 52, padding: 0 }}>
             <Header collapsed={this.state.collapsed} toggle={this.toggle} />
@@ -54,14 +109,14 @@ class AppLayout extends React.Component<any> {
                   <ProtectedRoute key={index} path={route.path} component={route.component} permission={route.permission} />
                 ))}
 
-              <Redirect from="/" to="/dashboard" />
+              <Redirect from="/" to="/hourlogentry" />
             </Switch>
           </Content>
           {/* <Layout.Footer style={{ textAlign: 'center' }}>
             <Footer />
           </Layout.Footer> */}
         </Layout>
-      </Layout>
+      </StyledLayout>
     );
 
     return <DocumentTitle title={utils.getPageTitle(pathname)}>{layout}</DocumentTitle>;

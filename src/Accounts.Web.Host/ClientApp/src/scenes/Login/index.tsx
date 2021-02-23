@@ -15,6 +15,70 @@ import Stores from '../../stores/storeIdentifier';
 import TenantAvailabilityState from '../../services/account/dto/tenantAvailabilityState';
 import rules from './index.validation';
 import AppConsts from '../../lib/appconst';
+import styled from '@emotion/styled';
+import ITsutra from '../../images/itsutra.png';
+
+const StyledH1 = styled.h1`
+  color: #1c3faa;
+  font-weight: bold;
+  font-size: 34px;
+  margin-bottom: 35px;
+`;
+
+const StyledCard = styled(Card)`
+  border: none;
+  padding: 15px 40px;
+`;
+
+const StyledInput = styled(Input)`
+  input {
+    height: 50px;
+    box-shadow: 0px 3px 10px #0000000d;
+    border-radius: 10px;
+    padding-left: 40px !important;
+  }
+  .ant-input-prefix {
+    left: 20px;
+    top: 42%;
+  }
+  .ant-input-suffix {
+    top: 43%;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+`;
+
+const StyledGoogle = styled(Button)`
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  border: 1px solid #2a2a2a;
+  color: #2a2a2a;
+  font-weight: 500;
+`;
+
+const StyledLable = styled.p`
+  color: #5e5e5e;
+`;
+
+const StyledForm = styled(Form)`
+  .ant-input-affix-wrapper {
+    padding: 0px 0px 9px 0px;
+  }
+`;
+
+const StyledP = styled.p`
+  text-align: center;
+  margin: 2em 0 0 0;
+`;
+
+const IconFont = Icon.createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_2286956_rugdmojd5iq.js',
+});
 
 const FormItem = Form.Item;
 declare var abp: any;
@@ -103,12 +167,12 @@ class Login extends React.Component<ILoginProps> {
     if (this.props.authenticationStore!.isAuthenticated) return <Redirect to={from} />;
 
     const { loginModel } = this.props.authenticationStore!;
-    const { getFieldDecorator, getFieldValue } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     return (
       <Col className="name">
-        <Form className="" onSubmit={this.handleSubmit}>
+        <StyledForm className="" onSubmit={this.handleSubmit}>
           <Row>
-            <Row style={{ marginTop: 100 }}>
+            {/* <Row style={{ marginTop: 100 }}>
               <Col span={8} offset={8}>
                 <Card>
                   <Row>
@@ -154,58 +218,63 @@ class Login extends React.Component<ILoginProps> {
                   </Col>
                 </Row>
               </Modal>
-            </Row>
+            </Row> */}
             <Row style={{ marginTop: 10 }}>
               <Col span={8} offset={8}>
-                <Card>
-                  <div style={{ textAlign: 'center' }}>
-                    <h3>{L('Login to Accounts')}</h3>
-                  </div>
+                <StyledCard>
+                  <img src={ITsutra} alt="" style={{ marginBottom: '25px', width: '99px' }} />
+                  <StyledH1>{L('Login to Accounts')}</StyledH1>
+                  <StyledLable>User Name or Email</StyledLable>
                   <FormItem>
                     {getFieldDecorator('userNameOrEmailAddress', { rules: rules.userNameOrEmailAddress })(
-                      <Input placeholder={L('UserNameOrEmail')} prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} size="large" />
-                    )}
-                  </FormItem>
-
-                  <FormItem>
-                    {getFieldDecorator('password', { rules: rules.password })(
-                      <Input
-                        placeholder={L('Password')}
-                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                        type="password"
+                      <StyledInput
+                        placeholder={L('Enter Your User Name Or Email')}
+                        prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                         size="large"
+                        allowClear
                       />
                     )}
                   </FormItem>
-                  <Row style={{ margin: '0px 0px 10px 15px ' }} type="flex" justify="space-between">
+                  <StyledLable>Password</StyledLable>
+                  <FormItem>
+                    {getFieldDecorator('password', { rules: rules.password })(
+                      <StyledInput
+                        placeholder={L('Enter Your Password')}
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        size="large"
+                        allowClear
+                      />
+                    )}
+                  </FormItem>
+                  <Row style={{ margin: '0px 0px 25px 5px ' }} type="flex" justify="space-between">
                     <Col>
                       <Checkbox checked={loginModel.rememberMe} onChange={loginModel.toggleRememberMe} style={{ paddingRight: 8 }} />
-                      {L('RememberMe')}
-                      <br />
-                      <a>{L('ForgotPassword')}</a>
+                      Remember Me
                     </Col>
-
                     <Col>
-                      <Button style={{ backgroundColor: '#f5222d', color: 'white' }} htmlType={'submit'} type="danger">
-                        {L('LogIn')}
-                      </Button>
+                      <a>{L('Forgot Password?')}</a>
                     </Col>
                   </Row>
-                  <Row type="flex">
-                    <Col span={24}>
-                      {this.props.authenticationStore!.externalAuthenticationProviders &&
-                        this.props.authenticationStore!.externalAuthenticationProviders.map(info => (
-                          <Button onClick={() => this.handleExternalLogin(info.name, info.clientId)} block>
-                            {L(` ${info.name} Login`)}
-                          </Button>
-                        ))}
-                    </Col>
-                  </Row>
-                </Card>
+                  <StyledButton htmlType={'submit'} type="primary">
+                    Log In
+                  </StyledButton>
+                  <p style={{ textAlign: 'center', marginTop: '1em' }}>OR</p>
+                  {this.props.authenticationStore!.externalAuthenticationProviders &&
+                    this.props.authenticationStore!.externalAuthenticationProviders.map((info) => (
+                      <StyledGoogle onClick={() => this.handleExternalLogin(info.name, info.clientId)} block>
+                        <IconFont type="icongoogle" />
+                        Sign in with Google
+                      </StyledGoogle>
+                    ))}
+                  <StyledP>
+                    Accounts - iTSutra, Inc © 2019 <a href="https://github.com/ryoldash/module-zero-core-template">Github Page</a>
+                  </StyledP>
+                </StyledCard>
               </Col>
             </Row>
           </Row>
-        </Form>
+        </StyledForm>
       </Col>
     );
   }

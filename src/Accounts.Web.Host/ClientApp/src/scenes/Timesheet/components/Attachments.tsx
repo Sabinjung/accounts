@@ -4,9 +4,16 @@ import { inject, observer } from 'mobx-react';
 import Stores from '../../../stores/storeIdentifier';
 import AttachmentViewer from '../../TimesheetReview/components/AttachmentViewer';
 import AttachmentModel from '../../../models/Timesheet/attachmentModel';
+import styled from '@emotion/styled';
 
 const { Dragger } = Upload;
-const { Text } = Typography
+const { Text } = Typography;
+
+const StyledCol = styled(Col)`
+  .ant-upload-list {
+    display: none;
+  }
+`;
 
 export default inject(Stores.ProjectStore)(
   observer(
@@ -71,15 +78,17 @@ export default inject(Stores.ProjectStore)(
         <Row type="flex" style={{ flexDirection: 'column', height: '100%' }}>
           <Col style={{ width: '100%' }}>
             <Row type="flex" justify="space-between" className="mb-10">
-              <Col span={10}>
+              <StyledCol span={10}>
                 {!enableTimesheetAttachment && (
                   <Dragger {...uploadProps}>
                     <Spin spinning={isLoading}>
-                      <Text type="secondary"><Icon type="plus" style={{ fontSize: "18px" }} /> Click or drag file to this area to upload</Text>
+                      <Text type="secondary">
+                        <Icon type="plus" style={{ fontSize: '18px' }} /> Click or drag file to this area to upload
+                      </Text>
                     </Spin>
                   </Dragger>
                 )}
-              </Col>
+              </StyledCol>
 
               <Col>
                 {enableTimesheetAttachment && (
@@ -88,7 +97,7 @@ export default inject(Stores.ProjectStore)(
                   </Checkbox>
                 )}
                 {!enableTimesheetAttachment && (
-                  <Button type="danger" onClick={deleteAttachment} style={{ marginTop: "8px" }}>
+                  <Button type="danger" onClick={deleteAttachment} style={{ marginTop: '8px' }}>
                     <Icon type="delete" /> Delete
                   </Button>
                 )}

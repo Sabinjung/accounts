@@ -3,7 +3,7 @@ import './index.less';
 
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Button, DatePicker, notification, Radio, Icon, Typography, Select } from 'antd';
+import { Row, Col, Button, DatePicker, notification, Radio, Icon, Typography, Select, Card } from 'antd';
 import moment, { Moment } from 'moment';
 import HourLogEntryTable from './components/HourLogEntryTable';
 import Stores from '../../stores/storeIdentifier';
@@ -19,6 +19,8 @@ import AttachmentDrawer from './components/Attachments';
 import ProjectSummary from './components/ProjectSummary';
 import { jsx, css } from '@emotion/core';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
+import CustomCancleButton from './../../components/Custom/CustomCancelButton';
+import CustomButton from '../../components/Custom/CustomButton';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -209,31 +211,43 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
       filteredProjectHourLogEntries = projectHourLogEntries;
     }
     return (
-      <div>
+      <Card style={{height: "100vh"}}>
         <div style={{ marginBottom: 16 }}>
+          <h1>HOUR LOGS</h1>
           <Row type="flex" justify="space-between" align="middle">
             <Col>
-              <Button type="primary" style={{ marginRight: 10 }} disabled={!hasSelected} onClick={this.saveProjects}>
-                Save Entries
-              </Button>
+              {hasSelected ? (
+                <CustomButton type="primary" style={{ marginRight: 10 }} onClick={this.saveProjects}>
+                  Save Entries
+                </CustomButton>
+              ) : (
+                <CustomCancleButton>Save Entries</CustomCancleButton>
+              )}
               <span style={{ marginLeft: 8 }}>{hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}</span>
             </Col>
             <Col>
               <Row type="flex" align="middle">
                 <Col>
-                  <Select allowClear={true} style={{ width: '200px', marginRight: '20px' }} placeholder="Search Query" onChange={this.handleSelect}>
+                  <Select
+                    size="large"
+                    allowClear={true}
+                    style={{ width: '200px', marginRight: '20px' }}
+                    placeholder="Search Query"
+                    onChange={this.handleSelect}
+                  >
                     <Option value="0">Timesheet Created</Option>
                     <Option value="1">{'Past Due < 7D'}</Option>
                     <Option value="2">{'Past Due > 7D'}</Option>
                   </Select>
                 </Col>
                 <Col>
-                  <Button type="default" onClick={() => this.changeRange(-1)}>
+                  <Button size="large" type="default" onClick={() => this.changeRange(-1)}>
                     <Icon type="left" />
                   </Button>
                 </Col>
                 <Col>
                   <RangePicker
+                    size="large"
                     ranges={{
                       Today: [moment(), moment()],
                       Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -254,7 +268,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                   />
                 </Col>
                 <Col>
-                  <Button type="default" onClick={() => this.changeRange(1)}>
+                  <Button size="large" type="default" onClick={() => this.changeRange(1)}>
                     <Icon type="right" />
                   </Button>
                 </Col>
@@ -382,7 +396,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
             {() => <ProjectSummary />}
           </RouteableDrawer>
         </Portal>
-      </div>
+      </Card>
     );
   }
 }
