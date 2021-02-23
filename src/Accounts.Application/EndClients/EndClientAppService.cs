@@ -44,12 +44,9 @@ namespace Accounts.EndClients
         [HttpDelete]
         public async Task DeleteClient(int id)
         {
-            var projects = ProjectRepository.GetAllList().Where(x => x.EndClientId == id);
-            foreach(var pro in projects)
-            {
-                pro.EndClientId = null;
-                await ProjectRepository.UpdateAsync(pro);
-            }
+            var projects = ProjectRepository.GetAllList().Where(x => x.EndClientId == id).FirstOrDefault();
+            if(projects != null)
+                throw new UserFriendlyException("Unable to delete end client.", "The end client is associated with  project(s).");
             await Repository.DeleteAsync(id);
 
         }

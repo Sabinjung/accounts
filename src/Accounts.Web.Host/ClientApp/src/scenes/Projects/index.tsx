@@ -128,7 +128,10 @@ export default () => {
                 {({ onClose }: any) => {
                   return (
                     <ProjectCreateUpdate
-                      onClose={onClose}
+                      onClose={() => {
+                        onClose();
+                        store.newProject = {};
+                      }}
                       project={store.newProject}
                       onProjectAdded={() => {
                         onClose();
@@ -151,13 +154,19 @@ export default () => {
                   return (
                     <Get url="api/services/app/project/get" params={{ id: projectId }}>
                       {({ error, data, isLoading }: any) => {
+                        let result = data && data.result;
+                        store.newProject = store.newProject.id ? store.newProject : { ...result };
                         return (
                           <ProjectCreateUpdate
-                            onClose={onClose}
-                            project={data && data.result}
+                            onClose={() => {
+                              onClose();
+                              store.newProject = {};
+                            }}
+                            project={store.newProject}
                             onProjectAdded={() => {
                               onClose();
                               makeRequest({});
+                              store.newProject = {};
                             }}
                           />
                         );

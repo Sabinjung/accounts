@@ -19,6 +19,6 @@ namespace Accounts.Invoicing
         
         Task<IEnumerable<InvoiceMonthReportDto>> GetInvoicesByMonthReport(InvoiceQueryParameter queryParameter);
 
-        Task<IEnumerable<AgeingReportDto>> GetAgeingReport();
+        Task<IEnumerable<AgeingReportDto>> GetAgeingReport(int? companyId);
     }
 }
