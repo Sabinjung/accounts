@@ -169,7 +169,7 @@ namespace Accounts.Projects
             var activeProjectCount = await Repository.CountAsync(x => x.ConsultantId == input.ConsultantId && (x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true));
             if (activeProjectCount > 0)
             {
-                throw new UserFriendlyException("Consultant has active project. ");
+                throw new UserFriendlyException("Project cannot be created.", "Consultant has an active project.");
             }
             return await base.Create(input);
         }
