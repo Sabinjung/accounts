@@ -14,6 +14,7 @@ using Accounts.Companies.Dto;
 using Accounts.Invoicing.Dto;
 using Abp.FluentValidation;
 using System;
+using Accounts.Expenses.Dto;
 
 namespace Accounts
 {
@@ -166,6 +167,9 @@ namespace Accounts
                         .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty));
 
                     cfg.CreateMap<LineItem, LineItemDto>()
+                        .ForMember(x => x.ExpenseTypeName, x => x.MapFrom(y => y.ExpenseType.Name));
+                    
+                    cfg.CreateMap<Expense, ExpenseDto>()
                         .ForMember(x => x.ExpenseTypeName, x => x.MapFrom(y => y.ExpenseType.Name));
 
                     cfg.AddMaps(thisAssembly);

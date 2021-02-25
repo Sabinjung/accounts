@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useImperativeHandle, forwardRef } from 'react';
 import moment from 'moment';
-import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty } from 'antd';
+import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty, notification } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Get } from '../../../lib/axios';
@@ -136,6 +136,10 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             style={{ background: '#FF0000', height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             type="danger"
             onSuccess={() => {
+              notification.open({
+                message: 'Success',
+                description: 'Successfully Deleted.',
+              });
               refetch();
               onTimesheetDeleted && onTimesheetDeleted();
             }}
@@ -207,6 +211,10 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                         params={{ timesheetId }}
                         style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
                         onSuccess={() => {
+                          notification.open({
+                            message: 'Success',
+                            description: 'Successfully Approved.',
+                          });
                           onTimesheetApproved && onTimesheetApproved();
                           refetch();
                         }}

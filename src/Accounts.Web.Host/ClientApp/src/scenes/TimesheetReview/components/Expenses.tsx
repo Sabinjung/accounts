@@ -31,23 +31,28 @@ export default (path: any, timesheetId: number) => {
   const columns = [
     {
       title: 'Expense Type',
-      dataIndex: 'expenseTypeId',
+      dataIndex: 'expenseTypeName',
+      key:"expenseType"
     },
     {
       title: 'Date',
       dataIndex: 'reportDt',
       render: (val: string) => moment(val).format('MM/DD/YYYY'),
+      key:"date"
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
+      key:"amount"
     },
     {
       title: 'Comment',
       dataIndex: 'comment',
+      key:"comment"
     },
     {
       title: 'Actions',
+      key:"actions",
       render: (data: any, record: any) => (
         <Fragment>
           <CustomEditButton
