@@ -54,11 +54,13 @@ export default inject(Stores.ProjectStore)(
 
       async function deleteAttachment() {
         if (viewerRef.current) {
-          setLoading(true);
           const { attachmentId } = viewerRef.current;
-          await projectStore.deleteAttachment(projectId, attachmentId);
-          message.info('Attachment successfully deleted');
-          setLoading(false);
+          if (attachmentId) {
+            setLoading(true);
+            await projectStore.deleteAttachment(projectId, attachmentId);
+            message.info('Attachment successfully deleted');
+            setLoading(false);
+          }
         }
       }
 
