@@ -242,7 +242,7 @@ export const TimesheetList = ({
 };
 
 const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = (props) => {
-  const { onSelectionChange, projectId } = props;
+  const { projectId } = props;
   const [selectedFilter, setSelectedFilter] = useState('Pending Apprv');
   return (
     <Get url="api/services/app/Timesheet/GetTimesheets" params={{ name: selectedFilter, isActive: true, projectId }}>
@@ -254,7 +254,6 @@ const ConnectedTimesheetList: React.FunctionComponent<ITimesheetListProps> = (pr
           <TimesheetList
             dataSource={dataSource}
             predefinedQueries={predefinedQueries}
-            onSelectionChange={onSelectionChange}
             isLoading={loading}
             selectedFilter={selectedFilter}
             onFilterChanged={(filter: string) => setSelectedFilter(filter)}

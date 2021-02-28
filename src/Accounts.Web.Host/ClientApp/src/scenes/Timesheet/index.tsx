@@ -1,9 +1,8 @@
 /** @jsx jsx */
 import './index.less';
-
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Button, DatePicker, notification, Radio, Icon, Typography, Select, Card } from 'antd';
+import { Row, Col, Button, DatePicker, notification, Icon, Typography, Select, Card } from 'antd';
 import moment, { Moment } from 'moment';
 import HourLogEntryTable from './components/HourLogEntryTable';
 import Stores from '../../stores/storeIdentifier';
@@ -51,6 +50,7 @@ const fullDrawerBodyStyles = css`
   }
 `;
 
+
 @inject(Stores.HourLogEntryStore)
 @observer
 class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
@@ -87,7 +87,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
         await this.props.hourLogEntryStore.saveHourLogEntries([projectId]);
         notification.open({
           message: 'Success',
-          description: 'Hours are successfully logged.',
+          description: 'Hour Logs successfully saved.',
         });
         break;
       case 2:
@@ -164,7 +164,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     await this.props.hourLogEntryStore.saveHourLogEntries(this.state.selectedRowKeys);
     notification.open({
       message: 'Success',
-      description: 'Hour Log Entires are successfully saved.',
+      description: 'Hour Logs successfully saved.',
     });
     this.setState({
       selectedRowKeys: [],
@@ -211,7 +211,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
       filteredProjectHourLogEntries = projectHourLogEntries;
     }
     return (
-      <Card style={{height: "100vh"}}>
+      <Card style={{ height: '100vh' }}>
         <div style={{ marginBottom: 16 }}>
           <h1>HOUR LOGS</h1>
           <Row type="flex" justify="space-between" align="middle">
@@ -256,13 +256,13 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                       'This Month': [moment().startOf('month'), moment().endOf('month')],
                       'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                     }}
-                    renderExtraFooter={() => (
-                      <Radio.Group onChange={this.onInvoiceCycleChange} defaultValue="3" size="small">
-                        <Radio.Button value="1">Weekly</Radio.Button>
-                        <Radio.Button value="2">Bi-Weekly</Radio.Button>
-                        <Radio.Button value="3">Monthly</Radio.Button>
-                      </Radio.Group>
-                    )}
+                    // renderExtraFooter={() => (
+                    //   <Radio.Group onChange={this.onInvoiceCycleChange} defaultValue="3" size="small">
+                    //     <Radio.Button value="1">Weekly</Radio.Button>
+                    //     <Radio.Button value="2">Bi-Weekly</Radio.Button>
+                    //     <Radio.Button value="3">Monthly</Radio.Button>
+                    //   </Radio.Group>
+                    // )}
                     value={[startDt, endDt]}
                     onChange={this.onDateSelectionChange}
                   />
@@ -323,20 +323,11 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
           >
             {(prop: any) => {
               const {
-                history,
                 match: {
-                  url,
                   params: { projectId },
                 },
               } = prop;
-              return (
-                <ConnectedTimesheetList
-                  projectId={projectId}
-                  onSelectionChange={(timesheetId) => {
-                    history.push(`${url}/${timesheetId}`);
-                  }}
-                />
-              );
+              return <ConnectedTimesheetList projectId={projectId} />;
             }}
           </RouteableDrawer>
           <RouteableDrawer

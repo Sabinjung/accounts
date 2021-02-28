@@ -15,5 +15,6 @@ namespace Accounts.Expenses.Dto
         public DateTime? ReportDt { get; set; }
         public int TimesheetId { get; set; }
         public int ExpenseTypeId { get; set; }
+        public string ExpenseTypeName { get; set; }
     }
 }

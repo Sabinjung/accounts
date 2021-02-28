@@ -126,7 +126,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
-          })(<StyledDatePicker />)}
+          })(<StyledDatePicker allowClear={false}/>)}
         </Form.Item>
         <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
         <Form.Item label="InvoiceCycle Start Date">

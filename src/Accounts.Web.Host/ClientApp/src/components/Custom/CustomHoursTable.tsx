@@ -71,6 +71,9 @@ const StyledTable = styled(Table)`
   .ant-checkbox-inner {
     border-spacing: 0px !important;
   }
+  .ant-table-scroll table .ant-table-fixed-columns-in-body:not([colspan]){
+    background: white !important;
+  }
 `;
 
 const CustomHoursTable: React.FC<CustomHoursTableProps> = (props: any) => {
