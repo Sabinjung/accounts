@@ -208,7 +208,7 @@ namespace Accounts.Projects
                 queryParameter.IsActive && !string.IsNullOrEmpty(queryParameter.Name) ?
                 SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList() : new[] { queryParameter }.ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
-            result.RecordCounts.Where(x => x.Name == "Invoiced").FirstOrDefault().Count = 0;
+            //result.RecordCounts.Where(x => x.Name == "Invoiced").FirstOrDefault().Count = 0;
             return result;
         }
 
@@ -217,7 +217,7 @@ namespace Accounts.Projects
             var query = GetQuery(queryParameter);
             return await query.ExecuteAsync((originalQuery) =>
                  (from t in originalQuery
-                  select t.HourLogEntries).SelectMany(x => x).GetMonthlyHourReport()
+                  select t.HourLogEntries).SelectMany(x => x).GetMonthlyHourReport().OrderBy(x => x.Year)
             , queryParameter);
         }
 

@@ -37,6 +37,8 @@ namespace Accounts.EntityFrameworkCore
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
         public DbSet<EndClient> EndClients { get; set; }
+        public DbSet<Config> Configs { get; set; }
+        public DbSet<ConfigType> ConfigTypes { get; set; }
 
         public AccountsDbContext(DbContextOptions<AccountsDbContext> options)
             : base(options)
