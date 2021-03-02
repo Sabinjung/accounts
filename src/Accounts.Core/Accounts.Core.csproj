@@ -18,6 +18,7 @@
     <PackageReference Include="Abp.AutoMapper" Version="4.9.0" />
     <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="4.9.0" />
     <PackageReference Include="IppDotNetSdkForQuickBooksApiV3" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />

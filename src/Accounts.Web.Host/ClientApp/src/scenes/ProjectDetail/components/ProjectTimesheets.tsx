@@ -32,7 +32,7 @@ const RenderBarChart = (props: any) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="month"
-          tickFormatter={label =>
+          tickFormatter={(label) =>
             `${moment()
               .month(label - 1)
               .format('MMM')}`
@@ -111,7 +111,7 @@ const ProjectTimesheets = (props: any) => {
     return (
       <Row>
         <Col lg={{ span: 4 }}>
-          <RangePicker onChange={handleDateSearch} style={{width: 220}}/>
+          <RangePicker onChange={handleDateSearch} style={{ width: 220 }} />
         </Col>
         <Col lg={{ span: 6 }}>
           <Select mode="multiple" style={{ width: '100%' }} onChange={handleStateId} placeholder="Select Status">
@@ -141,7 +141,7 @@ const ProjectTimesheets = (props: any) => {
         loading={loading}
         pagination={{ pageSize: 10, total: 0, defaultCurrent: 1 }}
         title={() => headerRender()}
-      ></CustomTable>
+      />
     </Card>
   );
 };

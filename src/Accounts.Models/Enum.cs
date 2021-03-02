@@ -24,4 +24,11 @@ namespace Accounts.Data
         BiWeekly = 3,
         BiMonthly = 4
     }
+
+    public enum ConfigTypes
+    {
+        DefaultEmail = 1,
+        NotificationEmail = 2,
+        BaseUrl = 3
+    }
 }

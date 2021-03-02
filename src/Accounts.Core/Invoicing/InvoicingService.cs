@@ -46,10 +46,8 @@ namespace Accounts.Core.Invoicing
                 throw new UserFriendlyException("Invoice is already generated.");
             }
             var generatedInvoice = Mapper.Map<Invoice>(timesheet);
-            //generatedInvoice.DueDate = generatedInvoice.InvoiceDate.AddDays(generatedInvoice.Term.DueDays);
             
             return generatedInvoice;
-
 
         }
         public async Task Submit(int timesheetId, int userId, bool isMailing)

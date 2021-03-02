@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, DatePicker, Card } from 'antd';
+import { Card, Row, Col, DatePicker } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import CustomTable from '../../../components/Custom/CustomTable';
 import useAxios from '../../../lib/axios/useAxios';
 import { useHistory } from 'react-router';
 import { Portal } from 'react-portal';
@@ -9,7 +10,6 @@ import RouteableDrawer from '../../../components/RouteableDrawer';
 import EntityPicker from '../../../components/EntityPicker';
 import InvoiceDetail from '../../../components/Domain/InvoiceDetail';
 import moment from 'moment';
-import CustomTable from '../../../components/Custom/CustomTable';
 
 const CustomTooltip = ({ payload, active, label }: any) => {
   if (active) {
@@ -65,18 +65,23 @@ const ProjectInvoices = (props: any) => {
   });
 
   useEffect(() => {
-    makeRequest({ params: { projectId, consultantId: searchId, startDate: dateSearchText[0], endDate: dateSearchText[1] } });
+    makeRequest({ params: { projectId, consultantId: searchId, startDate: dateSearchText[0], endDate: dateSearchText[1], name: 'All' } });
   }, [projectId, searchId, dateSearchText]);
 
   const result = data && data.result;
 
   const columns = [
     {
-      title: 'QB Invoice ID',
-      key: 'qboInvoiceId',
-      dataIndex: 'qboInvoiceId',
+      title: 'eInvoiceId',
+      key: 'eInvoiceId',
       width: 130,
       align: 'center' as const,
+      render: (val: any) =>
+        val.eInvoiceId && (
+          <a href={`https://c70.qbo.intuit.com/app/invoice?txnId=${val.qboInvoiceId}`} target="_blank">
+            {val.eInvoiceId}
+          </a>
+        ),
     },
     {
       title: 'Company',
@@ -156,7 +161,7 @@ const ProjectInvoices = (props: any) => {
         onRow={(record: any, rowIndex: any) => ({
           onDoubleClick: () => history.push(`/invoices/${record.id}`),
         })}
-      ></CustomTable>
+      />
 
       <Portal>
         <RouteableDrawer path={[`/invoices/:invoiceId`]} width={'50vw'} title="Invoice Detail" exact="true">

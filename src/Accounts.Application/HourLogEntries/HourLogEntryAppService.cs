@@ -1,17 +1,21 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Abp.UI;
 using Accounts.Data;
 using Accounts.Data.Dto;
 using Accounts.EntityFrameworkCore.Repositories;
 using Accounts.Extensions;
 using Accounts.HourLogEntries.Dto;
 using Accounts.Models;
+using Accounts.Core.Notify;
 using Accounts.Projects.Dto;
 using Accounts.Timesheets;
 using Accounts.Timesheets.Dto;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using MoreLinq;
 using PQ;
 using PQ.Pagination;
@@ -19,6 +23,8 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
@@ -31,24 +37,32 @@ namespace Accounts.HourLogEntries
 
         private readonly IRepository<Timesheet> TimesheetRepository;
 
+        private readonly IRepository<Config> ConfigRepository;
+        
         private readonly IMapper Mapper;
 
         private readonly ITimesheetService TimesheetService;
+
+        private readonly INotifyService NotifyService;
 
         private readonly QueryBuilderFactory QueryBuilderFactory;
 
         public HourLogEntryAppService(
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
+            IRepository<Config> configRepository,
             ITimesheetService timesheetService,
             IRepository<Timesheet> timesheetRepository,
             QueryBuilderFactory queryBuilderFactory,
+            INotifyService notifyService,
             IMapper mapper) : base(repository)
         {
+            ConfigRepository = configRepository;
             ProjectRepository = projectRepository;
             Mapper = mapper;
             TimesheetService = timesheetService;
             TimesheetRepository = timesheetRepository;
+            NotifyService = notifyService;
             QueryBuilderFactory = queryBuilderFactory;
         }
 
@@ -278,6 +292,13 @@ namespace Accounts.HourLogEntries
             {
                 HourLogEntries = hourentries
             };
+        }
+
+        [HttpGet]
+        public async Task<string> NotifyUnassociatedHours()
+        {
+            var result = await NotifyService.NotifyUser();
+            return result;
         }
     }
 }

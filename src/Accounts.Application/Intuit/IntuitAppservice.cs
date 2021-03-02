@@ -1,5 +1,6 @@
 ﻿using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Accounts.Core.Notify;
 using Accounts.Models;
 using AutoMapper;
 using Intuit.Ipp.OAuth2PlatformClient;
