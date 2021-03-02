@@ -294,6 +294,7 @@ namespace Accounts.HourLogEntries
             };
         }
 
+        [AbpAllowAnonymous]
         [HttpGet]
         public async Task<string> NotifyUnassociatedHours()
         {
