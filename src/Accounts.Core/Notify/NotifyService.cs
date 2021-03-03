@@ -4,6 +4,7 @@ using Abp.Domain.Services;
 using Abp.UI;
 using Accounts.Data;
 using Accounts.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,13 @@ namespace Accounts.Core.Notify
         private readonly IRepository<HourLogEntry> HourlogRepository;
         private readonly IRepository<Timesheet> TimesheetRepository;
         private readonly IRepository<Config> ConfigRepository;
-        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository)
+        private readonly IConfiguration Configuration;
+        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository, IConfiguration configuration)
         {
             HourlogRepository = hourlogRepository;
             TimesheetRepository = timesheetRepository;
             ConfigRepository = configRepository;
+            Configuration = configuration;
         }
 
         public async Task<string> NotifyUser()
@@ -35,7 +38,7 @@ namespace Accounts.Core.Notify
             var unassociatedHoursProjects = HourlogRepository.GetAllList().Where(x => (x.TimesheetId == null || unassociatedTimesheets.Contains(x.TimesheetId.Value))&& x.Day < DateTime.Now.AddDays(-45)).GroupBy(y => y.ProjectId).Select(z => z.Key);
             var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
             var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
-            var projectUrl = "http://dev-accounts.itsutra.com/projects/";
+            var projectUrl = Configuration.GetSection("App:ServerRootAddress").Value;
             if (unassociatedHoursProjects.Count() != 0)
             {
                 string messageBody = "";
