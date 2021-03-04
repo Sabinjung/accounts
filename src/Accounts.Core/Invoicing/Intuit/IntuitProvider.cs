@@ -51,6 +51,14 @@ namespace Accounts.Intuit
             return customers;
         }
 
+        public IEnumerable<PaymentMethod> GetPaymentMethod()
+        {
+            var serviceContext = GetServiceContext();
+            // Create a QuickBooks QueryService using ServiceContext
+            var customerService = new QueryService<PaymentMethod>(serviceContext);
+            var paymentMethod = customerService.ExecuteIdsQuery("SELECT * FROM PaymentMethod");
+            return paymentMethod;
+        }
 
         public IEnumerable<Term> GetTerms()
         {

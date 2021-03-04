@@ -8,5 +8,6 @@ namespace Accounts.Terms
     public class TermDto : EntityDto
     {
         public string Name { get; set; }
+        public string ExternalTermId { get; set; }
     }
 }

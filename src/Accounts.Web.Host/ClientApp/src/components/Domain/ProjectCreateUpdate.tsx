@@ -116,7 +116,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
             rules: [{ required: true, message: 'Select correct Term' }],
-          })(<EntityPicker url="/api/services/app/Term/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
+          })(<EntityPicker url="/api/services/app/Term/GetAll?MaxResultCount=25" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
         </Form.Item>
         <Form.Item label="Invoice Cycle">
           {getFieldDecorator('invoiceCycleId', {
@@ -126,7 +126,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
-          })(<StyledDatePicker allowClear={false}/>)}
+          })(<StyledDatePicker allowClear={false} />)}
         </Form.Item>
         <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
         <Form.Item label="InvoiceCycle Start Date">

@@ -127,26 +127,35 @@ class User extends AppComponentBase<IUserProps, IUserState> {
           loading: true,
         });
         if (this.state.userId === 0) {
-          await this.props.userStore.create(values);
-          notification.open({
-            message: 'Success',
-            description: 'User Created Successfully.',
-          });
+          try {
+            await this.props.userStore.create(values);
+            notification.open({
+              message: 'Success',
+              description: 'User Created Successfully.',
+            });
+          } catch (err) {
+            this.setState({
+              loading: false,
+            });
+          }
         } else {
-          await this.props.userStore.update({ id: this.state.userId, ...values });
-          notification.open({
-            message: 'Success',
-            description: 'User Updated Successfully.',
-          });
+          try {
+            await this.props.userStore.update({ id: this.state.userId, ...values });
+            notification.open({
+              message: 'Success',
+              description: 'User Updated Successfully.',
+            });
+          } catch (err) {
+            this.setState({
+              loading: false,
+            });
+          }
         }
       }
-
       await this.getAll();
-
       form.resetFields();
     });
   };
-
   saveFormRef = (formRef: any) => {
     this.formRef = formRef;
   };
@@ -162,7 +171,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
     const { users } = this.props.userStore;
     const columns = [
       { title: L('UserName'), dataIndex: 'userName', key: 'userName', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('FullName'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('FullName'), dataIndex: 'fullName', key: 'fullName', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('EmailAddress'), dataIndex: 'emailAddress', key: 'emailAddress', width: 150, render: (text: string) => <div>{text}</div> },
       {
         title: L('IsActive'),

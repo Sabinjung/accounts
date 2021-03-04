@@ -7,8 +7,14 @@ import { L } from '../../lib/abpUtility';
 import ActionButton from '../../components/ActionButton';
 import { AxiosError } from 'axios';
 import AppConsts from '../../lib/appconst';
+import { useHistory } from 'react-router';
 import CustomTable from '../../components/Custom/CustomTable';
 import CustomSearch from '../../components/Custom/CustomSearch';
+import CustomButton from './../../components/Custom/CustomButton';
+import { Portal } from 'react-portal';
+import RouteableDrawer from './../../components/RouteableDrawer';
+import CompanyCreateUpdate from './components/CompanyCreateUpdate';
+import Authorize from '../../components/Authorize';
 
 const columns = [
   {
@@ -30,6 +36,7 @@ const columns = [
 ];
 
 export default () => {
+  const history = useHistory();
   const [searchText, setSearchText] = useState('');
   const [skipCount, setSkipCount] = useState(0);
   const [{ data, loading }, makeRequest] = useAxios({
@@ -53,6 +60,25 @@ export default () => {
           <ActionButton
             permissions={['Company.Sync']}
             method="GET"
+            url="/api/services/app/Intuit/SyncPaymentMethods"
+            style={{ marginRight: 15, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
+            onSuccess={(response: any) => {
+              notification.open({
+                message: 'Success',
+                description: 'Payment methods successfully synced.',
+              });
+            }}
+            onError={(err: AxiosError) => {
+              if (err && err.response && err.response.status == 403) {
+                window.location.href = `${AppConsts.remoteServiceBaseUrl}/Intuit/Login?returnUrl=${window.location.href}`;
+              }
+            }}
+          >
+            Sync Payment Methods
+          </ActionButton>
+          <ActionButton
+            permissions={['Company.Sync']}
+            method="GET"
             url={`/api/services/app/Intuit/SyncTerms`}
             style={{ marginRight: 15, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             onSuccess={(response: any) => {
@@ -72,7 +98,7 @@ export default () => {
           <ActionButton
             method="GET"
             permissions={['Company.Sync']}
-            style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
+            style={{ marginRight: 15, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             url={`/api/services/app/Intuit/SyncCompanies`}
             onSuccess={(response: any) => {
               notification.open({
@@ -89,6 +115,11 @@ export default () => {
           >
             Sync Companies
           </ActionButton>
+          <Authorize permissions={['Company.Create']}>
+            <CustomButton type="primary" icon="plus" onClick={() => history.push('/companies/new')}>
+              Add Company
+            </CustomButton>
+          </Authorize>
         </Col>
       </Row>
       <Row>
@@ -110,6 +141,23 @@ export default () => {
           />
         </Col>
       </Row>
+      <Portal>
+        <Authorize permissions={['Company.Create']}>
+          <RouteableDrawer path={['/companies/new']} width={'40vw'} title="Add New Company">
+            {({ onClose }: any) => {
+              return (
+                <CompanyCreateUpdate
+                  onClose={onClose}
+                  onCompanyAddedOrUpdated={() => {
+                    onClose();
+                    makeRequest({});
+                  }}
+                />
+              );
+            }}
+          </RouteableDrawer>
+        </Authorize>
+      </Portal>
     </Card>
   );
 };

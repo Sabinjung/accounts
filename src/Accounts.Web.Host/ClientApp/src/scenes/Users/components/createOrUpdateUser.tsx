@@ -131,10 +131,10 @@ class CreateOrUpdateUser extends React.Component<ICreateOrUpdateUserProps> {
             <FormItem label={L('Name')} {...formItemLayout}>
               {getFieldDecorator('name', { rules: rules.name })(<CustomInput />)}
             </FormItem>
-            <FormItem label={L('Surname')} {...formItemLayout}>
+            <FormItem label={L('Last Name')} {...formItemLayout}>
               {getFieldDecorator('surname', { rules: rules.surname })(<CustomInput />)}
             </FormItem>
-            <FormItem label={L('UserName')} {...formItemLayout}>
+            <FormItem label={L('User Name')} {...formItemLayout}>
               {getFieldDecorator('userName', { rules: rules.userName })(<CustomInput />)}
             </FormItem>
             <FormItem label={L('Email')} {...formItemLayout}>

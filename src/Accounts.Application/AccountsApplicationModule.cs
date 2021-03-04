@@ -14,6 +14,8 @@ using Accounts.Companies.Dto;
 using Accounts.Invoicing.Dto;
 using Abp.FluentValidation;
 using System;
+using Accounts.Intuit.Dto;
+using Accounts.Intuit;
 using Accounts.Expenses.Dto;
 
 namespace Accounts
@@ -96,8 +98,15 @@ namespace Accounts
                         .ForMember("Email", x => x.MapFrom(y => y.PrimaryEmailAddr != null ? y.PrimaryEmailAddr.Address : string.Empty))
                          .ForMember("PhoneNumber", x => x.MapFrom(y => y.PrimaryPhone != null ? y.PrimaryPhone.FreeFormNumber : string.Empty));
 
+                    cfg.CreateMap<IntuitCompanyDto, IntuitData.Customer>()
+                      .ConvertUsing<ConvertCompanyToCustomer>();
+
                     cfg.CreateMap<IntuitData.Term, Term>()
                         .ForMember("ExternalTermId", x => x.MapFrom(y => y.Id))
+                        .ForMember("Id", x => x.Ignore());
+
+                    cfg.CreateMap<IntuitData.PaymentMethod, PaymentMethod>()
+                        .ForMember("ExternalPaymentId", x => x.MapFrom(y => y.Id))
                         .ForMember("Id", x => x.Ignore());
 
                     cfg.CreateMap<IntuitData.Invoice, Invoice>()
