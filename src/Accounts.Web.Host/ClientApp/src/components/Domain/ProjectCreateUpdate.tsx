@@ -98,6 +98,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
               selector={(store: any) => store.consultants}
               mapFunc={(r: any) => ({ value: r.id, text: `${r.firstName} ${r.lastName}` })}
               addUrl={project && project.id ? `/projects/${project.id}/edit/consultants/new` : '/projects/new/consultants/new'}
+              disabled={project && project.id ? true : false}
             />
           )}
         </Form.Item>

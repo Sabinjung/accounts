@@ -133,7 +133,6 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
       : parseFloat(parseFloat(form.discountValue).toFixed(2));
     TotalAmount = parseFloat((sTotal - discount).toFixed(2));
   }
-  debugger;
 
   return (
     <React.Fragment>

@@ -2,7 +2,7 @@
 import './index.less';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Button, DatePicker, notification, Icon, Typography, Select, Card } from 'antd';
+import { Row, Col, Button, DatePicker, notification, Icon, Typography, Select, Card, Radio } from 'antd';
 import moment, { Moment } from 'moment';
 import HourLogEntryTable from './components/HourLogEntryTable';
 import Stores from '../../stores/storeIdentifier';
@@ -17,6 +17,7 @@ import TimesheetViewer from '../TimesheetReview/components/TimesheetViewer';
 import AttachmentDrawer from './components/Attachments';
 import ProjectSummary from './components/ProjectSummary';
 import { jsx, css } from '@emotion/core';
+import styled from '@emotion/styled';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
 import CustomCancleButton from './../../components/Custom/CustomCancelButton';
 import CustomButton from '../../components/Custom/CustomButton';
@@ -38,18 +39,34 @@ export interface ITimesheetState {
   selectedProjectId: number | null;
   invoiceCycle: number;
   selectedQuery: number | null;
+  range: number;
+  isRangePickerOpen: boolean;
 }
 
 const fullDrawerBodyStyles = css`
   .ant-drawer-wrapper-body {
     display: flex;
     flex-direction: column;
-    .ant-drawer-body {
+    .ant-drawer-body {d
       flex: 1;
     }
   }
 `;
 
+const StyledRadioGroup = styled(Radio.Group)`
+  .ant-radio-button-wrapper {
+    margin: 0 4px;
+    color: #2680eb !important;
+    :hover {
+      color: #fff !important;
+      background: #2680eb !important;
+    }
+  }
+  .ant-radio-button-wrapper-checked {
+    color: #fff !important;
+    background: #2680eb !important;
+  }
+`;
 
 @inject(Stores.HourLogEntryStore)
 @observer
@@ -65,6 +82,8 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
       selectedProjectId: null,
       invoiceCycle: 3,
       selectedQuery: null,
+      range: 0,
+      isRangePickerOpen: false,
     };
     this.handleSave = this.handleSave.bind(this);
     this.onDateSelectionChange = this.onDateSelectionChange.bind(this);
@@ -89,6 +108,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
           message: 'Success',
           description: 'Hour Logs successfully saved.',
         });
+        await this.getAll();
         break;
       case 2:
         this.setState({
@@ -125,10 +145,28 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     this.setState({ selectedRowKeys });
   };
 
-  onInvoiceCycleChange = (e: any) => {
-    this.setState({
-      invoiceCycle: parseInt(e.target.value),
-    });
+  onRangeToggle = (e: any) => {
+    this.setState({ range: e.target.value, isRangePickerOpen: false });
+    switch (e.target.value) {
+      case 1:
+        this.onDateSelectionChange([moment(), moment()]);
+        break;
+      case 2:
+        this.onDateSelectionChange([moment().subtract(1, 'days'), moment().subtract(1, 'days')]);
+        break;
+      case 3:
+        this.onDateSelectionChange([moment().subtract(6, 'days'), moment()]);
+        break;
+      case 4:
+        this.onDateSelectionChange([moment().subtract(29, 'days'), moment()]);
+        break;
+      case 5:
+        this.onDateSelectionChange([moment().startOf('month'), moment().endOf('month')]);
+        break;
+      case 6:
+        this.onDateSelectionChange([moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]);
+        break;
+    }
   };
 
   changeRange(direction: number) {
@@ -166,9 +204,12 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
       message: 'Success',
       description: 'Hour Logs successfully saved.',
     });
-    this.setState({
-      selectedRowKeys: [],
-    });
+    this.setState(
+      {
+        selectedRowKeys: [],
+      },
+      () => this.getAll()
+    );
   };
 
   setStartDate = () => {
@@ -181,7 +222,6 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
 
   handleSelect = (value: number) => {
     this.setState({ selectedQuery: value });
-    console.log(this.state.selectedQuery);
   };
 
   render() {
@@ -248,23 +288,24 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                 <Col>
                   <RangePicker
                     size="large"
-                    ranges={{
-                      Today: [moment(), moment()],
-                      Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                      'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                      'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                      'This Month': [moment().startOf('month'), moment().endOf('month')],
-                      'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                    }}
-                    // renderExtraFooter={() => (
-                    //   <Radio.Group onChange={this.onInvoiceCycleChange} defaultValue="3" size="small">
-                    //     <Radio.Button value="1">Weekly</Radio.Button>
-                    //     <Radio.Button value="2">Bi-Weekly</Radio.Button>
-                    //     <Radio.Button value="3">Monthly</Radio.Button>
-                    //   </Radio.Group>
-                    // )}
+                    allowClear={false}
+                    open={this.state.isRangePickerOpen}
+                    onOpenChange={() => this.setState({ isRangePickerOpen: !this.state.isRangePickerOpen })}
+                    renderExtraFooter={() => (
+                      <StyledRadioGroup value={this.state.range} onChange={this.onRangeToggle} size="small">
+                        <Radio.Button value={1}>Today</Radio.Button>
+                        <Radio.Button value={2}>Yesterday</Radio.Button>
+                        <Radio.Button value={3}>Last 7 Days</Radio.Button>
+                        <Radio.Button value={4}>Last 30 Days</Radio.Button>
+                        <Radio.Button value={5}>This Month</Radio.Button>
+                        <Radio.Button value={6}>Last Month</Radio.Button>
+                      </StyledRadioGroup>
+                    )}
                     value={[startDt, endDt]}
-                    onChange={this.onDateSelectionChange}
+                    onChange={(dates: any) => {
+                      this.onDateSelectionChange(dates);
+                      this.setState({ range: 0 });
+                    }}
                   />
                 </Col>
                 <Col>
