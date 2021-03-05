@@ -30,6 +30,11 @@ const StyledCheckBoxGroup = styled(CheckboxGroup)`
   }
 `;
 
+const StyledP = styled.p`
+  color: #f5222d;
+  text-align: center;
+`;
+
 const TabPane = Tabs.TabPane;
 
 export interface ICreateOrUpdateUserProps extends FormComponentProps {
@@ -126,10 +131,10 @@ class CreateOrUpdateUser extends React.Component<ICreateOrUpdateUserProps> {
             <FormItem label={L('Name')} {...formItemLayout}>
               {getFieldDecorator('name', { rules: rules.name })(<CustomInput />)}
             </FormItem>
-            <FormItem label={L('Surname')} {...formItemLayout}>
+            <FormItem label={L('Last Name')} {...formItemLayout}>
               {getFieldDecorator('surname', { rules: rules.surname })(<CustomInput />)}
             </FormItem>
-            <FormItem label={L('UserName')} {...formItemLayout}>
+            <FormItem label={L('User Name')} {...formItemLayout}>
               {getFieldDecorator('userName', { rules: rules.userName })(<CustomInput />)}
             </FormItem>
             <FormItem label={L('Email')} {...formItemLayout}>
@@ -166,12 +171,13 @@ class CreateOrUpdateUser extends React.Component<ICreateOrUpdateUserProps> {
               </FormItem>
             ) : null}
             <FormItem label={L('IsActive')} {...tailFormItemLayout}>
-              {getFieldDecorator('isActive', { valuePropName: 'checked' })(<StyledCheckBox>Aktif</StyledCheckBox>)}
+              {getFieldDecorator('isActive', { valuePropName: 'checked' })(<StyledCheckBox></StyledCheckBox>)}
             </FormItem>
+            <StyledP>{this.props.form.getFieldError('roleNames')}</StyledP>
           </TabPane>
           <TabPane tab={L('Roles')} key={'rol'}>
             <FormItem {...tailFormItemLayout}>
-              {getFieldDecorator('roleNames', { valuePropName: 'value' })(<StyledCheckBoxGroup options={options} />)}
+              {getFieldDecorator('roleNames', { rules: rules.role, valuePropName: 'value' })(<StyledCheckBoxGroup options={options} />)}
             </FormItem>
           </TabPane>
         </Tabs>

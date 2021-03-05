@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Card, Col, Modal, Row } from 'antd';
+import { Card, Col, Modal, Row, notification } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
@@ -26,6 +26,7 @@ export interface IRoleState {
   skipCount: number;
   roleId: number;
   filter: string;
+  loading: boolean;
 }
 
 const confirm = Modal.confirm;
@@ -41,6 +42,7 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
     skipCount: 0,
     roleId: 0,
     filter: '',
+    loading: true,
   };
 
   async componentDidMount() {
@@ -49,6 +51,9 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
 
   async getAll() {
     await this.props.roleStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    this.setState({
+      loading: false,
+    });
   }
 
   handleTableChange = (pagination: any) => {
@@ -83,8 +88,12 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
     const self = this;
     confirm({
       title: 'Do you Want to delete these items?',
-      onOk() {
-        self.props.roleStore.delete(input);
+      async onOk() {
+        await self.props.roleStore.delete(input);
+        notification.open({
+          message: 'Success',
+          description: 'User Deleted Successfully.',
+        });
       },
       onCancel() {},
     });
@@ -96,10 +105,22 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
       if (err) {
         return;
       } else {
+        this.setState({ modalVisible: false });
+        this.setState({
+          loading: true,
+        });
         if (this.state.roleId === 0) {
           await this.props.roleStore.create(values);
+          notification.open({
+            message: 'Success',
+            description: 'Role Created Successfully.',
+          });
         } else {
           await this.props.roleStore.update({ id: this.state.roleId, ...values });
+          notification.open({
+            message: 'Success',
+            description: 'Role Updated Successfully.',
+          });
         }
       }
 
@@ -165,7 +186,7 @@ class Role extends AppComponentBase<IRoleProps, IRoleState> {
               size={'default'}
               pagination={{ pageSize: this.state.maxResultCount, total: roles === undefined ? 0 : roles.totalCount, defaultCurrent: 1 }}
               columns={columns}
-              loading={roles === undefined ? true : false}
+              loading={this.state.loading}
               dataSource={roles === undefined ? [] : roles.items}
               onChange={this.handleTableChange}
             />

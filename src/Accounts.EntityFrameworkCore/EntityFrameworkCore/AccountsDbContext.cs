@@ -17,6 +17,8 @@ namespace Accounts.EntityFrameworkCore
 
         public DbSet<Term> Terms { get; set; }
 
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+
         public DbSet<HourLogEntry> HourLogEntries { get; set; }
 
         public DbSet<Timesheet> Timesheets { get; set; }

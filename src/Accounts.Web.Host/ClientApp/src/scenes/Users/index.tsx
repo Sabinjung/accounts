@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Card, Col, Modal, Row } from 'antd';
+import { Card, Col, Modal, Row, notification } from 'antd';
 import { inject, observer } from 'mobx-react';
 
 import AppComponentBase from '../../components/AppComponentBase';
@@ -43,6 +43,7 @@ export interface IUserState {
   skipCount: number;
   userId: number;
   filter: string;
+  loading: boolean;
 }
 
 const confirm = Modal.confirm;
@@ -58,6 +59,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
     skipCount: 0,
     userId: 0,
     filter: '',
+    loading: true,
   };
 
   async componentDidMount() {
@@ -66,6 +68,9 @@ class User extends AppComponentBase<IUserProps, IUserState> {
 
   async getAll() {
     await this.props.userStore.getAll({ maxResultCount: this.state.maxResultCount, skipCount: this.state.skipCount, keyword: this.state.filter });
+    this.setState({
+      loading: false,
+    });
   }
 
   handleTableChange = (pagination: any) => {
@@ -96,9 +101,13 @@ class User extends AppComponentBase<IUserProps, IUserState> {
   delete(input: EntityDto) {
     const self = this;
     confirm({
-      title: 'Do you Want to delete these items?',
-      onOk() {
-        self.props.userStore.delete(input);
+      title: 'Do you Want to delete these User?',
+      async onOk() {
+        await self.props.userStore.delete(input);
+        notification.open({
+          message: 'Success',
+          description: 'User Deleted Successfully.',
+        });
       },
       onCancel() {
         console.log('Cancel');
@@ -113,24 +122,48 @@ class User extends AppComponentBase<IUserProps, IUserState> {
       if (err) {
         return;
       } else {
+        this.setState({ modalVisible: false });
+        this.setState({
+          loading: true,
+        });
         if (this.state.userId === 0) {
-          await this.props.userStore.create(values);
+          try {
+            await this.props.userStore.create(values);
+            notification.open({
+              message: 'Success',
+              description: 'User Created Successfully.',
+            });
+          } catch (err) {
+            this.setState({
+              loading: false,
+            });
+          }
         } else {
-          await this.props.userStore.update({ id: this.state.userId, ...values });
+          try {
+            await this.props.userStore.update({ id: this.state.userId, ...values });
+            notification.open({
+              message: 'Success',
+              description: 'User Updated Successfully.',
+            });
+          } catch (err) {
+            this.setState({
+              loading: false,
+            });
+          }
         }
       }
-
       await this.getAll();
-      this.setState({ modalVisible: false });
       form.resetFields();
     });
   };
-
   saveFormRef = (formRef: any) => {
     this.formRef = formRef;
   };
 
   handleSearch = (value: string) => {
+    this.setState({
+      loading: true,
+    });
     this.setState({ filter: value }, async () => await this.getAll());
   };
 
@@ -138,7 +171,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
     const { users } = this.props.userStore;
     const columns = [
       { title: L('UserName'), dataIndex: 'userName', key: 'userName', width: 150, render: (text: string) => <div>{text}</div> },
-      { title: L('FullName'), dataIndex: 'name', key: 'name', width: 150, render: (text: string) => <div>{text}</div> },
+      { title: L('FullName'), dataIndex: 'fullName', key: 'fullName', width: 150, render: (text: string) => <div>{text}</div> },
       { title: L('EmailAddress'), dataIndex: 'emailAddress', key: 'emailAddress', width: 150, render: (text: string) => <div>{text}</div> },
       {
         title: L('IsActive'),
@@ -190,7 +223,7 @@ class User extends AppComponentBase<IUserProps, IUserState> {
               size={'default'}
               columns={columns}
               pagination={{ pageSize: 10, total: users === undefined ? 0 : users.totalCount, defaultCurrent: 1 }}
-              loading={users === undefined ? true : false}
+              loading={this.state.loading}
               dataSource={users === undefined ? [] : users.items}
               onChange={this.handleTableChange}
             />

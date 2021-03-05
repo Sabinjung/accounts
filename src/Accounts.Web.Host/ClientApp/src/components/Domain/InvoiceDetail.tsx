@@ -276,6 +276,10 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               cancelText="Cancel"
               placement="topRight"
               onConfirm={() => {
+                notification.open({
+                  message: 'Success',
+                  description: 'Invoice saved successfully.',
+                });
                 makeRequest({});
               }}
             >
@@ -292,6 +296,10 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
             params={{ timesheetId }}
             style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             onSuccess={() => {
+              notification.open({
+                message: 'Success',
+                description: 'Invoice submitted and mailed  successfully.',
+              });
               onClose && onClose();
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
@@ -310,6 +318,10 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
               params={{ timesheetId }}
               style={{ marginRight: 8, height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
               onSuccess={() => {
+                notification.open({
+                  message: 'Success',
+                  description: 'Invoice submitted successfully.',
+                });
                 onClose && onClose();
                 setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
               }}

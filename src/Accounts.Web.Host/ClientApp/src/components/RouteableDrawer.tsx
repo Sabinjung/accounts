@@ -6,6 +6,9 @@ import $ from 'jquery';
 import styled from '@emotion/styled';
 
 const StyledDrawer = styled(Drawer)`
+  .ant-drawer-body {
+    padding: 5px 24px;
+  }
   .ant-drawer-header {
     padding: 28px 43px;
     border: none;
