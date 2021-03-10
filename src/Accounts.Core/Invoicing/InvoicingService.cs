@@ -7,6 +7,8 @@ using Accounts.Data;
 using Accounts.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using IntuitData = Intuit.Ipp.Data;
@@ -97,6 +99,18 @@ namespace Accounts.Core.Invoicing
         {
             var invoice = await InvoiceRepository.GetAsync(invoiceId);
             await InvoiceProcessor.UpdateAndSend(invoice, isMailing);
+        }
+
+        public async Task SyncInvoice(string invoiceId)
+        {
+            var balance = await InvoiceProcessor.SyncInvoice(invoiceId);
+            var invoice = InvoiceRepository.GetAllList().Where(x => x.QBOInvoiceId == invoiceId).FirstOrDefault();
+            if(invoice == null)
+                throw new UserFriendlyException("Invoice not found.");
+
+            invoice.Balance = balance;
+            invoice.LastUpdated = DateTime.UtcNow;
+            await InvoiceRepository.UpdateAsync(invoice);
         }
     }
 }

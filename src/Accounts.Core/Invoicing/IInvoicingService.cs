@@ -13,5 +13,6 @@ namespace Accounts.Core.Invoicing
         Task UpdateAndSendMail(int invoiceId, bool isMailing);
         Task<string> Save(int timesheetId, int userId, string referenceNo);
         Task ReadInvoice(int invoiceId);
+        Task SyncInvoice(string invoiceId);
     }
 }

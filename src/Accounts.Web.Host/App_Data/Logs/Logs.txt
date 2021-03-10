@@ -20146,3 +20146,1216 @@ INFO  2020-02-07 21:32:21,573 [41   ] .Mvc.Infrastructure.ObjectResultExecutor -
 INFO  2020-02-07 21:32:21,576 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application) in 2038.3235ms
 INFO  2020-02-07 21:32:21,579 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.HourLogEntries.HourLogEntryAppService.GetProjectMonthlyHourReport (Accounts.Application)'
 INFO  2020-02-07 21:32:21,581 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2056.3547ms 200 application/json; charset=utf-8
+DEBUG 2021-01-22 03:36:11,159 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-01-22 03:36:11,270 [1    ] Abp.Modules.AbpModuleManager             - Found 17 ABP modules in total.
+DEBUG 2021-01-22 03:36:11,311 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,316 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,316 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,317 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,317 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,317 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,318 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,318 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,319 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.FluentValidation.AbpFluentValidationModule, Abp.FluentValidation, Version=4.8.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,320 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,321 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,321 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,321 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,322 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,322 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,322 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,323 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:11,327 [1    ] Abp.Modules.AbpModuleManager             - 17 modules loaded.
+DEBUG 2021-01-22 03:36:11,612 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-22 03:36:11,612 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-22 03:36:11,612 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-22 03:36:11,612 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-22 03:36:12,191 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-22 03:36:13,807 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-01-22 03:36:13,857 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-01-22 03:36:13,866 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-01-22 03:36:13,875 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2021-01-22 03:36:13,880 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-01-22 03:36:14,132 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-01-22 03:36:14,303 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-01-22 03:36:14,391 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 27 classes define auto mapping attributes
+DEBUG 2021-01-22 03:36:14,391 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-01-22 03:36:14,398 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2021-01-22 03:36:14,399 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2021-01-22 03:36:14,400 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2021-01-22 03:36:14,402 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2021-01-22 03:36:14,402 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-01-22 03:36:14,402 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-01-22 03:36:14,402 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2021-01-22 03:36:14,402 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2021-01-22 03:36:14,403 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.IhrmsProjectDto
+DEBUG 2021-01-22 03:36:14,403 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2021-01-22 03:36:14,403 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2021-01-22 03:36:14,404 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.UnsyncedProjectData
+DEBUG 2021-01-22 03:36:14,404 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-01-22 03:36:14,404 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2021-01-22 03:36:14,404 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2021-01-22 03:36:14,405 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2021-01-22 03:36:14,406 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.EndClients.Dto.EndClientDto
+DEBUG 2021-01-22 03:36:14,406 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2021-01-22 03:36:14,406 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2021-01-22 03:36:40,305 [1    ] Microsoft.AspNetCore.SpaServices         - Starting create-react-app server on port 55730...
+INFO  2021-01-22 03:36:40,821 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-01-22 03:36:40,823 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-01-22 03:36:40,930 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 123.6746ms 200 
+INFO  2021-01-22 03:36:41,249 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-22 03:36:44,409 [6    ] Microsoft.AspNetCore.SpaServices         - > reactjs@4.7.1 start E:\AccountsApp\src\Accounts.Web.Host\ClientApp
+> craco start
+
+i ∩╜ówds∩╜ú: Project is running at http://192.168.56.1/
+
+INFO  2021-01-22 03:36:44,413 [9    ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: webpack output is served from 
+
+INFO  2021-01-22 03:36:45,903 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2021-01-22 03:36:47,421 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2021-01-22 03:36:47,428 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 2.6553ms.
+ERROR 2021-01-22 03:36:47,639 [12   ] Microsoft.AspNetCore.SpaServices         - Browserslist: caniuse-lite is outdated. Please run the following command: `npx browserslist --update-db`
+
+INFO  2021-01-22 03:36:48,625 [7    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /index.html.
+INFO  2021-01-22 03:36:48,647 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 2733.3054ms
+INFO  2021-01-22 03:36:48,651 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-22 03:36:48,678 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+INFO  2021-01-22 03:36:48,684 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 7881.7131ms 302 
+INFO  2021-01-22 03:37:08,959 [9    ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: Content not from webpack is served from E:\AccountsApp\src\Accounts.Web.Host\ClientApp\public
+i ∩╜ówds∩╜ú: 404s will fallback to /
+Starting the development server...
+
+Compiled with warnings.
+
+INFO  2021-01-22 03:37:08,976 [18   ] Microsoft.AspNetCore.SpaServices         - 
+./src/scenes/Timesheet/components/ProjectSummary.tsx
+
+INFO  2021-01-22 03:37:09,007 [17   ] Microsoft.AspNetCore.SpaServices         -   Line 101:32:  Expected to return a value in arrow function  array-callback-return
+
+./src/lib/axios/useAxios.ts
+  Line 101:6:  React Hook useEffect has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array    react-hooks/exhaustive-deps
+  Line 109:5:  React Hook useCallback has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/index.tsx
+  Line 137:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 138:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 140:19:  Expected '===' and instead saw '=='  eqeqeq
+  Line 198:23:  Expected '===' and instead saw '=='  eqeqeq
+  Line 200:47:  Expected '===' and instead saw '=='  eqeqeq
+  Line 202:30:  Expected '===' and instead saw '=='  eqeqeq
+  Line 206:30:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetViewer.tsx
+  Line 168:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 182:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 195:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 200:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 262:41:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 265:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 287:42:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 288:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 297:107:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+./src/scenes/Login/index.tsx
+  Line 185:23:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+./src/scenes/ProjectDetail/index.tsx
+  Line 19:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/stores/hourLogEntryStore.ts
+  Line 1:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/PayrollHours/index.tsx
+  Line 220:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 288:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 381:6:   React Hook useEffect has missing dependencies: 'makeRequest', 'month', and 'year'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/TimesheetReview/components/Expenses.tsx
+  Line 28:8:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/models/Timesheet/projectHourLogEntries.ts
+  Line 31:79:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/Timesheet/components/Attachments.tsx
+  Line 32:10:  React Hook useEffect has missing dependencies: 'projectStore' and 'shouldLoad'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Login/OauthCallback.tsx
+  Line 32:8:  React Hook useEffect has missing dependencies: 'authenticationStore' and 'qs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/components/NewTimesheet.tsx
+  Line 37:8:   React Hook useEffect has missing dependencies: 'projectStore' and 'timesheetStore'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 64:84:  Expected '===' and instead saw '=='                                                                                                     eqeqeq
+
+./src/components/hooks.tsx
+  Line 39:6:  React Hook useEffect has missing dependencies: 'func' and 'store'. Either include them or remove the dependency array. If 'func' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+./src/components/Domain/ProjectTable.tsx
+  Line 3:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/Projects/index.tsx
+  Line 40:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Companies/index.tsx
+  Line 41:6:   React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 65:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+  Line 84:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+
+./src/scenes/EndClients/index.tsx
+  Line 42:90:  Unexpected use of comma operator  no-sequences
+  Line 73:95:  Unexpected use of comma operator  no-sequences
+
+./src/components/Domain/InvoiceDetail.tsx
+  Line 46:10:   Unexpected empty object pattern                                                                                               no-empty-pattern
+  Line 180:27:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 186:46:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 207:87:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 262:62:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 280:64:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/components/Domain/ConsultantCreateUpdate.tsx
+  Line 4:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/stores/timesheetStore.ts
+  Line 54:107:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetList.tsx
+  Line 5:8:      '_' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+  Line 156:71:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 166:111:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 180:43:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/scenes/TimesheetReview/index.tsx
+  Line 62:6:  React Hook useEffect has a missing dependency: 'refetch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+INFO  2021-01-22 03:37:11,142 [26   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 22463.8865ms 200 text/html; charset=UTF-8
+INFO  2021-01-22 03:37:11,173 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/abp.js  
+INFO  2021-01-22 03:37:11,177 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/signalr.min.js  
+INFO  2021-01-22 03:37:11,189 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/bundle.js  
+INFO  2021-01-22 03:37:11,212 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 25.8024ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:11,226 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/33.chunk.js  
+INFO  2021-01-22 03:37:11,444 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 217.2635ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:11,468 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/main.chunk.js  
+INFO  2021-01-22 03:37:11,479 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 11.1613ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:13,221 [29   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2050.1235ms 304 
+INFO  2021-01-22 03:37:13,235 [27   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2062.9112ms 304 
+INFO  2021-01-22 03:37:13,305 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/sockjs-node  
+INFO  2021-01-22 03:37:13,315 [19   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2021-01-22 03:37:13,318 [19   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2021-01-22 03:37:13,380 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/AbpUserConfiguration/GetAll  
+INFO  2021-01-22 03:37:13,407 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/manifest.json  
+INFO  2021-01-22 03:37:13,420 [27   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 13.7645ms 304 
+INFO  2021-01-22 03:37:13,597 [13   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2021-01-22 03:37:14,477 [28   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2021-01-22 03:37:14,491 [28   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpUserConfiguration", area = ""}. Executing action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)
+INFO  2021-01-22 03:37:14,497 [28   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) - Validation state: Valid
+INFO  2021-01-22 03:37:18,750 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore), returned result Microsoft.AspNetCore.Mvc.JsonResult in 4250.4202ms.
+INFO  2021-01-22 03:37:19,912 [7    ] matters.Json.Internal.JsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-22 03:37:19,997 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) in 5503.2331ms
+INFO  2021-01-22 03:37:20,000 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2021-01-22 03:37:20,003 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 6623.8004ms 200 application/json; charset=utf-8
+INFO  2021-01-22 03:37:20,033 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/0.chunk.js  
+INFO  2021-01-22 03:37:20,036 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/1.chunk.js  
+INFO  2021-01-22 03:37:20,040 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/2.chunk.js  
+INFO  2021-01-22 03:37:20,047 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/4.chunk.js  
+INFO  2021-01-22 03:37:20,051 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/11.chunk.js  
+INFO  2021-01-22 03:37:20,062 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/22.chunk.js  
+INFO  2021-01-22 03:37:22,063 [29   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2030.5645ms 304 
+INFO  2021-01-22 03:37:22,075 [29   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/Session/GetCurrentLoginInformations  
+INFO  2021-01-22 03:37:22,080 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2038.4213ms 304 
+INFO  2021-01-22 03:37:22,091 [29   ] uthentication.JwtBearer.JwtBearerHandler - Successfully validated the token.
+INFO  2021-01-22 03:37:22,093 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2040.8673ms 304 
+INFO  2021-01-22 03:37:22,108 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/23.chunk.js  
+INFO  2021-01-22 03:37:22,110 [29   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)'
+INFO  2021-01-22 03:37:22,120 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/29.chunk.js  
+INFO  2021-01-22 03:37:22,137 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2068.2965ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,149 [29   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetCurrentLoginInformations", controller = "Session"}. Executing action Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)
+INFO  2021-01-22 03:37:22,164 [48   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2121.7245ms 304 
+INFO  2021-01-22 03:37:22,180 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 77.0473ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,187 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/35.chunk.js  
+INFO  2021-01-22 03:37:22,199 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2135.7443ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,207 [45   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 79.6574ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,230 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 51.0042ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,402 [52   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/3.chunk.js  
+INFO  2021-01-22 03:37:22,412 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/5.chunk.js  
+INFO  2021-01-22 03:37:22,419 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/9.chunk.js  
+INFO  2021-01-22 03:37:22,421 [23   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/7.chunk.js  
+INFO  2021-01-22 03:37:22,428 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/17.chunk.js  
+INFO  2021-01-22 03:37:22,453 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 49.494ms 304 
+INFO  2021-01-22 03:37:22,489 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 73.3064ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,492 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/19.chunk.js  
+INFO  2021-01-22 03:37:22,494 [23   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 80.3506ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,508 [49   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 107.1363ms 304 
+INFO  2021-01-22 03:37:22,517 [28   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/36.chunk.js  
+INFO  2021-01-22 03:37:22,519 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 107.3012ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,548 [23   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 37.3522ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,576 [13   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 100.8258ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-22 03:37:22,847 [29   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application) - Validation state: Valid
+INFO  2021-01-22 03:37:23,569 [56   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 718.0079ms.
+INFO  2021-01-22 03:37:23,872 [56   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-22 03:37:23,897 [56   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application) in 1742.2492ms
+INFO  2021-01-22 03:37:23,902 [56   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)'
+INFO  2021-01-22 03:37:23,905 [56   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 1830.9853ms 200 application/json; charset=utf-8
+DEBUG 2021-01-26 04:27:05,454 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-01-26 04:27:06,259 [1    ] Abp.Modules.AbpModuleManager             - Found 17 ABP modules in total.
+DEBUG 2021-01-26 04:27:06,348 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,354 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,354 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,354 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,355 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,355 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,355 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,356 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,356 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.FluentValidation.AbpFluentValidationModule, Abp.FluentValidation, Version=4.8.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,357 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,358 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,358 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,358 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,358 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,359 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,359 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,359 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:06,363 [1    ] Abp.Modules.AbpModuleManager             - 17 modules loaded.
+DEBUG 2021-01-26 04:27:06,946 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:27:06,946 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:27:06,946 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:27:06,946 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:27:08,202 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:27:10,247 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-01-26 04:27:10,350 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-01-26 04:27:10,361 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-01-26 04:27:10,367 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2021-01-26 04:27:10,371 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-01-26 04:27:10,814 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-01-26 04:27:11,044 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-01-26 04:27:11,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 27 classes define auto mapping attributes
+DEBUG 2021-01-26 04:27:11,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-01-26 04:27:11,184 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2021-01-26 04:27:11,185 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2021-01-26 04:27:11,185 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.IhrmsProjectDto
+DEBUG 2021-01-26 04:27:11,186 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.UnsyncedProjectData
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2021-01-26 04:27:11,187 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.EndClients.Dto.EndClientDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2021-01-26 04:27:11,188 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2021-01-26 04:27:49,969 [1    ] Microsoft.AspNetCore.SpaServices         - Starting create-react-app server on port 59659...
+INFO  2021-01-26 04:27:51,736 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-01-26 04:27:51,746 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-01-26 04:27:52,506 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 821.8554ms 200 
+INFO  2021-01-26 04:27:54,036 [6    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:28:06,948 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2021-01-26 04:28:10,942 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2021-01-26 04:28:10,954 [6    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 4.6017ms.
+INFO  2021-01-26 04:28:12,807 [17   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /index.html.
+INFO  2021-01-26 04:28:12,853 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 5881.61ms
+INFO  2021-01-26 04:28:12,863 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:28:12,921 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 21257.0351ms 302 
+INFO  2021-01-26 04:28:12,974 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+INFO  2021-01-26 04:28:45,774 [18   ] Microsoft.AspNetCore.SpaServices         - > reactjs@4.7.1 start E:\AccountsApp\src\Accounts.Web.Host\ClientApp
+> craco start
+
+i ∩╜ówds∩╜ú: Project is running at http://192.168.56.1/
+
+INFO  2021-01-26 04:28:45,786 [14   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: webpack output is served from 
+
+ERROR 2021-01-26 04:29:03,344 [14   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id "0HM61GA5SNRTG", Request id "0HM61GA5SNRTG:00000002": An unhandled exception was thrown by the application.
+System.TimeoutException: The create-react-app server did not start listening for requests within the timeout period of 50 seconds. Check the log output for error information.
+   at Microsoft.AspNetCore.SpaServices.Extensions.Util.TaskTimeoutExtensions.WithTimeout[T](Task`1 task, TimeSpan timeoutDelay, String message)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Proxy.SpaProxy.PerformProxyRequest(HttpContext context, HttpClient httpClient, Task`1 baseUriTask, CancellationToken applicationStoppingToken, Boolean proxy404s)
+   at Microsoft.AspNetCore.Builder.SpaProxyingExtensions.<>c__DisplayClass2_0.<<UseProxyToSpaDevelopmentServer>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+INFO  2021-01-26 04:29:03,392 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 50454.4489ms 500 
+ERROR 2021-01-26 04:29:24,099 [20   ] Microsoft.AspNetCore.SpaServices         - Browserslist: caniuse-lite is outdated. Please run the following command: `npx browserslist --update-db`
+
+INFO  2021-01-26 04:30:37,919 [6    ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: Content not from webpack is served from E:\AccountsApp\src\Accounts.Web.Host\ClientApp\public
+i ∩╜ówds∩╜ú: 404s will fallback to /
+Starting the development server...
+
+Compiled with warnings.
+
+INFO  2021-01-26 04:30:37,945 [6    ] Microsoft.AspNetCore.SpaServices         - 
+./src/scenes/Timesheet/components/ProjectSummary.tsx
+
+INFO  2021-01-26 04:30:37,965 [14   ] Microsoft.AspNetCore.SpaServices         -   Line 101:32:  Expected to return a value in arrow function  array-callback-return
+
+./src/lib/axios/useAxios.ts
+  Line 101:6:  React Hook useEffect has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array    react-hooks/exhaustive-deps
+  Line 109:5:  React Hook useCallback has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/index.tsx
+  Line 137:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 138:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 140:19:  Expected '===' and instead saw '=='  eqeqeq
+  Line 198:23:  Expected '===' and instead saw '=='  eqeqeq
+  Line 200:47:  Expected '===' and instead saw '=='  eqeqeq
+  Line 202:30:  Expected '===' and instead saw '=='  eqeqeq
+  Line 206:30:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetViewer.tsx
+  Line 168:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 182:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 195:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 200:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 262:41:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 265:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 287:42:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 288:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 297:107:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+./src/scenes/Login/index.tsx
+  Line 185:23:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+./src/scenes/ProjectDetail/index.tsx
+  Line 19:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/stores/hourLogEntryStore.ts
+  Line 1:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/PayrollHours/index.tsx
+  Line 220:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 288:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 381:6:   React Hook useEffect has missing dependencies: 'makeRequest', 'month', and 'year'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/TimesheetReview/components/Expenses.tsx
+  Line 28:8:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/models/Timesheet/projectHourLogEntries.ts
+  Line 31:79:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/Timesheet/components/Attachments.tsx
+  Line 32:10:  React Hook useEffect has missing dependencies: 'projectStore' and 'shouldLoad'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Login/OauthCallback.tsx
+  Line 32:8:  React Hook useEffect has missing dependencies: 'authenticationStore' and 'qs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/components/NewTimesheet.tsx
+  Line 37:8:   React Hook useEffect has missing dependencies: 'projectStore' and 'timesheetStore'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 64:84:  Expected '===' and instead saw '=='                                                                                                     eqeqeq
+
+./src/components/hooks.tsx
+  Line 39:6:  React Hook useEffect has missing dependencies: 'func' and 'store'. Either include them or remove the dependency array. If 'func' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+./src/components/Domain/ProjectTable.tsx
+  Line 3:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/Projects/index.tsx
+  Line 40:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Companies/index.tsx
+  Line 41:6:   React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 65:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+  Line 84:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+
+./src/scenes/EndClients/index.tsx
+  Line 42:90:  Unexpected use of comma operator  no-sequences
+  Line 73:95:  Unexpected use of comma operator  no-sequences
+
+./src/components/Domain/InvoiceDetail.tsx
+  Line 46:10:   Unexpected empty object pattern                                                                                               no-empty-pattern
+  Line 180:27:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 186:46:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 207:87:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 262:62:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 280:64:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/components/Domain/ConsultantCreateUpdate.tsx
+  Line 4:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/stores/timesheetStore.ts
+  Line 54:107:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetList.tsx
+  Line 5:8:      '_' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+  Line 156:71:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 166:111:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 180:43:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/scenes/TimesheetReview/index.tsx
+  Line 62:6:  React Hook useEffect has a missing dependency: 'refetch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+DEBUG 2021-01-26 04:35:04,303 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-01-26 04:35:04,487 [1    ] Abp.Modules.AbpModuleManager             - Found 17 ABP modules in total.
+DEBUG 2021-01-26 04:35:04,532 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,567 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,569 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,570 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,570 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,570 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,571 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,572 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,572 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.FluentValidation.AbpFluentValidationModule, Abp.FluentValidation, Version=4.8.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,573 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,574 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,574 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,574 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,575 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,575 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,576 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,576 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:04,583 [1    ] Abp.Modules.AbpModuleManager             - 17 modules loaded.
+DEBUG 2021-01-26 04:35:05,284 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:35:05,284 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:35:05,284 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:35:05,284 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:35:06,571 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:35:10,761 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-01-26 04:35:10,902 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-01-26 04:35:10,919 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-01-26 04:35:10,924 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2021-01-26 04:35:10,929 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-01-26 04:35:11,584 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-01-26 04:35:12,213 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-01-26 04:35:12,525 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 27 classes define auto mapping attributes
+DEBUG 2021-01-26 04:35:12,526 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-01-26 04:35:12,557 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2021-01-26 04:35:12,559 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2021-01-26 04:35:12,560 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2021-01-26 04:35:12,562 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2021-01-26 04:35:12,562 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-01-26 04:35:12,563 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-01-26 04:35:12,563 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2021-01-26 04:35:12,563 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2021-01-26 04:35:12,563 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.IhrmsProjectDto
+DEBUG 2021-01-26 04:35:12,563 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.UnsyncedProjectData
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2021-01-26 04:35:12,564 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2021-01-26 04:35:12,565 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2021-01-26 04:35:12,566 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2021-01-26 04:35:12,566 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.EndClients.Dto.EndClientDto
+DEBUG 2021-01-26 04:35:12,566 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2021-01-26 04:35:12,567 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2021-01-26 04:35:50,839 [1    ] Microsoft.AspNetCore.SpaServices         - Starting create-react-app server on port 59813...
+INFO  2021-01-26 04:35:51,868 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-01-26 04:35:51,871 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-01-26 04:35:52,210 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 373.4664ms 200 
+INFO  2021-01-26 04:35:53,087 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:36:04,792 [12   ] Microsoft.AspNetCore.SpaServices         - > reactjs@4.7.1 start E:\AccountsApp\src\Accounts.Web.Host\ClientApp
+> craco start
+
+i ∩╜ówds∩╜ú: Project is running at http://192.168.56.1/
+
+INFO  2021-01-26 04:36:04,814 [17   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: webpack output is served from 
+
+INFO  2021-01-26 04:36:07,757 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2021-01-26 04:36:14,153 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2021-01-26 04:36:14,192 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 13.6638ms.
+ERROR 2021-01-26 04:36:14,862 [19   ] Microsoft.AspNetCore.SpaServices         - Browserslist: caniuse-lite is outdated. Please run the following command: `npx browserslist --update-db`
+
+INFO  2021-01-26 04:36:17,374 [9    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /index.html.
+INFO  2021-01-26 04:36:17,467 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 9654.8806ms
+INFO  2021-01-26 04:36:17,496 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:36:17,640 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 25762.0853ms 302 
+INFO  2021-01-26 04:36:17,689 [27   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+ERROR 2021-01-26 04:37:08,046 [7    ] Microsoft.AspNetCore.Server.Kestrel      - Connection id "0HM61GEL2I5M1", Request id "0HM61GEL2I5M1:00000002": An unhandled exception was thrown by the application.
+System.TimeoutException: The create-react-app server did not start listening for requests within the timeout period of 50 seconds. Check the log output for error information.
+   at Microsoft.AspNetCore.SpaServices.Extensions.Util.TaskTimeoutExtensions.WithTimeout[T](Task`1 task, TimeSpan timeoutDelay, String message)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Proxy.SpaProxy.PerformProxyRequest(HttpContext context, HttpClient httpClient, Task`1 baseUriTask, CancellationToken applicationStoppingToken, Boolean proxy404s)
+   at Microsoft.AspNetCore.Builder.SpaProxyingExtensions.<>c__DisplayClass2_0.<<UseProxyToSpaDevelopmentServer>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+INFO  2021-01-26 04:37:08,057 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 50404.9561ms 500 
+INFO  2021-01-26 04:37:16,665 [12   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: Content not from webpack is served from E:\AccountsApp\src\Accounts.Web.Host\ClientApp\public
+i ∩╜ówds∩╜ú: 404s will fallback to /
+Starting the development server...
+
+Compiled with warnings.
+
+INFO  2021-01-26 04:37:16,726 [12   ] Microsoft.AspNetCore.SpaServices         - 
+./src/scenes/Timesheet/components/ProjectSummary.tsx
+
+INFO  2021-01-26 04:37:16,872 [12   ] Microsoft.AspNetCore.SpaServices         -   Line 101:32:  Expected to return a value in arrow function  array-callback-return
+
+./src/lib/axios/useAxios.ts
+  Line 101:6:  React Hook useEffect has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array    react-hooks/exhaustive-deps
+  Line 109:5:  React Hook useCallback has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/index.tsx
+  Line 137:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 138:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 140:19:  Expected '===' and instead saw '=='  eqeqeq
+  Line 198:23:  Expected '===' and instead saw '=='  eqeqeq
+  Line 200:47:  Expected '===' and instead saw '=='  eqeqeq
+  Line 202:30:  Expected '===' and instead saw '=='  eqeqeq
+  Line 206:30:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetViewer.tsx
+  Line 168:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 182:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 195:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 200:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 262:41:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 265:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 287:42:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 288:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 297:107:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+./src/scenes/Login/index.tsx
+  Line 185:23:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+./src/scenes/ProjectDetail/index.tsx
+  Line 19:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/stores/hourLogEntryStore.ts
+  Line 1:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/PayrollHours/index.tsx
+  Line 220:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 288:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 381:6:   React Hook useEffect has missing dependencies: 'makeRequest', 'month', and 'year'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/TimesheetReview/components/Expenses.tsx
+  Line 28:8:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/models/Timesheet/projectHourLogEntries.ts
+  Line 31:79:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/Timesheet/components/Attachments.tsx
+  Line 32:10:  React Hook useEffect has missing dependencies: 'projectStore' and 'shouldLoad'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Login/OauthCallback.tsx
+  Line 32:8:  React Hook useEffect has missing dependencies: 'authenticationStore' and 'qs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/components/NewTimesheet.tsx
+  Line 37:8:   React Hook useEffect has missing dependencies: 'projectStore' and 'timesheetStore'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 64:84:  Expected '===' and instead saw '=='                                                                                                     eqeqeq
+
+./src/components/hooks.tsx
+  Line 39:6:  React Hook useEffect has missing dependencies: 'func' and 'store'. Either include them or remove the dependency array. If 'func' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+./src/components/Domain/ProjectTable.tsx
+  Line 3:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/Projects/index.tsx
+  Line 40:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Companies/index.tsx
+  Line 41:6:   React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 65:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+  Line 84:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+
+./src/scenes/EndClients/index.tsx
+  Line 42:90:  Unexpected use of comma operator  no-sequences
+  Line 73:95:  Unexpected use of comma operator  no-sequences
+
+./src/components/Domain/InvoiceDetail.tsx
+  Line 46:10:   Unexpected empty object pattern                                                                                               no-empty-pattern
+  Line 180:27:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 186:46:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 207:87:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 262:62:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 280:64:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/components/Domain/ConsultantCreateUpdate.tsx
+  Line 4:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/stores/timesheetStore.ts
+  Line 54:107:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetList.tsx
+  Line 5:8:      '_' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+  Line 156:71:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 166:111:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 180:43:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/scenes/TimesheetReview/index.tsx
+  Line 62:6:  React Hook useEffect has a missing dependency: 'refetch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+DEBUG 2021-01-26 04:40:51,870 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-01-26 04:40:52,175 [1    ] Abp.Modules.AbpModuleManager             - Found 17 ABP modules in total.
+DEBUG 2021-01-26 04:40:52,255 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,259 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,261 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,264 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,266 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,266 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,266 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.FluentValidation.AbpFluentValidationModule, Abp.FluentValidation, Version=4.8.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,268 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,269 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,270 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,272 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,274 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,276 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,277 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,277 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:52,288 [1    ] Abp.Modules.AbpModuleManager             - 17 modules loaded.
+DEBUG 2021-01-26 04:40:52,588 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:40:52,588 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:40:52,588 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:40:52,588 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:40:53,687 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:40:56,805 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-01-26 04:40:56,906 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-01-26 04:40:56,922 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-01-26 04:40:56,935 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2021-01-26 04:40:56,940 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-01-26 04:40:57,537 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-01-26 04:40:57,996 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-01-26 04:40:58,161 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 27 classes define auto mapping attributes
+DEBUG 2021-01-26 04:40:58,161 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-01-26 04:40:58,170 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2021-01-26 04:40:58,171 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2021-01-26 04:40:58,171 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2021-01-26 04:40:58,173 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.IhrmsProjectDto
+DEBUG 2021-01-26 04:40:58,174 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2021-01-26 04:40:58,174 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2021-01-26 04:40:58,174 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.UnsyncedProjectData
+DEBUG 2021-01-26 04:40:58,174 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2021-01-26 04:40:58,175 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.EndClients.Dto.EndClientDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2021-01-26 04:40:58,176 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2021-01-26 04:41:36,937 [1    ] Microsoft.AspNetCore.SpaServices         - Starting create-react-app server on port 59913...
+INFO  2021-01-26 04:41:38,295 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-01-26 04:41:38,312 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-01-26 04:41:38,724 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 483.3766ms 200 
+INFO  2021-01-26 04:41:39,449 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:41:49,106 [7    ] Microsoft.AspNetCore.SpaServices         - > reactjs@4.7.1 start E:\AccountsApp\src\Accounts.Web.Host\ClientApp
+> craco start
+
+i ∩╜ówds∩╜ú: Project is running at http://192.168.56.1/
+
+INFO  2021-01-26 04:41:49,128 [7    ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: webpack output is served from 
+
+INFO  2021-01-26 04:41:52,384 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+ERROR 2021-01-26 04:42:01,136 [6    ] Microsoft.AspNetCore.SpaServices         - Browserslist: caniuse-lite is outdated. Please run the following command: `npx browserslist --update-db`
+
+INFO  2021-01-26 04:42:05,654 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2021-01-26 04:42:05,717 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 28.4393ms.
+INFO  2021-01-26 04:42:08,183 [18   ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /index.html.
+INFO  2021-01-26 04:42:08,311 [18   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 15860.6899ms
+INFO  2021-01-26 04:42:08,406 [18   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:42:08,609 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 30253.2608ms 302 
+INFO  2021-01-26 04:42:08,820 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+ERROR 2021-01-26 04:42:59,615 [12   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id "0HM61GHS8JMJV", Request id "0HM61GHS8JMJV:00000002": An unhandled exception was thrown by the application.
+System.TimeoutException: The create-react-app server did not start listening for requests within the timeout period of 50 seconds. Check the log output for error information.
+   at Microsoft.AspNetCore.SpaServices.Extensions.Util.TaskTimeoutExtensions.WithTimeout[T](Task`1 task, TimeSpan timeoutDelay, String message)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Proxy.SpaProxy.PerformProxyRequest(HttpContext context, HttpClient httpClient, Task`1 baseUriTask, CancellationToken applicationStoppingToken, Boolean proxy404s)
+   at Microsoft.AspNetCore.Builder.SpaProxyingExtensions.<>c__DisplayClass2_0.<<UseProxyToSpaDevelopmentServer>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+INFO  2021-01-26 04:42:59,666 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 50809.7165ms 500 
+INFO  2021-01-26 04:43:21,712 [14   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: Content not from webpack is served from E:\AccountsApp\src\Accounts.Web.Host\ClientApp\public
+i ∩╜ówds∩╜ú: 404s will fallback to /
+Starting the development server...
+
+Compiled with warnings.
+
+INFO  2021-01-26 04:43:21,853 [14   ] Microsoft.AspNetCore.SpaServices         - 
+./src/scenes/Timesheet/components/ProjectSummary.tsx
+
+INFO  2021-01-26 04:43:22,071 [14   ] Microsoft.AspNetCore.SpaServices         -   Line 101:32:  Expected to return a value in arrow function  array-callback-return
+
+./src/lib/axios/useAxios.ts
+  Line 101:6:  React Hook useEffect has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array    react-hooks/exhaustive-deps
+  Line 109:5:  React Hook useCallback has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/index.tsx
+  Line 137:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 138:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 140:19:  Expected '===' and instead saw '=='  eqeqeq
+  Line 198:23:  Expected '===' and instead saw '=='  eqeqeq
+  Line 200:47:  Expected '===' and instead saw '=='  eqeqeq
+  Line 202:30:  Expected '===' and instead saw '=='  eqeqeq
+  Line 206:30:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetViewer.tsx
+  Line 168:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 182:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 195:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 200:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 262:41:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 265:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 287:42:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 288:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 297:107:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+./src/scenes/Login/index.tsx
+  Line 185:23:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+./src/scenes/ProjectDetail/index.tsx
+  Line 19:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/stores/hourLogEntryStore.ts
+  Line 1:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/PayrollHours/index.tsx
+  Line 220:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 288:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 381:6:   React Hook useEffect has missing dependencies: 'makeRequest', 'month', and 'year'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/TimesheetReview/components/Expenses.tsx
+  Line 28:8:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/models/Timesheet/projectHourLogEntries.ts
+  Line 31:79:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/Timesheet/components/Attachments.tsx
+  Line 32:10:  React Hook useEffect has missing dependencies: 'projectStore' and 'shouldLoad'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Login/OauthCallback.tsx
+  Line 32:8:  React Hook useEffect has missing dependencies: 'authenticationStore' and 'qs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/components/NewTimesheet.tsx
+  Line 37:8:   React Hook useEffect has missing dependencies: 'projectStore' and 'timesheetStore'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 64:84:  Expected '===' and instead saw '=='                                                                                                     eqeqeq
+
+./src/components/hooks.tsx
+  Line 39:6:  React Hook useEffect has missing dependencies: 'func' and 'store'. Either include them or remove the dependency array. If 'func' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+./src/components/Domain/ProjectTable.tsx
+  Line 3:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/Projects/index.tsx
+  Line 40:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Companies/index.tsx
+  Line 41:6:   React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 65:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+  Line 84:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+
+./src/scenes/EndClients/index.tsx
+  Line 42:90:  Unexpected use of comma operator  no-sequences
+  Line 73:95:  Unexpected use of comma operator  no-sequences
+
+./src/components/Domain/InvoiceDetail.tsx
+  Line 46:10:   Unexpected empty object pattern                                                                                               no-empty-pattern
+  Line 180:27:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 186:46:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 207:87:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 262:62:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 280:64:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/components/Domain/ConsultantCreateUpdate.tsx
+  Line 4:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/stores/timesheetStore.ts
+  Line 54:107:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetList.tsx
+  Line 5:8:      '_' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+  Line 156:71:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 166:111:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 180:43:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/scenes/TimesheetReview/index.tsx
+  Line 62:6:  React Hook useEffect has a missing dependency: 'refetch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+INFO  2021-01-26 04:43:42,559 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+INFO  2021-01-26 04:43:45,069 [38   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2476.2826ms 200 text/html; charset=UTF-8
+INFO  2021-01-26 04:43:45,153 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/abp.js  
+INFO  2021-01-26 04:43:45,159 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/bundle.js  
+INFO  2021-01-26 04:43:45,219 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/signalr.min.js  
+INFO  2021-01-26 04:43:45,230 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/33.chunk.js  
+INFO  2021-01-26 04:43:45,246 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/main.chunk.js  
+INFO  2021-01-26 04:43:45,279 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 90.5395ms 304 
+INFO  2021-01-26 04:43:45,917 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 664.8898ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-26 04:43:47,257 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2102.8896ms 304 
+INFO  2021-01-26 04:43:47,289 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2116.0002ms 304 
+INFO  2021-01-26 04:43:47,664 [5    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2424.7973ms 304 
+INFO  2021-01-26 04:43:47,834 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/sockjs-node  
+INFO  2021-01-26 04:43:47,890 [18   ] pNetCore.Cors.Infrastructure.CorsService - CORS policy execution failed.
+INFO  2021-01-26 04:43:47,903 [18   ] pNetCore.Cors.Infrastructure.CorsService - Request origin http://localhost:21021 does not have permission to access the resource.
+INFO  2021-01-26 04:43:48,136 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/AbpUserConfiguration/GetAll  
+INFO  2021-01-26 04:43:48,140 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/favicon.png  
+INFO  2021-01-26 04:43:48,199 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/manifest.json  
+INFO  2021-01-26 04:43:48,587 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 132.4085ms 304 
+INFO  2021-01-26 04:43:48,686 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 543.9353ms 200 image/png
+INFO  2021-01-26 04:43:49,286 [12   ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\Microsoft.IdentityModel.Tokens\Validators.cs:line 274
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 1182
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 739
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 723
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+INFO  2021-01-26 04:43:49,301 [12   ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+INFO  2021-01-26 04:43:49,363 [12   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2021-01-26 04:43:49,439 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "GetAll", controller = "AbpUserConfiguration", area = ""}. Executing action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)
+INFO  2021-01-26 04:43:49,512 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) - Validation state: Valid
+INFO  2021-01-26 04:43:54,428 [12   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore), returned result Microsoft.AspNetCore.Mvc.JsonResult in 4913.1855ms.
+INFO  2021-01-26 04:43:55,852 [19   ] matters.Json.Internal.JsonResultExecutor - Executing JsonResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-26 04:43:56,294 [19   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore) in 6850.4783ms
+INFO  2021-01-26 04:43:56,297 [19   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Abp.AspNetCore.Mvc.Controllers.AbpUserConfigurationController.GetAll (Abp.AspNetCore)'
+INFO  2021-01-26 04:43:56,301 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 8166.7756ms 200 application/json; charset=utf-8
+INFO  2021-01-26 04:43:56,463 [12   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/2.chunk.js  
+INFO  2021-01-26 04:43:56,467 [44   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/0.chunk.js  
+INFO  2021-01-26 04:43:56,496 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/1.chunk.js  
+INFO  2021-01-26 04:43:56,523 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/11.chunk.js  
+INFO  2021-01-26 04:43:56,528 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/4.chunk.js  
+INFO  2021-01-26 04:43:56,633 [48   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/29.chunk.js  
+INFO  2021-01-26 04:43:58,561 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2100.7356ms 304 
+INFO  2021-01-26 04:43:58,564 [45   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2092.373ms 304 
+INFO  2021-01-26 04:43:58,605 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/services/app/Session/GetCurrentLoginInformations  
+INFO  2021-01-26 04:43:58,613 [45   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/37.chunk.js  
+INFO  2021-01-26 04:43:58,624 [41   ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\Microsoft.IdentityModel.Tokens\Validators.cs:line 274
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 1182
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 739
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 723
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+INFO  2021-01-26 04:43:58,637 [41   ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+INFO  2021-01-26 04:43:58,685 [19   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 54.5648ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-26 04:43:58,692 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)'
+INFO  2021-01-26 04:43:58,706 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2237.083ms 304 
+INFO  2021-01-26 04:43:58,709 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2239.8354ms 304 
+INFO  2021-01-26 04:43:58,779 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {area = "app", action = "GetCurrentLoginInformations", controller = "Session"}. Executing action Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)
+WARN  2021-01-26 04:43:58,837 [41   ] Mvc.Authorization.AbpAuthorizationFilter - Abp.Authorization.AbpAuthorizationException: Current user did not login to the application!
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(IEnumerable`1 authorizeAttributes) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 42
+   at Abp.Authorization.AuthorizationHelper.CheckPermissions(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 107
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 56
+   at Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter.OnAuthorizationAsync(AuthorizationFilterContext context) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Authorization\AbpAuthorizationFilter.cs:line 53
+Abp.Authorization.AbpAuthorizationException: Current user did not login to the application!
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(IEnumerable`1 authorizeAttributes) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 42
+   at Abp.Authorization.AuthorizationHelper.CheckPermissions(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 107
+   at Abp.Authorization.AuthorizationHelper.AuthorizeAsync(MethodInfo methodInfo, Type type) in D:\Github\aspnetboilerplate\src\Abp\Authorization\AuthorizationHelper.cs:line 56
+   at Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter.OnAuthorizationAsync(AuthorizationFilterContext context) in D:\Github\aspnetboilerplate\src\Abp.AspNetCore\AspNetCore\Mvc\Authorization\AbpAuthorizationFilter.cs:line 53
+INFO  2021-01-26 04:43:58,898 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Authorization failed for the request at filter 'Abp.AspNetCore.Mvc.Authorization.AbpAuthorizationFilter'.
+INFO  2021-01-26 04:43:58,918 [51   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2324.9422ms 304 
+INFO  2021-01-26 04:43:58,985 [42   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 2506.6912ms 304 
+INFO  2021-01-26 04:43:59,046 [41   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-26 04:43:59,120 [41   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application) in 334.955ms
+INFO  2021-01-26 04:43:59,125 [41   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Sessions.SessionAppService.GetCurrentLoginInformations (Accounts.Application)'
+INFO  2021-01-26 04:43:59,129 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 533.1457ms 401 application/json; charset=utf-8
+INFO  2021-01-26 04:43:59,299 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/3.chunk.js  
+INFO  2021-01-26 04:43:59,308 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/6.chunk.js  
+INFO  2021-01-26 04:43:59,317 [39   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/7.chunk.js  
+INFO  2021-01-26 04:43:59,324 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/40.chunk.js  
+INFO  2021-01-26 04:43:59,358 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/9.chunk.js  
+INFO  2021-01-26 04:43:59,376 [4    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 65.6145ms 304 
+INFO  2021-01-26 04:43:59,390 [49   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/10.chunk.js  
+INFO  2021-01-26 04:43:59,630 [43   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 285.6078ms 304 
+INFO  2021-01-26 04:43:59,652 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 303.9157ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-26 04:43:59,762 [47   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 359.2858ms 304 
+INFO  2021-01-26 04:43:59,841 [49   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 290.3368ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-26 04:43:59,847 [55   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 358.8782ms 200 application/javascript; charset=UTF-8
+INFO  2021-01-26 04:43:59,890 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/media/userLayout-Backround.4c29894e.svg  
+INFO  2021-01-26 04:43:59,977 [61   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 78.4973ms 200 image/svg+xml; charset=UTF-8
+INFO  2021-01-26 04:44:00,238 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/33.chunk.js  
+INFO  2021-01-26 04:44:00,307 [51   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 101.2267ms 304 
+INFO  2021-01-26 04:44:00,671 [17   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/api/TokenAuth/GetExternalAuthenticationProviders  
+INFO  2021-01-26 04:44:00,681 [17   ] uthentication.JwtBearer.JwtBearerHandler - Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\Microsoft.IdentityModel.Tokens\Validators.cs:line 274
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 1182
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 739
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken) in C:\agent1\_work\109\s\src\System.IdentityModel.Tokens.Jwt\JwtSecurityTokenHandler.cs:line 723
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+INFO  2021-01-26 04:44:00,711 [17   ] uthentication.JwtBearer.JwtBearerHandler - JwtBearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: '[PII is hidden]', Current time: '[PII is hidden]'.
+INFO  2021-01-26 04:44:00,727 [17   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core)'
+INFO  2021-01-26 04:44:00,734 [57   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/static/js/33.chunk.js.map  
+INFO  2021-01-26 04:44:00,753 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "GetExternalAuthenticationProviders", controller = "TokenAuth", area = ""}. Executing action Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core)
+INFO  2021-01-26 04:44:01,396 [41   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 632.6854ms 200 application/json; charset=UTF-8
+INFO  2021-01-26 04:44:04,717 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core) - Validation state: Valid
+INFO  2021-01-26 04:44:04,765 [17   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 43.8908ms.
+INFO  2021-01-26 04:44:05,692 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-26 04:44:05,706 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core) in 4941.9489ms
+INFO  2021-01-26 04:44:05,741 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Controllers.TokenAuthController.GetExternalAuthenticationProviders (Accounts.Web.Core)'
+INFO  2021-01-26 04:44:05,764 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 5076.0952ms 200 application/json; charset=utf-8
+INFO  2021-01-26 04:44:09,447 [57   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/Intuit/ServiceBusListener  
+INFO  2021-01-26 04:44:09,463 [57   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)'
+INFO  2021-01-26 04:44:09,586 [57   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "ServiceBusListener", controller = "Intuit", area = ""}. Executing action Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)
+INFO  2021-01-26 04:44:13,567 [57   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core) - Validation state: Valid
+INFO  2021-01-26 04:46:07,466 [57   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core), returned result Microsoft.AspNetCore.Mvc.BadRequestObjectResult in 113893.0159ms.
+INFO  2021-01-26 04:46:08,448 [14   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2021-01-26 04:46:08,831 [14   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core) in 119030.6713ms
+INFO  2021-01-26 04:46:08,866 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)'
+INFO  2021-01-26 04:46:08,877 [14   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 119425.1713ms 400 application/json; charset=utf-8
+INFO  2021-01-26 04:46:12,840 [49   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/Intuit/ServiceBusListener  
+INFO  2021-01-26 04:46:12,859 [49   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)'
+INFO  2021-01-26 04:46:12,880 [49   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "ServiceBusListener", controller = "Intuit", area = ""}. Executing action Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)
+INFO  2021-01-26 04:46:12,918 [49   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core) - Validation state: Valid
+DEBUG 2021-01-26 04:54:54,783 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2021-01-26 04:54:55,119 [1    ] Abp.Modules.AbpModuleManager             - Found 17 ABP modules in total.
+DEBUG 2021-01-26 04:54:55,252 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.Web.Host.Startup.AccountsWebHostModule, Accounts.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,257 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsWebCoreModule, Accounts.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,257 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsCoreModule, Accounts.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,258 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: PQ.PQModule, PQ, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,258 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,259 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,259 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,259 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.AccountsApplicationModule, Accounts.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,260 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.FluentValidation.AbpFluentValidationModule, Abp.FluentValidation, Version=4.8.1.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,261 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,262 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Accounts.EntityFrameworkCore.AccountsEntityFrameworkModule, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,263 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,265 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,269 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,273 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,276 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,278 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.SignalR.AbpAspNetCoreSignalRModule, Abp.AspNetCore.SignalR, Version=4.9.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:54:55,293 [1    ] Abp.Modules.AbpModuleManager             - 17 modules loaded.
+DEBUG 2021-01-26 04:54:56,088 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:54:56,088 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:54:56,088 [1    ] o.Configuration.LanguageManagementConfig - Converted Accounts (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:54:56,089 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2021-01-26 04:54:58,224 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Accounts.EntityFrameworkCore.AccountsDbContext, Accounts.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2021-01-26 04:55:03,957 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2021-01-26 04:55:04,124 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2021-01-26 04:55:04,158 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2021-01-26 04:55:04,167 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Accounts
+DEBUG 2021-01-26 04:55:04,202 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2021-01-26 04:55:05,290 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2021-01-26 04:55:05,651 [1    ] rization.Users.UserTokenExpirationWorker - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker
+DEBUG 2021-01-26 04:55:05,851 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 27 classes define auto mapping attributes
+DEBUG 2021-01-26 04:55:05,851 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Models.TokenAuth.ExternalLoginProviderInfoModel
+DEBUG 2021-01-26 04:55:05,863 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.CreateUserDto
+DEBUG 2021-01-26 04:55:05,864 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Users.Dto.UserDto
+DEBUG 2021-01-26 04:55:05,864 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Timesheets.Dto.TimesheetListItemDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.TenantLoginInfoDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Sessions.Dto.UserLoginInfoDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Roles.Dto.PermissionDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.AttachmentDto
+DEBUG 2021-01-26 04:55:05,865 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.IhrmsProjectDto
+DEBUG 2021-01-26 04:55:05,866 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectDto
+DEBUG 2021-01-26 04:55:05,866 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.ProjectListItemDto
+DEBUG 2021-01-26 04:55:05,866 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Projects.Dto.UnsyncedProjectData
+DEBUG 2021-01-26 04:55:05,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.CreateTenantDto
+DEBUG 2021-01-26 04:55:05,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.MultiTenancy.Dto.TenantDto
+DEBUG 2021-01-26 04:55:05,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.IncoiceListItemDto
+DEBUG 2021-01-26 04:55:05,867 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.InvoiceDto
+DEBUG 2021-01-26 04:55:05,868 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Invoicing.Dto.LineItemDto
+DEBUG 2021-01-26 04:55:05,868 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.InvoiceCycleDto
+DEBUG 2021-01-26 04:55:05,868 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Terms.TermDto
+DEBUG 2021-01-26 04:55:05,868 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.AddUpdateHourLogEntryDto
+DEBUG 2021-01-26 04:55:05,868 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.HourLogEntries.Dto.HourLogEntryDto
+DEBUG 2021-01-26 04:55:05,869 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseDto
+DEBUG 2021-01-26 04:55:05,869 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Expenses.Dto.ExpenseTypeDto
+DEBUG 2021-01-26 04:55:05,869 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.EndClients.Dto.EndClientDto
+DEBUG 2021-01-26 04:55:05,870 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Consultants.Dto.ConsultantDto
+DEBUG 2021-01-26 04:55:05,870 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Accounts.Companies.Dto.CompanyDto
+INFO  2021-01-26 04:55:43,605 [1    ] Microsoft.AspNetCore.SpaServices         - Starting create-react-app server on port 60270...
+INFO  2021-01-26 04:55:44,883 [25   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/Intuit/ServiceBusListener  
+INFO  2021-01-26 04:55:44,890 [6    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2021-01-26 04:55:44,896 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 DEBUG http://localhost:21021/  0
+INFO  2021-01-26 04:55:45,389 [7    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 512.621ms 200 
+INFO  2021-01-26 04:55:46,465 [7    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:55:46,477 [25   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)'
+INFO  2021-01-26 04:55:57,733 [9    ] Microsoft.AspNetCore.SpaServices         - > reactjs@4.7.1 start E:\AccountsApp\src\Accounts.Web.Host\ClientApp
+> craco start
+
+i ∩╜ówds∩╜ú: Project is running at http://192.168.56.1/
+
+INFO  2021-01-26 04:55:57,750 [12   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: webpack output is served from 
+
+INFO  2021-01-26 04:56:05,388 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)
+INFO  2021-01-26 04:56:05,443 [25   ] ore.Mvc.Internal.ControllerActionInvoker - Route matched with {action = "ServiceBusListener", controller = "Intuit", area = ""}. Executing action Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)
+ERROR 2021-01-26 04:56:09,257 [18   ] Microsoft.AspNetCore.SpaServices         - Browserslist: caniuse-lite is outdated. Please run the following command: `npx browserslist --update-db`
+
+INFO  2021-01-26 04:56:13,976 [25   ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core) - Validation state: Valid
+INFO  2021-01-26 04:56:46,467 [25   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core), returned result Microsoft.AspNetCore.Mvc.OkResult in 32429.0453ms.
+INFO  2021-01-26 04:56:47,145 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executing action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) - Validation state: Valid
+INFO  2021-01-26 04:56:47,159 [7    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action method Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host), returned result Microsoft.AspNetCore.Mvc.RedirectResult in 7.0931ms.
+INFO  2021-01-26 04:56:49,973 [18   ] icrosoft.AspNetCore.Mvc.StatusCodeResult - Executing HttpStatusCodeResult, setting HTTP status code 200
+INFO  2021-01-26 04:56:50,104 [18   ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core) in 44630.6636ms
+INFO  2021-01-26 04:56:50,174 [18   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Controllers.IntuitController.ServiceBusListener (Accounts.Web.Core)'
+INFO  2021-01-26 04:56:50,240 [9    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /index.html.
+INFO  2021-01-26 04:56:50,255 [9    ] ore.Mvc.Internal.ControllerActionInvoker - Executed action Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host) in 44803.0798ms
+INFO  2021-01-26 04:56:50,273 [9    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Accounts.Web.Host.Controllers.HomeController.Index (Accounts.Web.Host)'
+INFO  2021-01-26 04:56:50,337 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 65451.7086ms 200 
+INFO  2021-01-26 04:56:50,439 [9    ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 65472.9427ms 302 
+INFO  2021-01-26 04:56:50,554 [18   ] soft.AspNetCore.Hosting.Internal.WebHost - Request starting HTTP/1.1 GET http://localhost:21021/index.html  
+INFO  2021-01-26 04:58:55,567 [27   ] Microsoft.AspNetCore.SpaServices         - i ∩╜ówds∩╜ú: Content not from webpack is served from E:\AccountsApp\src\Accounts.Web.Host\ClientApp\public
+i ∩╜ówds∩╜ú: 404s will fallback to /
+Starting the development server...
+
+Compiled with warnings.
+
+INFO  2021-01-26 04:58:55,716 [27   ] Microsoft.AspNetCore.SpaServices         - 
+./src/scenes/Timesheet/components/ProjectSummary.tsx
+
+INFO  2021-01-26 04:58:56,149 [27   ] Microsoft.AspNetCore.SpaServices         -   Line 101:32:  Expected to return a value in arrow function  array-callback-return
+
+./src/lib/axios/useAxios.ts
+  Line 101:6:  React Hook useEffect has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array    react-hooks/exhaustive-deps
+  Line 109:5:  React Hook useCallback has missing dependencies: 'axiosInstance', 'debounceRequest', 'finalConfig', and 'mergedOptions'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/index.tsx
+  Line 137:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 138:36:  Expected '===' and instead saw '=='  eqeqeq
+  Line 140:19:  Expected '===' and instead saw '=='  eqeqeq
+  Line 198:23:  Expected '===' and instead saw '=='  eqeqeq
+  Line 200:47:  Expected '===' and instead saw '=='  eqeqeq
+  Line 202:30:  Expected '===' and instead saw '=='  eqeqeq
+  Line 206:30:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetViewer.tsx
+  Line 168:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 182:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 195:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 200:46:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 262:41:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 265:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 287:42:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 288:40:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 297:107:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+
+./src/scenes/Login/index.tsx
+  Line 185:23:  The href attribute is required for an anchor to be keyboard accessible. Provide a valid, navigable address as the href value. If you cannot provide an href, but still need the element to resemble a link, use a button and change it with appropriate styles. Learn more: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/anchor-is-valid.md  jsx-a11y/anchor-is-valid
+
+./src/scenes/ProjectDetail/index.tsx
+  Line 19:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/stores/hourLogEntryStore.ts
+  Line 1:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/PayrollHours/index.tsx
+  Line 220:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 288:44:  Expected to return a value in arrow function                                                                                           array-callback-return
+  Line 381:6:   React Hook useEffect has missing dependencies: 'makeRequest', 'month', and 'year'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/TimesheetReview/components/Expenses.tsx
+  Line 28:8:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/models/Timesheet/projectHourLogEntries.ts
+  Line 31:79:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/Timesheet/components/Attachments.tsx
+  Line 32:10:  React Hook useEffect has missing dependencies: 'projectStore' and 'shouldLoad'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Login/OauthCallback.tsx
+  Line 32:8:  React Hook useEffect has missing dependencies: 'authenticationStore' and 'qs'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Timesheet/components/NewTimesheet.tsx
+  Line 37:8:   React Hook useEffect has missing dependencies: 'projectStore' and 'timesheetStore'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  Line 64:84:  Expected '===' and instead saw '=='                                                                                                     eqeqeq
+
+./src/components/hooks.tsx
+  Line 39:6:  React Hook useEffect has missing dependencies: 'func' and 'store'. Either include them or remove the dependency array. If 'func' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+./src/components/Domain/ProjectTable.tsx
+  Line 3:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/scenes/Projects/index.tsx
+  Line 40:6:  React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+./src/scenes/Companies/index.tsx
+  Line 41:6:   React Hook useEffect has a missing dependency: 'makeRequest'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  Line 65:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+  Line 84:62:  Expected '===' and instead saw '=='                                                                             eqeqeq
+
+./src/scenes/EndClients/index.tsx
+  Line 42:90:  Unexpected use of comma operator  no-sequences
+  Line 73:95:  Unexpected use of comma operator  no-sequences
+
+./src/components/Domain/InvoiceDetail.tsx
+  Line 46:10:   Unexpected empty object pattern                                                                                               no-empty-pattern
+  Line 180:27:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 186:46:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 207:87:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 262:62:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 280:64:  Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/components/Domain/ConsultantCreateUpdate.tsx
+  Line 4:8:  '_' is defined but never used  @typescript-eslint/no-unused-vars
+
+./src/stores/timesheetStore.ts
+  Line 54:107:  Expected '===' and instead saw '=='  eqeqeq
+
+./src/scenes/TimesheetReview/components/TimesheetList.tsx
+  Line 5:8:      '_' is defined but never used                                                                                                 @typescript-eslint/no-unused-vars
+  Line 156:71:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+  Line 166:111:  Using target="_blank" without rel="noopener noreferrer" is a security risk: see https://mathiasbynens.github.io/rel-noopener  react/jsx-no-target-blank
+  Line 180:43:   Expected '===' and instead saw '=='                                                                                           eqeqeq
+
+./src/scenes/TimesheetReview/index.tsx
+  Line 62:6:  React Hook useEffect has a missing dependency: 'refetch'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+ERROR 2021-01-26 04:58:56,876 [31   ] Microsoft.AspNetCore.Server.Kestrel      - Connection id "0HM61GPOK0B0L", Request id "0HM61GPOK0B0L:00000002": An unhandled exception was thrown by the application.
+System.TimeoutException: The create-react-app server did not start listening for requests within the timeout period of 50 seconds. Check the log output for error information.
+   at Microsoft.AspNetCore.SpaServices.Extensions.Util.TaskTimeoutExtensions.WithTimeout[T](Task`1 task, TimeSpan timeoutDelay, String message)
+   at Microsoft.AspNetCore.SpaServices.Extensions.Proxy.SpaProxy.PerformProxyRequest(HttpContext context, HttpClient httpClient, Task`1 baseUriTask, CancellationToken applicationStoppingToken, Boolean proxy404s)
+   at Microsoft.AspNetCore.Builder.SpaProxyingExtensions.<>c__DisplayClass2_0.<<UseProxyToSpaDevelopmentServer>b__0>d.MoveNext()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Localization.RequestLocalizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IISIntegration.IISMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpProtocol.ProcessRequests[TContext](IHttpApplication`1 application)
+INFO  2021-01-26 04:58:56,991 [31   ] soft.AspNetCore.Hosting.Internal.WebHost - Request finished in 126394.5966ms 500 

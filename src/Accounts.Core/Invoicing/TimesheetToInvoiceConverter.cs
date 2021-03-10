@@ -63,6 +63,7 @@ namespace Accounts.Invoicing
             invoice.DiscountValue = project.DiscountValue;
             invoice.DiscountAmount = Math.Round(discount, 2);
             invoice.Total = Math.Round(invoice.SubTotal - discount, 2);
+            invoice.Balance = Math.Round(invoice.SubTotal - discount, 2);
         }
     }
 }
