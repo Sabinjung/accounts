@@ -37,7 +37,7 @@ const StyledRow = styled(Row)`
 `;
 
 const StyledInput = styled(Input)`
-  width: 40px !important;
+  width: 53px !important;
 `;
 
 const StyledSelect = styled(Select)`

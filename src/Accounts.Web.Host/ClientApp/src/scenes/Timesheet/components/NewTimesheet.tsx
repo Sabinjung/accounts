@@ -55,8 +55,8 @@ export default inject(
     const selectedAttachmentList = (attachments && attachments.filter((x: AttachmentModel) => x.isSelected).map((a: AttachmentModel) => a.id)) || [];
 
     async function onCreateTimesheet() {
-      await timesheetStore.createTimesheet();
       onClose && onClose();
+      await timesheetStore.createTimesheet();
       onSave && onSave();
       notification.open({
         message: 'Success',
