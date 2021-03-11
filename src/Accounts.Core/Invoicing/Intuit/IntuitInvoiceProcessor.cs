@@ -120,7 +120,10 @@ namespace Accounts.Core.Invoicing.Intuit
                     SyncToken = existinginvoice.SyncToken,
                     domain = "QBO"
                 };
-
+                intuitInvoice.CustomerMemo = new IntuitData.MemoRef()
+                {
+                    Value = invoice.Memo
+                };
                 intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
                 {
                     name = invoice.Company.DisplayName,

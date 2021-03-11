@@ -90,6 +90,13 @@ export const TimesheetList = ({
   const [endTime, setEndTime] = useState();
   const [visible, setVisible] = useState(false);
 
+  predefinedQueries &&
+    predefinedQueries.map((item: any) => {
+      if (item.name === 'Invoiced') {
+        item.count = null;
+      }
+    });
+
   const handleDateRange = (dates: any, dateString: any) => {
     setStartTime(dateString[0]);
     setEndTime(dateString[1]);

@@ -143,6 +143,7 @@ namespace Accounts.Invoicing
             invoice.SubTotal = input.Invoice.SubTotal;
             invoice.Total = input.Invoice.Total;
             invoice.IsInvoiceEdited = true;
+            invoice.Memo = input.Invoice.Memo;
             invoice.Balance = input.Invoice.Total;
 
             if(input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)

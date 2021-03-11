@@ -50,6 +50,7 @@ namespace Accounts.Invoicing.Dto
         public string EInvoiceId { get; set; }
 
         public bool IsSendMail { get; set; }
+        public string Memo { get; set; }
 
         public List<LineItemDto> LineItems { get; set; }
 

@@ -43,12 +43,23 @@ const StyledInput = styled(Input)`
 const StyledSelect = styled(Select)`
   width: 107px !important;
 `;
+
+const StyledTextRow = styled(Row)`
+  margin-top: 10px;
+  color: rgba(0, 0, 0, 0.85);
+`;
+
+const StyledTextArea = styled(TextArea)`
+  width: 400px !important;
+`;
+
 let originalHours: any;
 const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [form, setForm]: any = useState({ rate: 0, discountValue: 0 });
   const [disType, setDisType] = useState(null);
+  const [intuitMemo, setIntuitMemo] = useState();
   const [logedHours, setLogedHours]: any = useState();
 
   const [{}, makeRequest] = useAxios(
@@ -93,6 +104,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     endClientName,
     isSendMail,
     id,
+    memo,
   } = invoice;
 
   let initialAmount = serviceTotal;
@@ -110,6 +122,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     setForm({ rate, discountValue });
     setDisType(discountType ? discountType : 2);
     setLogedHours(originalHours);
+    setIntuitMemo(memo);
     setIsEdit((prevState: boolean) => !prevState);
   };
 
@@ -231,6 +244,12 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
           <td>${TotalAmount}</td>
         </tr>
       </table>
+      <StyledTextRow type="flex" gutter={8}>
+        <Col>Memo:</Col>
+        <Col>
+          {isEdit ? <StyledTextArea maxLength={1000} rows={2} value={intuitMemo} onChange={(e: any) => setIntuitMemo(e.target.value)} /> : memo}
+        </Col>
+      </StyledTextRow>
       <List
         header={<b>Attachments</b>}
         dataSource={attachments}
@@ -362,6 +381,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
                     subTotal: sTotal,
                     total: TotalAmount,
                     isSendMail: isGranted('Invoicing.SubmitAndMail') && isSendMail,
+                    memo: intuitMemo,
                     id,
                   },
                   updatedHourLogEntries: logedHours,
