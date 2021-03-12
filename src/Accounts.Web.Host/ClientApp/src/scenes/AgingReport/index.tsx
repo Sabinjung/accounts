@@ -105,7 +105,6 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setCompa
       return (filteredData = [...filteredData, { key: item.key, days: item.days, children: newChildren }]);
     });
   const [expandedRows, setExpandedRows] = useState(allKeys);
-  debugger;
   const handleRowExpand = (record: any) => {
     if (expandedRows.includes(record.key)) {
       let rows = expandedRows.filter((key: number) => key !== record.key);

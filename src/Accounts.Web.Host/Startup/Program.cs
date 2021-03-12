@@ -1,5 +1,12 @@
-﻿using Microsoft.AspNetCore;
+﻿using Accounts.AzureServices;
+using Accounts.Core.Invoicing;
+using Accounts.Core.Invoicing.Intuit;
+using Intuit.Ipp.OAuth2PlatformClient;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace Accounts.Web.Host.Startup
 {

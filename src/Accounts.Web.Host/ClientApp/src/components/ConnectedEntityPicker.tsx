@@ -7,13 +7,14 @@ import { useHistory } from 'react-router';
 const { Option } = Select;
 const InputGroup = Input.Group;
 
-const ConnectedEntityPicker = observer(function <TStore>({ loader, selector, value, onChange, mapFunc, addUrl }: any) {
+const ConnectedEntityPicker = observer(function <TStore>({ loader, selector, value, onChange, mapFunc, addUrl, disabled }: any) {
   const history = useHistory();
   const store = useLoad<TStore>(loader);
   const dataSource = selector(store);
   return (
     <InputGroup compact style={{ display: 'flex', boxShadow: '0px 3px 10px #0000000D' }}>
       <Select
+        disabled={disabled}
         showSearch
         optionFilterProp="children"
         onChange={onChange}
@@ -28,7 +29,7 @@ const ConnectedEntityPicker = observer(function <TStore>({ loader, selector, val
           </Option>
         ))}
       </Select>
-      <Button icon="plus" onClick={() => history.push(addUrl)} />
+      {!disabled && <Button icon="plus" onClick={() => history.push(addUrl)} />}
     </InputGroup>
   );
 });

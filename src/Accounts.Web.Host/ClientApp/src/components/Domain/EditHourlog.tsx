@@ -22,7 +22,7 @@ const StyledHeader = styled.div`
 `;
 
 const StyledHour = styled.div`
-  padding: 9px;
+  padding: 9px 7px;
   &.is-holiday {
     background: #f6f6f6 !important;
   }
@@ -73,8 +73,9 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
   };
 
   const handleHourEdit = (e: any) => {
-    let val: any = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value);
-    filteredLogedHours[e.target.name].hours = val;
+    let val: number = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value);
+    let hour: number = val > 24 ? filteredLogedHours[e.target.name].hours : val;
+    filteredLogedHours[e.target.name].hours = hour;
     setLogedHours([...filteredLogedHours]);
   };
 

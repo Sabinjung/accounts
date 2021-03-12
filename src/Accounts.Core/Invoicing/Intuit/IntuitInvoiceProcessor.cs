@@ -120,7 +120,10 @@ namespace Accounts.Core.Invoicing.Intuit
                     SyncToken = existinginvoice.SyncToken,
                     domain = "QBO"
                 };
-
+                intuitInvoice.CustomerMemo = new IntuitData.MemoRef()
+                {
+                    Value = invoice.Memo
+                };
                 intuitInvoice.CustomerRef = new IntuitData.ReferenceType()
                 {
                     name = invoice.Company.DisplayName,
@@ -285,6 +288,12 @@ namespace Accounts.Core.Invoicing.Intuit
             intuitInvoice.Line = lineList.ToArray();
         }
 
+        public async Task<decimal> SyncInvoice(string invoiceId)
+        {
+            var invoice = new IntuitData.Invoice { Id = invoiceId };
+            var balance = IntuitDataProvider.FindById<IntuitData.Invoice>(invoice);//GetInvoices().Where(x => x.DocNumber.Equals(docNumber)).Select(y => y.Balance).FirstOrDefault();
+            return balance.Balance;
+        }
 
     }
 }

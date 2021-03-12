@@ -4,6 +4,7 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Accounts.Configuration;
 using Accounts.Authentication.External;
+using Accounts.AzureServices;
 
 namespace Accounts.Web.Host.Startup
 {
@@ -39,6 +40,9 @@ namespace Accounts.Web.Host.Startup
                     typeof(GoogleAuthProvider)
                 )
             );
+
+            var rmanager = IocManager.Resolve<IAzureServiceBus>();
+            rmanager.ServiceBusListener();
         }
     }
 }

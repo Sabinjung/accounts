@@ -35,7 +35,6 @@ const LoginCallback = inject(Stores.AuthenticationStore)(
       window.location.href = qs.get('state') || '/';
     }
 
-    debugger;
     if (authenticationResult.error) {
       return (
         <Result
