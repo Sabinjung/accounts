@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
+using Abp.Domain.Repositories;
 using Abp.UI;
 using Accounts.Blob;
 using Accounts.Intuit;
@@ -22,12 +23,13 @@ namespace Accounts.Core.Invoicing.Intuit
         private readonly IntuitDataProvider IntuitDataProvider;
 
         private readonly IAzureBlobService AzureBlobService;
+        private readonly IRepository<Project> ProjectRepository;
 
-        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider, IAzureBlobService azureBlobService)
+        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider, IAzureBlobService azureBlobService, IRepository<Project> projectRepo)
         {
             IntuitDataProvider = intuitDataProvider;
             AzureBlobService = azureBlobService;
-
+            ProjectRepository = projectRepo;
         }
 
         public async Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing)
@@ -154,6 +156,8 @@ namespace Accounts.Core.Invoicing.Intuit
             var consultant = invoice.Consultant;
             var client = invoice.EndClientName;
             var customFields = new List<IntuitData.CustomField>();
+            var project = ProjectRepository.FirstOrDefault(x => invoice.ProjectId == x.Id);
+            var projectMemoName = project.Memo;
 
             var customerFields = customer.CustomField;
 
@@ -165,6 +169,14 @@ namespace Accounts.Core.Invoicing.Intuit
             candidateCustomField.DefinitionId = "1";
 
             customFields.Add(candidateCustomField);
+
+            var memoCustomField = new IntuitData.CustomField();
+            memoCustomField.Name = "Memo";
+            memoCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
+            memoCustomField.AnyIntuitObject = projectMemoName;
+            memoCustomField.DefinitionId = "2";
+
+            customFields.Add(memoCustomField);
 
             var clientCustomField = new IntuitData.CustomField();
             clientCustomField.Name = "End Client Name";

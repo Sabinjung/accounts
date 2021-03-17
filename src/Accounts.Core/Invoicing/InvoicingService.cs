@@ -68,6 +68,7 @@ namespace Accounts.Core.Invoicing
             timesheet.StatusId = (int)TimesheetStatuses.Invoiced;
             timesheet.InvoiceGeneratedByUserId = userId;
             timesheet.InvoiceGeneratedDate = DateTime.UtcNow;
+        
 
             //return await Task.FromResult(referenceNo);
         }
