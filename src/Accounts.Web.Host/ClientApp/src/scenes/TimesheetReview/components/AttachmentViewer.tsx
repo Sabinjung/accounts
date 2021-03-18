@@ -70,7 +70,7 @@ export default class AttachmentViewer extends Component<any, any> {
     }
 
     return (
-      <div style={{ flex: 1, position: 'relative', height: '100%' }}>
+      <div style={{ flex: 1, position: 'relative', height: '80vh' }}>
         {type === 'application/pdf' ? (
           <object data={attachmentUrl} type={type} style={{ width: '100%', height: '100%' }}></object>
         ) : (

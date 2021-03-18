@@ -17,6 +17,8 @@ namespace Accounts.Companies.Dto
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
+        public string ExternalCustomerId { get; set; }
+        public string Notes { get; set; }
 
         public string TermName { get; set; }
 

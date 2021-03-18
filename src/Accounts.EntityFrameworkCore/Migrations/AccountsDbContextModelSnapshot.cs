@@ -1108,6 +1108,8 @@ namespace Accounts.Migrations
 
                     b.Property<long?>("LastModifierUserId");
 
+                    b.Property<string>("Notes");
+
                     b.Property<string>("PhoneNumber");
 
                     b.Property<int?>("TermId");
@@ -1589,6 +1591,8 @@ namespace Accounts.Migrations
                     b.Property<DateTime?>("LastModificationTime");
 
                     b.Property<long?>("LastModifierUserId");
+
+                    b.Property<string>("Memo");
 
                     b.Property<int?>("PaymentMethodId");
 

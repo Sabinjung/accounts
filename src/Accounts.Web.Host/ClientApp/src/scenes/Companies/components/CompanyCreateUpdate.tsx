@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Input, Checkbox, notification } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import CustomInput from './../../../components/Custom/CustomInput';
@@ -34,14 +34,24 @@ const StyledForm = styled(Form)`
 `;
 
 export type ICompanyFormProps = FormComponentProps<{}> & {
-  onCompanyAddedOrUpdated?: (data: any) => void;
-  consultant?: any;
+  onCompanyAddedOrUpdated?: () => void;
   onClose?: any;
+  company?: any;
+  isEdited?: boolean;
 };
 
-const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdated, consultant, onClose }) => {
+const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdated, company, onClose, isEdited }) => {
   const [isSameAddress, setIsSameAddress] = useState(true);
   const { getFieldDecorator, validateFields } = form;
+
+  useEffect(() => {
+    let IsAddressSame =
+      company && (company.shippingState || company.shippingStreet || company.shippingZipCode || company.shippingCity || company.shippingCountry)
+        ? false
+        : true;
+    setIsSameAddress(IsAddressSame);
+  }, [company]);
+
   return (
     <React.Fragment>
       <StyledForm>
@@ -138,7 +148,9 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
             </Row>
           )}
         </Form.Item>
-        <Form.Item label="Notes">{getFieldDecorator('notes')(<StyledTextArea allowClear rows={2} placeholder="Comment..." />)}</Form.Item>
+        <Form.Item label="Notes">
+          {getFieldDecorator('notes')(<StyledTextArea maxLength={4000} allowClear rows={2} placeholder="Comment..." />)}
+        </Form.Item>
       </StyledForm>
 
       <div
@@ -161,16 +173,16 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
           Cancel
         </CustomCancleButton>
         <ActionButton
-          permissions={['Company.Create']}
+          permissions={[isEdited ? 'Company.Edit' : 'Company.Create']}
           method="Post"
           style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
-          url="/api/services/app/Intuit/CreateCompany"
+          url={`/api/services/app/Intuit/${isEdited ? 'EditCompany' : 'CreateCompany'}`}
           onSuccess={(response: any) => {
             notification.open({
               message: 'Success',
-              description: 'Company created successfully!',
+              description: isEdited ? 'Updated Successfully' : 'Created Successfully',
             });
-            onCompanyAddedOrUpdated && onCompanyAddedOrUpdated(response.data.result);
+            onCompanyAddedOrUpdated && onCompanyAddedOrUpdated();
           }}
           onSubmit={({ setFormData, setIsReady }: any) => {
             validateFields((errors, values: any) => {
@@ -190,6 +202,7 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
                 } = values;
                 if (isSameAddress) {
                   setFormData({
+                    externalCustomerId: company && company.externalCustomerId,
                     shippingCountry: billingCountry,
                     shippingCity: billingCity,
                     shippingZipCode: billingZipCode,
@@ -204,6 +217,7 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
                   });
                 } else {
                   setFormData({
+                    externalCustomerId: company && company.externalCustomerId,
                     billingCountry,
                     billingCity,
                     billingZipCode,
@@ -249,12 +263,12 @@ const WrappedCompanyForm = Form.create<ICompanyFormProps>({
       billingCountry: Form.createFormField({ value: company.billingCountry }),
       billingCity: Form.createFormField({ value: company.billingCity }),
       billingZipCode: Form.createFormField({ value: company.billingZipCode }),
-      billingStreet: Form.createFormField({ value: company.billingstreet }),
+      billingStreet: Form.createFormField({ value: company.billingStreet }),
       billingState: Form.createFormField({ value: company.billingState }),
       shippingCountry: Form.createFormField({ value: company.shippingCountry }),
       shippingCity: Form.createFormField({ value: company.shippingCity }),
       shippingZipCode: Form.createFormField({ value: company.shippingZipCode }),
-      shippingStreet: Form.createFormField({ value: company.shippingstreet }),
+      shippingStreet: Form.createFormField({ value: company.shippingStreet }),
       shippingState: Form.createFormField({ value: company.shippingState }),
       paymentMethod: Form.createFormField({ value: company.paymentMethod }),
       terms: Form.createFormField({ value: company.terms }),
