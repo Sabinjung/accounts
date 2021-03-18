@@ -106,7 +106,8 @@ namespace Accounts.Core.Invoicing.Intuit
                 var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
                 var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
                 var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
-
+                var items = new IntuitData.Item();
+                                
                 var intuitInvoice = new IntuitData.Invoice
                 {
                     Deposit = 0,
@@ -225,26 +226,52 @@ namespace Accounts.Core.Invoicing.Intuit
             lineList.Add(line);
 
 
+
+
             //Expenses
             for (var i = 0; i < invoice.LineItems.Count(); i++)
             {
-                
+
                 var e = invoice.LineItems.ToList()[i];
                 var expenseLine = new IntuitData.Line();
+
+
+
+
                 expenseLine.Id = GetLineNum(true);
                 expenseLine.LineNum = GetLineNum();
-                expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
                 expenseLine.DetailTypeSpecified = true;
                 expenseLine.Amount = e.Amount;
                 expenseLine.AmountSpecified = true;
                 expenseLine.Description = e.Description;
-                expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
+                var serviceItem = IntuitDataProvider.GetItems().FirstOrDefault(x => x.Name == e.ExpenseType.Name);
+
+                if (serviceItem == null)
                 {
-                    ServiceDate = e.ServiceDt,
-                    ServiceDateSpecified = true,
-
-
-                };
+                    var expenseId = IntuitDataProvider.CreateExpense(e.ExpenseType.Name);
+                    expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                    {
+                        ServiceDate = e.ServiceDt,
+                        ServiceDateSpecified = true,
+                        ItemRef = new IntuitData.ReferenceType()
+                        {
+                            Value = expenseId
+                        }
+                    };
+                }
+                else
+                {
+                    expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                    {
+                        ServiceDate = e.ServiceDt,
+                        ServiceDateSpecified = true,
+                        ItemRef = new IntuitData.ReferenceType()
+                        {
+                            Value = serviceItem.Id
+                        }
+                    };
+                }
                 lineList.Add(expenseLine);
 
             }
@@ -257,8 +284,6 @@ namespace Accounts.Core.Invoicing.Intuit
             subTotalLine.DetailTypeSpecified = true;
             subTotalLine.Amount = invoice.SubTotal;
             lineList.Add(subTotalLine);
-
-
 
             //Discount
             var discountLine = new IntuitData.Line();
@@ -277,7 +302,6 @@ namespace Accounts.Core.Invoicing.Intuit
                 discountLineDetail.DiscountPercentSpecified = true;
                 discountLineDetail.PercentBased = true;
                 discountLineDetail.PercentBasedSpecified = true;
-
             }
             else
             {
@@ -286,8 +310,6 @@ namespace Accounts.Core.Invoicing.Intuit
                 discountLineDetail.PercentBased = false;
 
             }
-
-
             discountLine.AnyIntuitObject = discountLineDetail;
             discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
             {

@@ -136,7 +136,6 @@ export default () => {
                       }}
                       project={store.newProject}
                       onProjectAdded={() => {
-                        onClose();
                         makeRequest({});
                       }}
                     />

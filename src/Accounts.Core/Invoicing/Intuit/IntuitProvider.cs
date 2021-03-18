@@ -51,6 +51,36 @@ namespace Accounts.Intuit
             return customers;
         }
 
+        public IEnumerable<Item> GetItems()
+        {
+            var serviceContext = GetServiceContext();
+
+            var itemService = new QueryService<Item>(serviceContext);
+            var items = itemService.ExecuteIdsQuery("SELECT * FROM Item maxresults 1000");
+            return items;
+        }
+
+        public string CreateExpense(string expenseName)
+        {
+          var serviceContext = GetServiceContext();
+          DataService service = new DataService(serviceContext);
+          Item expense = new Item
+          {
+              TrackQtyOnHand = true,
+              Name = expenseName,
+              QtyOnHand = 0,
+              IncomeAccountRef = new ReferenceType()
+              { Value="1", name = "Services" },
+              AssetAccountRef = new ReferenceType() { name = "Inventory Assest" },
+              InvStartDate = DateTime.Now,
+              TypeSpecified = true,
+              Type = ItemTypeEnum.Service,
+              ExpenseAccountRef = new ReferenceType() { name = "Cost", Value = "10" }
+            };
+            var result  = service.Add<Item>(expense);
+            return result.Id;
+        }
+
         public IEnumerable<PaymentMethod> GetPaymentMethod()
         {
             var serviceContext = GetServiceContext();
