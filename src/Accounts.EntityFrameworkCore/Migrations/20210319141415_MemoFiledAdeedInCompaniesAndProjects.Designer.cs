@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Accounts.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    [Migration("20210315194753_added notes field in company")]
-    partial class addednotesfieldincompany
+    [Migration("20210319141415_MemoFiledAdeedInCompaniesAndProjects")]
+    partial class MemoFiledAdeedInCompaniesAndProjects
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
