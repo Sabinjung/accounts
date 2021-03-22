@@ -114,6 +114,7 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             />
           )}
         </Form.Item>
+        <Form.Item label="Project Memo">{getFieldDecorator('memo')(<CustomInput maxLength={31} />)}</Form.Item>
         <Form.Item label="Term">
           {getFieldDecorator('termId', {
             rules: [{ required: true, message: 'Select correct Term' }],
@@ -175,10 +176,12 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           style={{ height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
           url={`/api/services/app/Project/${project && project.id ? 'Update' : 'Create'}`}
           onSuccess={(response: any) => {
+            onClose();
             notification.open({
               message: 'Success',
               description: project && project.id ? 'Project successfully updated.' : 'Project successfully created.',
             });
+            project = {};
             onProjectAdded && onProjectAdded();
           }}
           onSubmit={({ setFormData, setIsReady }: any) => {
@@ -222,6 +225,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       companyId: Form.createFormField({ value: project.companyId }),
       termId: Form.createFormField({ value: project.termId }),
       invoiceCycleId: Form.createFormField({ value: project.invoiceCycleId }),
+      memo: Form.createFormField({ value: project.memo }),
       startDt: Form.createFormField({ value: moment(project.startDt) }),
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
       consultantId: Form.createFormField({ value: project.consultantId }),
@@ -242,6 +246,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     const { project } = props;
     project.companyId = returnVal('companyId');
     project.termId = returnVal('termId');
+    project.memo = returnVal('memo');
     project.invoiceCycleId = returnVal('invoiceCycleId');
     project.startDt = returnVal('startDt');
     project.endDt = returnVal('endDt');

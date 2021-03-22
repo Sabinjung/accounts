@@ -71,6 +71,19 @@ namespace Accounts
                        .ForMember(x => x.ConsultantName, y => y.MapFrom(z => $"{z.Consultant.FirstName} {z.Consultant.LastName}"))
                        .ForMember(x => x.CompanyName, y => y.MapFrom(z => $"{z.Company.DisplayName}"));
 
+                    cfg.CreateMap<UpdateInvoiceInputDto, Invoice>()
+                    .ForMember(x => x.Rate, y => y.MapFrom(z => z.Invoice.Rate))
+                    .ForMember(x => x.TotalHours, y => y.MapFrom(z => z.Invoice.TotalHours))
+                    .ForMember(x => x.DiscountType, y => y.MapFrom(z => z.Invoice.DiscountType))
+                    .ForMember(x => x.DiscountValue, y => y.MapFrom(z => z.Invoice.DiscountValue))
+                    .ForMember(x => x.ServiceTotal, y => y.MapFrom(z => z.Invoice.ServiceTotal))
+                    .ForMember(x => x.DiscountAmount, y => y.MapFrom(z => z.Invoice.DiscountAmount))
+                    .ForMember(x => x.SubTotal, y => y.MapFrom(z => z.Invoice.SubTotal))
+                    .ForMember(x => x.Total, y => y.MapFrom(z => z.Invoice.Total))
+                    .ForMember(x => x.Memo, y => y.MapFrom(z => z.Invoice.Memo))
+                    .ForMember(x => x.Balance, y => y.MapFrom(z => z.Invoice.Total));
+
+
                     cfg.CreateMap<Project, UnsyncedProjectData>()
                         .ForMember("FirstName", x => x.MapFrom(y => y.Consultant.FirstName))
                         .ForMember("LastName", x => x.MapFrom(y => y.Consultant.LastName))
@@ -99,7 +112,29 @@ namespace Accounts
                          .ForMember("PhoneNumber", x => x.MapFrom(y => y.PrimaryPhone != null ? y.PrimaryPhone.FreeFormNumber : string.Empty));
 
                     cfg.CreateMap<IntuitCompanyDto, IntuitData.Customer>()
-                      .ConvertUsing<ConvertCompanyToCustomer>();
+                       .ConvertUsing<ConvertCompanyToCustomer>();
+
+                    cfg.CreateMap<IntuitData.Customer, IntuitCompanyDto>()
+                          .ForMember("FirstName", x => x.MapFrom(y => y.GivenName))
+                          .ForMember("CompanyName", x => x.MapFrom(y => y.CompanyName == null ? y.DisplayName : y.CompanyName))
+                          .ForMember("Email", x => x.MapFrom(y => y.PrimaryEmailAddr.Address))
+                          .ForMember("LastName", x => x.MapFrom(y => y.FamilyName))
+                          .ForMember("PhoneNumber", x => x.MapFrom(y => y.PrimaryPhone.FreeFormNumber))
+                          .ForMember("MobileNumber", x => x.MapFrom(y => y.Mobile.FreeFormNumber))
+                          .ForMember("PaymentMethod", x => x.MapFrom(y => y.PaymentMethodRef.Value))
+                          .ForMember("Terms", x => x.MapFrom(y => y.SalesTermRef.Value))
+                          .ForMember("BillingCountry", x => x.MapFrom(y => y.BillAddr.Country))
+                          .ForMember("BillingCity", x => x.MapFrom(y => y.BillAddr.City))
+                          .ForMember("BillingZipCode", x => x.MapFrom(y => y.BillAddr.PostalCode))
+                          .ForMember("BillingState", x => x.MapFrom(y => y.BillAddr.CountrySubDivisionCode))
+                          .ForMember("BillingStreet", x => x.MapFrom(y => y.BillAddr.Line1))
+                          .ForMember("ShippingCountry", x => x.MapFrom(y => y.ShipAddr.Country))
+                          .ForMember("ShippingCity", x => x.MapFrom(y => y.ShipAddr.City))
+                          .ForMember("ShippingZipCode", x => x.MapFrom(y => y.ShipAddr.PostalCode))
+                          .ForMember("ShippingState", x => x.MapFrom(y => y.ShipAddr.CountrySubDivisionCode))
+                          .ForMember("ShippingStreet", x => x.MapFrom(y => y.ShipAddr.Line1))
+                          .ForMember("Notes", x => x.MapFrom(y => y.Notes));
+                          
 
                     cfg.CreateMap<IntuitData.Term, Term>()
                         .ForMember("ExternalTermId", x => x.MapFrom(y => y.Id))

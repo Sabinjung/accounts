@@ -38,6 +38,8 @@ namespace Accounts.Authorization
             var companyPermission = context.CreatePermission("Company", L("Company"));
             companyPermission.CreateChildPermission("Company.Sync", L("Company.Sync"));
             companyPermission.CreateChildPermission("Company.Create", L("Company.Create"));
+            companyPermission.CreateChildPermission("Company.Edit", L("Company.Edit"));
+
 
             // Project Permissions
             var projectPermission = context.CreatePermission("Project", L("Project"));

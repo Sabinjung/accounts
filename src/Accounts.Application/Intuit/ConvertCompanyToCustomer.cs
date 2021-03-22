@@ -14,6 +14,7 @@ namespace Accounts.Intuit
         {
             var customer = new IntuitData.Customer
             {
+                Id = source.ExternalCustomerId,
                 CompanyName = source.CompanyName,
                 DisplayName = source.CompanyName,
                 FullyQualifiedName = source.CompanyName,

@@ -6,6 +6,7 @@ namespace Accounts.Intuit.Dto
 {
     public class IntuitCompanyDto
     {
+        public string ExternalCustomerId { get; set; }
         public string CompanyName { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }

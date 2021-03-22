@@ -40,5 +40,7 @@ namespace Accounts.Expenses
             var result = await query.ExecuteAsync<ExpenseDto>(queryParameter);
             return result;
         }
+
+       
     }
 }

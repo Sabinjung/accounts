@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Portal } from 'react-portal';
 import { ProjectTable } from '../../components/Domain/ProjectTable';
 import { Row, Col, Card } from 'antd';
@@ -29,17 +29,20 @@ export default () => {
   const [invoiceCycleId, setInvoiceCycleId] = useState(undefined);
   const [{ data, loading }, makeRequest] = useAxios({
     url: 'api/services/app/project/search',
-    params: { isActive: true, name: queryName, TermId: termFilterText, InvoiceCyclesId: invoiceCycleId },
+    params: {
+      isActive: true,
+      name: queryName,
+      TermId: termFilterText,
+      InvoiceCyclesId: invoiceCycleId,
+      pageSize,
+      pageNumber: skipCount,
+      keyword: searchText,
+    },
   });
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
   const { results: dataSource, recordCounts: predefinedQueries, recordCount } = result;
 
   const history = useHistory();
-  useEffect(() => {
-    makeRequest({
-      params: { pageSize, pageNumber: skipCount, keyword: searchText, name: queryName, TermId: termFilterText, InvoiceCyclesId: invoiceCycleId },
-    });
-  }, [searchText, skipCount, queryName, termFilterText, invoiceCycleId]);
 
   const handleTermFilter = (value: any) => {
     setTermFilterText(value);
@@ -94,7 +97,7 @@ export default () => {
             </Col>
             <Col>
               <EntityPicker
-                url="api/services/app/Term/GetAll"
+                url="api/services/app/Term/GetAll?MaxResultCount=25"
                 size="large"
                 mapFun={(r) => ({ value: r.id, text: `${r.name}` })}
                 style={{ width: '180px', marginRight: '20px' }}
@@ -124,19 +127,16 @@ export default () => {
           />
           <Portal>
             <Authorize permissions={['Project.Create']}>
-              <RouteableDrawer path={[`/projects/new`]} width={'30vw'} title="Add New Project">
+              <RouteableDrawer path={[`/projects/new`]} width={'30vw'} title="Add New Project" clearValues={() => (store.newProject = {})}>
                 {({ onClose }: any) => {
                   return (
                     <ProjectCreateUpdate
                       onClose={() => {
                         onClose();
-                        store.newProject = {};
                       }}
                       project={store.newProject}
                       onProjectAdded={() => {
-                        onClose();
                         makeRequest({});
-                        store.newProject = {};
                       }}
                     />
                   );
@@ -144,7 +144,7 @@ export default () => {
               </RouteableDrawer>
             </Authorize>
             <Authorize permissions={['Project.Update']}>
-              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Project">
+              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Project" clearValues={() => (store.newProject = {})}>
                 {({
                   match: {
                     params: { projectId },
@@ -160,13 +160,10 @@ export default () => {
                           <ProjectCreateUpdate
                             onClose={() => {
                               onClose();
-                              store.newProject = {};
                             }}
                             project={store.newProject}
                             onProjectAdded={() => {
-                              onClose();
                               makeRequest({});
-                              store.newProject = {};
                             }}
                           />
                         );

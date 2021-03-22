@@ -47,6 +47,7 @@ namespace Accounts.Intuit
             InvoiceRepository = invoiceRepository;
             Mapper = mapper;
             OAuth2Client = oAuth2CLient;
+
         }
 
 
@@ -90,6 +91,57 @@ namespace Accounts.Intuit
                     PaymentMethodRepository.InsertOrUpdate(updatedTerm);
                 }
             }
+        }
+
+        [HttpGet]
+        public async Task<IntuitCompanyDto> GetCompany(string externalCustomerId)
+        {
+            var intuitCompanyDto = new IntuitCompanyDto();
+
+            var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+            if(isConnectionEstablished)
+            {
+                var customer = IntuitDataProvider.GetCustomers().FirstOrDefault(x => x.Id == externalCustomerId);
+                if (customer != null)
+                {
+                    intuitCompanyDto.ExternalCustomerId = externalCustomerId;
+                    var companyDto = Mapper.Map(customer, intuitCompanyDto);
+
+                    return companyDto;
+
+                }
+            }
+            throw new UserFriendlyException("Warnings!!", "No Company Found.");
+
+        }
+        [HttpPost]
+        [AbpAuthorize("Company.Edit")]
+        public async Task EditCompany(IntuitCompanyDto data)
+        {
+            
+                var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
+                if(isConnectionEstablished)
+                {
+                    var cus = new IntuitData.Customer { Id = data.ExternalCustomerId };
+                    var existingCompany = await CompanyRepository.FirstOrDefaultAsync(x => x.ExternalCustomerId == cus.Id);
+                    var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
+                    var updatedCus = Mapper.Map(data, customer);
+                    updatedCus.SyncToken = customer.SyncToken;
+                    IntuitDataProvider.Update(updatedCus);
+
+                    var updatedDatabaseCompany = Mapper.Map(updatedCus, existingCompany);
+                    if (updatedCus.SalesTermRef != null)
+                    {
+                    var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == updatedCus.SalesTermRef.Value);
+                    if (existingTerm != null)
+                    {
+                        updatedDatabaseCompany.Term = existingTerm;
+                    }
+                }
+                CompanyRepository.InsertOrUpdate(updatedDatabaseCompany);
+            }
+
+
         }
 
         [HttpPost]

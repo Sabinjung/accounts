@@ -44,7 +44,7 @@ function calculate() {
 }
 
 const RouteableDrawer = (props: any) => {
-  const { title, exact, ...rest } = props;
+  const { title, exact, clearValues, ...rest } = props;
   return (
     <Route path={props.path} exact={exact}>
       {(para) => {
@@ -64,6 +64,7 @@ const RouteableDrawer = (props: any) => {
           closable: true,
 
           onClose: () => {
+            clearValues && clearValues();
             para.history.goBack();
           },
         };

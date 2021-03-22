@@ -134,19 +134,22 @@ namespace Accounts.Invoicing
             var timesheet = TimesheetRepository.GetAll().Where(x => x.InvoiceId == input.Invoice.Id).FirstOrDefault();
 
             var invoice = await Repository.GetAsync(input.Invoice.Id);
-            invoice.Rate = input.Invoice.Rate;
-            invoice.TotalHours = input.Invoice.TotalHours;
-            invoice.DiscountType = input.Invoice.DiscountType;
-            invoice.DiscountValue = input.Invoice.DiscountValue;
-            invoice.ServiceTotal = input.Invoice.ServiceTotal;
-            invoice.DiscountAmount = input.Invoice.DiscountAmount;
-            invoice.SubTotal = input.Invoice.SubTotal;
-            invoice.Total = input.Invoice.Total;
-            invoice.IsInvoiceEdited = true;
-            invoice.Memo = input.Invoice.Memo;
-            invoice.Balance = input.Invoice.Total;
+            Mapper.Map(input, invoice);
 
-            if(input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
+            //invoice.Rate = input.Invoice.Rate;
+            //invoice.TotalHours = input.Invoice.TotalHours;
+            //invoice.DiscountType = input.Invoice.DiscountType;
+            //invoice.DiscountValue = input.Invoice.DiscountValue;
+            //invoice.ServiceTotal = input.Invoice.ServiceTotal;
+            //invoice.DiscountAmount = input.Invoice.DiscountAmount;
+            //invoice.SubTotal = input.Invoice.SubTotal;
+            //invoice.Total = input.Invoice.Total;
+            //invoice.Memo = input.Invoice.Memo;
+            //invoice.Balance = input.Invoice.Total;
+
+            invoice.IsInvoiceEdited = true;
+
+            if (input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
             {
                 timesheet.EndDt = input.UpdatedHourLogEntries.Max(x => x.Day);
                 invoice.Description = "Billing Period " + input.UpdatedHourLogEntries.Min(x => x.Day).ToShortDateString() + " - " + input.UpdatedHourLogEntries.Max(x => x.Day).ToShortDateString();

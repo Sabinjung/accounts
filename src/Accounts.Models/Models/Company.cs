@@ -15,6 +15,7 @@ namespace Accounts.Models
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
+        public string Notes { get; set; }
 
         public int? TermId { get; set; }
 

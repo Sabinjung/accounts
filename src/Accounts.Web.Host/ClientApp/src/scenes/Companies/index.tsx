@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-import { Card, Row, Col, notification } from 'antd';
-
+import { Card, Row, Col, notification, Tooltip } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
 import { L } from '../../lib/abpUtility';
 import ActionButton from '../../components/ActionButton';
@@ -15,25 +13,17 @@ import { Portal } from 'react-portal';
 import RouteableDrawer from './../../components/RouteableDrawer';
 import CompanyCreateUpdate from './components/CompanyCreateUpdate';
 import Authorize from '../../components/Authorize';
+import CustomEditButton from './../../components/Custom/CustomEditButton';
+import { Get } from './../../lib/axios/index';
+import styled from '@emotion/styled';
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'displayName',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-  },
-  {
-    title: 'Phone Number',
-    dataIndex: 'phoneNumber',
-  },
-  {
-    title: 'Term',
-    dataIndex: 'termName',
-  },
-];
+const StyledSpan = styled.span`
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+`;
 
 export default () => {
   const history = useHistory();
@@ -50,6 +40,49 @@ export default () => {
   const {
     result: { items, totalCount },
   } = data || { result: { items: [], totalCount: 0 } };
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'displayName',
+      key: 'displayName',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Phone Number',
+      dataIndex: 'phoneNumber',
+      key: 'phoneNumber',
+    },
+    {
+      title: 'Term',
+      dataIndex: 'termName',
+      key: 'termName',
+    },
+    {
+      title: 'Notes',
+      dataIndex: 'notes',
+      key: 'notes',
+      render: (val: string) => (
+        <Tooltip title={val}>
+          <StyledSpan>{val}</StyledSpan>
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      render: (record: any) => (
+        <Authorize permissions={['Endclient.Update']}>
+          <CustomEditButton icon="edit" type="primary" onClick={() => history.push(`/companies/${record.externalCustomerId}/edit`)} />
+        </Authorize>
+      ),
+    },
+  ];
+
   return (
     <Card>
       <Row type="flex" justify="space-between">
@@ -157,6 +190,32 @@ export default () => {
             }}
           </RouteableDrawer>
         </Authorize>
+        <RouteableDrawer path={['/companies/:externalCustomerId/edit']} width={'40vw'} title="End Client" exact={true}>
+          {({
+            match: {
+              params: { externalCustomerId },
+            },
+            onClose,
+          }: any) => {
+            return (
+              <Get url="/api/services/app/Intuit/GetCompany" params={{ externalCustomerId: externalCustomerId }}>
+                {({ error, data, isLoading }: any) => {
+                  return (
+                    <CompanyCreateUpdate
+                      isEdited={true}
+                      onClose={onClose}
+                      company={data && data.result}
+                      onCompanyAddedOrUpdated={() => {
+                        onClose();
+                        makeRequest({});
+                      }}
+                    />
+                  );
+                }}
+              </Get>
+            );
+          }}
+        </RouteableDrawer>
       </Portal>
     </Card>
   );

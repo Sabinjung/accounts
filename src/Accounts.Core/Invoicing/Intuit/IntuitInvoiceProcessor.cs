@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Dependency;
+using Abp.Domain.Repositories;
 using Abp.UI;
 using Accounts.Blob;
 using Accounts.Intuit;
@@ -22,12 +23,13 @@ namespace Accounts.Core.Invoicing.Intuit
         private readonly IntuitDataProvider IntuitDataProvider;
 
         private readonly IAzureBlobService AzureBlobService;
+        private readonly IRepository<Project> ProjectRepository;
 
-        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider, IAzureBlobService azureBlobService)
+        public IntuitInvoiceProcessor(IntuitDataProvider intuitDataProvider, IAzureBlobService azureBlobService, IRepository<Project> projectRepo)
         {
             IntuitDataProvider = intuitDataProvider;
             AzureBlobService = azureBlobService;
-
+            ProjectRepository = projectRepo;
         }
 
         public async Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing)
@@ -104,7 +106,8 @@ namespace Accounts.Core.Invoicing.Intuit
                 var customer = IntuitDataProvider.FindById<IntuitData.Customer>(cus);
                 var inv = new IntuitData.Invoice { Id = invoice.QBOInvoiceId };
                 var existinginvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
-
+                var items = new IntuitData.Item();
+                                
                 var intuitInvoice = new IntuitData.Invoice
                 {
                     Deposit = 0,
@@ -154,6 +157,8 @@ namespace Accounts.Core.Invoicing.Intuit
             var consultant = invoice.Consultant;
             var client = invoice.EndClientName;
             var customFields = new List<IntuitData.CustomField>();
+            var project = ProjectRepository.FirstOrDefault(x => invoice.ProjectId == x.Id);
+            var projectMemoName = project.Memo;
 
             var customerFields = customer.CustomField;
 
@@ -165,6 +170,14 @@ namespace Accounts.Core.Invoicing.Intuit
             candidateCustomField.DefinitionId = "1";
 
             customFields.Add(candidateCustomField);
+
+            var memoCustomField = new IntuitData.CustomField();
+            memoCustomField.Name = "Memo";
+            memoCustomField.Type = IntuitData.CustomFieldTypeEnum.StringType;
+            memoCustomField.AnyIntuitObject = projectMemoName;
+            memoCustomField.DefinitionId = "2";
+
+            customFields.Add(memoCustomField);
 
             var clientCustomField = new IntuitData.CustomField();
             clientCustomField.Name = "End Client Name";
@@ -213,26 +226,52 @@ namespace Accounts.Core.Invoicing.Intuit
             lineList.Add(line);
 
 
+
+
             //Expenses
             for (var i = 0; i < invoice.LineItems.Count(); i++)
             {
-                
+
                 var e = invoice.LineItems.ToList()[i];
                 var expenseLine = new IntuitData.Line();
+
+
+
+
                 expenseLine.Id = GetLineNum(true);
                 expenseLine.LineNum = GetLineNum();
-                expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
                 expenseLine.DetailTypeSpecified = true;
                 expenseLine.Amount = e.Amount;
                 expenseLine.AmountSpecified = true;
                 expenseLine.Description = e.Description;
-                expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                expenseLine.DetailType = IntuitData.LineDetailTypeEnum.SalesItemLineDetail;
+                var serviceItem = IntuitDataProvider.GetItems().FirstOrDefault(x => x.Name == e.ExpenseType.Name);
+
+                if (serviceItem == null)
                 {
-                    ServiceDate = e.ServiceDt,
-                    ServiceDateSpecified = true,
-
-
-                };
+                    var expenseId = IntuitDataProvider.CreateExpense(e.ExpenseType.Name);
+                    expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                    {
+                        ServiceDate = e.ServiceDt,
+                        ServiceDateSpecified = true,
+                        ItemRef = new IntuitData.ReferenceType()
+                        {
+                            Value = expenseId
+                        }
+                    };
+                }
+                else
+                {
+                    expenseLine.AnyIntuitObject = new IntuitData.SalesItemLineDetail()
+                    {
+                        ServiceDate = e.ServiceDt,
+                        ServiceDateSpecified = true,
+                        ItemRef = new IntuitData.ReferenceType()
+                        {
+                            Value = serviceItem.Id
+                        }
+                    };
+                }
                 lineList.Add(expenseLine);
 
             }
@@ -245,8 +284,6 @@ namespace Accounts.Core.Invoicing.Intuit
             subTotalLine.DetailTypeSpecified = true;
             subTotalLine.Amount = invoice.SubTotal;
             lineList.Add(subTotalLine);
-
-
 
             //Discount
             var discountLine = new IntuitData.Line();
@@ -265,7 +302,6 @@ namespace Accounts.Core.Invoicing.Intuit
                 discountLineDetail.DiscountPercentSpecified = true;
                 discountLineDetail.PercentBased = true;
                 discountLineDetail.PercentBasedSpecified = true;
-
             }
             else
             {
@@ -274,8 +310,6 @@ namespace Accounts.Core.Invoicing.Intuit
                 discountLineDetail.PercentBased = false;
 
             }
-
-
             discountLine.AnyIntuitObject = discountLineDetail;
             discountLineDetail.DiscountAccountRef = new IntuitData.ReferenceType()
             {
