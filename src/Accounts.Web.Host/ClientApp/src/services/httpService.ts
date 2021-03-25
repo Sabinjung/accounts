@@ -49,7 +49,7 @@ http.interceptors.response.use(
         content: error.response.data.error.message,
       });
     } else if (!error.response) {
-      Modal.error({ content: L('UnknownError') });
+      !error.__CANCEL__ && Modal.error({ content: L('UnknownError') });
     }
 
     setTimeout(() => {}, 1000);
