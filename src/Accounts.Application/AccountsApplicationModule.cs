@@ -50,7 +50,8 @@ namespace Accounts
                        .ForMember("EndClientName", x => x.MapFrom(y => y.EndClient.ClientName))
                        .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
                        .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
-                       .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
+                       .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name))
+                       ;
 
                     cfg.CreateMap<Project, ProjectListItemDto>()
                        .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
@@ -116,7 +117,7 @@ namespace Accounts
 
                     cfg.CreateMap<IntuitData.Customer, IntuitCompanyDto>()
                           .ForMember("FirstName", x => x.MapFrom(y => y.GivenName))
-                          .ForMember("CompanyName", x => x.MapFrom(y => y.CompanyName == null ? y.DisplayName : y.CompanyName))
+                          .ForMember("CompanyName", x => x.MapFrom(y => y.DisplayName == null ? y.CompanyName : y.DisplayName))
                           .ForMember("Email", x => x.MapFrom(y => y.PrimaryEmailAddr.Address))
                           .ForMember("LastName", x => x.MapFrom(y => y.FamilyName))
                           .ForMember("PhoneNumber", x => x.MapFrom(y => y.PrimaryPhone.FreeFormNumber))
@@ -208,7 +209,9 @@ namespace Accounts
                        .ForAllOtherMembers(opt => opt.Condition((source, dest, sourceMember, destmember) => destmember == null));
 
                     cfg.CreateMap<Company, CompanyDto>()
-                        .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty));
+                        .ForMember(d => d.TermName, x => x.MapFrom(y => y.Term != null ? y.Term.Name : string.Empty))
+                        .ForMember(d=>d.PaymentMethodName, x=>x.MapFrom(y=>y.PaymentMethod !=null ? y.PaymentMethod.Name : string.Empty))
+                        .ForMember(x=>x.InvoiceCycleName, y=>y.MapFrom(z=>z.InvoiceCycle!=null ? z.InvoiceCycle.Name : string.Empty));
 
                     cfg.CreateMap<LineItem, LineItemDto>()
                         .ForMember(x => x.ExpenseTypeName, x => x.MapFrom(y => y.ExpenseType.Name));

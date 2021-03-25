@@ -115,16 +115,6 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
           )}
         </Form.Item>
         <Form.Item label="Project Memo">{getFieldDecorator('memo')(<CustomInput maxLength={31} />)}</Form.Item>
-        <Form.Item label="Term">
-          {getFieldDecorator('termId', {
-            rules: [{ required: true, message: 'Select correct Term' }],
-          })(<EntityPicker url="/api/services/app/Term/GetAll?MaxResultCount=25" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
-        </Form.Item>
-        <Form.Item label="Invoice Cycle">
-          {getFieldDecorator('invoiceCycleId', {
-            rules: [{ required: true, message: 'Select right invoice cycle!' }],
-          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
-        </Form.Item>
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
@@ -223,8 +213,6 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     // });
     return {
       companyId: Form.createFormField({ value: project.companyId }),
-      termId: Form.createFormField({ value: project.termId }),
-      invoiceCycleId: Form.createFormField({ value: project.invoiceCycleId }),
       memo: Form.createFormField({ value: project.memo }),
       startDt: Form.createFormField({ value: moment(project.startDt) }),
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
@@ -245,9 +233,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     const returnVal = (val: string) => (_.get(fields, `${val}.value`) ? _.get(fields, `${val}.value`) : project[val]);
     const { project } = props;
     project.companyId = returnVal('companyId');
-    project.termId = returnVal('termId');
     project.memo = returnVal('memo');
-    project.invoiceCycleId = returnVal('invoiceCycleId');
     project.startDt = returnVal('startDt');
     project.endDt = returnVal('endDt');
     project.consultantId = returnVal('consultantId');

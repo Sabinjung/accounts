@@ -18,6 +18,8 @@ namespace Accounts.Models
         public string Notes { get; set; }
 
         public int? TermId { get; set; }
+        public int? InvoiceCycleId { get; set; }
+        public int? PaymentMethodId { get; set; }
 
         [ConcurrencyCheck]
         public string ExternalCustomerId { get; set; }
@@ -25,6 +27,8 @@ namespace Accounts.Models
         public virtual ICollection<Project> Projects { get; set; }
 
         public virtual Term Term { get; set; }
+        public virtual PaymentMethod PaymentMethod { get; set; }
+        public virtual InvoiceCycle InvoiceCycle { get; set; }
 
     }
 }

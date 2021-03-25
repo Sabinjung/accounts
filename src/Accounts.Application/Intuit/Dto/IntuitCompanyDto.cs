@@ -16,6 +16,7 @@ namespace Accounts.Intuit.Dto
         public string MobileNumber { get; set; }
         public string PaymentMethod { get; set; }
         public string Terms { get; set; }
+        public int InvoiceCycleId { get; set; }
         public string BillingCountry { get; set; }
         public string BillingCity { get; set; }
         public string BillingZipCode { get; set; }

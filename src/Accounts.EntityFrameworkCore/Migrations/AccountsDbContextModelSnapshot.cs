@@ -1102,6 +1102,8 @@ namespace Accounts.Migrations
 
                     b.Property<string>("FullyQualifiedName");
 
+                    b.Property<int?>("InvoiceCycleId");
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("LastModificationTime");
@@ -1110,11 +1112,17 @@ namespace Accounts.Migrations
 
                     b.Property<string>("Notes");
 
+                    b.Property<int?>("PaymentMethodId");
+
                     b.Property<string>("PhoneNumber");
 
                     b.Property<int?>("TermId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceCycleId");
+
+                    b.HasIndex("PaymentMethodId");
 
                     b.HasIndex("TermId");
 
@@ -1975,6 +1983,14 @@ namespace Accounts.Migrations
 
             modelBuilder.Entity("Accounts.Models.Company", b =>
                 {
+                    b.HasOne("Accounts.Models.InvoiceCycle", "InvoiceCycle")
+                        .WithMany()
+                        .HasForeignKey("InvoiceCycleId");
+
+                    b.HasOne("Accounts.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany()
+                        .HasForeignKey("PaymentMethodId");
+
                     b.HasOne("Accounts.Models.Term", "Term")
                         .WithMany()
                         .HasForeignKey("TermId");

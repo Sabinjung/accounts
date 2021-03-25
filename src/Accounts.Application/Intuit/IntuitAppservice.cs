@@ -20,12 +20,14 @@ namespace Accounts.Intuit
         private readonly IntuitDataProvider IntuitDataProvider;
 
         private readonly IRepository<Company> CompanyRepository;
-
+        private readonly IRepository<Project> ProjectRepository;
         private readonly IRepository<Term> TermRepository;
 
         private readonly IRepository<PaymentMethod> PaymentMethodRepository;
 
         private readonly IRepository<Invoice> InvoiceRepository;
+        private readonly IRepository<InvoiceCycle> InvoiceCycleRepository;
+
 
         private readonly IMapper Mapper;
 
@@ -34,17 +36,21 @@ namespace Accounts.Intuit
         public IntuitAppService(
             IntuitDataProvider intuitDataProvider,
             IRepository<Company> companyRepository,
+            IRepository<Project> projectRepository,
             IRepository<Term> termRepository,
             IRepository<PaymentMethod> paymentMethodRepository,
             IRepository<Invoice> invoiceRepository,
+            IRepository<InvoiceCycle> invoiceCycleRepository,
             OAuth2Client oAuth2CLient,
             IMapper mapper)
         {
             IntuitDataProvider = intuitDataProvider;
             CompanyRepository = companyRepository;
+            ProjectRepository = projectRepository;
             TermRepository = termRepository;
             PaymentMethodRepository = paymentMethodRepository;
             InvoiceRepository = invoiceRepository;
+            InvoiceCycleRepository = invoiceCycleRepository;
             Mapper = mapper;
             OAuth2Client = oAuth2CLient;
 
@@ -67,9 +73,15 @@ namespace Accounts.Intuit
                     {
                         var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == customer.SalesTermRef.Value);
                         if (existingTerm != null)
-                        {
                             updatedCompany.Term = existingTerm;
-                        }
+                        
+                    }
+                    if(customer.PaymentMethodRef !=null)
+                    {
+                        var existingPayment = await PaymentMethodRepository.FirstOrDefaultAsync(x => x.ExternalPaymentId == customer.PaymentMethodRef.Value);
+                        if (existingPayment != null)
+                          updatedCompany.PaymentMethod = existingPayment;
+
                     }
                     CompanyRepository.InsertOrUpdate(updatedCompany);
                 }
@@ -104,9 +116,18 @@ namespace Accounts.Intuit
                 var customer = IntuitDataProvider.GetCustomers().FirstOrDefault(x => x.Id == externalCustomerId);
                 if (customer != null)
                 {
+                    var companyInvoiceCycle= CompanyRepository.FirstOrDefaultAsync(x=>x.ExternalCustomerId == customer.Id);
                     intuitCompanyDto.ExternalCustomerId = externalCustomerId;
                     var companyDto = Mapper.Map(customer, intuitCompanyDto);
+                    if (companyInvoiceCycle.Result.InvoiceCycle != null)
+                    {
+                        companyDto.InvoiceCycleId = (int)companyInvoiceCycle.Result.InvoiceCycleId;
 
+                    }
+                    if(companyInvoiceCycle.Result.InvoiceCycle ==null)
+                    {
+                        companyDto.InvoiceCycleId = 1;
+                    }
                     return companyDto;
 
                 }
@@ -133,9 +154,16 @@ namespace Accounts.Intuit
                     if (updatedCus.SalesTermRef != null)
                     {
                     var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == updatedCus.SalesTermRef.Value);
-                    if (existingTerm != null)
+                    var existingInvoiceCycle = await InvoiceCycleRepository.FirstOrDefaultAsync(x => x.Id == data.InvoiceCycleId);
+                    var existingPaymentMethod = await PaymentMethodRepository.FirstOrDefaultAsync(x => x.ExternalPaymentId == updatedCus.PaymentMethodRef.Value);
+
+
+                    if (existingTerm != null || existingInvoiceCycle !=null || existingPaymentMethod !=null)
                     {
                         updatedDatabaseCompany.Term = existingTerm;
+                        updatedDatabaseCompany.InvoiceCycle = existingInvoiceCycle;
+                        updatedDatabaseCompany.PaymentMethod = existingPaymentMethod;
+
                     }
                 }
                 CompanyRepository.InsertOrUpdate(updatedDatabaseCompany);
@@ -160,9 +188,13 @@ namespace Accounts.Intuit
                     if (customer.SalesTermRef != null)
                     {
                         var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == customer.SalesTermRef.Value);
+                        var existingInvoiceCycle = await InvoiceCycleRepository.FirstOrDefaultAsync(x => x.Id == data.InvoiceCycleId);
+                        var existingPayment = await PaymentMethodRepository.FirstOrDefaultAsync(x => x.ExternalPaymentId == customer.PaymentMethodRef.Value);
                         if (existingTerm != null)
                         {
                             updatedCompany.Term = existingTerm;
+                            updatedCompany.InvoiceCycle = existingInvoiceCycle;
+                            updatedCompany.PaymentMethod = existingPayment;
                         }
                     }
                     CompanyRepository.InsertOrUpdate(updatedCompany);
