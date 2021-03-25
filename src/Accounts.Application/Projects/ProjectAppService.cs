@@ -34,6 +34,7 @@ namespace Accounts.Projects
 
         private readonly IMapper Mapper;
         private readonly IRepository<Company> CompanyRepository;
+        private readonly IRepository<Invoice> InvoiceRepository;
         private readonly IRepository<Attachment> AttachmentRepository;
 
         private readonly QueryBuilderFactory QueryBuilder;
@@ -46,6 +47,7 @@ namespace Accounts.Projects
         public ProjectAppService(
             IRepository<Project> repository,
             IRepository<Company> companyRepository,
+            IRepository<Invoice> invoiceRepository,
             IRepository<Attachment> attachmentRepository,
             IAzureBlobService azureBlobService,
             QueryBuilderFactory queryBuilderFactory,
@@ -57,6 +59,7 @@ namespace Accounts.Projects
             AzureBlobService = azureBlobService;
             Mapper = mapper;
             CompanyRepository = companyRepository;
+            InvoiceRepository = invoiceRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
             TimesheetService = timesheetService;
@@ -170,14 +173,11 @@ namespace Accounts.Projects
         {
             var company = CompanyRepository.FirstOrDefault(x => x.Id == input.CompanyId);
             var activeProjectCount = await Repository.CountAsync(x => x.ConsultantId == input.ConsultantId && (x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true));
-            if(input.DiscountType == null && input.DiscountValue !=null)
-            {
+           
+            if (input.DiscountType == null && input.DiscountValue !=null)
                 throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
-
-            }
             if (activeProjectCount > 0)
                 throw new UserFriendlyException("Project cannot be created.", "Consultant has an active project.");
-            
             if (company.InvoiceCycleId == null || company.TermId == null || company.PaymentMethodId == null)
                 throw new UserFriendlyException("Invoice Cycle, Terms or Payment Method not found.", $"Please Add Invoice Cycle, Terms or Payment Method in {company.DisplayName} Company");
             
@@ -188,11 +188,23 @@ namespace Accounts.Projects
         }
         public override async Task<ProjectDto> Update(ProjectDto input)
         {
-            var query = Repository.GetAll().FirstOrDefault(x => x.ConsultantId == input.ConsultantId && x.CompanyId == input.CompanyId);
+            var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
+            var changedCompany = CompanyRepository.FirstOrDefault(x => x.Id == input.CompanyId);
+
+            if (query != null)
+            {
+                var checkInvoice = InvoiceRepository.GetAll().FirstOrDefault(x => x.ProjectId == input.Id);
+                if (checkInvoice != null)
+                {
+                    throw new UserFriendlyException("Cannot update company name", "Consultant has an existing Invoice");
+                }
+            }
+            if (changedCompany.InvoiceCycleId == null || changedCompany.TermId == null || changedCompany.PaymentMethodId == null)
+                throw new UserFriendlyException("Invoice Cycle, Terms or Payment Method not found.", $"Please Add Invoice Cycle, Terms or Payment Method in {changedCompany.DisplayName} Company");
             if (input.DiscountType == null && input.DiscountValue != null)
                 throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
-            input.InvoiceCycleId = query.InvoiceCycleId;
-            input.TermId = query.TermId;
+            input.InvoiceCycleId = (int)changedCompany.InvoiceCycleId;
+            input.TermId = (int)changedCompany.TermId;
             return await base.Update(input);
         }
         public override async Task<ProjectDto> Get(EntityDto<int> input)
