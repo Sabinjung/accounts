@@ -100,7 +100,7 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
           </Col>
         </Row>
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item label="Payment Methods">
               {getFieldDecorator('paymentMethod', {
                 rules: [{ required: true, message: 'Please select payment method!' }],
@@ -112,11 +112,18 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
               )}
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item label="Terms">
               {getFieldDecorator('terms', {
                 rules: [{ required: true, message: 'Please select term!' }],
               })(<EntityPicker url="/api/services/app/Term/GetAll?MaxResultCount=25" mapFun={(r) => ({ value: r.externalTermId, text: r.name })} />)}
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Invoice Cycle">
+              {getFieldDecorator('invoiceCycleId', {
+                rules: [{ required: true, message: 'Please select invoice cycle!' }],
+              })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
             </Form.Item>
           </Col>
         </Row>
@@ -273,6 +280,7 @@ const WrappedCompanyForm = Form.create<ICompanyFormProps>({
       paymentMethod: Form.createFormField({ value: company.paymentMethod }),
       terms: Form.createFormField({ value: company.terms }),
       notes: Form.createFormField({ value: company.notes }),
+      invoiceCycleId: Form.createFormField({ value: company.invoiceCycleId }),
     };
   },
 })(CompanyForm);

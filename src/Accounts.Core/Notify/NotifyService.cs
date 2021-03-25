@@ -44,7 +44,7 @@ namespace Accounts.Core.Notify
                 string messageBody = "";
                 foreach (var project in unassociatedHoursProjects)
                 {
-                    messageBody = messageBody + projectUrl + project + "/detail\n";
+                    messageBody = messageBody + projectUrl + "projects/" + project + "/detail\n";
                 }
                 notify = new NotifyParam
                 {

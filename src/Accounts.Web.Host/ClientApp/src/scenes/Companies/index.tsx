@@ -63,6 +63,11 @@ export default () => {
       key: 'termName',
     },
     {
+      title: 'Invoice Cycle',
+      dataIndex: 'invoiceCycleName',
+      key: 'invoiceCycleName',
+    },
+    {
       title: 'Notes',
       dataIndex: 'notes',
       key: 'notes',
@@ -190,7 +195,7 @@ export default () => {
             }}
           </RouteableDrawer>
         </Authorize>
-        <RouteableDrawer path={['/companies/:externalCustomerId/edit']} width={'40vw'} title="End Client" exact={true}>
+        <RouteableDrawer path={['/companies/:externalCustomerId/edit']} width={'40vw'} title="Edit Company" exact={true}>
           {({
             match: {
               params: { externalCustomerId },
