@@ -44,8 +44,9 @@ http.interceptors.response.use(
         content: error.response.data.error.details,
       });
     } else if (!!error.response && !!error.response.data.error && !!error.response.data.error.message) {
+      error.response.data.error.message != 'Current user did not login to the application!' &&
       Modal.error({
-        title: L('LoginFailed'),
+        title: L('Error'),
         content: error.response.data.error.message,
       });
     } else if (!error.response) {
