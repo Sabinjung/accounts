@@ -268,7 +268,7 @@ class Login extends React.Component<ILoginProps> {
                       </StyledGoogle>
                     ))}
                   <StyledP>
-                    Accounts - iTSutra, Inc © 2019 <a href="https://github.com/ryoldash/module-zero-core-template">Github Page</a>
+                    Accounts - iTSutra, Inc © 2019
                   </StyledP>
                 </StyledCard>
               </Col>
