@@ -174,14 +174,19 @@ namespace Accounts
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
                         .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName))
                         .ForMember("QBInvoiceId", x => x.MapFrom(y => y.Invoice.QBOInvoiceId))
-                        .ForMember("InvoiceGeneratedByUserName", x => x.MapFrom(y => y.InvoiceGeneratedByUser.FullName));
+                        .ForMember("InvoiceGeneratedByUserName", x => x.MapFrom(y => y.InvoiceGeneratedByUser.FullName))
+                        .ForMember("InvoiceCompanyId", x => x.MapFrom(y => y.Project.CompanyId))
+                        .ForMember("InvoiceCompanyName", x => x.MapFrom(y => y.Project.Company.DisplayName));
 
                     cfg.CreateMap<Timesheet, TimesheetListItemDto>()
                         .ForMember("CreatedDt", x => x.MapFrom(y => y.CreationTime))
                         .ForMember("CreatedByUserName", x => x.MapFrom(y => y.CreatorUser.FullName))
                         .ForMember("ApprovedByUserName", x => x.MapFrom(y => y.ApprovedByUser.FullName))
                         .ForMember("QBOInvoiceId", x => x.MapFrom(y => y.InvoiceId.HasValue ? y.Invoice.QBOInvoiceId : string.Empty))
-                        .ForMember("EInvoiceId", x => x.MapFrom(y => y.InvoiceId.HasValue ? y.Invoice.EInvoiceId : string.Empty));
+                        .ForMember("EInvoiceId", x => x.MapFrom(y => y.InvoiceId.HasValue ? y.Invoice.EInvoiceId : string.Empty))
+                        .ForMember("InvoiceCompanyId",x=>x.MapFrom(y=>y.Invoice.CompanyId))
+                        .ForMember("InvoiceCompanyName",x=>x.MapFrom(y=>y.Invoice.Company.DisplayName));
+                    
 
                     cfg.CreateMap<Invoice, InvoiceDto>()
                         .ForMember(x => x.TermName, y => y.MapFrom(z => z.Term.Name))

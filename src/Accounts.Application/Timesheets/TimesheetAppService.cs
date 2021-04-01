@@ -29,7 +29,7 @@ namespace Accounts.Projects
     public class TimesheetAppService : ApplicationService, ITimesheetAppService
     {
         private readonly IRepository<Timesheet> Repository;
-
+        private readonly IRepository<Invoice> _InvoiceRepository;
         private readonly IProjectRepository ProjectRepository;
 
         private readonly IHourLogEntryRepository HourLogEntryRepository;
@@ -46,6 +46,7 @@ namespace Accounts.Projects
 
         public TimesheetAppService(
             IRepository<Timesheet> repository,
+            IRepository<Invoice> invoiceRepository,
             IProjectRepository projectRepository,
             IRepository<Attachment> attachmentRepository,
             IHourLogEntryRepository hourLogEntryRepository,
@@ -58,6 +59,7 @@ namespace Accounts.Projects
         {
             Mapper = mapper;
             Repository = repository;
+            _InvoiceRepository = invoiceRepository;
             ProjectRepository = projectRepository;
             HourLogEntryRepository = hourLogEntryRepository;
             AttachmentRepository = attachmentRepository;
@@ -176,6 +178,13 @@ namespace Accounts.Projects
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
             var timesheet = Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
+            if (timesheet.InvoiceId != null)
+            {
+                var invoice = _InvoiceRepository.FirstOrDefault(x => x.Id == timesheet.InvoiceId);
+                timesheet.InvoiceCompanyId = invoice.CompanyId;
+                timesheet.InvoiceCompanyName = invoice.Company.DisplayName;
+            }
+
             return timesheet;
         }
 
@@ -186,12 +195,14 @@ namespace Accounts.Projects
                 queryParameter.StartTime = DateTime.UtcNow.AddMonths(-1).StartOfMonth();
                 queryParameter.EndTime = DateTime.UtcNow;
             }
+            var equery = Repository.GetAll().Where(x => x.Status.Name == "Invoiced").ToList();
             var query = QueryBuilder.Create<Timesheet, TimesheetQueryParameters>(Repository.GetAll());
-            query.WhereIf(p => p.ProjectId.HasValue, p => x => x.ProjectId == p.ProjectId);
-            query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);
-            query.WhereIf(p => p.CompanyId.HasValue, p => x => x.Project.CompanyId == p.CompanyId);
+            query.WhereIf(p => p.ProjectId.HasValue, p =>  x => x.ProjectId == p.ProjectId);
+            query.WhereIf(p => p.ConsultantId.HasValue, p => x => x.Project.ConsultantId == p.ConsultantId);    
+            query.WhereIf(p => p.CompanyId.HasValue , p => x => x.Project.CompanyId == p.CompanyId);
             query.WhereIf(p => p.StatusId != null && p.StatusId.Length > 0, p => x => p.StatusId.Contains(x.StatusId));
             query.WhereIf(p => p.Name == "Invoiced" && p.StartTime.HasValue && p.EndTime.HasValue, p => x => x.StartDt >= p.StartTime && x.EndDt <= p.EndTime);
+            
 
             var sorts = new Sorts<Timesheet>();
             sorts.Add(true, t => t.LastModificationTime, true, 1);
@@ -208,6 +219,15 @@ namespace Accounts.Projects
                 queryParameter.IsActive && !string.IsNullOrEmpty(queryParameter.Name) ?
                 SavedQueries.Select(x => Mapper.Map(queryParameter, x)).ToList() : new[] { queryParameter }.ToList();
             var result = await query.ExecuteAsync<TimesheetListItemDto>(queryParameters.ToArray());
+            if (queryParameter.Name != "Invoiced")
+            {
+                foreach (var item in result.Results)
+                {
+                    item.InvoiceCompanyId = item.Project.CompanyId;
+                    item.InvoiceCompanyName = item.Project.CompanyName;
+
+                }
+            }
             return result;
         }
 

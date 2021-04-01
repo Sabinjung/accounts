@@ -194,16 +194,17 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             approvedByUserName,
             invoiceId,
             qbInvoiceId,
+            invoiceCompanyName,
             invoiceGeneratedDate,
             invoiceGeneratedByUserName,
-            project: { consultantName, companyName, startDt: projectStartDt, endDt: projectEndDt },
+            project: { consultantName, startDt: projectStartDt, endDt: projectEndDt },
           } = data.result;
           return (
             <ClassNames>
               {({ css }) => (
                 <PageHeader
                   title={consultantName}
-                  subTitle={companyName}
+                  subTitle={invoiceCompanyName}
                   extra={[
                     <Condition val={statusId == 1}>
                       <ActionButton

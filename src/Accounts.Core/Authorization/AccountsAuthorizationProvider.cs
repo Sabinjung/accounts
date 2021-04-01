@@ -45,7 +45,6 @@ namespace Accounts.Authorization
             var projectPermission = context.CreatePermission("Project", L("Project"));
             projectPermission.CreateChildPermission("Project.Create", L("Project.Create"));
             projectPermission.CreateChildPermission("Project.Update", L("Project.Update"));
-            projectPermission.CreateChildPermission("Project.Delete", L("Project.Delete"));
 
             // Expense Permissions
             var expensePermission = context.CreatePermission("Expense", L("Expense"));
