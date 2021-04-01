@@ -15,6 +15,9 @@ namespace Accounts.Timesheets.Dto
         public int? Id { get; set; }
 
         public ProjectDto Project { get; set; }
+        public int InvoiceCompanyId { get; set; }
+        public string InvoiceCompanyName { get; set; }
+
 
         public int StatusId { get; set; }
 

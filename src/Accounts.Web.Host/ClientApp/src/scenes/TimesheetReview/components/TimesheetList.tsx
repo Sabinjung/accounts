@@ -203,7 +203,7 @@ export const TimesheetList = ({
                     </StyledRow>
                     <Row type="flex" justify="space-between" align="middle">
                       <Col>
-                        <Text>{timesheet.project.companyName}</Text>
+                        <Text>{timesheet.invoiceCompanyName}</Text>
                       </Col>
                       <Col>
                         {timesheet.statusId == 1 ? (

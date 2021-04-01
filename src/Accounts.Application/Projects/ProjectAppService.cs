@@ -34,6 +34,7 @@ namespace Accounts.Projects
 
         private readonly IMapper Mapper;
         private readonly IRepository<Company> CompanyRepository;
+        private readonly IRepository<Timesheet> TimesheetRepository;
         private readonly IRepository<Invoice> InvoiceRepository;
         private readonly IRepository<Attachment> AttachmentRepository;
 
@@ -47,6 +48,7 @@ namespace Accounts.Projects
         public ProjectAppService(
             IRepository<Project> repository,
             IRepository<Company> companyRepository,
+            IRepository<Timesheet> timesheetRepository,
             IRepository<Invoice> invoiceRepository,
             IRepository<Attachment> attachmentRepository,
             IAzureBlobService azureBlobService,
@@ -59,6 +61,7 @@ namespace Accounts.Projects
             AzureBlobService = azureBlobService;
             Mapper = mapper;
             CompanyRepository = companyRepository;
+            TimesheetRepository = timesheetRepository;
             InvoiceRepository = invoiceRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
@@ -80,7 +83,7 @@ namespace Accounts.Projects
 
             CreatePermissionName = "Project.Create";
             UpdatePermissionName = "Project.Update";
-            DeletePermissionName = "Project.Delete";
+            
         }
 
         private List<IhrmsProjectDto> GetIhrmsProjectList()
@@ -191,18 +194,17 @@ namespace Accounts.Projects
             var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
             var changedCompany = CompanyRepository.FirstOrDefault(x => x.Id == input.CompanyId);
 
-            if (query != null)
+            var timesheets = TimesheetRepository.GetAll().FirstOrDefault(x=>x.ProjectId == input.Id && x.Status.Name != "Invoiced");
+            if(timesheets!=null && input.CompanyId != query.CompanyId)
             {
-                var checkInvoice = InvoiceRepository.GetAll().FirstOrDefault(x => x.ProjectId == input.Id);
-                if (checkInvoice != null)
-                {
-                    throw new UserFriendlyException("Cannot update company name", "Consultant has an existing Invoice");
-                }
+                throw new UserFriendlyException("Cannot Change Company Name","Project has pending timesheet");
             }
             if (changedCompany.InvoiceCycleId == null || changedCompany.TermId == null || changedCompany.PaymentMethodId == null)
-                throw new UserFriendlyException("Invoice Cycle, Terms or Payment Method not found.", $"Please Add Invoice Cycle, Terms or Payment Method in {changedCompany.DisplayName} Company");
+            throw new UserFriendlyException("Invoice Cycle, Terms or Payment Method not found.", $"Please Add Invoice Cycle, Terms or Payment Method in {changedCompany.DisplayName} Company");
+
             if (input.DiscountType == null && input.DiscountValue != null)
-                throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
+            throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
+
             input.InvoiceCycleId = (int)changedCompany.InvoiceCycleId;
             input.TermId = (int)changedCompany.TermId;
             return await base.Update(input);
