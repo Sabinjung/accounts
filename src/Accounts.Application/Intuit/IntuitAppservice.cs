@@ -139,9 +139,10 @@ namespace Accounts.Intuit
         [AbpAuthorize("Company.Edit")]
         public async Task EditCompany(IntuitCompanyDto data)
         {
-            
+            try
+            {
                 var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
-                if(isConnectionEstablished)
+                if (isConnectionEstablished)
                 {
                     var cus = new IntuitData.Customer { Id = data.ExternalCustomerId };
                     var existingCompany = await CompanyRepository.FirstOrDefaultAsync(x => x.ExternalCustomerId == cus.Id);
@@ -153,22 +154,27 @@ namespace Accounts.Intuit
                     var updatedDatabaseCompany = Mapper.Map(updatedCus, existingCompany);
                     if (updatedCus.SalesTermRef != null)
                     {
-                    var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == updatedCus.SalesTermRef.Value);
-                    var existingInvoiceCycle = await InvoiceCycleRepository.FirstOrDefaultAsync(x => x.Id == data.InvoiceCycleId);
-                    var existingPaymentMethod = await PaymentMethodRepository.FirstOrDefaultAsync(x => x.ExternalPaymentId == updatedCus.PaymentMethodRef.Value);
+                        var existingTerm = await TermRepository.FirstOrDefaultAsync(x => x.ExternalTermId == updatedCus.SalesTermRef.Value);
+                        var existingInvoiceCycle = await InvoiceCycleRepository.FirstOrDefaultAsync(x => x.Id == data.InvoiceCycleId);
+                        var existingPaymentMethod = await PaymentMethodRepository.FirstOrDefaultAsync(x => x.ExternalPaymentId == updatedCus.PaymentMethodRef.Value);
 
 
-                    if (existingTerm != null || existingInvoiceCycle !=null || existingPaymentMethod !=null)
-                    {
-                        updatedDatabaseCompany.Term = existingTerm;
-                        updatedDatabaseCompany.InvoiceCycle = existingInvoiceCycle;
-                        updatedDatabaseCompany.PaymentMethod = existingPaymentMethod;
+                        if (existingTerm != null || existingInvoiceCycle != null || existingPaymentMethod != null)
+                        {
+                            updatedDatabaseCompany.Term = existingTerm;
+                            updatedDatabaseCompany.InvoiceCycle = existingInvoiceCycle;
+                            updatedDatabaseCompany.PaymentMethod = existingPaymentMethod;
 
+                        }
                     }
+                    CompanyRepository.InsertOrUpdate(updatedDatabaseCompany);
                 }
-                CompanyRepository.InsertOrUpdate(updatedDatabaseCompany);
             }
+            catch(Exception ex)
+            {
+                throw new UserFriendlyException("Company Create Failed!!", "Company already exists.");
 
+            }
 
         }
 

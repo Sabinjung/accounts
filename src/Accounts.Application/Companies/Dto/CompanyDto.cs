@@ -21,6 +21,8 @@ namespace Accounts.Companies.Dto
         public string Notes { get; set; }
 
         public string TermName { get; set; }
+        public int? TermId { get; set; }
+        public int? InvoiceCycleId { get; set; }
         public string InvoiceCycleName { get; set; }
         public string PaymentMethodName { get; set; }
 

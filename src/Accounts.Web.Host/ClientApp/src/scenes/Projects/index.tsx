@@ -39,8 +39,16 @@ export default () => {
       keyword: searchText,
     },
   });
+
+  const [{ data:companyData }] = useAxios({
+    url: 'api/services/app/Company/Search',
+  });
+
   const result = (data && data.result) || { results: [], recordCounts: [], totalCount: 0 };
   const { results: dataSource, recordCounts: predefinedQueries, recordCount } = result;
+
+  const company = (companyData && companyData.result) || {results: []};
+  const {results: companyDetails} = company;
 
   const history = useHistory();
 
@@ -134,6 +142,7 @@ export default () => {
                       onClose={() => {
                         onClose();
                       }}
+                      company={companyDetails}
                       project={store.newProject}
                       onProjectAdded={() => {
                         makeRequest({});
@@ -161,6 +170,7 @@ export default () => {
                             onClose={() => {
                               onClose();
                             }}
+                            company={companyDetails}
                             project={store.newProject}
                             onProjectAdded={() => {
                               makeRequest({});

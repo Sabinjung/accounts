@@ -117,7 +117,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                   handleRefetch={handleRefetch}
                   timesheetId={params.timesheetId}
                   onTimesheetApproved={() => {
-                    const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id === params.timesheetId);
+                    const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id == params.timesheetId);
                     const nextTimesheetItem = dataSource[selectedTimesheetIndex + 1];
 
                     if (nextTimesheetItem) {
@@ -126,7 +126,7 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                     refetch();
                   }}
                   onTimesheetDeleted={() => {
-                    const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id === params.timesheetId);
+                    const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id == params.timesheetId);
                     const nextTimesheetItem = dataSource[selectedTimesheetIndex + 1];
 
                     if (nextTimesheetItem) {
