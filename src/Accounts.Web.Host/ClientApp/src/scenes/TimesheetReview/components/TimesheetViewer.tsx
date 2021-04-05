@@ -140,7 +140,6 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                 message: 'Success',
                 description: 'Successfully Deleted.',
               });
-              refetch();
               onTimesheetDeleted && onTimesheetDeleted();
             }}
             permissions={['Timesheet.Delete']}

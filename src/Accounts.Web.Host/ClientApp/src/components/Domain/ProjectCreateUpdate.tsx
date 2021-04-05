@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, DatePicker, notification, Checkbox } from 'antd';
+import { Form, DatePicker, Select, notification, Checkbox } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 import EntityPicker from '../EntityPicker';
 import ConnectedEntityPicker from '../ConnectedEntityPicker';
@@ -10,6 +10,8 @@ import DiscountInput from './DiscountInput';
 import styled from '@emotion/styled';
 import CustomCancleButton from '../Custom/CustomCancelButton';
 import CustomInput from './../Custom/CustomInput';
+
+const {Option} = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -52,10 +54,21 @@ export type IProjectFormProps = FormComponentProps<{}> & {
   onProjectAdded?: () => void;
   project?: any;
   onClose?: any;
+  company?: any;
 };
 
-const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, project, onClose }) => {
-  const { getFieldDecorator, validateFields } = form;
+const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, project, company, onClose }) => {
+const { getFieldDecorator, validateFields } = form;
+
+const handleCompanyChange = (value: any) => {
+  if(value){
+    const filteredArray = company.filter((x: { id: any; })=>x.id === value);
+    form.setFieldsValue({
+      termId:filteredArray[0].termId,
+      invoiceCycleId: filteredArray[0].invoiceCycleId
+    })
+  }
+}
 
   const validateDiscount = (rule: any, value: any, callback: any) => {
     if (value.discountType && !value.discountValue) {
@@ -87,7 +100,11 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         <Form.Item label="Company">
           {getFieldDecorator('companyId', {
             rules: [{ required: true, message: 'Please input your Company!' }],
-          })(<EntityPicker url="/api/services/app/Company/Search" mapFun={(r) => ({ value: r.id, text: r.displayName })} />)}
+          })(<Select showSearch optionFilterProp="children" onChange={handleCompanyChange} allowClear>
+            {company.map((company: any, index: any) => (
+              <Option value={company.id} key={index}>{company.displayName}</Option>
+            ))}
+          </Select>)}
         </Form.Item>
         <Form.Item label="Consultant">
           {getFieldDecorator('consultantId', {
@@ -114,6 +131,18 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
             />
           )}
         </Form.Item>
+        <Form.Item label="Term">
+          {getFieldDecorator('termId', {
+            rules: [{ required: true, message: 'Please input term' }],
+          })(<EntityPicker url="/api/services/app/Term/GetAll?MaxResultCount=25" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
+        </Form.Item>
+
+        <Form.Item label="InvoiceCycle">
+          {getFieldDecorator('invoiceCycleId', {
+            rules: [{ required: true, message: 'Please input invoice cycle' }],
+          })(<EntityPicker url="/api/services/app/InvoiceCycle/GetAll" mapFun={(r) => ({ value: r.id, text: r.name })} />)}
+        </Form.Item>
+
         <Form.Item label="Project Memo">{getFieldDecorator('memo')(<CustomInput maxLength={31} />)}</Form.Item>
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
@@ -139,7 +168,6 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
         </Form.Item>
         <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<StyledCheckbox></StyledCheckbox>)}</Form.Item>
       </StyledForm>
-
       <div
         style={{
           position: 'absolute',
@@ -201,11 +229,13 @@ const ProjectForm: React.FC<IProjectFormProps> = ({ form, onProjectAdded, projec
 };
 
 const WrappedProjectForm = Form.create<IProjectFormProps>({
+  
   name: 'project_state',
 
   mapPropsToFields(props: any) {
     const { project } = props;
     if (!project) return;
+
 
     // var map = {};
     // _.keys(project).forEach(key => {
@@ -213,6 +243,8 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     // });
     return {
       companyId: Form.createFormField({ value: project.companyId }),
+      termId: Form.createFormField({ value: project.termId}),
+      invoiceCycleId: Form.createFormField({ value: project.invoiceCycleId}),
       memo: Form.createFormField({ value: project.memo }),
       startDt: Form.createFormField({ value: moment(project.startDt) }),
       endDt: Form.createFormField({ value: project.endDt && moment(project.endDt) }),
@@ -233,6 +265,8 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     const returnVal = (val: string) => (_.get(fields, `${val}.value`) ? _.get(fields, `${val}.value`) : project[val]);
     const { project } = props;
     project.companyId = returnVal('companyId');
+    project.termId = returnVal('termId');
+    project.invoiceCycleId = returnVal('invoiceCycleId');
     project.memo = returnVal('memo');
     project.startDt = returnVal('startDt');
     project.endDt = returnVal('endDt');

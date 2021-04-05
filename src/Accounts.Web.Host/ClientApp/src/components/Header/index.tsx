@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Avatar, Badge, Col, Dropdown, Icon, Menu, Row } from 'antd';
 
 import { L } from '../../lib/abpUtility';
-import LanguageSelect from '../LanguageSelect';
+
 import { Link } from 'react-router-dom';
 
 import profilePicture from '../../images/user.png';
@@ -42,7 +42,7 @@ export class Header extends React.Component<IHeaderProps> {
           <StyledIcon type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.props.toggle} />
         </Col>
         <Col style={{ textAlign: 'right' }} span={12}>
-          <LanguageSelect /> {'   '}
+          {/* <LanguageSelect /> {'   '} */}
           <Dropdown overlay={userDropdownMenu} trigger={['click']}>
             <Badge style={{}} count={3}>
               <Avatar style={{ height: 24, width: 24 }} shape="circle" alt={'profile'} src={profilePicture} />
