@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Row, Col, DatePicker, Button, Popover, Typography, Icon } from 'antd';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import useAxios from '../../lib/axios/useAxios';
 import moment from 'moment';
 import { useHistory } from 'react-router';
@@ -8,10 +7,10 @@ import { Portal } from 'react-portal';
 import RouteableDrawer from '../../components/RouteableDrawer';
 import EntityPicker from '../../components/EntityPicker';
 import InvoiceDetail from '../../components/Domain/InvoiceDetail';
-import { Get } from '../../lib/axios';
 import styled from '@emotion/styled';
 import CustomTable from '../../components/Custom/CustomTable';
 import PredefinedQueryPills from '../../components/PredefinedQueryPills';
+import InvoiceBarChart from './components/InvoiceBarChart';
 
 const { Text } = Typography;
 type sortableType = ['descend', 'ascend', 'descend'];
@@ -38,46 +37,6 @@ const StyledTable = styled(CustomTable)`
     }
   }
 `;
-
-const CustomTooltip = ({ payload, active, label }: any) => {
-  if (active) {
-    if (payload !== undefined && payload !== null) {
-      const amount = payload[0].payload.monthAmount;
-      return (
-        <div className="custom-tooltip" style={{ background: 'rgba(255, 255, 255, 0.7)', padding: '10px', borderRadius: '10px' }}>
-          <p className="label">{`Month : ${moment()
-            .month(label - 1)
-            .format('MMMM')}`}</p>
-          <p className="intro">{`Amount : $ ${amount.toLocaleString()}`}</p>
-        </div>
-      );
-    } else {
-      return null;
-    }
-  }
-  return null;
-};
-
-const RenderBarChart = (props: any) => {
-  return (
-    <ResponsiveContainer width="100%" height={250}>
-      <BarChart width={900} height={250} data={props.data} margin={{ top: 20, bottom: 20 }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis
-          dataKey="monthName"
-          tickFormatter={(label) =>
-            `${moment()
-              .month(label - 1)
-              .format('MMM')}`
-          }
-        />
-        <YAxis yAxisId="left" orientation="left" stroke="#748AA1" />
-        <Tooltip content={<CustomTooltip />} />
-        <Bar yAxisId="left" dataKey="monthAmount" fill="#1C3FAA" barSize={70} />
-      </BarChart>
-    </ResponsiveContainer>
-  );
-};
 
 const AllInvoiceList = (props: any) => {
   const [companySearchText, setCompanySearchText] = useState(undefined);
@@ -108,6 +67,17 @@ const AllInvoiceList = (props: any) => {
         item.count = null;
       }
     });
+
+  const [{ data: barChartData, loading: barChartLoading }, barMakeRequest] = useAxios({
+    url: '/api/services/app/Invoice/GetInvoicesByMonthReport',
+    params: {
+      isActive: true,
+      companyId: companySearchText,
+      consultantId: consultantSearchText,
+      startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
+      endDate: dateSearchText[1] && moment(dateSearchText[1]).format('YYYY-MM-DD'),
+    },
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -293,7 +263,7 @@ const AllInvoiceList = (props: any) => {
 
   const headerRender = () => {
     return (
-      <Row type="flex" justify="space-between" align="middle" style={{ height: 45 }}>
+      <Row type="flex" justify="space-between" align="middle" style={{ height: 45, marginTop: '20px' }}>
         <Col>
           <Row type="flex" align="middle">
             <Col>
@@ -339,29 +309,13 @@ const AllInvoiceList = (props: any) => {
 
   const refetch = () => {
     makeRequest({ params: { isActive: true } });
+    barMakeRequest({ params: { isActive: true } });
   };
-
-  result.listItemDto && console.log(result.listItemDto.results);
-
   return (
     <>
       <Card>
         <h1>INVOICES</h1>
-        <Get
-          url="/api/services/app/Invoice/GetInvoicesByMonthReport"
-          params={{
-            isActive: true,
-            companyId: companySearchText,
-            consultantId: consultantSearchText,
-            startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
-            endDate: dateSearchText[1] && moment(dateSearchText[1]).format('YYYY-MM-DD'),
-          }}
-        >
-          {({ error, data, isLoading }: any) => {
-            return <RenderBarChart data={data && data.result} />;
-          }}
-        </Get>
-
+        <InvoiceBarChart data={barChartData && barChartData.result} loading={barChartLoading} /> 
         <StyledTable
           dataSource={result.listItemDto && result.listItemDto.results}
           rowClassName={(record: any) => {
