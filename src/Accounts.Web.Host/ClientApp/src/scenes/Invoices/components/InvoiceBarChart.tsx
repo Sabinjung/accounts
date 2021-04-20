@@ -18,14 +18,16 @@ const InvoiceBarChart: React.FC<InvoiceBarChartProps> = ({ data, loading }) => {
   let yearList: any[] = [];
   const [invoiceData, setInvoiceData] = useState<any>();
   const [selectedYear, setSelectedYear] = useState<any>('All Years');
-  const initialStartIndex: number = data && data.length > 12 ? data.length - 12 : 0;
-  const initialEndIndex: number = data ? data.length - 1 : 0;
-  const [startIndex, setStartIndex] = useState<number>(initialStartIndex);
-  const [endIndex, setEndIndex] = useState<number>(initialEndIndex);
+  const [startIndex, setStartIndex] = useState<number>();
+  const [endIndex, setEndIndex] = useState<number>();
 
   useEffect(() => {
     setInvoiceData(data);
     setSelectedYear('All Years');
+    const initialStartIndex: number = data && data.length > 12 ? data.length - 12 : 0;
+    setStartIndex(initialStartIndex);
+    const initialEndIndex: number = data ? data.length - 1 : 0;
+    setEndIndex(initialEndIndex);
   }, [data]);
 
   if (data) {

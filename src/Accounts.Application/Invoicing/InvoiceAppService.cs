@@ -225,7 +225,7 @@ namespace Accounts.Invoicing
         {
             var query = GetQuery(queryParameter);
 
-            return await query.ExecuteAsync((o) =>
+            return query.ExecuteAsync((o) =>
                  from t1 in o
                  group t1 by new
                  {
@@ -238,7 +238,7 @@ namespace Accounts.Invoicing
                      Year = g.Key.Year,
                      MonthName = g.Key.Month,
                      MonthAmount = g.Sum(y => y.Total),
-                 }, queryParameter);
+                 }, queryParameter).Result.OrderBy(x=>x.Year).ThenBy(x=>x.MonthName);
         }
 
         [AbpAuthorize("AgingReport")]
