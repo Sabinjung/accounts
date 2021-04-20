@@ -234,6 +234,25 @@ namespace Accounts.Intuit
         [HttpGet]
         public async Task SyncInvoices()
         {
+            var getAllInvoices = InvoiceRepository.GetAll().Where(x => x.EInvoiceId == null);
+            if (getAllInvoices != null)
+            {
+                foreach (var item in getAllInvoices)
+                {
+                    if (item.QBOInvoiceId != null)
+                    {
+                        string id = item.QBOInvoiceId;
+                        var data = new IntuitData.Invoice { Id = id };
+                        var invoice = IntuitDataProvider.FindById<IntuitData.Invoice>(data);
+                        if(invoice!= null)
+                        {
+                            item.EInvoiceId = invoice.DocNumber;
+                            InvoiceRepository.InsertOrUpdate(item);
+                        }
+                       
+                    }
+                }
+            }
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
