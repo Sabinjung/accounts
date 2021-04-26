@@ -52,6 +52,7 @@ namespace Accounts.Models
         public string EndClientName { get; set; }
 
         public bool IsInvoiceEdited { get; set; }
+        public bool IsDeletedInIntuit { get; set; } = false;
 
         public virtual Project Project { get; set; }
 

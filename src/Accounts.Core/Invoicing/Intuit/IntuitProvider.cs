@@ -185,8 +185,30 @@ namespace Accounts.Intuit
             var serviceContext = GetServiceContext();
             DataService service = new DataService(serviceContext);
             T foundEntity = service.FindById(entity);
-
             return foundEntity;
+        }
+        public List<string> FindDeleted(List<IEntity> entity)
+        {
+            var dtUpper = DateTime.UtcNow.AddDays(-100);
+            CDCQuery cdcQuery = new CDCQuery();
+            cdcQuery.ChangedSince = dtUpper;
+            var serviceContext = GetServiceContext();
+            List<string> QboId = new List<string>();
+            DataService commonService = new DataService(serviceContext);
+            List<Invoice> lstEnt = new List<Invoice>();
+            lstEnt.Add(new Invoice());
+            IntuitCDCResponse cdcResp = commonService.CDC(entity, dtUpper);
+            if (cdcResp.entities.ContainsKey("Invoice"))
+                foreach (Invoice qboi in cdcResp.entities["Invoice"])
+                {
+                    if (qboi.status == EntityStatusEnum.Deleted && qboi.statusSpecified == true)
+                    {
+                        QboId.Add(qboi.Id);
+                    }
+                }
+
+            return QboId;
+            
         }
 
 

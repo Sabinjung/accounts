@@ -47,6 +47,7 @@ namespace Accounts.Timesheets.Dto
         public string ApprovedByUserName { get; set; }
 
         public string InvoiceGeneratedByUserName { get; set; }
+        public bool IsDeletedInIntuit { get; set; }
 
         public IEnumerable<HourLogEntryDto> HourLogEntries { get; set; }
 

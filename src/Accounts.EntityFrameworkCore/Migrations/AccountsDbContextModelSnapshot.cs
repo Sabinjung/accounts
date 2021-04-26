@@ -1402,6 +1402,8 @@ namespace Accounts.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<bool>("IsDeletedInIntuit");
+
                     b.Property<bool>("IsInvoiceEdited");
 
                     b.Property<DateTime?>("LastModificationTime");

@@ -36,5 +36,6 @@ namespace Accounts.Timesheets.Dto
         public string QBOInvoiceId { get; set; }
 
         public string EInvoiceId { get; set; }
+        public bool isInvoiceDeleted { get; set; }
     }
 }

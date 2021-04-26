@@ -19,6 +19,7 @@ using MoreLinq;
 using System.Collections.Concurrent;
 using Abp.UI;
 using Abp.Collections.Extensions;
+using Accounts.Data;
 
 namespace Accounts.Invoicing
 {
@@ -123,17 +124,24 @@ namespace Accounts.Invoicing
             if (isConnectionEstablished)
             {
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
+                var timesheet = TimesheetRepository.GetAsync(timesheetId);
+                if(timesheet.Result.StatusId == (int)TimesheetStatuses.Created)
+                {
+                    throw new UserFriendlyException("Invalid Timesheet Id", "Please Approve Timesheet to Generate Invoice");
+                }
                 await InvoicingService.Submit(timesheetId, currentUserId, isMailing);
             }
         }
         [AbpAuthorize("Invoicing.Edit")]
         public async Task UpdateInvoice(UpdateInvoiceInputDto input)
         {
+            
             var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId }).OrderBy(x => x.Day);
             var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
             var timesheet = TimesheetRepository.GetAll().Where(x => x.InvoiceId == input.Invoice.Id).FirstOrDefault();
 
             var invoice = await Repository.GetAsync(input.Invoice.Id);
+           
             Mapper.Map(input, invoice);
 
             //invoice.Rate = input.Invoice.Rate;
@@ -146,7 +154,7 @@ namespace Accounts.Invoicing
             //invoice.Total = input.Invoice.Total;
             //invoice.Memo = input.Invoice.Memo;
             //invoice.Balance = input.Invoice.Total;
-
+            await InvoicingService.SyncInvoice(invoice.QBOInvoiceId);
             invoice.IsInvoiceEdited = true;
 
             if (input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
@@ -179,10 +187,14 @@ namespace Accounts.Invoicing
                     throw new UserFriendlyException("Could not find existing hours to updated.");
                 }
             });
-
+           
             var isConnectionEstablished = await OAuth2Client.EstablishConnection(SettingManager);
             if (isConnectionEstablished)
             {
+                if (invoice.IsDeletedInIntuit == true)
+                {
+                    throw new UserFriendlyException("Cannot Edit Invoice", "This invoice has been deleted from Intuit");
+                }
                 var currentUserId = Convert.ToInt32(AbpSession.UserId);
                 await InvoicingService.UpdateAndSendMail(invoice.Id, input.Invoice.IsSendMail);
             }

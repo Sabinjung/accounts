@@ -1,4 +1,5 @@
-﻿using Accounts.Models;
+﻿using Accounts.AzureServices;
+using Accounts.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +15,7 @@ namespace Accounts.Core.Invoicing
         Task<string> Save(int timesheetId, int userId, string referenceNo);
         Task ReadInvoice(int invoiceId);
         Task SyncInvoice(string invoiceId);
+        Task SyncInvoiceAndNotify(IntuitNotifyDto invoice);
+
     }
 }
