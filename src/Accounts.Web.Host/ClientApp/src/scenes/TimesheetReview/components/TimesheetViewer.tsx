@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useImperativeHandle, forwardRef } from 'react';
 import moment from 'moment';
-import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty, notification } from 'antd';
+import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty, notification, Spin } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
 import { Get } from '../../../lib/axios';
@@ -112,6 +112,13 @@ const timesheetViewerStyles = css`
   }
 `;
 
+const StyledSpin = styled(Spin)`
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+`;
+
 const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITimesheetViewerProps> = (
   { timesheetId, onTimesheetApproved, onTimesheetDeleted, path, form, handleRefetch },
   ref
@@ -127,7 +134,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
 
   return (
     <Get url="/api/services/app/Timesheet/Detail" params={{ timesheetId }}>
-      {({ data, refetch }: any) => {
+      {({ data, refetch, loading }: any) => {
         const DeleteButton = (
           <ConfirmActionbutton
             url="/api/services/app/Timesheet/Delete"
@@ -179,7 +186,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
         handleRefetch(refetch);
 
         refetchFn = refetch;
-        if (data && data.result) {
+        if (data && data.result && !loading) {
           const {
             attachments,
             hourLogEntries,
@@ -358,7 +365,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             </ClassNames>
           );
         } else {
-          return null;
+          return <StyledSpin size="default" />
         }
       }}
     </Get>
