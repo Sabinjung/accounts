@@ -51,6 +51,7 @@ namespace Accounts.Invoicing.Dto
 
         public bool IsSendMail { get; set; }
         public string Memo { get; set; }
+        public bool IsDeletedInIntuit { get; set; }
 
         public List<LineItemDto> LineItems { get; set; }
 

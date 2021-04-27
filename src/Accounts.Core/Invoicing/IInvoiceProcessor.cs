@@ -12,5 +12,8 @@ namespace Accounts.Core.Invoicing
         Task<IntuitInvoiceDto> Send(Invoice invoice, bool isMailing);
         Task UpdateAndSend(Invoice invoice, bool isMailing);
         Task<decimal> SyncInvoice(string invoiceId);
+        
+
+
     }
 }

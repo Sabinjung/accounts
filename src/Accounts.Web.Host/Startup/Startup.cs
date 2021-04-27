@@ -35,6 +35,7 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Options;
 using Accounts.Invoicing;
 using Accounts.Core.Notify;
+using Accounts.Notify;
 
 namespace Accounts.Web.Host.Startup
 {
@@ -55,7 +56,8 @@ namespace Accounts.Web.Host.Startup
             services.Configure<AzureBlobSettings>(_appConfiguration.GetSection("AzureBlob"));
             services.Configure<IntuitSettings>(_appConfiguration.GetSection("Intuit"));
             services.Configure<DefaultEmailSetting>(_appConfiguration.GetSection("DefaultEmail"));
-            
+
+
             services.AddSingleton(prov =>
             {
                 var options = prov.GetService<IOptions<IntuitSettings>>();

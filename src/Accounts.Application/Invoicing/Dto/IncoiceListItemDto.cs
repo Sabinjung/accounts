@@ -23,6 +23,8 @@ namespace Accounts.Invoicing.Dto
         public decimal Total { get; set; }
         public decimal? Balance { get; set; }
         public int? DueDays { get; set; }
+        public bool IsDeletedInIntuit { get; set; }
+
     }
 
     public class InvoiceListItemDto

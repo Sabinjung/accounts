@@ -178,9 +178,15 @@ namespace Accounts.Projects
         public async Task<TimesheetDto> Detail(int timesheetId)
         {
             var timesheet = Mapper.Map<TimesheetDto>(await Repository.GetAll().FirstOrDefaultAsync(x => x.Id == timesheetId));
+            
             if (timesheet.InvoiceId != null)
             {
                 var invoice = _InvoiceRepository.FirstOrDefault(x => x.Id == timesheet.InvoiceId);
+                timesheet.IsDeletedInIntuit = false;
+                if(invoice.IsDeletedInIntuit == true)
+                {
+                    timesheet.IsDeletedInIntuit = true;
+                }
                 timesheet.InvoiceCompanyId = invoice.CompanyId;
                 timesheet.InvoiceCompanyName = invoice.Company.DisplayName;
             }
@@ -228,6 +234,7 @@ namespace Accounts.Projects
 
                 }
             }
+          
             return result;
         }
 

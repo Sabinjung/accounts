@@ -4,10 +4,13 @@ using Abp.Domain.Services;
 using Abp.UI;
 using Accounts.Data;
 using Accounts.Models;
+using Accounts.Notify;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -22,14 +25,67 @@ namespace Accounts.Core.Notify
         private readonly IRepository<Timesheet> TimesheetRepository;
         private readonly IRepository<Config> ConfigRepository;
         private readonly IConfiguration Configuration;
-        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository, IConfiguration configuration)
+        private readonly TeamNotification TeamNotification;
+
+        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IOptions<TeamNotification> team, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository, IConfiguration configuration)
         {
+            TeamNotification = team.Value;
             HourlogRepository = hourlogRepository;
             TimesheetRepository = timesheetRepository;
             ConfigRepository = configRepository;
             Configuration = configuration;
         }
+        public async Task<string> NotifyInvoice(string invoiceId , string message)
+        {
+            
+            ChannelNotifyParam notify = new ChannelNotifyParam()
+            {
+                TeamId = "",
+                TeamName = "",
+                Message = "Invoice " + invoiceId + " has been " + message + "\n"
+            };
+            await SendNotification(notify, "sutrabot");
+            return "User Notified";
+        }
+        public async Task<string> NotifyPayment(decimal? balance, string customerName, string invoiceId, string date)
+        {
+            ChannelNotifyParam notify = new ChannelNotifyParam
+            {
+                TeamId = "",
+                TeamName = "",
+                Message = "Amount has been paid by vendor.\n" +
+                $"eInvoice ID:{invoiceId}\n" +
+                $"Customer Name: {customerName}\n" +
+                $"Amount Received: ${balance}\n" +
+                $"Payment Date: {date}\n"
+            };
+            await SendNotification(notify, "ar followup");
+            return "User Notified";
+        }
 
+        public async Task<string> SendNotification(ChannelNotifyParam param,string teamName)
+        {
+            var client = new HttpClient();
+            var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
+            var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
+            client.BaseAddress = new Uri(baseUrl);
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            HttpResponseMessage getTeams = await client.GetAsync("api/GetAllTeams");
+            var jsonData = await getTeams.Content.ReadAsStringAsync();
+            var teams = JsonConvert.DeserializeObject<List<TeamNotification>>(jsonData);
+            var query = teams.Where(x => x.TeamName.ToLower() == teamName).Select(x => (x.TeamId, x.TeamName)).FirstOrDefault();
+            param.TeamId = query.TeamId;
+            param.TeamName = query.TeamName;
+            HttpResponseMessage res = await client.PostAsJsonAsync("api/CreateTeamNotification",param);
+
+            if (!res.IsSuccessStatusCode)
+            {
+                throw new UserFriendlyException("User notify failed.");
+            }
+
+            return "User Notified";
+        }
         public async Task<string> NotifyUser()
         {
             var client = new HttpClient();

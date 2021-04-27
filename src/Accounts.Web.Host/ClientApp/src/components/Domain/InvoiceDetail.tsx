@@ -17,7 +17,6 @@ import CustomCancleButton from './../Custom/CustomCancelButton';
 
 const { TextArea } = Input;
 const { Option } = Select;
-
 const tableStyles = css`
   width: 100%;
   border-radius: 5px;
@@ -53,8 +52,14 @@ const StyledTextArea = styled(TextArea)`
   width: 400px !important;
 `;
 
+const StyledDescriptions = styled(Descriptions)`
+.textAlign{
+  vertical-align: top;
+}
+`;
+
 let originalHours: any;
-const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: any) => {
+const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDeletedInIntuit }: any) => {
   const [qbInvoiceId, setQbInvoiceId] = useState('');
   const [isEdit, setIsEdit] = useState(false);
   const [form, setForm]: any = useState({ rate: 0, discountValue: 0 });
@@ -107,6 +112,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
     memo,
   } = invoice;
 
+  const companyEmailList = companyEmail && companyEmail.split(",");
   let initialAmount = serviceTotal;
   let TotalAmount = total;
   let discount = discountAmount;
@@ -152,24 +158,28 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries }: an
       {!timesheetId && qboInvoiceId && isGranted('Invoicing.Edit') && (
         <StyledRow type="flex" justify="end">
           <Col>
-            <CustomButton type="primary" onClick={handleEdit}>
+            <CustomButton disabled={isDeletedInIntuit} type="primary" onClick={handleEdit}>
               Edit
             </CustomButton>
           </Col>
         </StyledRow>
       )}
-      <Descriptions layout="vertical" column={4} size="small">
-        <Descriptions.Item label="Customer">{companyName}</Descriptions.Item>
-        <Descriptions.Item label="Customer Email">{companyEmail}</Descriptions.Item>
-        <Descriptions.Item label="Billing Address">
+      <StyledDescriptions layout="vertical" column={4} size="small">
+        <Descriptions.Item className="textAlign" label="Customer">{companyName}</Descriptions.Item>
+        <Descriptions.Item label="Customer Email">{companyEmailList.map((companyEmail: any)=> (
+          <div>
+            {companyEmail}
+          </div>
+        ))}</Descriptions.Item>
+        <Descriptions.Item className="textAlign" label="Billing Address">
           <code> Populated from Intuit</code>
         </Descriptions.Item>
-        <Descriptions.Item label="Term">{termName}</Descriptions.Item>
+        <Descriptions.Item className="textAlign" label="Term">{termName}</Descriptions.Item>
         <Descriptions.Item label="Invoice Date">{moment(invoiceDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Due Date">{moment(dueDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Consultant">{consultantName}</Descriptions.Item>
         {endClientName && <Descriptions.Item label="End Client">{endClientName}</Descriptions.Item>}
-      </Descriptions>
+      </StyledDescriptions>
       <table css={tableStyles}>
         <tr>
           <th>Product/Service</th>
@@ -410,7 +420,7 @@ const ConnectedInvoiceDetail = ({ invoiceId, onClose, onInvoiceSubmitted }: any)
     <Get url={'/api/services/app/Invoice/Get'} params={{ id: invoiceId }}>
       {({ error, data, isLoading }: any) => {
         const result = data && data.result;
-        return <InvoiceDetail invoice={result} onClose={onClose} onInvoiceSubmitted={onInvoiceSubmitted} hourEntries={hourEntries} />;
+        return <InvoiceDetail isDeletedInIntuit={result && result.isDeletedInIntuit} invoice={result} onClose={onClose} onInvoiceSubmitted={onInvoiceSubmitted} hourEntries={hourEntries} />;
       }}
     </Get>
   );

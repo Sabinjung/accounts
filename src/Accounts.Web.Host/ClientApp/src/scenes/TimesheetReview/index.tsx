@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import './index.less';
 import React, { useState, useEffect, useRef } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import { useRouteMatch } from 'react-router-dom';
 import { TimesheetList } from './components/TimesheetList';
 import TimesheetViewer from './components/TimesheetViewer';
@@ -14,7 +14,16 @@ import { Route, useHistory } from 'react-router';
 import { Portal } from 'react-portal';
 import RouteableDrawer from '../../components/RouteableDrawer';
 import InvoiceDetail, { InvoiceDetailForm } from '../../components/Domain/InvoiceDetail';
+import styled from '@emotion/styled';
 import { Get } from '../../lib/axios';
+
+
+const StyledSpin = styled(Spin)`
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+`;
 
 interface ITimesheetReviewProps {
   axios: AxiosInstance;
@@ -117,20 +126,23 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
                   handleRefetch={handleRefetch}
                   timesheetId={params.timesheetId}
                   onTimesheetApproved={() => {
-                    const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id == params.timesheetId);
-                    const nextTimesheetItem = dataSource[selectedTimesheetIndex + 1];
-
-                    if (nextTimesheetItem) {
-                      history.push(`/timesheets/${nextTimesheetItem.id}`);
-                    }
                     refetch();
                   }}
                   onTimesheetDeleted={() => {
                     const selectedTimesheetIndex = dataSource.findIndex((t: any) => t.id == params.timesheetId);
                     const nextTimesheetItem = dataSource[selectedTimesheetIndex + 1];
+                    const previousTimesheetItem = dataSource[selectedTimesheetIndex - 1];
 
                     if (nextTimesheetItem) {
                       history.push(`/timesheets/${nextTimesheetItem.id}`);
+                    }
+                    else{
+                      if(previousTimesheetItem){
+                        history.push(`/timesheets/${previousTimesheetItem.id}`);
+                      }
+                      else{
+                        history.push("/timesheets");
+                      }
                     }
                     refetch();
                   }}
@@ -163,18 +175,23 @@ const TimesheetReview: React.FC<ITimesheetReviewProps> = () => {
               } else {
                 return (
                   <Get url={'/api/services/app/Invoice/GenerateInvoice'} params={{ timesheetId }}>
-                    {({ error, data, isLoading }: any) => {
+                    {({ error, data, loading }: any) => {
                       const result = data && data.result;
-                      return (
-                        <InvoiceDetailForm
-                          invoice={result}
-                          onClose={onClose}
-                          onInvoiceSubmitted={() => {
-                            refetch();
-                            reload && reload();
-                          }}
-                        />
-                      );
+                      if(loading){
+                        return <StyledSpin size="default" />
+                      }
+                      else{
+                        return (
+                          <InvoiceDetailForm
+                            invoice={result}
+                            onClose={onClose}
+                            onInvoiceSubmitted={() => {
+                              refetch();
+                              reload && reload();
+                            }}
+                          />
+                        );
+                      }
                     }}
                   </Get>
                 );

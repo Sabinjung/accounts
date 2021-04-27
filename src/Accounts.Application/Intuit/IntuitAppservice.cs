@@ -11,6 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using IntuitData = Intuit.Ipp.Data;
 using Abp.UI;
+using Accounts.Core.Invoicing;
+using System.Collections.Generic;
 
 namespace Accounts.Intuit
 {
@@ -32,6 +34,7 @@ namespace Accounts.Intuit
         private readonly IMapper Mapper;
 
         private readonly OAuth2Client OAuth2Client;
+        private readonly IInvoiceProcessor InvoiceProcessor;
 
         public IntuitAppService(
             IntuitDataProvider intuitDataProvider,
@@ -42,6 +45,7 @@ namespace Accounts.Intuit
             IRepository<Invoice> invoiceRepository,
             IRepository<InvoiceCycle> invoiceCycleRepository,
             OAuth2Client oAuth2CLient,
+            IInvoiceProcessor invoiceProcessor,
             IMapper mapper)
         {
             IntuitDataProvider = intuitDataProvider;
@@ -53,7 +57,7 @@ namespace Accounts.Intuit
             InvoiceCycleRepository = invoiceCycleRepository;
             Mapper = mapper;
             OAuth2Client = oAuth2CLient;
-
+            InvoiceProcessor = invoiceProcessor;
         }
 
 
@@ -257,8 +261,23 @@ namespace Accounts.Intuit
             if (isConnectionEstablished)
             {
                 var invoices = IntuitDataProvider.GetInvoices();
+                //find deleted invoice and sync balance
+                List<IntuitData.IEntity> lstEnt = new List<IntuitData.IEntity>();
+                lstEnt.Add(new IntuitData.Invoice());
+                var QboIds = IntuitDataProvider.FindDeleted(lstEnt);
+                foreach (var item in QboIds)
+                {
+                    var inv = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == item);
+                    if (inv != null)
+                    {
+                        inv.Balance = 0;
+                        inv.IsDeletedInIntuit = true;
+                        InvoiceRepository.InsertOrUpdate(inv);
+                    }
+                }
                 foreach (var invoice in invoices)
                 {
+                    //sync all invoices
                     var existingInvoice = await InvoiceRepository.FirstOrDefaultAsync(x => x.QBOInvoiceId == invoice.Id);
                     if(existingInvoice != null)
                     {
@@ -272,10 +291,15 @@ namespace Accounts.Intuit
                         }
                         var updatedInvoice = Mapper.Map(invoice, existingInvoice);
                         updatedInvoice.Id = existingInvoice.Id;
-                        InvoiceRepository.Update(updatedInvoice);
+                        updatedInvoice.Balance = invoice.Balance;
+                        updatedInvoice.EInvoiceId = invoice.DocNumber;
+                        await InvoiceRepository.InsertOrUpdateAsync(updatedInvoice);
                     }
                 }
+
             }
         }
+
+       
     }
 }
