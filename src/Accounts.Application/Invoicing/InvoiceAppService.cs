@@ -154,9 +154,8 @@ namespace Accounts.Invoicing
             //invoice.Total = input.Invoice.Total;
             //invoice.Memo = input.Invoice.Memo;
             //invoice.Balance = input.Invoice.Total;
-            await InvoicingService.SyncInvoice(invoice.QBOInvoiceId);
             invoice.IsInvoiceEdited = true;
-
+            Repository.InsertOrUpdate(invoice);
             if (input.UpdatedHourLogEntries.Max(x => x.Day) < timesheet.EndDt)
             {
                 timesheet.EndDt = input.UpdatedHourLogEntries.Max(x => x.Day);
