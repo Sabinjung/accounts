@@ -33,7 +33,7 @@ namespace Accounts.Consultants
         public async Task<Page<ConsultantDto>> Search(ConsultantSearchParameters queryParameter)
         {
             var query = QueryBuilder.Create<Consultant, ConsultantSearchParameters>(Repository.GetAll());
-            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText) || x.LastName.Contains(p.SearchText));
+            query.WhereIf(p => !string.IsNullOrEmpty(p.SearchText), p => x => x.FirstName.Contains(p.SearchText) || x.LastName.Contains(p.SearchText) || x.DisplayName.Contains(p.SearchText));
             var sorts = new Sorts<Consultant>();
             sorts.Add(true, c => c.FirstName);
             query.ApplySorts(sorts);
@@ -44,7 +44,7 @@ namespace Accounts.Consultants
         protected override IQueryable<Consultant> CreateFilteredQuery(PagedCompanyResultRequestDto input)
         {
             return Repository.GetAll()
-                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.FirstName.Contains(input.Keyword) || x.LastName.Contains(input.Keyword));
+                .WhereIf(!input.Keyword.IsNullOrWhiteSpace(), x => x.FirstName.ToLower().Contains(input.Keyword.ToLower()) || x.LastName.ToLower().Contains(input.Keyword.ToLower()) || x.DisplayName.ToLower().Contains(input.Keyword.ToLower()));
         }
     }
 }

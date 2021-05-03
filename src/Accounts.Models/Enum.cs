@@ -29,6 +29,8 @@ namespace Accounts.Data
     {
         DefaultEmail = 1,
         NotificationEmail = 2,
-        BaseUrl = 3
+        BaseUrl = 3,
+        RCChannel = 4,
+        RCBot = 5
     }
 }

@@ -132,19 +132,20 @@ namespace Accounts.Core.Invoicing
             {
                 switch (invoice.Operation)
                 {
+                    case "Create":
+                        await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Created");
+                        await SyncInvoice(invoice.Id);
+                        break;
                     case "Update":
-                        var inv1 = new IntuitData.Invoice { Id = invoice.Id };
-                        var Intuit1 = IntuitDataProvider.FindById<IntuitData.Invoice>(inv1);
-                        var databaseInv = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == Intuit1.Id);
-                        if (databaseInv.Balance != Intuit1.Balance && databaseInv.Balance > Intuit1.Balance)
-                        {
-                            var newBalance = databaseInv.Balance - Intuit1.Balance;
-                            await NotifyService.NotifyPayment(newBalance, Intuit1.CustomerRef.name, databaseInv.EInvoiceId, invoice.LastUpdated.ToString(" dd/MM/yyyy"));
-                        }
-                        else
-                        {
-                            await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Modified");
-                        }
+                        //var inv1 = new IntuitData.Invoice { Id = invoice.Id };
+                        //var Intuit1 = IntuitDataProvider.FindById<IntuitData.Invoice>(inv1);
+                        //var databaseInv = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == Intuit1.Id);
+                        //if (databaseInv.Balance != Intuit1.Balance && databaseInv.Balance > Intuit1.Balance && databaseInv.DiscountAmount == Intuit1.DiscountAmt)
+                        //{
+                        //    var newBalance = databaseInv.Balance - Intuit1.Balance;
+                        //    await NotifyService.NotifyPayment(newBalance, Intuit1.CustomerRef.name, databaseInv.EInvoiceId, invoice.LastUpdated.ToString(" dd/MM/yyyy"));
+                        //}
+                        //await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Modified");
                         await SyncInvoice(invoice.Id);
                         break;
                     case "Emailed":
