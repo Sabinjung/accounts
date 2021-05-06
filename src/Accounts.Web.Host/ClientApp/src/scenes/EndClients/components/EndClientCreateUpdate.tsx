@@ -25,14 +25,13 @@ const formItemLayout = {
 const EndClientCreateUpdate: React.FC<EndClientCreateUpdateProps> = ({ form, onEndClientAddedOrUpdated, endClient, onClose }) => {
   const { getFieldDecorator, validateFields } = form;
   let permission: string = endClient ? 'Endclient.Update' : 'Endclient.Create';
-
   return (
     <>
       <Form {...formItemLayout} hideRequiredMark name="End Client">
         <Form.Item label="Client Name">
           {getFieldDecorator('clientName', {
             rules: [{ required: true, message: 'Please Enter Client Name!' }],
-          })(<CustomInput />)}
+          })(<CustomInput maxLength={31} />)}
         </Form.Item>
       </Form>
       <div
