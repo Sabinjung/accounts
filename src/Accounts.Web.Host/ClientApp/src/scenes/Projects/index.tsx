@@ -153,7 +153,7 @@ export default () => {
               </RouteableDrawer>
             </Authorize>
             <Authorize permissions={['Project.Update']}>
-              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Project" clearValues={() => (store.newProject = {})}>
+              <RouteableDrawer path={['/projects/:projectId/edit']} width={'30vw'} title="Edit Project" clearValues={() => (store.newProject = {})}>
                 {({
                   match: {
                     params: { projectId },

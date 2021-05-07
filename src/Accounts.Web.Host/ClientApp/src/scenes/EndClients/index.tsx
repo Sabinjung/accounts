@@ -86,7 +86,7 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       <CustomTable dataSource={results} columns={columns} loading={loading} />
       <Portal>
         <Authorize permissions={['Endclient.Create', 'Endclient.Update']}>
-          <RouteableDrawer path={[`/endClients/new`]} width={'25vw'} title="End Client">
+          <RouteableDrawer path={[`/endClients/new`]} width={'25vw'} title="Add New End Client">
             {({ onClose }: any) => {
               return (
                 <EndClientCreateUpdate
@@ -101,7 +101,7 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
           </RouteableDrawer>
         </Authorize>
         <Authorize permissions={['Endclient.Update']}>
-          <RouteableDrawer path={['/endClients/:endClientId/edit']} width={'25vw'} title="End Client" exact={true}>
+          <RouteableDrawer path={['/endClients/:endClientId/edit']} width={'25vw'} title="Edit End Client" exact={true}>
             {({
               match: {
                 params: { endClientId },

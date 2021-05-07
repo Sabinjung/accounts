@@ -60,7 +60,7 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
             <Form.Item label="Company Name">
               {getFieldDecorator('companyName', {
                 rules: [{ required: true, message: 'Please input company name!' }],
-              })(<CustomInput placeholder="Company Name" />)}
+              })(<CustomInput maxLength={100} placeholder="Company Name" />)}
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -76,7 +76,7 @@ const CompanyForm: React.FC<ICompanyFormProps> = ({ form, onCompanyAddedOrUpdate
                     message: 'Enter valid emails separated with commas!',
                   },
                 ],
-              })(<CustomInput placeholder="E-mail" />)}
+              })(<CustomInput maxLength={100} placeholder="E-mail" />)}
             </Form.Item>
           </Col>
         </Row>
