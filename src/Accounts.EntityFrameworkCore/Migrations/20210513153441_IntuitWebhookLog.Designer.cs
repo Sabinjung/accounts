@@ -4,14 +4,16 @@ using Accounts.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Accounts.Migrations
 {
     [DbContext(typeof(AccountsDbContext))]
-    partial class AccountsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210513153441_IntuitWebhookLog")]
+    partial class IntuitWebhookLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1387,8 +1389,6 @@ namespace Accounts.Migrations
                     b.Property<string>("Name");
 
                     b.Property<string>("Operation");
-
-                    b.Property<string>("TranId");
 
                     b.HasKey("Id");
 
