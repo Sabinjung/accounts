@@ -7,6 +7,7 @@ namespace Accounts.Invoicing.Dto
 {
     public class InvoiceQueryParameter : NamedQueryParameter
     {
+        public string EInvoiceId { get; set; }
         public int? CompanyId { get; set; }
 
         public int? ConsultantId { get; set; }

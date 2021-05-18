@@ -202,6 +202,7 @@ namespace Accounts.Invoicing
         private QueryBuilder<Invoice, InvoiceQueryParameter> GetQuery(InvoiceQueryParameter queryParameter)
         {
             var query = QueryBuilder.Create<Invoice, InvoiceQueryParameter>(Repository.GetAll());
+            query.WhereIf(x => !x.EInvoiceId.IsNullOrWhiteSpace(), c => p => p.EInvoiceId.Contains(c.EInvoiceId));
             query.WhereIf(x => !x.ConsultantName.IsNullOrWhiteSpace(), c => p => p.Consultant.FirstName.ToUpper().Contains(c.ConsultantName.ToUpper()));
             query.WhereIf(x => !x.CompanyName.IsNullOrWhiteSpace(), c => p => p.Company.DisplayName.ToUpper().Contains(c.CompanyName.ToUpper()));
             query.WhereIf(x => x.ConsultantId.HasValue, c => p => p.ConsultantId == c.ConsultantId);
