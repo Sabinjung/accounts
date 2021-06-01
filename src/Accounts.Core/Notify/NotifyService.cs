@@ -112,7 +112,10 @@ namespace Accounts.Core.Notify
             var client = new HttpClient();
             var notify = new NotifyParam();
             var unassociatedTimesheets = TimesheetRepository.GetAllList().Where(x => x.InvoiceId == null).Select(x => x.Id).ToList();
-            var unassociatedHoursProjects = HourlogRepository.GetAllList().Where(x => (x.TimesheetId == null || unassociatedTimesheets.Contains(x.TimesheetId.Value))&& x.Day < DateTime.Now.AddDays(-45)).GroupBy(y => y.ProjectId).Select(z => z.Key);
+            var unassociatedHoursProjects = HourlogRepository.GetAllIncluding(x=>x.Project)
+                                            .Where(x => (x.TimesheetId == null || unassociatedTimesheets
+                                            .Contains(x.TimesheetId.Value))&& x.Day < DateTime.Now.AddDays(-45) && x.Day >= x.Project.InvoiceCycleStartDt)
+                                            .GroupBy(y => y.ProjectId).Select(z => z.Key);
             var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
             var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
             var projectUrl = Configuration.GetSection("App:ServerRootAddress").Value;
@@ -121,7 +124,7 @@ namespace Accounts.Core.Notify
                 string messageBody = "";
                 foreach (var project in unassociatedHoursProjects)
                 {
-                    messageBody = messageBody + projectUrl + "projects/" + project + "/detail\n";
+                    messageBody = messageBody + projectUrl + "projects/" + project + "/detail/unassociatedHourLogs\n";
                 }
                 notify = new NotifyParam
                 {
