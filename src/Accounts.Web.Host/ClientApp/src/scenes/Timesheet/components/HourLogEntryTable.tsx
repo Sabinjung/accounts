@@ -97,8 +97,11 @@ function generateColumns(startDt: any, endDt: any, getColumnSearchProps: any) {
               {item.invoiceCycleName}
             </Descriptions.Item>
             <Descriptions.Item label="Upcoming Timesheet" span={3}>
-              {moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY')} -{' '}
-              {moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY')}
+              {moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY') >
+              moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY') ? (
+                <span>The project has ended</span>
+              ) : 
+                (moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY') + "-" + moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY'))}
             </Descriptions.Item>
             <Descriptions.Item label="Upcoming Total Hours" span={3}>
               {item.upcomingTimesheetSummary.totalHrs} hrs

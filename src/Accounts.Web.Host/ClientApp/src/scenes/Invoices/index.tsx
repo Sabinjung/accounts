@@ -44,6 +44,7 @@ const StyledSearch = styled(Search)`
     border: 1px solid #CCCCCC;
     border-radius: 4px;
     height: 32px;
+    width: 220px;
   }
 `;
 
