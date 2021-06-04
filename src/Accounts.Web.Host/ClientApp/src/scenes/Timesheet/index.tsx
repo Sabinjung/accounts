@@ -2,7 +2,7 @@
 import './index.less';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Row, Col, Button, DatePicker, notification, Icon, Typography, Select, Card, Radio } from 'antd';
+import { Row, Col, Button, DatePicker, notification, Icon, Typography, Select, Card, Radio, Spin } from 'antd';
 import moment, { Moment } from 'moment';
 import HourLogEntryTable from './components/HourLogEntryTable';
 import Stores from '../../stores/storeIdentifier';
@@ -28,6 +28,14 @@ const { Option } = Select;
 // import * as Space from 'react-spaces';
 
 const { RangePicker } = DatePicker;
+
+const StyledSpin = styled(Spin)`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export type ITimesheetProps = RouteChildrenProps & {
   hourLogEntryStore: HourLogEntryStore;
 };
@@ -35,10 +43,14 @@ export type ITimesheetProps = RouteChildrenProps & {
 export interface ITimesheetState {
   startDt: Moment;
   endDt: Moment;
+  pageSize: number;
+  skipCount: number;
   selectedRowKeys: any;
   selectedProjectId: number | null;
   invoiceCycle: number;
   selectedQuery: number | null;
+  loading: boolean;
+  searchText: string;
   range: number;
   isRangePickerOpen: boolean;
 }
@@ -78,11 +90,15 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     this.state = {
       startDt,
       endDt: startDt.clone().endOf('month'),
+      pageSize: 10,
+      skipCount: 1,
       selectedRowKeys: [],
       selectedProjectId: null,
       invoiceCycle: 3,
       selectedQuery: null,
       range: 0,
+      loading: false,
+      searchText: '',
       isRangePickerOpen: false,
     };
     this.handleSave = this.handleSave.bind(this);
@@ -95,8 +111,16 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
   }
 
   async getAll() {
-    const { startDt, endDt } = this.state;
-    await this.props.hourLogEntryStore.getAll({ startDt: startDt.format('MM/DD/YYYY'), endDt: endDt.format('MM/DD/YYYY') });
+    this.setState({loading: true});
+    const { startDt, endDt, skipCount, pageSize, searchText } = this.state;
+    await this.props.hourLogEntryStore.getAll({
+      startDt: startDt.format('MM/DD/YYYY'),
+      endDt: endDt.format('MM/DD/YYYY'),
+      pageSize,
+      pageNumber: skipCount,
+      searchText: searchText
+    });
+    this.setState({loading: false});
   }
 
   handleClick = async (e: any, data: any) => {
@@ -198,6 +222,16 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     console.log(row);
   };
 
+  handleSearch = (selectedKeys: any, confirm: any) => {
+    confirm();
+    this.setState({ searchText: selectedKeys[0] });
+  };
+
+  handleReset = (clearFilters: any) => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
+
   saveProjects = async () => {
     await this.props.hourLogEntryStore.saveHourLogEntries(this.state.selectedRowKeys);
     notification.open({
@@ -225,8 +259,8 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
   };
 
   render() {
-    const { startDt, endDt, selectedRowKeys, selectedQuery } = this.state;
-    const { projectHourLogEntries } = this.props.hourLogEntryStore;
+    const { startDt, endDt, pageSize, selectedRowKeys, selectedQuery, loading } = this.state;
+    const { projectHourLogEntries, recordCount } = this.props.hourLogEntryStore;
     let filteredProjectHourLogEntries;
     const hasSelected = selectedRowKeys.length > 0;
     if (selectedQuery == 0) {
@@ -250,8 +284,8 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
     } else {
       filteredProjectHourLogEntries = projectHourLogEntries;
     }
-    return (
-      <Card style={{ height: '100vh' }}>
+      return (
+        <Card style={{ height: '100vh' }}>
         <div style={{ marginBottom: 16 }}>
           <h1>HOUR LOGS</h1>
           <Row type="flex" justify="space-between" align="middle">
@@ -317,15 +351,26 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
             </Col>
           </Row>
         </div>
+        {projectHourLogEntries ?
         <HourLogEntryTable
           entries={filteredProjectHourLogEntries}
+          loading={loading}
           startDt={startDt}
           endDt={endDt}
+          recordCount={recordCount}
+          pagination={{ pageSize, total: projectHourLogEntries === undefined ? 0 : recordCount, defaultCurrent: 1, size: 'default' }}
+          onChange={(pagination: any) => {
+            this.setState({ skipCount: pagination.current }, () => this.getAll());
+          }}
           onSelectChange={this.onSelectChange}
+          handleSearch={this.handleSearch}
+          handleReset={this.handleReset}
           handleSave={this.handleSave}
           selectedRowKeys={selectedRowKeys}
           baseUrl={this.props.match!.url}
-        />
+        /> :
+       <StyledSpin size="default" />
+        }
         <ProjectContextMenu handleClick={this.handleClick} />
         <Portal>
           <RouteableDrawer
@@ -428,8 +473,8 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
             {() => <ProjectSummary />}
           </RouteableDrawer>
         </Portal>
-      </Card>
-    );
+      </Card> 
+      );
   }
 }
 

@@ -8,12 +8,14 @@ import HourLogEntryModel from '../models/Timesheet/hourLogEntryModel';
 
 class HourLogEntryStore {
   @observable projectHourLogEntries!: Array<GetProjectHourLogsOutput>;
+  @observable recordCount!: number;
 
   @action
   async getAll(args: GetProjectHourLogsInput) {
-    let result = await hourLogEntryService.getProjectHourLogs(args);
+    let result: any = await hourLogEntryService.getProjectHourLogs(args);
     runInAction(() => {
-      this.projectHourLogEntries = result;
+      this.projectHourLogEntries = result[0];
+      this.recordCount = result[1];
     });
   }
 

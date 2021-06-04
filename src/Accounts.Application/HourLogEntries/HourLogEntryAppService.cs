@@ -189,16 +189,16 @@ namespace Accounts.HourLogEntries
             return activeProjectsHourLogReports;
         }
 
-        public async Task<IEnumerable<ProjectHourLogEntryDto>> GetProjectHourLogs
-                (DateTime startDt, DateTime endDt, int? projectId, int? consultantId)
+        public async Task<Page<ProjectHourLogEntryDto>> GetProjectHourLogs
+                (ProjectHourLogsQueryParameter hourLogQueryParameter)
         {
-            var startDay = startDt.Date;
-            var endDay = endDt.Date;
+            var startDay = hourLogQueryParameter.StartDt;
+            var endDay = hourLogQueryParameter.EndDt;
 
-            var activeProjectsQuery = ProjectRepository.QueryActiveProjectsByDate(startDay, endDay)
-                .Where(projectId.HasValue, x => x.Id == projectId)
-                .Where(consultantId.HasValue, x => x.ConsultantId == consultantId);
-
+            var projects = ProjectRepository.PagedQueryActiveProjectsByDate(startDay, endDay, hourLogQueryParameter);
+            var pagedResult = await projects.ExecuteAsync<ProjectDto>(hourLogQueryParameter);
+            var activeProjectsQuery = pagedResult.Results.ToList();
+            
             var lastTimesheetQuery = from t in TimesheetRepository.GetAll()
                                      where activeProjectsQuery.Any(x => x.Id == t.ProjectId)
                                      group t by t.ProjectId into g
@@ -230,7 +230,7 @@ namespace Accounts.HourLogEntries
                         };
 
             var (activeProjects, projectsHourLogs) = await TaskEx.WhenAll(
-                Mapper.ProjectTo<ProjectDto>(activeProjectsQuery).ToListAsync(),
+               Task.FromResult(activeProjectsQuery),
                 query.ToListAsync());
 
             var (lastApproved, lastInvoiced) = await TaskEx.WhenAll(lastApprovedTimeSheetQuery.ToListAsync(), lastInvoicedTimesheetQuery.ToListAsync());
@@ -273,8 +273,17 @@ namespace Accounts.HourLogEntries
                     HourLogEntries = projectHourLog?.HourLogEntries ?? new List<HourLogEntryDto>()
                 };
             });
-
-            return result.OrderBy(x => x.Project.ConsultantName);
+            Page<ProjectHourLogEntryDto> finalResult = new Page<ProjectHourLogEntryDto>()
+            {
+                CurrentPage = pagedResult.CurrentPage,
+                TotalCount = pagedResult.TotalCount,
+                PageCount = pagedResult.PageCount,
+                PageSize = pagedResult.PageSize,
+                RecordCount = pagedResult.RecordCount,
+                RecordCounts = pagedResult.RecordCounts
+            };
+            finalResult.Results = result.OrderBy(x => x.Project.ConsultantName);
+            return finalResult;
         }
 
         public async Task<InvoicedHourLogEntryDto> GetInvoicedHourLogs(int invoiceId)
