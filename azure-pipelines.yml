@@ -13,6 +13,17 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '2.x'
+- task: efcore-migration-script-generator-task@0
+  inputs:
+    projectpath: src/Accounts.EntityFrameworkCore/Accounts.EntityFrameworkCore.csproj
+    databasecontexts: AccountsDbContext
+    startupprojectpath: src/Accounts.Web.Host/Accounts.Web.Host.csproj
+    targetfolder: '$(build.artifactstagingdirectory)/migrations'
+    
 - task: DotNetCoreCLI@2
   displayName: Publish
   inputs:
