@@ -42,6 +42,8 @@ namespace Accounts.EntityFrameworkCore
         public DbSet<Config> Configs { get; set; }
         public DbSet<ConfigType> ConfigTypes { get; set; }
 
+        public DbSet<IntuitWebhookLog> IntuitWebhookLogs { get; set; }
+
         public AccountsDbContext(DbContextOptions<AccountsDbContext> options)
             : base(options)
         {

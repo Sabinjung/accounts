@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, DatePicker, Button, Popover, Typography, Icon } from 'antd';
+import { Card, Row, Col, DatePicker, Button, Popover, Input,  Typography, Icon } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
 import moment from 'moment';
 import { useHistory } from 'react-router';
@@ -13,6 +13,7 @@ import PredefinedQueryPills from '../../components/PredefinedQueryPills';
 import InvoiceBarChart from './components/InvoiceBarChart';
 
 const { Text } = Typography;
+const Search = Input.Search;
 type sortableType = ['descend', 'ascend', 'descend'];
 const defaultSortOrder: sortableType = ['descend', 'ascend', 'descend'];
 
@@ -38,7 +39,18 @@ const StyledTable = styled(CustomTable)`
   }
 `;
 
+const StyledSearch = styled(Search)`
+  .ant-input {
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    height: 32px;
+    width: 220px;
+  }
+`;
+
+
 const AllInvoiceList = (props: any) => {
+  const [eInvoiceIdSearchText, setEInvoiceIdSearchText] = useState();
   const [companySearchText, setCompanySearchText] = useState(undefined);
   const [consultantSearchText, setConsultantSearchText] = useState(undefined);
   const [queryName, setQueryName] = useState('All');
@@ -53,6 +65,7 @@ const AllInvoiceList = (props: any) => {
     params: {
       isActive: true,
       name: queryName,
+      eInvoiceId: eInvoiceIdSearchText,
       companyId: companySearchText,
       consultantId: consultantSearchText,
       startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
@@ -72,6 +85,7 @@ const AllInvoiceList = (props: any) => {
     url: '/api/services/app/Invoice/GetInvoicesByMonthReport',
     params: {
       isActive: true,
+      eInvoiceId: eInvoiceIdSearchText,
       companyId: companySearchText,
       consultantId: consultantSearchText,
       startDate: dateSearchText[0] && moment(dateSearchText[0]).format('YYYY-MM-DD'),
@@ -81,6 +95,7 @@ const AllInvoiceList = (props: any) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setEInvoiceIdSearchText(undefined);
       setCompanySearchText(undefined);
       setConsultantSearchText(undefined);
       setDateSearchText([]);
@@ -96,6 +111,9 @@ const AllInvoiceList = (props: any) => {
     let isBefore: boolean = moment(currentDate).isBefore(dueDate);
     return isSame || record.balance === null || record.balance === 0 ? false : isBefore ? false : true;
   };
+  const handleSearch = (value: any) => {
+      setEInvoiceIdSearchText(value);
+  }
 
   const handleCompanySearch = (value: any) => {
     setCompanySearchText(value);
@@ -279,6 +297,9 @@ const AllInvoiceList = (props: any) => {
         <Col>
           <Row type="flex" align="middle" gutter={8}>
             <Col>
+              <StyledSearch placeholder="Search eInvoice ID" allowClear onSearch={handleSearch} />
+            </Col>
+            <Col>
               <EntityPicker
                 url="api/services/app/Company/Search"
                 mapFun={(r) => ({ value: r.id, text: `${r.displayName}` })}
@@ -315,7 +336,7 @@ const AllInvoiceList = (props: any) => {
     <>
       <Card>
         <h1>INVOICES</h1>
-        <InvoiceBarChart data={barChartData && barChartData.result} loading={barChartLoading} /> 
+        <InvoiceBarChart data={barChartData && barChartData.result} loading={barChartLoading} />
         <StyledTable
           dataSource={result.listItemDto && result.listItemDto.results}
           rowClassName={(record: any) => {

@@ -36,6 +36,7 @@ namespace Accounts.Projects
         private readonly IRepository<Company> CompanyRepository;
         private readonly IRepository<Timesheet> TimesheetRepository;
         private readonly IRepository<Invoice> InvoiceRepository;
+        private readonly IRepository<HourLogEntry> HourlogRepository;
         private readonly IRepository<Attachment> AttachmentRepository;
 
         private readonly QueryBuilderFactory QueryBuilder;
@@ -50,6 +51,7 @@ namespace Accounts.Projects
             IRepository<Company> companyRepository,
             IRepository<Timesheet> timesheetRepository,
             IRepository<Invoice> invoiceRepository,
+            IRepository<HourLogEntry> hourlogRepository,
             IRepository<Attachment> attachmentRepository,
             IAzureBlobService azureBlobService,
             QueryBuilderFactory queryBuilderFactory,
@@ -63,6 +65,7 @@ namespace Accounts.Projects
             CompanyRepository = companyRepository;
             TimesheetRepository = timesheetRepository;
             InvoiceRepository = invoiceRepository;
+            HourlogRepository = hourlogRepository;
             AttachmentRepository = attachmentRepository;
             QueryBuilder = queryBuilderFactory;
             TimesheetService = timesheetService;
@@ -204,6 +207,30 @@ namespace Accounts.Projects
         {
             var project = await Repository.GetAsync(input.Id);
             return Mapper.Map<ProjectDto>(project);
+        }
+        public async Task<UnassociatedProject> GetUnAssociatedHourLogReport(int projectId)
+        {
+            List<int> unassociatedTimesheets = TimesheetRepository.GetAllList().Where(x => x.InvoiceId == null).Select(x => x.Id).ToList();
+            var unassociatedHoursProjects = await HourlogRepository.GetAllIncluding(x=>x.Project)
+                                            .Where(x => x.ProjectId == projectId && (x.TimesheetId == null || unassociatedTimesheets
+                                            .Contains(x.TimesheetId.Value)) && x.Day < DateTime.Now.AddDays(-45) && x.Day >= x.Project.InvoiceCycleStartDt)
+                                            .GroupBy(z => new
+                                            {
+                                                z.Day.Date.Month,
+                                                z.Day.Date.Year
+                                            }).ToListAsync();
+
+            UnassociatedProject result = new UnassociatedProject
+            {
+                ConsultantName = Repository.FirstOrDefault(y => y.Id == projectId).Consultant.DisplayName,
+                UnassociatedProjectHourReportDtos = unassociatedHoursProjects.Select(x => new UnassociatedProjectHourlogMonthReportDto
+                {
+                    MonthName = x.Key.Month,
+                    Year = x.Key.Year,
+                    TotalHours = (double)x.Sum(y => y.Hours)
+                }).OrderBy(x => x.Year).ThenBy(x => x.MonthName)
+            };
+            return result;
         }
     }
 }

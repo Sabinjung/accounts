@@ -109,7 +109,7 @@ namespace Accounts.Core.Invoicing
             var invoice = await InvoiceRepository.GetAsync(invoiceId);
             await InvoiceProcessor.UpdateAndSend(invoice, isMailing);
         }
-
+        //sync balance from intuit to accounts app
         public async Task SyncInvoice(string invoiceId)
         {
             var balance = await InvoiceProcessor.SyncInvoice(invoiceId);
@@ -122,19 +122,22 @@ namespace Accounts.Core.Invoicing
             await InvoiceRepository.UpdateAsync(invoice);
         }
 
-        public async Task SyncInvoiceAndNotify(IntuitNotifyDto invoice)
+        public async Task SyncInvoiceAndNotify(IntuitNotifyDto transaction)
         {
-            if (invoice.Name == "Payment" && invoice.Operation == "Create")
+            
+            if (transaction.Name == "Payment" && transaction.Operation == "Create")
             {
-                await SendPaymentNotification(invoice.Id, invoice.LastUpdated.Date);
+                //to get payment id from transaction, sends payment notification to ringcentral and sync invoice
+                await SendPaymentNotification(transaction.Id, transaction.LastUpdated.Date);
             }
-            if (invoice.Name == "Invoice")
+            //runs when invoice operations are triggered
+            if (transaction.Name == "Invoice")
             {
-                switch (invoice.Operation)
+                switch (transaction.Operation)
                 {
                     case "Create":
-                        await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Created");
-                        await SyncInvoice(invoice.Id);
+                        //await NotifyService.NotifyInvoice(GeteInvoiceId(transaction.Id), "Created");
+                        await SyncInvoice(transaction.Id);
                         break;
                     case "Update":
                         //var inv1 = new IntuitData.Invoice { Id = invoice.Id };
@@ -145,19 +148,19 @@ namespace Accounts.Core.Invoicing
                         //    var newBalance = databaseInv.Balance - Intuit1.Balance;
                         //    await NotifyService.NotifyPayment(newBalance, Intuit1.CustomerRef.name, databaseInv.EInvoiceId, invoice.LastUpdated.ToString(" dd/MM/yyyy"));
                         //}
-                        //await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Modified");
-                        await SyncInvoice(invoice.Id);
+                        await NotifyService.NotifyInvoice(GeteInvoiceId(transaction.Id), "edited");
+                        await SyncInvoice(transaction.Id);
                         break;
                     case "Emailed":
-                        await SyncInvoice(invoice.Id);
+                        await SyncInvoice(transaction.Id);
                         break;
                     case "Void":
-                        await NotifyService.NotifyInvoice(GeteInvoiceId(invoice.Id), "Voided");
-                        await SyncInvoice(invoice.Id);
+                        await NotifyService.NotifyInvoice(GeteInvoiceId(transaction.Id), "voided");
+                        await SyncInvoice(transaction.Id);
                         break;
                     case "Delete":
-                        var toDelete = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == invoice.Id);
-                        await NotifyService.NotifyInvoice(toDelete.EInvoiceId, "Deleted");
+                        var toDelete = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == transaction.Id);
+                        await NotifyService.NotifyInvoice(toDelete.EInvoiceId, "deleted");
                         toDelete.Balance = 0;
                         toDelete.IsDeletedInIntuit = true;
                         await InvoiceRepository.InsertOrUpdateAsync(toDelete);
@@ -165,26 +168,30 @@ namespace Accounts.Core.Invoicing
                 }
             }
         }
+        //gets eInvoiceId from etransId
         public string GeteInvoiceId(string invoiceId)
         {
             var inv = new IntuitData.Invoice { Id = invoiceId };
             var eInvoiceId = IntuitDataProvider.FindById<IntuitData.Invoice>(inv);
             return eInvoiceId.DocNumber;
         }
-        public async Task SendPaymentNotification(string paymentId, DateTime lastUpdatedDate)
+        //gets invoice id from paytment id, sends notification and sync balance
+        public async Task SendPaymentNotification(string transId, DateTime lastUpdatedDate)
         {
-            var payment = new IntuitData.Payment { Id = paymentId };
+            var paymentId = new IntuitData.Payment { Id = transId };
             string invId = "";
-            var Intuit = IntuitDataProvider.FindById<IntuitData.Payment>(payment);
-            foreach (var item in Intuit.Line)
+            var payment = IntuitDataProvider.FindById<IntuitData.Payment>(paymentId);
+            foreach (var item in payment.Line)
             {
                 if (item.LinkedTxn.Any(x => x.TxnType == "Invoice"))
                 {
                     invId = item.LinkedTxn.Where(x => x.TxnType == "Invoice").FirstOrDefault().TxnId;
+                    var intuitId = new IntuitData.Invoice { Id = invId };
+                    var intuitInvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(intuitId);
                     var databaseInv = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == invId);
                     if (databaseInv.EInvoiceId != null)
                     {
-                        await NotifyService.NotifyPayment(item.Amount, Intuit.CustomerRef.name, databaseInv.EInvoiceId, lastUpdatedDate.ToString(" dd/MM/yyyy"));
+                        await NotifyService.NotifyPayment(item.Amount, payment.CustomerRef.name, databaseInv.EInvoiceId, payment.TxnDate.Date.ToString(" MM/dd/yyyy"),intuitInvoice.Balance);
                         await SyncInvoice(invId);
                     }
                     

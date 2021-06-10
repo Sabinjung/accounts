@@ -97,8 +97,11 @@ function generateColumns(startDt: any, endDt: any, getColumnSearchProps: any) {
               {item.invoiceCycleName}
             </Descriptions.Item>
             <Descriptions.Item label="Upcoming Timesheet" span={3}>
-              {moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY')} -{' '}
-              {moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY')}
+              {moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY') >
+              moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY') ? (
+                <span>The project has ended</span>
+              ) : 
+                (moment(item.upcomingTimesheetSummary.startDt).format('MM/DD/YYYY') + "-" + moment(item.upcomingTimesheetSummary.endDt).format('MM/DD/YYYY'))}
             </Descriptions.Item>
             <Descriptions.Item label="Upcoming Total Hours" span={3}>
               {item.upcomingTimesheetSummary.totalHrs} hrs
@@ -159,6 +162,7 @@ class HourLogEntryTable extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
+    debugger;
     this.state = {
       loading: false,
     };
@@ -174,19 +178,19 @@ class HourLogEntryTable extends React.Component<any, any> {
           placeholder={`Search`}
           value={selectedKeys[0]}
           onChange={(e: any) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-          onPressEnter={() => this.handleSearch(selectedKeys, confirm)}
+          onPressEnter={() => this.props.handleSearch(selectedKeys, confirm)}
           style={{ width: 188, marginBottom: 8, display: 'block' }}
         />
         <Button
           type="primary"
-          onClick={() => this.handleSearch(selectedKeys, confirm)}
+          onClick={() => this.props.handleSearch(selectedKeys, confirm)}
           icon="search"
           size="small"
           style={{ width: 90, marginRight: 8 }}
         >
           Search
         </Button>
-        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+        <Button onClick={() => this.props.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
           Reset
         </Button>
       </div>
@@ -213,18 +217,8 @@ class HourLogEntryTable extends React.Component<any, any> {
     ),
   });
 
-  handleSearch = (selectedKeys: any, confirm: any) => {
-    confirm();
-    this.setState({ searchText: selectedKeys[0] });
-  };
-
-  handleReset = (clearFilters: any) => {
-    clearFilters();
-    this.setState({ searchText: '' });
-  };
-
   render() {
-    const { entries, startDt, endDt, selectedRowKeys, onSelectChange, handleSave, history, baseUrl } = this.props;
+    const { entries, recordCount, pagination, loading, startDt, endDt, selectedRowKeys, onSelectChange, onChange, handleSave, history, baseUrl } = this.props;
     if (entries == null) return null;
     const components = {
       body: {
@@ -284,15 +278,17 @@ class HourLogEntryTable extends React.Component<any, any> {
         <CustomHoursTable
           rowSelection={rowSelection}
           components={components}
+          loading={loading}
           rowClassName={() => 'editable-row'}
           dataSource={dataSource}
           columns={columns}
           size="small"
           scroll={{ x: 470 }}
-          pagination={{ pageSize: 10, size: 'default' }}
+          pagination={pagination}
+          onChange={onChange}
           footer={() => (
             <Row type="flex" justify="space-between" align="bottom">
-              <Col>Total Consultants: {dataSource.length}</Col>
+              <Col>Total Consultants: {recordCount}</Col>
               <Col>
                 <CustomButton type="primary" onClick={() => history.push(`${baseUrl}/projectsummary`)}>
                   Project Summary

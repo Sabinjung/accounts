@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import ProjectInvoice from './components/ProjectInvoices';
 import ProjectTimesheet from './components/ProjectTimesheets';
+import ProjectUnassociatedHourLogs from './components/ProjectUnassociatedHourLogs';
 
 const ProjectDetail = (props: any) => {
   const projectId = props.match.params.projectId;
@@ -19,7 +20,6 @@ const ProjectDetail = (props: any) => {
   }, [projectId]);
 
   const result = data && data.result;
-
   return (
     <Card>
       <Row type="flex" justify="space-between">
@@ -65,6 +65,11 @@ const ProjectDetail = (props: any) => {
             label: 'Invoices',
             getRoute: (url: string) => `${url}/invoices`,
             component: ProjectInvoice,
+          },
+          {
+            label: 'Unassociated Hour Logs',
+            getRoute: (url: string) => `${url}/unassociatedHourLogs`,
+            component: ProjectUnassociatedHourLogs,
           },
         ]}
       />

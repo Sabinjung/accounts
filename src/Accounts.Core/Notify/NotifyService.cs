@@ -22,42 +22,61 @@ namespace Accounts.Core.Notify
     public class NotifyService : DomainService, INotifyService
     {
         private readonly IRepository<HourLogEntry> HourlogRepository;
+        private readonly IRepository<Consultant> ConsultantRepository;
+        private readonly IRepository<Company> CompanyRepository;
         private readonly IRepository<Timesheet> TimesheetRepository;
+        private readonly IRepository<Invoice> InvoiceRepository;
         private readonly IRepository<Config> ConfigRepository;
         private readonly IConfiguration Configuration;
         private readonly TeamNotification TeamNotification;
 
-        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IOptions<TeamNotification> team, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository, IConfiguration configuration)
+        public NotifyService (IRepository<HourLogEntry> hourlogRepository, IRepository<Consultant> consultantRepository, IRepository<Company> companyRepository, IRepository<Invoice> invoiceRepository, IOptions<TeamNotification> team, IRepository<Timesheet> timesheetRepository, IRepository<Config> configRepository, IConfiguration configuration)
         {
             TeamNotification = team.Value;
             HourlogRepository = hourlogRepository;
+            ConsultantRepository = consultantRepository;
+            CompanyRepository = companyRepository;
             TimesheetRepository = timesheetRepository;
+            InvoiceRepository = invoiceRepository;
             ConfigRepository = configRepository;
             Configuration = configuration;
         }
         public async Task<string> NotifyInvoice(string invoiceId , string message)
         {
-            
-            ChannelNotifyParam notify = new ChannelNotifyParam()
+            var invoiceUrl = Configuration.GetSection("App:ServerRootAddress").Value;
+            var databaseInvoice = InvoiceRepository.FirstOrDefault(x => x.EInvoiceId == invoiceId);
+            var companyName = CompanyRepository.FirstOrDefault(x => x.Id == databaseInvoice.CompanyId).DisplayName;
+            var consultantName = ConsultantRepository.FirstOrDefault(x => x.Id == databaseInvoice.ConsultantId).DisplayName;
+            ChannelNotifyParam notify = new ChannelNotifyParam
             {
                 TeamId = "",
                 TeamName = "",
-                Message = "Invoice " + invoiceId + " has been " + message + "\n"
+                Message = $"Invoice has been {message}.\n" +
+                $" Date: {DateTime.UtcNow.Date.ToString(" MM/dd/yyyy")}\n" +
+                $" Customer Name: {companyName}\n" +
+                $" Consultant Name: {consultantName}\n" +
+                $" eInvoice ID:{invoiceId}\n" +
+                $" Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInvoice.Id + "\n"}\n"
             };
             await SendNotification(notify, (int)ConfigTypes.RCBot);
+
             return "User Notified";
         }
-        public async Task<string> NotifyPayment(decimal? balance, string customerName, string invoiceId, string date)
+        public async Task<string> NotifyPayment(decimal? balance, string customerName, string invoiceId, string date,decimal remainingBalance)
         {
+            var invoiceUrl = Configuration.GetSection("App:ServerRootAddress").Value;
+            var databaseInvoice = InvoiceRepository.FirstOrDefault(x => x.EInvoiceId == invoiceId);
             ChannelNotifyParam notify = new ChannelNotifyParam
             {
                 TeamId = "",
                 TeamName = "",
                 Message = "Amount has been paid by vendor.\n" +
-                $"eInvoice ID:{invoiceId}\n" +
-                $"Customer Name: {customerName}\n" +
-                $"Amount Received: ${balance}\n" +
-                $"Payment Date: {date}\n"
+                $" Payment Date: {date}\n" +
+                $" Customer Name: {customerName}\n" +
+                $" Amount Received: ${balance}\n" +
+                $" eInvoice ID:{invoiceId}\n" +
+                $" Remaining Balance: ${remainingBalance}\n" +
+                $" Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInvoice.Id + "\n"}\n" 
             };
             await SendNotification(notify, (int)ConfigTypes.RCChannel);
             return "User Notified";
@@ -93,7 +112,10 @@ namespace Accounts.Core.Notify
             var client = new HttpClient();
             var notify = new NotifyParam();
             var unassociatedTimesheets = TimesheetRepository.GetAllList().Where(x => x.InvoiceId == null).Select(x => x.Id).ToList();
-            var unassociatedHoursProjects = HourlogRepository.GetAllList().Where(x => (x.TimesheetId == null || unassociatedTimesheets.Contains(x.TimesheetId.Value))&& x.Day < DateTime.Now.AddDays(-45)).GroupBy(y => y.ProjectId).Select(z => z.Key);
+            var unassociatedHoursProjects = HourlogRepository.GetAllIncluding(x=>x.Project)
+                                            .Where(x => (x.TimesheetId == null || unassociatedTimesheets
+                                            .Contains(x.TimesheetId.Value))&& x.Day < DateTime.Now.AddDays(-45) && x.Day >= x.Project.InvoiceCycleStartDt)
+                                            .GroupBy(y => y.ProjectId).Select(z => z.Key);
             var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
             var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
             var projectUrl = Configuration.GetSection("App:ServerRootAddress").Value;
@@ -102,7 +124,7 @@ namespace Accounts.Core.Notify
                 string messageBody = "";
                 foreach (var project in unassociatedHoursProjects)
                 {
-                    messageBody = messageBody + projectUrl + "projects/" + project + "/detail\n";
+                    messageBody = messageBody + projectUrl + "projects/" + project + "/detail/unassociatedHourLogs\n";
                 }
                 notify = new NotifyParam
                 {

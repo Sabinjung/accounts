@@ -65,7 +65,8 @@ const RouteableDrawer = (props: any) => {
 
           onClose: () => {
             clearValues && clearValues();
-            para.history.goBack();
+            const splittedPath = para.history.location.pathname.split('/');
+            para.history.length > 2 ? para.history.goBack() : para.history.push(`/${splittedPath[1]}`) ;
           },
         };
         return <StyledDrawer {...drawerProps}>{props.children({ ...para, onClose: drawerProps.onClose })}</StyledDrawer>;

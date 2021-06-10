@@ -11,7 +11,7 @@ namespace Accounts.Core.Notify
     {
         Task<string> NotifyUser();
         Task<string> NotifyInvoice(string invoiceId,string message);
-        Task<string> NotifyPayment(decimal? balance, string customerName, string invoiceId, string date);
+        Task<string> NotifyPayment(decimal? balance, string customerName, string invoiceId, string date,decimal remainingBalance);
 
     }
 }

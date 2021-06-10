@@ -157,20 +157,20 @@ export class HourLogEntryInput extends React.Component<any> {
       upcomingTimesheetSummary,
       ...restProps
     } = this.props;
-
     const btw =
       upcomingTimesheetSummary &&
       (moment(day).isSame(upcomingTimesheetSummary.startDt) ||
         moment(day).isSame(upcomingTimesheetSummary.endDt) ||
         moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt));
+    const isActive: boolean = upcomingTimesheetSummary && moment(upcomingTimesheetSummary.startDt) <= moment(upcomingTimesheetSummary.endDt) ? true : false;
     return (
       <td
         className={classNames(className, {
           'is-modified': hourEntry && hourEntry.isModified,
           'is-associated': hourEntry && hourEntry.isAssociatedWithTimesheet,
           'is-current-date': day && moment(day).format('MM/DD/YYYY') === moment().format('MM/DD/YYYY'),
-          'is-upcoming-startDt': upcomingTimesheetSummary && moment(day).isSame(upcomingTimesheetSummary.startDt),
-          'is-upcoming-endDt': upcomingTimesheetSummary && moment(day).isSame(upcomingTimesheetSummary.endDt),
+          'is-upcoming-startDt': upcomingTimesheetSummary && isActive && moment(day).isSame(upcomingTimesheetSummary.startDt),
+          'is-upcoming-endDt': upcomingTimesheetSummary && isActive && moment(day).isSame(upcomingTimesheetSummary.endDt),
           'is-upcoming-btw': upcomingTimesheetSummary && moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt),
           btw: btw,
           'is-disabled':
@@ -180,7 +180,7 @@ export class HourLogEntryInput extends React.Component<any> {
         {...restProps}
       >
         {editable ? <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer> : children}
-        {btw && <div className="upcoming-timesheet-totalhrs">{upcomingTimesheetSummary.totalHrs} hrs</div>}
+        {btw && isActive && <div className="upcoming-timesheet-totalhrs">{upcomingTimesheetSummary.totalHrs} hrs</div>}
       </td>
     );
   }
