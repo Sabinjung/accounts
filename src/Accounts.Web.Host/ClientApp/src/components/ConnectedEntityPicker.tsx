@@ -18,6 +18,7 @@ const ConnectedEntityPicker = observer(function <TStore>({ loader, selector, val
         showSearch
         optionFilterProp="children"
         onChange={onChange}
+        getPopupContainer={(trigger: any) => trigger.parentNode}
         value={value}
         style={{ flex: 1, boxShadow: '0px 3px 10px #0000000D' }}
         defaultValue={value}

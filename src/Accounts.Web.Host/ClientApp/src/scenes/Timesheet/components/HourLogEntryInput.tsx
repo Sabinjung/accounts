@@ -33,6 +33,7 @@ export const HourLogEntryRow = observer(Form.create()(EditableRow));
 export class HourLogEntryInput extends React.Component<any> {
   state = {
     editing: false,
+    hours: 0,
   };
 
   input: any;
@@ -81,6 +82,29 @@ export class HourLogEntryInput extends React.Component<any> {
     const { getFieldError, isFieldTouched } = form;
     const fieldId = `${projectId}-${day}`;
     const isEntryError = isFieldTouched(fieldId) && getFieldError(fieldId);
+    
+    const handleHourChange = (e: any) => {
+        let val: number = e.target.value === '' ? 0 : parseFloat(e.target.value);
+        let strVal: string = e.target.value;
+        if (val > 24 || (strVal.includes('.') && strVal.split('.')[1].length > 1)) {
+          this.setState((prevState: any) => {
+            this.form.setFieldsValue({ [fieldId]: prevState.hours.toString() });
+            return { hours: prevState.hours };
+          });
+       } else {
+          this.setState(() => {
+            this.form.setFieldsValue({ [fieldId]: val.toString() });
+            return { hours: val };
+          });
+        }
+      };
+    
+      const handleCharacters = (e: any) => {
+        const invalidChars = ['-', '+', 'e'];
+        if (invalidChars.includes(e.key)) {
+          e.preventDefault();
+        }
+      };
 
     const isEditable =
       editing &&
@@ -102,16 +126,12 @@ export class HourLogEntryInput extends React.Component<any> {
           rules: [
             {
               validator(rule: any, value: any, callback: any) {
-                const intVal = parseFloat(value);
-                if (intVal && (intVal < 0 || intVal > 24)) {
-                  callback('Value is not within limit');
-                }
                 callback();
               },
             },
           ],
           initialValue: cellContent,
-        })(<Input ref={(node) => (this.input = node)} type="number" onPressEnter={this.save} onBlur={this.save} maxLength={5} />)}
+        })(<Input ref={(node) => (this.input = node)} type="number" onKeyDown={handleCharacters} onPressEnter={this.save} onBlur={this.save} onChange={handleHourChange} maxLength={5} />)}
       </Form.Item>
     ) : (
       <div
@@ -162,7 +182,8 @@ export class HourLogEntryInput extends React.Component<any> {
       (moment(day).isSame(upcomingTimesheetSummary.startDt) ||
         moment(day).isSame(upcomingTimesheetSummary.endDt) ||
         moment(day).isBetween(upcomingTimesheetSummary.startDt, upcomingTimesheetSummary.endDt));
-    const isActive: boolean = upcomingTimesheetSummary && moment(upcomingTimesheetSummary.startDt) <= moment(upcomingTimesheetSummary.endDt) ? true : false;
+    const isActive: boolean =
+      upcomingTimesheetSummary && moment(upcomingTimesheetSummary.startDt) <= moment(upcomingTimesheetSummary.endDt) ? true : false;
     return (
       <td
         className={classNames(className, {
@@ -180,7 +201,17 @@ export class HourLogEntryInput extends React.Component<any> {
         {...restProps}
       >
         {editable ? <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer> : children}
-        {btw && isActive && <div className="upcoming-timesheet-totalhrs">{upcomingTimesheetSummary.totalHrs} hrs</div>}
+        {btw && isActive && (
+          <div
+            className={
+              Number.isInteger(upcomingTimesheetSummary.totalHrs) && upcomingTimesheetSummary.totalHrs < 100
+                ? 'upcoming-timesheet-totalhrs'
+                : 'upcoming-timesheet-totalhrs three-digits-totalhrs'
+            }
+          >
+            {upcomingTimesheetSummary.totalHrs && parseFloat(upcomingTimesheetSummary.totalHrs.toFixed(1))} hrs
+          </div>
+        )}
       </td>
     );
   }

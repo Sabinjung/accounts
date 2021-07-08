@@ -80,7 +80,7 @@ const InvoiceBarChart: React.FC<InvoiceBarChartProps> = ({ data, loading }) => {
         <>
           <Row>
             <Col offset={21}>
-              <StyledSelect showSearch allowClear value={selectedYear} placeholder="Select a year" onChange={handleYearChange}>
+              <StyledSelect showSearch allowClear value={selectedYear} placeholder="Select a year" onChange={handleYearChange} getPopupContainer={(trigger: any) => trigger.parentNode}>
                 {yearList.map((item: any, index: any) => (
                   <Option value={item} key={index}>
                     {item}

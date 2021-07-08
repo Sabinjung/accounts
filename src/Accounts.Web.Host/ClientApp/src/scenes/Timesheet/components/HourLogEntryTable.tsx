@@ -260,7 +260,7 @@ class HourLogEntryTable extends React.Component<any, any> {
         phoneNumber: e.project.phoneNumber,
         invoiceCycleName: e.project.invoiceCycleName,
         hourLogEntries: e.hourLogEntries,
-        totalHrs: e.totalHrs,
+        totalHrs: e.totalHrs && parseFloat(e.totalHrs.toFixed(1)),
         projectStartDt: e.project.startDt,
         projectEndDt: e.project.endDt,
         upcomingTimesheetSummary: e.project.upcomingTimesheetSummary,

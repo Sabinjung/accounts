@@ -65,7 +65,7 @@ export default class DiscountInput extends React.Component<any, any> {
     const { discountType, discountValue } = this.state;
     return (
       <InputGroup compact>
-        <StyledSelect value={discountType} onChange={this.handleDiscountTypeChange} style={{ width: 100 }} allowClear>
+        <StyledSelect value={discountType} onChange={this.handleDiscountTypeChange} getPopupContainer={(trigger: any) => trigger.parentNode} style={{ width: 100 }} allowClear>
           <Option value={1}>Percentage</Option>
           <Option value={2}>Value</Option>
         </StyledSelect>

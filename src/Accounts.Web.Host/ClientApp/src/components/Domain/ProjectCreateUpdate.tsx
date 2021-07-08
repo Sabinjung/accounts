@@ -79,11 +79,11 @@ const handleCompanyChange = (value: any) => {
   };
 
   const handleRate = (val: any, prevVal: any) => {
-    let rx = /^\d*\.?\d{0,2}$/;
-    if (rx.test(val)) {
-      return val;
-    } else {
+    let strVal = val && val.toString();
+    if (val >= 1000 || (val && strVal.includes('.') && strVal.split('.')[1].length > 2)) {
       return prevVal;
+    } else {
+      return val;
     }
   };
 
@@ -94,13 +94,20 @@ const handleCompanyChange = (value: any) => {
     callback('Rate must be greater than 0!');
   };
 
+  const handleCharacters = (e: any) => {
+    const invalidChars = ['-', '+', 'e'];
+    if (invalidChars.includes(e.key)) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <React.Fragment>
       <StyledForm {...formItemLayout}>
         <Form.Item label="Company">
           {getFieldDecorator('companyId', {
             rules: [{ required: true, message: 'Please input your Company!' }],
-          })(<Select showSearch optionFilterProp="children" onChange={handleCompanyChange} allowClear>
+          })(<Select showSearch optionFilterProp="children" getPopupContainer={(trigger: any) => trigger.parentNode} onChange={handleCompanyChange} allowClear>
             {company.map((company: any, index: any) => (
               <Option value={company.id} key={index}>{company.displayName}</Option>
             ))}
@@ -147,13 +154,13 @@ const handleCompanyChange = (value: any) => {
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
-          })(<StyledDatePicker allowClear={false} />)}
+          })(<StyledDatePicker allowClear={false} getCalendarContainer={(trigger: any) => trigger.parentNode} />)}
         </Form.Item>
-        <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker />)}</Form.Item>
+        <Form.Item label="End Date">{getFieldDecorator('endDt')(<DatePicker getCalendarContainer={(trigger: any) => trigger.parentNode} />)}</Form.Item>
         <Form.Item label="InvoiceCycle Start Date">
           {getFieldDecorator('invoiceCycleStartDt', {
             rules: [{ required: true, message: 'Please input InvoiceCycle Start Date!' }],
-          })(<StyledDatePicker />)}
+          })(<StyledDatePicker getCalendarContainer={(trigger: any) => trigger.parentNode} />)}
         </Form.Item>
         <Form.Item label="Discount">
           {getFieldDecorator('discount', {
@@ -164,8 +171,8 @@ const handleCompanyChange = (value: any) => {
           {getFieldDecorator('rate', {
             rules: [{ required: true, message: ' ' }, { validator: checkRate }],
             normalize: handleRate,
-          })(<CustomInput style={{ width: '5em' }} />)}
-        </Form.Item>
+          })(<CustomInput type="number" style={{ width: '90px' }} onKeyDown={handleCharacters} />)}
+          </Form.Item>
         <Form.Item label="Send Mail">{getFieldDecorator('isSendMail', { valuePropName: 'checked' })(<StyledCheckbox></StyledCheckbox>)}</Form.Item>
       </StyledForm>
       <div

@@ -6,7 +6,7 @@ import { isGranted } from '../../lib/abpUtility';
 
 const StyledDiv = styled.div`
   height: 82px;
-  width: 55px;
+  width: 68px;
   border: 1px solid #e8e8e8;
   text-align: center;
 `;
@@ -73,10 +73,18 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
   };
 
   const handleHourEdit = (e: any) => {
-    let val: number = isNaN(parseFloat(e.target.value)) ? 0 : parseFloat(e.target.value);
-    let hour: number = val > 24 ? filteredLogedHours[e.target.name].hours : val;
+    let val: number = e.target.value === "" ? 0 : parseFloat(e.target.value);
+    let strVal: string = String(val);
+    let hour: number = val > 24 ||(strVal.includes('.') && strVal.split(".")[1].length > 1) ? filteredLogedHours[e.target.name].hours : val;
     filteredLogedHours[e.target.name].hours = hour;
     setLogedHours([...filteredLogedHours]);
+  };
+
+  const handleCharacters = (e: any) => {
+    const invalidChars = ['-', '+', 'e'];
+    if (invalidChars.includes(e.key)) {
+      e.preventDefault();
+    }
   };
 
   const weekEnd = (day: any) => {
@@ -94,7 +102,7 @@ const EditHourlog: React.FC<EditHourlogProps> = ({ description, logedHours, setL
           <StyledDiv>
             <StyledHeader className={weekEnd(item.day)}>{moment(item.day).format('MM/DD')}</StyledHeader>
             <StyledHour className={weekEnd(item.day)}>
-              <StyledInput className={weekEnd(item.day)} name={index} value={item.hours} onChange={handleHourEdit} />
+            <StyledInput type="number" className={weekEnd(item.day)} name={index} value={(item.hours).toString()} onChange={handleHourEdit} onKeyDown={handleCharacters} />
             </StyledHour>
           </StyledDiv>
         </Col>

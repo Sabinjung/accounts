@@ -320,7 +320,7 @@ const AllInvoiceList = (props: any) => {
               />
             </Col>
             <Col>
-              <RangePicker onChange={handleDateSearch} value={dateSearchText} />
+              <RangePicker onChange={handleDateSearch} value={dateSearchText} getCalendarContainer={(trigger: any) => trigger.parentNode} />
             </Col>
           </Row>
         </Col>

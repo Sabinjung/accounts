@@ -306,6 +306,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                     size="large"
                     allowClear={true}
                     style={{ width: '200px', marginRight: '20px' }}
+                    getPopupContainer={(trigger: any) => trigger.parentNode}
                     placeholder="Search Query"
                     onChange={this.handleSelect}
                   >
@@ -324,6 +325,7 @@ class Timesheet extends React.Component<ITimesheetProps, ITimesheetState> {
                     size="large"
                     allowClear={false}
                     open={this.state.isRangePickerOpen}
+                    getCalendarContainer={(trigger: any) => trigger.parentNode}
                     onOpenChange={() => this.setState({ isRangePickerOpen: !this.state.isRangePickerOpen })}
                     renderExtraFooter={() => (
                       <StyledRadioGroup value={this.state.range} onChange={this.onRangeToggle} size="small">

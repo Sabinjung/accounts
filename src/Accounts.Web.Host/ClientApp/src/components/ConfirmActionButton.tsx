@@ -65,6 +65,7 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
         title={children(setFormData, formData)}
         okText="Yes"
         cancelText="No"
+        getPopupContainer={(trigger: any) => trigger.parentNode}
         placement={placement}
         onConfirm={() => {
           if (onSubmit) {
