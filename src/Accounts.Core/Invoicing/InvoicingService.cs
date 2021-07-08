@@ -1,18 +1,16 @@
 ﻿using Abp.Domain.Repositories;
 using Abp.Domain.Services;
 using Abp.ObjectMapping;
-using Abp.Runtime.Session;
 using Abp.UI;
 using Accounts.AzureServices;
 using Accounts.Core.Notify;
 using Accounts.Data;
 using Accounts.Intuit;
 using Accounts.Models;
+using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
 using System.Threading.Tasks;
 using IntuitData = Intuit.Ipp.Data;
 
@@ -21,23 +19,26 @@ namespace Accounts.Core.Invoicing
     public class InvoicingService : DomainService, IInvoicingService
     {
         private readonly IRepository<Invoice> InvoiceRepository;
-
         private readonly IRepository<Timesheet> TimesheetRepository;
-
         private readonly IRepository<Project> ProjectRepository;
         private readonly IntuitDataProvider IntuitDataProvider;
         private readonly INotifyService NotifyService;
         private readonly IObjectMapper Mapper;
-
         private readonly IInvoiceProcessor InvoiceProcessor;
+        private readonly IRepository<Company> CompanyRepository;
+        private readonly IConfiguration Configuration;
+
         public InvoicingService(
             IRepository<Invoice> invoiceRepository,
             IRepository<Timesheet> timesheetRepository,
             IInvoiceProcessor invoiceProcessor,
             IRepository<Project> projectRepository,
-             IntuitDataProvider intuitDataProvider,
-             INotifyService notifyService,
-        IObjectMapper mapper)
+            IntuitDataProvider intuitDataProvider,
+            INotifyService notifyService,
+            IObjectMapper mapper,
+            IRepository<Company> companyRepository,
+            IConfiguration configuration
+            )
         {
             InvoiceRepository = invoiceRepository;
             TimesheetRepository = timesheetRepository;
@@ -46,6 +47,8 @@ namespace Accounts.Core.Invoicing
             IntuitDataProvider = intuitDataProvider;
             NotifyService = notifyService;
             Mapper = mapper;
+            CompanyRepository = companyRepository;
+            Configuration = configuration;
         }
         public async Task<Invoice> GenerateInvoice(int timesheetId, int userId, bool shouldAssociate= false)
         {
@@ -181,6 +184,8 @@ namespace Accounts.Core.Invoicing
             var paymentId = new IntuitData.Payment { Id = transId };
             string invId = "";
             var payment = IntuitDataProvider.FindById<IntuitData.Payment>(paymentId);
+            var message = "";
+            var invoiceUrl = Configuration.GetSection("App:ServerRootAddress").Value;
             foreach (var item in payment.Line)
             {
                 if (item.LinkedTxn.Any(x => x.TxnType == "Invoice"))
@@ -188,17 +193,22 @@ namespace Accounts.Core.Invoicing
                     invId = item.LinkedTxn.Where(x => x.TxnType == "Invoice").FirstOrDefault().TxnId;
                     var intuitId = new IntuitData.Invoice { Id = invId };
                     var intuitInvoice = IntuitDataProvider.FindById<IntuitData.Invoice>(intuitId);
-                    var databaseInv = InvoiceRepository.FirstOrDefault(x => x.QBOInvoiceId == invId);
+                    var databaseInv = InvoiceRepository.FirstOrDefaultAsync(x => x.QBOInvoiceId == invId).Result;
+                    var customerName = CompanyRepository.FirstOrDefaultAsync(x => x.Id == databaseInv.CompanyId).Result.DisplayName;
                     if (databaseInv.EInvoiceId != null)
                     {
-                        await NotifyService.NotifyPayment(item.Amount, payment.CustomerRef.name, databaseInv.EInvoiceId, payment.TxnDate.Date.ToString(" MM/dd/yyyy"),intuitInvoice.Balance);
-                        await SyncInvoice(invId);
+                        message += $"Amount has been paid by vendor.\n" +
+                        $"Payment Date: {payment.TxnDate.Date.ToString(" MM/dd/yyyy")}\n" +
+                        $"Customer Name: {customerName}\n" +
+                        $"Amount Received: ${item.Amount}\n" +
+                        $"eInvoice ID: {databaseInv.EInvoiceId}\n" +
+                        $"Remaining Balance: ${intuitInvoice.Balance}\n" +
+                        $"Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInv.Id + "\n"}\n";
                     }
-                    
                 }                             
             }
-
-
+            await NotifyService.NotifyPayment(message);
+            await SyncInvoice(invId);
         }
     }
 }

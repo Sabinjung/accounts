@@ -39,7 +39,7 @@ export default inject(
     useEffect(() => {
       if (projectId) {
         setLoading(true);
-        timesheetStore.getUpcomingTimesheetInfo(projectId);
+        getUpComingTimeSheet();        
         projectStore.getAttachments(projectId);
         setLoading(false);
       }
@@ -53,6 +53,14 @@ export default inject(
       (attachments && attachments.map((a: AttachmentModel) => ({ label: a.originalName, value: a.id, checked: a.isSelected }))) || [];
 
     const selectedAttachmentList = (attachments && attachments.filter((x: AttachmentModel) => x.isSelected).map((a: AttachmentModel) => a.id)) || [];
+
+    async function getUpComingTimeSheet() {
+        try {
+          await timesheetStore.getUpcomingTimesheetInfo(projectId);
+        } catch (error) {
+          onClose();
+        }
+      }
 
     async function onCreateTimesheet() {
       onClose && onClose();
