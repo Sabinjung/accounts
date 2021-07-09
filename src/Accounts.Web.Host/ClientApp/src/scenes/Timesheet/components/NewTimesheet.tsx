@@ -29,6 +29,14 @@ const StyledSpin = styled(Spin)`
   transform: translate(-50%, -50%);
 `;
 
+const StyledDiv = styled.div`
+{
+  max-height: 250px;
+  overflow-y: scroll;
+  margin-bottom: 100px;
+}
+`;
+
 export default inject(
   Stores.TimesheetStore,
   Stores.ProjectStore
@@ -186,12 +194,14 @@ export default inject(
               {attachmentList.length === 0 ? (
                 <Alert message="Upload at least 1 attachment first" type="warning" />
               ) : (
-                <Checkbox.Group
-                  options={attachmentList}
-                  value={selectedAttachmentList}
-                  onChange={onAttachmentSelection}
-                  className="attachment-selection-list"
-                />
+                <StyledDiv>
+                  <Checkbox.Group
+                    options={attachmentList}
+                    value={selectedAttachmentList}
+                    onChange={onAttachmentSelection}
+                    className="attachment-selection-list"
+                  />
+                </StyledDiv>
               )}
             </React.Fragment>
           )}

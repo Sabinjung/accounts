@@ -162,7 +162,6 @@ class HourLogEntryTable extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
-    debugger;
     this.state = {
       loading: false,
     };
@@ -260,7 +259,7 @@ class HourLogEntryTable extends React.Component<any, any> {
         phoneNumber: e.project.phoneNumber,
         invoiceCycleName: e.project.invoiceCycleName,
         hourLogEntries: e.hourLogEntries,
-        totalHrs: e.totalHrs && parseFloat(e.totalHrs.toFixed(1)),
+        totalHrs: e.totalHrs && parseFloat(e.totalHrs.toFixed(2)),
         projectStartDt: e.project.startDt,
         projectEndDt: e.project.endDt,
         upcomingTimesheetSummary: e.project.upcomingTimesheetSummary,
@@ -282,6 +281,7 @@ class HourLogEntryTable extends React.Component<any, any> {
           rowClassName={() => 'editable-row'}
           dataSource={dataSource}
           columns={columns}
+          className="hour-table"
           size="small"
           scroll={{ x: 470 }}
           pagination={pagination}

@@ -111,9 +111,10 @@ const AllInvoiceList = (props: any) => {
     let isBefore: boolean = moment(currentDate).isBefore(dueDate);
     return isSame || record.balance === null || record.balance === 0 ? false : isBefore ? false : true;
   };
+  
   const handleSearch = (value: any) => {
-      setEInvoiceIdSearchText(value);
-  }
+    value === eInvoiceIdSearchText ? makeRequest({ params: { eInvoiceId: value } }) : setEInvoiceIdSearchText(value);
+  };
 
   const handleCompanySearch = (value: any) => {
     setCompanySearchText(value);

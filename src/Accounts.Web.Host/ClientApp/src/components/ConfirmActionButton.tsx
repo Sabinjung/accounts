@@ -10,6 +10,8 @@ export type ConfirmActionButtonProps = {
   onSuccess?: any;
   params?: any;
   data?: any;
+  disable?: boolean;
+  onVisibleChange?:any;
   onError?: (arg: any) => void;
   permissions?: any;
   onSubmit?: any;
@@ -27,6 +29,8 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
   onSuccess,
   params,
   data,
+  disable,
+  onVisibleChange,
   onError,
   permissions,
   onSubmit,
@@ -66,6 +70,8 @@ const ConfirmActionButton: React.FC<ConfirmActionButtonProps> = ({
         okText="Yes"
         cancelText="No"
         getPopupContainer={(trigger: any) => trigger.parentNode}
+        okButtonProps={{disabled: disable}}
+        onVisibleChange={onVisibleChange}
         placement={placement}
         onConfirm={() => {
           if (onSubmit) {

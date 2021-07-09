@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import moment from 'moment';
 import { PageHeader, Tabs, Descriptions, Typography, Steps, Icon, Input, Form, Badge, Empty, notification, Spin } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
@@ -131,6 +131,18 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
     },
   }));
   const { getFieldDecorator, validateFields } = form;
+  const [disable, setDisable] = useState<boolean>(true);
+
+  const handleTextLength = (e: any) => {
+    const disable = e.target.value && e.target.value.length > 0 ? false : true;
+    setDisable(disable);
+  }
+
+  const handleVisibleChange = (e: any) => {
+    if(e){
+      setDisable(true);
+    }
+  }
 
   return (
     <Get url="/api/services/app/Timesheet/Detail" params={{ timesheetId }}>
@@ -142,6 +154,8 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
             method="Delete"
             style={{ background: '#FF0000', height: '40px', boxShadow: '0px 3px 20px #2680EB66' }}
             type="danger"
+            disable={disable}
+            onVisibleChange={handleVisibleChange}
             onSuccess={() => {
               notification.open({
                 message: 'Success',
@@ -175,7 +189,7 @@ const TimesheetViewer: React.RefForwardingComponent<ITimesheetViewerHandles, ITi
                     <Form.Item>
                       {getFieldDecorator('noteText', {
                         rules: [{ required: true, message: 'Please enter the reason for deletion?' }],
-                      })(<TextArea />)}
+                      })(<TextArea onChange={handleTextLength} />)}
                     </Form.Item>
                   </Form>
                 </div>

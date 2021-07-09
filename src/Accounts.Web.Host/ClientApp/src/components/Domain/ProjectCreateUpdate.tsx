@@ -96,7 +96,7 @@ const handleCompanyChange = (value: any) => {
 
   const handleCharacters = (e: any) => {
     const invalidChars = ['-', '+', 'e'];
-    if (invalidChars.includes(e.key)) {
+    if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
       e.preventDefault();
     }
   };

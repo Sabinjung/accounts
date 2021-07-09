@@ -86,12 +86,19 @@ export class HourLogEntryInput extends React.Component<any> {
     const handleHourChange = (e: any) => {
         let val: number = e.target.value === '' ? 0 : parseFloat(e.target.value);
         let strVal: string = e.target.value;
-        if (val > 24 || (strVal.includes('.') && strVal.split('.')[1].length > 1)) {
+        if (val > 24 || (strVal.includes('.') && strVal.split('.')[1].length > 2)) {
           this.setState((prevState: any) => {
             this.form.setFieldsValue({ [fieldId]: prevState.hours.toString() });
             return { hours: prevState.hours };
           });
-       } else {
+       } 
+       else if(strVal.includes('.') && parseInt(strVal.split('.')[1]) == 0){
+        this.setState(() => {
+          this.form.setFieldsValue({ [fieldId]: strVal });
+          return { hours: val };
+        });
+       }
+       else {
           this.setState(() => {
             this.form.setFieldsValue({ [fieldId]: val.toString() });
             return { hours: val };
@@ -101,7 +108,7 @@ export class HourLogEntryInput extends React.Component<any> {
     
       const handleCharacters = (e: any) => {
         const invalidChars = ['-', '+', 'e'];
-        if (invalidChars.includes(e.key)) {
+        if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
           e.preventDefault();
         }
       };
@@ -209,7 +216,7 @@ export class HourLogEntryInput extends React.Component<any> {
                 : 'upcoming-timesheet-totalhrs three-digits-totalhrs'
             }
           >
-            {upcomingTimesheetSummary.totalHrs && parseFloat(upcomingTimesheetSummary.totalHrs.toFixed(1))} hrs
+            {upcomingTimesheetSummary.totalHrs && parseFloat(upcomingTimesheetSummary.totalHrs.toFixed(2))} hrs
           </div>
         )}
       </td>

@@ -8,5 +8,6 @@ namespace Accounts.Models
     public class EndClient : FullAuditedEntity
     {
         public string ClientName { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
     }
 }

@@ -31,6 +31,14 @@ const tableStyles = css`
   }
 `;
 
+const StyledDiv = styled.div`
+{
+  max-height: 450px;
+  overflow-y: scroll;
+  margin-bottom: 100px;
+}
+`;
+
 const StyledRow = styled(Row)`
   margin-bottom: 10px;
 `;
@@ -142,14 +150,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
 
   const handleCharacters = (e: any) => {
     const invalidChars = ['-', '+', 'e'];
-    if (invalidChars.includes(e.key)) {
+    if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
       e.preventDefault();
     }
   };
 
   const updateRate = (e: any) => {
     const invalidChars = ['-', '+', 'e'];
-    if (invalidChars.includes(e.key)) {
+    if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
       e.preventDefault();
     }
     let strVal = e.target.value;
@@ -161,7 +169,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
 
   if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
-    logedHours.map((item: any) => (totalHrs += item.hours));
+    logedHours.map((item: any) => (totalHrs += parseFloat(item.hours)));
     initialAmount = !form.rate ? 0 : parseFloat((parseFloat(form.rate) * totalHrs).toFixed(2));
     sTotal = parseFloat(parseFloat(initialAmount).toFixed(2)) + totalExpense;
     discount = !form.discountValue
@@ -220,7 +228,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
               description
             )}
           </td>
-          <td>{parseFloat(totalHrs.toFixed(1))}</td>
+          <td>{totalHrs && parseFloat(totalHrs).toFixed(2)}</td>
           <td>
             {isEdit ? (
               <StyledInput type="number" name="rate" size="small" value={form.rate} onChange={updateRate} onKeyDown={handleCharacters} />
@@ -289,21 +297,23 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
           {isEdit ? <StyledTextArea maxLength={1000} rows={2} value={intuitMemo} onChange={(e: any) => setIntuitMemo(e.target.value)} /> : memo}
         </Col>
       </StyledTextRow>
-      <List
-        header={<b>Attachments</b>}
-        dataSource={attachments}
-        renderItem={(item: any) => (
-          <List.Item
-            css={css`
-              padding: 5px 0;
-            `}
-          >
-            <a href={`${AppConsts.remoteServiceBaseUrl}/Attachment/Index/${item.id}`} target="_blank">
-              {item.originalName}
-            </a>
-          </List.Item>
-        )}
-      />
+      <StyledDiv>
+        <List
+          header={<b>Attachments</b>}
+          dataSource={attachments}
+          renderItem={(item: any) => (
+            <List.Item
+              css={css`
+                padding: 5px 0;
+              `}
+            >
+              <a href={`${AppConsts.remoteServiceBaseUrl}/Attachment/Index/${item.id}`} target="_blank">
+                {item.originalName}
+              </a>
+            </List.Item>
+          )}
+        />
+      </StyledDiv>
       {isEdit && !parseFloat(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
       {isEdit && disType == 1 && form.discountValue > 100 && <Alert message="Please enter percentage less than or equal to 100" type="error" />}
       {isEdit && disType == 2 && initialAmount < form.discountValue && (

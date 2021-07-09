@@ -15,7 +15,7 @@ namespace Accounts.Timesheets
     {
         public double CalculateTotalHours(IEnumerable<HourLogEntry> hourLogEntries)
         {
-            return hourLogEntries.DistinctBy(x => x.Day).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0);
+            return  Math.Round(hourLogEntries.DistinctBy(x => x.Day).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0),2);
         }
 
         public Tuple<DateTime, DateTime> CalculateTimesheetPeriod(Project project, Timesheet lastTimesheet)
