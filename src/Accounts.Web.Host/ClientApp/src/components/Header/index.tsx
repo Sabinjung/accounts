@@ -2,7 +2,7 @@ import './index.less';
 
 import * as React from 'react';
 
-import { Avatar, Badge, Col, Dropdown, Icon, Menu, Row } from 'antd';
+import { Avatar, Col, Dropdown, Icon, Menu, Row } from 'antd';
 
 import { L } from '../../lib/abpUtility';
 
@@ -43,10 +43,8 @@ export class Header extends React.Component<IHeaderProps> {
         </Col>
         <Col style={{ textAlign: 'right' }} span={12}>
           {/* <LanguageSelect /> {'   '} */}
-          <Dropdown overlay={userDropdownMenu} trigger={['click']}>
-            <Badge style={{}} count={3}>
+          <Dropdown overlay={userDropdownMenu} trigger={['click']} getPopupContainer={(trigger: any) => trigger.parentNode} >
               <Avatar style={{ height: 24, width: 24 }} shape="circle" alt={'profile'} src={profilePicture} />
-            </Badge>
           </Dropdown>
         </Col>
       </Row>

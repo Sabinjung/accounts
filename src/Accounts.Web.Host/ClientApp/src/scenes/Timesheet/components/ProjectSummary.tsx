@@ -122,7 +122,7 @@ const ProjectSummary: React.SFC = () => {
         item &&
           item.map((data: any) => {
             if (d.month() === data.month - 1 && data.year === d.year()) {
-              val = data.value;
+              val = data.value && parseFloat(data.value).toFixed(2);
             }
           });
         return val;

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Accounts.Notify
 {
-    public class TeamNotification
+    public class TeamNotificationDto
     {
         public string TeamId { get; set; }
         public string TeamName { get; set; }
+        public string Message { get; set; }
     }
 }

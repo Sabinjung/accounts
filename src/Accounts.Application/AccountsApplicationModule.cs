@@ -76,7 +76,7 @@ namespace Accounts
                     .ForMember(x => x.Rate, y => y.MapFrom(z => z.Invoice.Rate))
                     .ForMember(x => x.TotalHours, y => y.MapFrom(z => z.Invoice.TotalHours))
                     .ForMember(x => x.DiscountType, y => y.MapFrom(z => z.Invoice.DiscountType))
-                    .ForMember(x => x.DiscountValue, y => y.MapFrom(z => z.Invoice.DiscountValue))
+                    .ForMember(x => x.DiscountValue, y => y.MapFrom(z => z.Invoice.DiscountValue == null ? 0 : z.Invoice.DiscountValue))
                     .ForMember(x => x.ServiceTotal, y => y.MapFrom(z => z.Invoice.ServiceTotal))
                     .ForMember(x => x.DiscountAmount, y => y.MapFrom(z => z.Invoice.DiscountAmount))
                     .ForMember(x => x.SubTotal, y => y.MapFrom(z => z.Invoice.SubTotal))

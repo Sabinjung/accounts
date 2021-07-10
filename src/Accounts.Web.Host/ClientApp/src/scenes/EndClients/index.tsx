@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, notification } from 'antd';
+import { Row, Col, Card, notification, Form, Input } from 'antd';
 // import { Row, Col, Card, Table, Button, Input } from 'antd';
 import useAxios from '../../lib/axios/useAxios';
 import EndClientCreateUpdate from './components/EndClientCreateUpdate';
+import { FormComponentProps } from 'antd/lib/form';
 import ConfirmActionButton from '../../components/ConfirmActionButton';
 import Authorize from '../../components/Authorize';
 import CustomSearch from './../../components/Custom/CustomSearch';
@@ -13,17 +14,44 @@ import { useHistory } from 'react-router';
 import { Portal } from 'react-portal';
 import { Get } from '../../lib/axios';
 import RouteableDrawer from '../../components/RouteableDrawer';
+import styled from '@emotion/styled';
 
-type DisplayContentProps = {
+type DisplayContentProps = FormComponentProps<{}> & {
   data: any;
   loading: boolean;
   setSearchText: any;
   makeRequest: any;
 };
 
-const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearchText, makeRequest }) => {
+const { TextArea } = Input;
+
+const StyledDiv = styled.div`
+textarea.ant-input {
+  margin-top: -20px;
+}
+}
+`;
+
+const StyledInnerDiv = styled.div`
+ height: 110px;
+`;
+
+const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearchText, makeRequest, form }) => {
   const history = useHistory();
   const results: any = data && data.result.results;
+  const { getFieldDecorator, validateFields } = form;
+  const [disable, setDisable] = useState<boolean>(true);
+  const handleTextLength = (e: any) => {
+    const disable = e.target.value && e.target.value.length > 0 ? false : true;
+    setDisable(disable);
+  };
+
+  const handleVisibleChange = (e: any) => {
+    if(e){
+      form.resetFields();
+      setDisable(true);
+    }
+  }
   const columns = [
     {
       title: 'Client Name',
@@ -34,7 +62,7 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
       title: 'Actions',
       key: 'action',
       render: (record: any) => (
-        <>
+        <StyledDiv>
           <Authorize permissions={['Endclient.Update']}>
             <CustomEditButton icon="edit" type="primary" onClick={() => history.push(`/endClients/${record.id}/edit`)} />
           </Authorize>
@@ -42,24 +70,53 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
             style={{ border: 'none', background: '#FF00001A', color: '#FF0000' }}
             url="/api/services/app/EndClient/DeleteClient"
             params={{ id: record.id }}
+            disable={disable}
+            onVisibleChange = {handleVisibleChange}
             method="Delete"
             type="danger"
             icon="delete"
-            placement="top"
+            placement="bottom"
             onSuccess={() => {
               notification.open({
                 message: 'Success',
                 description: 'Deleted successfully.',
               });
+              form.resetFields();
               makeRequest({});
             }}
             permissions={['Endclient.Delete']}
+            onSubmit={({ setFormData }: any) => {
+              let shouldProceed = false;
+              validateFields((errors: any, values: any) => {
+                if (!errors) {
+                  const { noteText } = values;
+                  setFormData({
+                    noteText: noteText,
+                  });
+                  shouldProceed = true;
+                } else {
+                  shouldProceed = false;
+                }
+              });
+              return shouldProceed;
+            }}
           >
             {() => {
-              return <div>Do you want to delete this End Client?</div>;
+              return (
+                <StyledInnerDiv>
+                  Do you want to delete this end client?
+                  <Form>
+                    <Form.Item>
+                      {getFieldDecorator('noteText', {
+                        rules: [{ required: true, message: 'Please enter the reason for deletion?' }],
+                      })(<TextArea onChange={handleTextLength} />)}
+                    </Form.Item>
+                  </Form>
+                </StyledInnerDiv>
+              );
             }}
           </ConfirmActionButton>
-        </>
+        </StyledDiv>
       ),
     },
   ];
@@ -132,6 +189,10 @@ const DisplayContent: React.FC<DisplayContentProps> = ({ data, loading, setSearc
   );
 };
 
+const WrappedDisplayContent = Form.create<DisplayContentProps>({
+  name: 'endClient_state',
+})(DisplayContent);
+
 const EndClients = () => {
   const [searchText, setSearchText] = useState('');
 
@@ -140,7 +201,7 @@ const EndClients = () => {
     params: { SearchText: searchText },
   });
 
-  return <DisplayContent data={data} loading={loading} setSearchText={setSearchText} makeRequest={makeRequest} />;
+  return <WrappedDisplayContent data={data} loading={loading} setSearchText={setSearchText} makeRequest={makeRequest} />;
 };
 
 export default EndClients;

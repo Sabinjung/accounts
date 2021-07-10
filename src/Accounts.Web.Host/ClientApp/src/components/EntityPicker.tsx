@@ -33,6 +33,7 @@ export default ({ onChange, url, mapFun, value, mode = 'default', style, placeho
             placeholder={placeholder}
             optionFilterProp="children"
             mode={mode}
+            getPopupContainer={(trigger: any) => trigger.parentNode}
             onSearch={debouncedSetSearchText}
             onChange={onChange}
             value={value}
