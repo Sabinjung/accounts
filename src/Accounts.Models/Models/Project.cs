@@ -25,6 +25,8 @@ namespace Accounts.Models
 
         public int ConsultantId { get; set; }
 
+        public Guid? ExternalProjectGuid { get; set; }
+
         public double Rate { get; set; }
 
         public bool IsSendMail { get; set; }
