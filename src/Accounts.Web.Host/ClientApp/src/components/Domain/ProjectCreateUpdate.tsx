@@ -151,6 +151,7 @@ const handleCompanyChange = (value: any) => {
         </Form.Item>
 
         <Form.Item label="Project Memo">{getFieldDecorator('memo')(<CustomInput maxLength={31} />)}</Form.Item>
+        <Form.Item label="External Project Guid">{getFieldDecorator('externalProjectGuid')(<CustomInput maxLength={36} />)}</Form.Item>
         <Form.Item label="Start Date">
           {getFieldDecorator('startDt', {
             rules: [{ required: true, message: 'Please input Start Date!' }],
@@ -259,6 +260,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
       rate: Form.createFormField({ value: project.rate }),
       isSendMail: Form.createFormField({ value: project.isSendMail === undefined ? true : project.isSendMail }),
       endClientId: Form.createFormField({ value: project.endClientId }),
+      externalProjectGuid: Form.createFormField({ value: project.externalProjectGuid }),
       discount: Form.createFormField({
         value: {
           discountType: project.discountType,
@@ -284,6 +286,7 @@ const WrappedProjectForm = Form.create<IProjectFormProps>({
     project.discountValue = _.get(fields, 'discount.value.discountValue') ? _.get(fields, 'discount.value.discountValue') : project.discountValue;
     project.invoiceCycleStartDt = returnVal('invoiceCycleStartDt');
     project.endClientId = returnVal('endClientId');
+    project.externalProjectGuid = returnVal('externalProjectGuid');
   },
 })(ProjectForm);
 

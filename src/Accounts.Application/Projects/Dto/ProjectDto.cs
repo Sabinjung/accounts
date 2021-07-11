@@ -43,6 +43,8 @@ namespace Accounts.Projects.Dto
 
         public DiscountType? DiscountType { get; set; }
 
+        public Guid? ExternalProjectGuid { get; set; }
+
         public decimal? DiscountValue { get; set; }
 
         public double Rate { get; set; }
