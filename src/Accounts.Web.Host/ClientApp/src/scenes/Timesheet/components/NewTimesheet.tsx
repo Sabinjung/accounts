@@ -119,7 +119,7 @@ export default inject(
               </StyledDiscription>
 
               <Title level={4}>
-                Total Hours (<Text>{upcomingTimesheet.totalHrs}</Text> hrs)
+                Total Hours (<Text>{upcomingTimesheet.totalHrs && parseFloat(upcomingTimesheet.totalHrs).toFixed(2)}</Text> hrs)
               </Title>
 
               <StyledDiscription column={2}>
