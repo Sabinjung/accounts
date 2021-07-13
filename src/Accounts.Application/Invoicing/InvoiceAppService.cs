@@ -135,13 +135,20 @@ namespace Accounts.Invoicing
         [AbpAuthorize("Invoicing.Edit")]
         public async Task UpdateInvoice(UpdateInvoiceInputDto input)
         {
-            
             var distinctHourLogs = input.UpdatedHourLogEntries.DistinctBy(x => new { x.Day, x.ProjectId }).OrderBy(x => x.Day);
             var hourLogEntries = await HourLogRepository.GetAllListAsync(x => distinctHourLogs.Any(y => y.ProjectId == x.ProjectId && x.Day == y.Day));
             var timesheet = TimesheetRepository.GetAll().Where(x => x.InvoiceId == input.Invoice.Id).FirstOrDefault();
 
             var invoice = await Repository.GetAsync(input.Invoice.Id);
-           
+            if (input.Invoice.Rate >= 1000)
+            {
+                throw new UserFriendlyException("Please enter 3 digit value for rate");
+            }
+            if (input.Invoice.DiscountType == DiscountType.Percentage && input.Invoice.DiscountValue > 100 ||
+                input.Invoice.DiscountType == DiscountType.Value && input.Invoice.DiscountValue > invoice.ServiceTotal)
+            {
+                throw new UserFriendlyException("Please enter a discount value less than or equal to Amount or, enter percentage less than or equal to 100");
+            }
             Mapper.Map(input, invoice);
 
             //invoice.Rate = input.Invoice.Rate;

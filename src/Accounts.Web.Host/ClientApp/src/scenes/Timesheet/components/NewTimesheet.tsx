@@ -29,6 +29,14 @@ const StyledSpin = styled(Spin)`
   transform: translate(-50%, -50%);
 `;
 
+const StyledDiv = styled.div`
+{
+  max-height: 250px;
+  overflow-y: scroll;
+  margin-bottom: 100px;
+}
+`;
+
 export default inject(
   Stores.TimesheetStore,
   Stores.ProjectStore
@@ -39,7 +47,7 @@ export default inject(
     useEffect(() => {
       if (projectId) {
         setLoading(true);
-        timesheetStore.getUpcomingTimesheetInfo(projectId);
+        getUpComingTimeSheet();        
         projectStore.getAttachments(projectId);
         setLoading(false);
       }
@@ -53,6 +61,14 @@ export default inject(
       (attachments && attachments.map((a: AttachmentModel) => ({ label: a.originalName, value: a.id, checked: a.isSelected }))) || [];
 
     const selectedAttachmentList = (attachments && attachments.filter((x: AttachmentModel) => x.isSelected).map((a: AttachmentModel) => a.id)) || [];
+
+    async function getUpComingTimeSheet() {
+        try {
+          await timesheetStore.getUpcomingTimesheetInfo(projectId);
+        } catch (error) {
+          onClose();
+        }
+      }
 
     async function onCreateTimesheet() {
       onClose && onClose();
@@ -178,12 +194,14 @@ export default inject(
               {attachmentList.length === 0 ? (
                 <Alert message="Upload at least 1 attachment first" type="warning" />
               ) : (
-                <Checkbox.Group
-                  options={attachmentList}
-                  value={selectedAttachmentList}
-                  onChange={onAttachmentSelection}
-                  className="attachment-selection-list"
-                />
+                <StyledDiv>
+                  <Checkbox.Group
+                    options={attachmentList}
+                    value={selectedAttachmentList}
+                    onChange={onAttachmentSelection}
+                    className="attachment-selection-list"
+                  />
+                </StyledDiv>
               )}
             </React.Fragment>
           )}

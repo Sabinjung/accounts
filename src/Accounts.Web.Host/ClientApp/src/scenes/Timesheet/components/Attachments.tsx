@@ -59,7 +59,9 @@ export default inject(Stores.ProjectStore)(
             setLoading(true);
             await projectStore.deleteAttachment(projectId, attachmentId);
             message.info('Attachment successfully deleted');
-            setLoading(false);
+            setTimeout(() => {
+              setLoading(false);
+            }, 2000);
           }
         }
       }
@@ -82,7 +84,7 @@ export default inject(Stores.ProjectStore)(
             <Row type="flex" justify="space-between" className="mb-10">
               <StyledCol span={10}>
                 {!enableTimesheetAttachment && (
-                  <Dragger {...uploadProps}>
+                  <Dragger {...uploadProps} disabled={isLoading}>
                     <Spin spinning={isLoading}>
                       <Text type="secondary">
                         <Icon type="plus" style={{ fontSize: '18px' }} /> Click or drag file to this area to upload
@@ -99,7 +101,7 @@ export default inject(Stores.ProjectStore)(
                   </Checkbox>
                 )}
                 {!enableTimesheetAttachment && (
-                  <Button type="danger" onClick={deleteAttachment} style={{ marginTop: '8px' }}>
+                  <Button type="danger" onClick={deleteAttachment} style={{ marginTop: '8px' }} disabled={isLoading}>
                     <Icon type="delete" /> Delete
                   </Button>
                 )}

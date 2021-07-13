@@ -9,6 +9,12 @@ const StyledSelect = styled(Select)`
   width: 200px;
 `;
 
+const StyledDiv = styled.div`
+.recharts-brush-texts {
+  display: none;
+}
+`;
+
 type InvoiceBarChartProps = {
   data: any;
   loading: boolean;
@@ -77,10 +83,10 @@ const InvoiceBarChart: React.FC<InvoiceBarChartProps> = ({ data, loading }) => {
   return (
     <>
       {data && (
-        <>
+        <StyledDiv>
           <Row>
             <Col offset={21}>
-              <StyledSelect showSearch allowClear value={selectedYear} placeholder="Select a year" onChange={handleYearChange}>
+              <StyledSelect showSearch allowClear value={selectedYear} placeholder="Select a year" onChange={handleYearChange} getPopupContainer={(trigger: any) => trigger.parentNode}>
                 {yearList.map((item: any, index: any) => (
                   <Option value={item} key={index}>
                     {item}
@@ -103,10 +109,10 @@ const InvoiceBarChart: React.FC<InvoiceBarChartProps> = ({ data, loading }) => {
               <YAxis yAxisId="left" orientation="left" stroke="#748AA1" />
               <Tooltip content={<CustomTooltip />} />
               <Bar yAxisId="left" dataKey="monthAmount" fill="#1C3FAA" barSize={70} />
-              <Brush width={1480} startIndex={startIndex} endIndex={endIndex} dataKey="monthName" stroke="#6587f0" height={30} />
+              <Brush startIndex={startIndex} endIndex={endIndex} dataKey="monthName" stroke="#6587f0" height={30} />
             </BarChart>
           </ResponsiveContainer>
-        </>
+        </StyledDiv>
       )}
     </>
   );

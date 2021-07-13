@@ -331,11 +331,11 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
       <h1>PAYROLL HOURS</h1>
       <Row type="flex" justify="space-between">
         <Col>
-          <MonthPicker value={selectedDate} format={'MMMM YYYY'} allowClear={false} onChange={(date: any) => setSelectedDate(date)} />
+          <MonthPicker value={selectedDate} format={'MMMM YYYY'} allowClear={false} onChange={(date: any) => setSelectedDate(date)} getCalendarContainer={(trigger: any) => trigger.parentNode} />
         </Col>
         <Col>
           <StyledText>Show </StyledText>
-          <StyledSelect value={pageSize} onChange={(value: any) => setPageSize(value)}>
+          <StyledSelect value={pageSize} onChange={(value: any) => setPageSize(value)} getPopupContainer={(trigger: any) => trigger.parentNode}>
             <Option value={10}>10</Option>
             <Option value={25}>25</Option>
             <Option value={50}>50</Option>

@@ -18,6 +18,9 @@ const StyledTable = styled(Table)`
       }
     }
     .ant-table-fixed-left {
+      table {
+        width: 405px !important;
+      }
       .ant-table-row {
         border-radius: 10px 0px 0px 10px !important;
       }

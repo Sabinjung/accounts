@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using System.Linq;
 using Abp.UI;
+using Abp.Authorization;
 
 namespace Accounts.EndClients
 {
@@ -40,15 +41,24 @@ namespace Accounts.EndClients
             var result = await query.ExecuteAsync<EndClientDto>(queryParameter);
             return result;
         }
-
+        [AbpAuthorize("Endclient.Delete")]
         [HttpDelete]
-        public async Task DeleteClient(int id)
+        public async Task DeleteClient([FromQuery] int id, [FromBody] DeleteEndClientDto input)
         {
             var projects = ProjectRepository.GetAllList().Where(x => x.EndClientId == id).FirstOrDefault();
-            if(projects != null)
+            if (projects != null)
                 throw new UserFriendlyException("Unable to delete end client.", "The end client is associated with  project(s).");
-            await Repository.DeleteAsync(id);
+            var endClient = await Repository.GetAsync(id);
 
+            if (!string.IsNullOrEmpty(input.NoteText))
+            {
+                endClient.Notes.Add(new Note
+                {
+                    NoteTitle = "EndClient Deleted",
+                    NoteText = input.NoteText
+                });
+            }
+            await Repository.DeleteAsync(id);
         }
 
         public override async Task<EndClientDto> Create(EndClientDto input)

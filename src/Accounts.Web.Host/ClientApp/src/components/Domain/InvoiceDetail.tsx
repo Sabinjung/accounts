@@ -31,12 +31,20 @@ const tableStyles = css`
   }
 `;
 
+const StyledDiv = styled.div`
+{
+  max-height: 450px;
+  overflow-y: scroll;
+  margin-bottom: 100px;
+}
+`;
+
 const StyledRow = styled(Row)`
   margin-bottom: 10px;
 `;
 
 const StyledInput = styled(Input)`
-  width: 53px !important;
+  width: 70px !important;
 `;
 
 const StyledSelect = styled(Select)`
@@ -53,9 +61,9 @@ const StyledTextArea = styled(TextArea)`
 `;
 
 const StyledDescriptions = styled(Descriptions)`
-.textAlign{
-  vertical-align: top;
-}
+  .textAlign {
+    vertical-align: top;
+  }
 `;
 
 let originalHours: any;
@@ -112,7 +120,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
     memo,
   } = invoice;
 
-  const companyEmailList = companyEmail && companyEmail.split(",");
+  const companyEmailList = companyEmail && companyEmail.split(',');
   let initialAmount = serviceTotal;
   let TotalAmount = total;
   let discount = discountAmount;
@@ -132,7 +140,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
     setIsEdit((prevState: boolean) => !prevState);
   };
 
-  const updateField = (e: any) => {
+  const updateDiscount = (e: any) => {
     let rx = /^\d*\.?\d{0,2}$/;
     setForm({
       ...form,
@@ -140,9 +148,28 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
     });
   };
 
+  const handleCharacters = (e: any) => {
+    const invalidChars = ['-', '+', 'e'];
+    if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
+      e.preventDefault();
+    }
+  };
+
+  const updateRate = (e: any) => {
+    const invalidChars = ['-', '+', 'e'];
+    if (invalidChars.includes(e.key) || e.keyCode === 38 || e.keyCode === 40) {
+      e.preventDefault();
+    }
+    let strVal = e.target.value;
+    setForm({
+      ...form,
+      [e.target.name]: strVal >= 1000 || (strVal.includes('.') && strVal.split('.')[1].length > 2) ? form[e.target.name] : e.target.value,
+    });
+  };
+
   if (form.rate || form.discountValue || disType || logedHours) {
     totalHrs = 0;
-    logedHours.map((item: any) => (totalHrs += item.hours));
+    logedHours.map((item: any) => (totalHrs += parseFloat(item.hours)));
     initialAmount = !form.rate ? 0 : parseFloat((parseFloat(form.rate) * totalHrs).toFixed(2));
     sTotal = parseFloat(parseFloat(initialAmount).toFixed(2)) + totalExpense;
     discount = !form.discountValue
@@ -165,16 +192,20 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
         </StyledRow>
       )}
       <StyledDescriptions layout="vertical" column={4} size="small">
-        <Descriptions.Item className="textAlign" label="Customer">{companyName}</Descriptions.Item>
-        <Descriptions.Item label="Customer Email">{companyEmailList.map((companyEmail: any)=> (
-          <div>
-            {companyEmail}
-          </div>
-        ))}</Descriptions.Item>
+        <Descriptions.Item className="textAlign" label="Customer">
+          {companyName}
+        </Descriptions.Item>
+        <Descriptions.Item label="Customer Email">
+          {companyEmailList.map((companyEmail: any) => (
+            <div>{companyEmail}</div>
+          ))}
+        </Descriptions.Item>
         <Descriptions.Item className="textAlign" label="Billing Address">
           <code> Populated from Intuit</code>
         </Descriptions.Item>
-        <Descriptions.Item className="textAlign" label="Term">{termName}</Descriptions.Item>
+        <Descriptions.Item className="textAlign" label="Term">
+          {termName}
+        </Descriptions.Item>
         <Descriptions.Item label="Invoice Date">{moment(invoiceDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Due Date">{moment(dueDate).format('MM/DD/YYYY')}</Descriptions.Item>
         <Descriptions.Item label="Consultant">{consultantName}</Descriptions.Item>
@@ -197,8 +228,14 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
               description
             )}
           </td>
-          <td>{totalHrs}</td>
-          <td>{isEdit ? <StyledInput name="rate" size="small" value={form.rate} onChange={updateField} /> : `$${rate}`}</td>
+          <td>{totalHrs && parseFloat(totalHrs).toFixed(2)}</td>
+          <td>
+            {isEdit ? (
+              <StyledInput type="number" name="rate" size="small" value={form.rate} onChange={updateRate} onKeyDown={handleCharacters} />
+            ) : (
+              `$${rate}`
+            )}
+          </td>
           <td>${initialAmount}</td>
         </tr>
         {lineItems &&
@@ -240,7 +277,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
           </td>
           <td>
             {isEdit ? (
-              <StyledInput name="discountValue" size="small" value={form.discountValue} onChange={updateField} />
+              <StyledInput name="discountValue" size="small" value={form.discountValue} onChange={updateDiscount} />
             ) : (
               discountValue && (discountType == 1 ? `${discountValue}%` : `$${discountValue}`)
             )}
@@ -260,23 +297,28 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
           {isEdit ? <StyledTextArea maxLength={1000} rows={2} value={intuitMemo} onChange={(e: any) => setIntuitMemo(e.target.value)} /> : memo}
         </Col>
       </StyledTextRow>
-      <List
-        header={<b>Attachments</b>}
-        dataSource={attachments}
-        renderItem={(item: any) => (
-          <List.Item
-            css={css`
-              padding: 5px 0;
-            `}
-          >
-            <a href={`${AppConsts.remoteServiceBaseUrl}/Attachment/Index/${item.id}`} target="_blank">
-              {item.originalName}
-            </a>
-          </List.Item>
-        )}
-      />
+      <StyledDiv>
+        <List
+          header={<b>Attachments</b>}
+          dataSource={attachments}
+          renderItem={(item: any) => (
+            <List.Item
+              css={css`
+                padding: 5px 0;
+              `}
+            >
+              <a href={`${AppConsts.remoteServiceBaseUrl}/Attachment/Index/${item.id}`} target="_blank">
+                {item.originalName}
+              </a>
+            </List.Item>
+          )}
+        />
+      </StyledDiv>
       {isEdit && !parseFloat(form.rate) && <Alert message="Rate can't be null or 0" type="error" />}
-
+      {isEdit && disType == 1 && form.discountValue > 100 && <Alert message="Please enter percentage less than or equal to 100" type="error" />}
+      {isEdit && disType == 2 && initialAmount < form.discountValue && (
+        <Alert message="Please enter a discount value less than or equal to Amount" type="error" />
+      )}
       <div
         style={{
           position: 'absolute',
@@ -326,7 +368,7 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
             onSuccess={() => {
               notification.open({
                 message: 'Success',
-                description: 'Invoice submitted and mailed  successfully.',
+                description: 'Invoice submitted and mailed successfully.',
               });
               onClose && onClose();
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
@@ -379,7 +421,11 @@ const InvoiceDetail = ({ invoice, onClose, onInvoiceSubmitted, hourEntries, isDe
               setTimeout(() => onInvoiceSubmitted && onInvoiceSubmitted());
             }}
             onSubmit={({ setFormData, setIsReady }: any) => {
-              if (parseFloat(form.rate) && totalHrs) {
+              if (
+                parseFloat(form.rate) &&
+                totalHrs &&
+                ((disType == 1 && form.discountValue <= 100) || (disType == 2 && form.discountValue <= initialAmount))
+              ) {
                 setFormData({
                   invoice: {
                     totalHours: totalHrs,
@@ -420,7 +466,15 @@ const ConnectedInvoiceDetail = ({ invoiceId, onClose, onInvoiceSubmitted }: any)
     <Get url={'/api/services/app/Invoice/Get'} params={{ id: invoiceId }}>
       {({ error, data, isLoading }: any) => {
         const result = data && data.result;
-        return <InvoiceDetail isDeletedInIntuit={result && result.isDeletedInIntuit} invoice={result} onClose={onClose} onInvoiceSubmitted={onInvoiceSubmitted} hourEntries={hourEntries} />;
+        return (
+          <InvoiceDetail
+            isDeletedInIntuit={result && result.isDeletedInIntuit}
+            invoice={result}
+            onClose={onClose}
+            onInvoiceSubmitted={onInvoiceSubmitted}
+            hourEntries={hourEntries}
+          />
+        );
       }}
     </Get>
   );

@@ -82,7 +82,7 @@ namespace Accounts.HourLogEntries
                 {
                     if (log.Hours.HasValue)
                     {
-                        existingHourLog.Hours = log.Hours;
+                        existingHourLog.Hours = Math.Round((double)log.Hours,2);
                     }
                 }
                 else
@@ -249,13 +249,14 @@ namespace Accounts.HourLogEntries
                 {
                     StartDt = uStartDt,
                     EndDt = uEndDt,
-                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0)
+                    TotalHrs = projectHourLog?.HourLogEntries.Where(x => x.Day >= uStartDt && x.Day <= uEndDt).Sum(x => x.Hours.HasValue ? Math.Round(x.Hours.Value,2) : 0)
                 };
                 proj.UpcomingTimesheetSummary = upcomingTimesheetSummary;
 
                 proj.LastApprovedDate = projectLastApprovedTimesheet?.ApprovedDate;
                 proj.LastInvoicedDate = projectLastInvoicedTimesheet?.InvoiceGeneratedDate;
-
+                proj.TotalHoursBilled = Math.Round(proj.TotalHoursBilled, 2);
+                proj.TotalAmountBilled = Math.Round(proj.TotalAmountBilled, 2);
                 proj.PastTimesheetDays = duedays > 0 ? duedays : 0;
                 if (duedays > 0)
                 {
