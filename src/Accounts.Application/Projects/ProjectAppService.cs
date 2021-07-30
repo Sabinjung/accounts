@@ -6,6 +6,7 @@ using Abp.Extensions;
 using Abp.UI;
 using Accounts.Blob;
 using Accounts.Data;
+using Accounts.Data.Models;
 using Accounts.Models;
 using Accounts.Projects.Dto;
 using Accounts.Timesheets;
@@ -38,7 +39,7 @@ namespace Accounts.Projects
         private readonly IRepository<Invoice> InvoiceRepository;
         private readonly IRepository<HourLogEntry> HourlogRepository;
         private readonly IRepository<Attachment> AttachmentRepository;
-
+        private readonly IRepository<Fieldglass> FieldglassRepository;
         private readonly QueryBuilderFactory QueryBuilder;
 
         private readonly IList<ProjectQueryParameters> SavedQueries;
@@ -53,6 +54,7 @@ namespace Accounts.Projects
             IRepository<Invoice> invoiceRepository,
             IRepository<HourLogEntry> hourlogRepository,
             IRepository<Attachment> attachmentRepository,
+            IRepository<Fieldglass> fieldglassRepository,
             IAzureBlobService azureBlobService,
             QueryBuilderFactory queryBuilderFactory,
             ITimesheetService timesheetService,
@@ -67,6 +69,7 @@ namespace Accounts.Projects
             InvoiceRepository = invoiceRepository;
             HourlogRepository = hourlogRepository;
             AttachmentRepository = attachmentRepository;
+            FieldglassRepository = fieldglassRepository;
             QueryBuilder = queryBuilderFactory;
             TimesheetService = timesheetService;
             Configuration = _Configuration;
@@ -189,18 +192,14 @@ namespace Accounts.Projects
         }
         public override async Task<ProjectDto> Update(ProjectDto input)
         {
-            var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
-          
 
+            var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
+            
             var timesheets = TimesheetRepository.GetAll().FirstOrDefault(x=>x.ProjectId == input.Id && x.Status.Name != "Invoiced");
             if(timesheets!=null && query!=null)
-            {
                 throw new UserFriendlyException("Project Edit Warning","Project has pending or approved timesheet. Please generate invoice or delete timesheet to edit project");
-            }
-           
-            if (input.DiscountType == null && input.DiscountValue != null)
-            throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
-
+            if(input.DiscountType == null && input.DiscountValue != null)
+                throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
             return await base.Update(input);
         }
         public override async Task<ProjectDto> Get(EntityDto<int> input)

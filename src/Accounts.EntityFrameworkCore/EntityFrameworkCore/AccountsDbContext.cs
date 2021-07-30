@@ -4,6 +4,7 @@ using Accounts.Authorization.Roles;
 using Accounts.Authorization.Users;
 using Accounts.MultiTenancy;
 using Accounts.Models;
+using Accounts.Data.Models;
 
 namespace Accounts.EntityFrameworkCore
 {
@@ -43,6 +44,7 @@ namespace Accounts.EntityFrameworkCore
         public DbSet<ConfigType> ConfigTypes { get; set; }
 
         public DbSet<IntuitWebhookLog> IntuitWebhookLogs { get; set; }
+        public DbSet<Fieldglass> Fieldglasses { get; set; }
 
         public AccountsDbContext(DbContextOptions<AccountsDbContext> options)
             : base(options)

@@ -8,11 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using PQ.Extensions;
 using MoreLinq;
+using Abp.Domain.Repositories;
+using Accounts.Data.Models;
 
 namespace Accounts.Timesheets
 {
     public class TimesheetService : DomainService, ITimesheetService
     {
+        private readonly IRepository<Fieldglass> _fieldglassRepo;
+
+        public TimesheetService(IRepository<Fieldglass> fieldglassRepo)
+        {
+            _fieldglassRepo = fieldglassRepo;
+        }
+
         public double CalculateTotalHours(IEnumerable<HourLogEntry> hourLogEntries)
         {
             return  Math.Round(hourLogEntries.DistinctBy(x => x.Day).Sum(x => x.Hours.HasValue ? x.Hours.Value : 0),2);
@@ -30,7 +39,7 @@ namespace Accounts.Timesheets
             DateTime CalculateTimesheetEndDt(DateTime dateTime)
             {
                 var eom = CalculateEndDtBasedonInvoiceCycle(dateTime, invoiceCycles);
-                return projectEndDt.HasValue ? projectEndDt > eom ? eom : projectEndDt.Value : eom;
+                return projectEndDt.HasValue ? projectEndDt > eom.Result ? eom.Result : projectEndDt.Value : eom.Result;
             }
 
             if (!lastTimesheetEndDt.HasValue)
@@ -98,7 +107,7 @@ namespace Accounts.Timesheets
             return true;
         }
 
-        private DateTime CalculateEndDtBasedonInvoiceCycle(DateTime dateTime, InvoiceCycles invoiceCycles)
+        private async Task<DateTime> CalculateEndDtBasedonInvoiceCycle(DateTime dateTime, InvoiceCycles invoiceCycles)
         {
             switch (invoiceCycles)
             {
@@ -110,6 +119,18 @@ namespace Accounts.Timesheets
 
                 case InvoiceCycles.BiWeekly:
                     return dateTime.AddDays(13);
+                case InvoiceCycles.Fieldglass:
+                    var date = new DateTime(2021, dateTime.Month, dateTime.Day);
+                    var fieldglass =  await _fieldglassRepo.FirstOrDefaultAsync(x => x.StartDate == date);
+                    if (fieldglass == null)
+                    {
+                        var result =await _fieldglassRepo.FirstOrDefaultAsync(x => date>=x.StartDate && date<=x.EndDate);
+                        return new DateTime(dateTime.Year, result.EndDate.Month, result.EndDate.Day);
+                    }
+                    else
+                    {
+                        return new DateTime(dateTime.Year, fieldglass.EndDate.Month, fieldglass.EndDate.Day);
+                    }
 
                 default:
                     return dateTime.EndofMonth();
