@@ -19,6 +19,8 @@ namespace Accounts.Authorization
             timesheetPermission.CreateChildPermission("Timesheet.Approve", L("Timesheet Approval"));
             timesheetPermission.CreateChildPermission("Timesheet.GenerateInvoice", L("Invoice Generation"));
             timesheetPermission.CreateChildPermission("Timesheet.Delete", L("Timesheet Delete"));
+            timesheetPermission.CreateChildPermission("HourLog.Report", L("Hourlog Report"));
+
 
             // Invoice Permissions
             var invoicePermission = context.CreatePermission("Invoicing", L("Invoicing"));
@@ -27,6 +29,7 @@ namespace Accounts.Authorization
             invoicePermission.CreateChildPermission("Invoicing.SubmitAndMail", L("Submit And Mail"));
             invoicePermission.CreateChildPermission("Invoicing.EditEndDate", L("Edit EndDate"));
             invoicePermission.CreateChildPermission("AgingReport", L("Aging Report"));
+
 
             // Consultant Permissions
             var consultantPermission = context.CreatePermission("Consultant", L("Consultant"));

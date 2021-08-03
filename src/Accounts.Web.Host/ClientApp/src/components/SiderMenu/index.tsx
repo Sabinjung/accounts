@@ -11,7 +11,7 @@ import { appRouters } from '../../components/Router/router.config';
 const { Sider } = Layout;
 
 const IconFont = Icon.createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2286956_rugdmojd5iq.js',
+  scriptUrl: '//at.alicdn.com/t/font_2286956_e26vnp2hrt.js',
 });
 
 export interface ISiderMenuProps {

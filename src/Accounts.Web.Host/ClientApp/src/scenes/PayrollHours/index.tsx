@@ -77,7 +77,20 @@ const StyledTable = styled(CustomHoursTable)`
   .iconrow {
     position: relative;
   }
+  .ant-table-scroll {
+    .ant-table-fixed {
+      width: 2500px !important;
+    }
+  }
+  .ant-table-fixed-left {
+    table {
+      width: 450px !important;
+    }
+  }
   .ant-table-fixed-right {
+    table {
+      width: 200px !important;
+    }
     th {
       padding: 18px 8px !important;
     }
@@ -275,7 +288,7 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
             return totalHrs;
           }
         }, 0);
-        return val;
+        return parseFloat(val.toFixed(2));
       },
     },
     {
@@ -293,7 +306,7 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
             return totalHrs;
           }
         }, 0);
-        return val;
+        return parseFloat(val.toFixed(2));
       },
     },
     {
@@ -306,7 +319,7 @@ const DisplayHours: React.SFC<DisplayHoursProps> = ({ result, loading, setSelect
         let isAllInvoiced = true;
         val = item.dailyHourLogs.reduce((totalHrs: any, data: any) => {
           totalHrs += data.hours;
-          return totalHrs;
+          return parseFloat(totalHrs.toFixed(2));
         }, 0);
         if (item.dailyHourLogs.length === 0) {
           isAllInvoiced = false;

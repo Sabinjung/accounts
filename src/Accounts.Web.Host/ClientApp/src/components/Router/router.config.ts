@@ -129,6 +129,17 @@ export const appRouters: any = [
   },
 
   {
+    path: '/hourlogsReport',
+    name: 'hourLogsReport',
+    permission: 'HourLog.Report',
+    title: 'Hour Logs Report',
+    icon: 'icona-hourlogsreport',
+    showInMenu: true,
+    exact: true,
+    component: LoadableComponent(() => import('../../scenes/Timesheet/components/HourLogReport')),
+  },
+
+  {
     path: '/agingReport',
     name: 'agingReport',
     permission: 'AgingReport',

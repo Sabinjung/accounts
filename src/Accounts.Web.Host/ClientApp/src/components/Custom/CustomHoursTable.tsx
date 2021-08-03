@@ -77,6 +77,18 @@ const StyledTable = styled(Table)`
   .ant-table-scroll table .ant-table-fixed-columns-in-body:not([colspan]){
     background: white !important;
   }
+
+  .inner-table{
+    width: 88vh;
+    th.is-holiday {
+      background: #ddd !important;
+    }
+    th, td {
+      text-align: center;
+    }
+  }
+
+  
 `;
 
 const CustomHoursTable: React.FC<CustomHoursTableProps> = (props: any) => {
