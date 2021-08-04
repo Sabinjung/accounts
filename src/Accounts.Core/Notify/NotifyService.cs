@@ -50,7 +50,7 @@ namespace Accounts.Core.Notify
             TeamNotificationDto notify = new TeamNotificationDto
             {
                 TeamId = "",
-                TeamName = "",
+                TeamName = "SutraBot",
                 Message = $"Invoice has been {message}.\n" +
                 $" Date: {DateTime.UtcNow.Date.ToString(" MM/dd/yyyy")}\n" +
                 $" Customer Name: {companyName}\n" +
@@ -68,7 +68,7 @@ namespace Accounts.Core.Notify
             TeamNotificationDto notify = new TeamNotificationDto
             {
                 TeamId = "",
-                TeamName = "",
+                TeamName = "ArFollowUp",
                 Message = message 
             };
             await SendNotification(notify, (int)ConfigTypes.RCChannel);
@@ -80,17 +80,12 @@ namespace Accounts.Core.Notify
             var client = new HttpClient();
             var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
             var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
-            var channelName = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == channelId).Select(x => x.Data).FirstOrDefault();
+            var teamId = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == channelId).Select(x => x.Data).FirstOrDefault();
 
             client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage getTeams = await client.GetAsync("api/GetAllTeams");
-            var jsonData = await getTeams.Content.ReadAsStringAsync();
-            var teams = JsonConvert.DeserializeObject<List<TeamNotificationDto>>(jsonData);
-            var query = teams.Where(x => x.TeamName.ToLower() == channelName.ToLower()).Select(x => (x.TeamId, x.TeamName)).FirstOrDefault();
-            param.TeamId = query.TeamId;
-            param.TeamName = query.TeamName;
+            param.TeamId = teamId;
             HttpResponseMessage res = await client.PostAsJsonAsync("api/CreateTeamNotification",param);
 
             if (!res.IsSuccessStatusCode)
