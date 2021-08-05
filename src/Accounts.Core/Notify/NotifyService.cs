@@ -44,6 +44,7 @@ namespace Accounts.Core.Notify
         public async Task<string> NotifyInvoice(string invoiceId , string message)
         {
             var invoiceUrl = Configuration.GetSection("App:ServerRootAddress").Value;
+            var notificationSource = Configuration.GetSection("RingCentralNotification:NotificationSource").Value;
             var databaseInvoice = InvoiceRepository.FirstOrDefault(x => x.EInvoiceId == invoiceId);
             var companyName = CompanyRepository.FirstOrDefault(x => x.Id == databaseInvoice.CompanyId).DisplayName;
             var consultantName = ConsultantRepository.FirstOrDefault(x => x.Id == databaseInvoice.ConsultantId).DisplayName;
@@ -58,7 +59,7 @@ namespace Accounts.Core.Notify
                 $" Consultant Name: {consultantName}\n" +
                 $" eInvoice ID:{invoiceId}\n" +
                 $" Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInvoice.Id + "\n"}\n",
-                From = "Accounts"
+                From = notificationSource
             };
             await SendNotification(notify);
 
@@ -67,12 +68,13 @@ namespace Accounts.Core.Notify
         public async Task<string> NotifyPayment(string message)
         {
             var teamId = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.RCChannel).Select(x => x.Data).FirstOrDefault();
+            var notificationSource = Configuration.GetSection("RingCentralNotification:NotificationSource").Value;
             TeamNotificationDto notify = new TeamNotificationDto
             {
                 TeamId = teamId,
                 TeamName = "ArFollowUp",
                 Message = message,
-                From = "Accounts"
+                From = notificationSource
             };
             await SendNotification(notify);
             return "User Notified";
@@ -99,6 +101,7 @@ namespace Accounts.Core.Notify
         {
             var client = new HttpClient();
             var notify = new NotifyParam();
+            var notificationSource = Configuration.GetSection("RingCentralNotification:NotificationSource").Value;
             var unassociatedTimesheets = TimesheetRepository.GetAllList().Where(x => x.InvoiceId == null).Select(x => x.Id).ToList();
             var unassociatedHoursProjects = HourlogRepository.GetAllIncluding(x=>x.Project)
                                             .Where(x => (x.TimesheetId == null || unassociatedTimesheets
@@ -120,7 +123,8 @@ namespace Accounts.Core.Notify
                 {
                     EmailAddress = emailAddress,
                     Message = "Projects with unassociated hour logs: " + unassociatedHoursProjects.Count() + " \n\nProject Details: \n" + messageBody,
-                    ImType = 1
+                    ImType = 1,
+                    From = notificationSource
                 };
                 notify.Message = notify.Message.Replace("\n", Environment.NewLine);
             }
@@ -130,7 +134,8 @@ namespace Accounts.Core.Notify
                 {
                     EmailAddress = emailAddress,
                     Message = "Projects with unassociated hour logs: " + unassociatedHoursProjects.Count(),
-                    ImType = 1
+                    ImType = 1,
+                    From = notificationSource
                 };
             }
             client.BaseAddress = new Uri(baseUrl);
