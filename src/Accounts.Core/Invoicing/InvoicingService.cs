@@ -212,7 +212,7 @@ namespace Accounts.Core.Invoicing
                     var customerName = CompanyRepository.FirstOrDefaultAsync(x => x.Id == databaseInv.CompanyId).Result.DisplayName;
                     if (databaseInv.EInvoiceId != null)
                     {
-                        message =
+                        message +=
                         $"{titleMsg}\n" +
                         $"Date: {payment.TxnDate.Date.ToString(" MM/dd/yyyy")}\n";
                         if (operation == "Create") { message += $"Amount Received: ${item.Amount}\n"; }

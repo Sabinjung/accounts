@@ -347,7 +347,7 @@ namespace Accounts.HourLogEntries
                     MonthName = x.Key.Month,
                     Year = x.Key.Year,
                     Days = x.Where(y=>y.Hours>0).Select(y=>new DailyHour { Day =y.Day,Hour= y.Hours }),
-                    TotalHours = (double)x.Sum(y => y.Hours)
+                    TotalHours = Math.Round((double)x.Sum(y => y.Hours),2)
                 }).OrderBy(x => x.Year).ThenBy(x => x.MonthName)
             };
             return result;

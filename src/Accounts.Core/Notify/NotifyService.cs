@@ -47,45 +47,45 @@ namespace Accounts.Core.Notify
             var databaseInvoice = InvoiceRepository.FirstOrDefault(x => x.EInvoiceId == invoiceId);
             var companyName = CompanyRepository.FirstOrDefault(x => x.Id == databaseInvoice.CompanyId).DisplayName;
             var consultantName = ConsultantRepository.FirstOrDefault(x => x.Id == databaseInvoice.ConsultantId).DisplayName;
+            var teamId = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.RCBot).Select(x => x.Data).FirstOrDefault();
             TeamNotificationDto notify = new TeamNotificationDto
             {
-                TeamId = "",
+                TeamId = teamId,
                 TeamName = "SutraBot",
                 Message = $"Invoice has been {message}.\n" +
                 $" Date: {DateTime.UtcNow.Date.ToString(" MM/dd/yyyy")}\n" +
                 $" Customer Name: {companyName}\n" +
                 $" Consultant Name: {consultantName}\n" +
                 $" eInvoice ID:{invoiceId}\n" +
-                $" Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInvoice.Id + "\n"}\n"
+                $" Invoice link to Accounts application: {invoiceUrl + "invoices/" + databaseInvoice.Id + "\n"}\n",
+                From = "Accounts"
             };
-            await SendNotification(notify, (int)ConfigTypes.RCBot);
+            await SendNotification(notify);
 
             return "User Notified";
         }
         public async Task<string> NotifyPayment(string message)
         {
-            var invoiceUrl = Configuration.GetSection("App:ServerRootAddress").Value;
+            var teamId = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.RCChannel).Select(x => x.Data).FirstOrDefault();
             TeamNotificationDto notify = new TeamNotificationDto
             {
-                TeamId = "",
+                TeamId = teamId,
                 TeamName = "ArFollowUp",
-                Message = message 
+                Message = message,
+                From = "Accounts"
             };
-            await SendNotification(notify, (int)ConfigTypes.RCChannel);
+            await SendNotification(notify);
             return "User Notified";
         }
 
-        public async Task<string> SendNotification(TeamNotificationDto param,int channelId)
+        public async Task<string> SendNotification(TeamNotificationDto param)
         {
             var client = new HttpClient();
             var emailAddress = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.NotificationEmail).Select(x => x.Data).ToList();
             var baseUrl = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == (int)ConfigTypes.BaseUrl).Select(x => x.Data).FirstOrDefault();
-            var teamId = ConfigRepository.GetAllList().Where(x => x.ConfigTypeId == channelId).Select(x => x.Data).FirstOrDefault();
-
             client.BaseAddress = new Uri(baseUrl);
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            param.TeamId = teamId;
             HttpResponseMessage res = await client.PostAsJsonAsync("api/CreateTeamNotification",param);
 
             if (!res.IsSuccessStatusCode)

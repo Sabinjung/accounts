@@ -182,7 +182,6 @@ namespace Accounts.Projects
         {
            
             var activeProjectCount = await Repository.CountAsync(x => x.ConsultantId == input.ConsultantId && (x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true));
-           
             if (input.DiscountType == null && input.DiscountValue !=null)
                 throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
             if (activeProjectCount > 0)
@@ -192,9 +191,9 @@ namespace Accounts.Projects
         }
         public override async Task<ProjectDto> Update(ProjectDto input)
         {
-
             var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
-            
+            if (input.EndDt.HasValue && HourlogRepository.GetAll().Any(x => x.ProjectId == input.Id && x.Day > input.EndDt))
+                throw new UserFriendlyException("Cannot Update Project.", "Hours are logged beyond the end date.");
             var timesheets = TimesheetRepository.GetAll().FirstOrDefault(x=>x.ProjectId == input.Id && x.Status.Name != "Invoiced");
             if(timesheets!=null && query!=null)
                 throw new UserFriendlyException("Project Edit Warning","Project has pending or approved timesheet. Please generate invoice or delete timesheet to edit project");
@@ -226,7 +225,7 @@ namespace Accounts.Projects
                 {
                     MonthName = x.Key.Month,
                     Year = x.Key.Year,
-                    TotalHours = (double)x.Sum(y => y.Hours)
+                    TotalHours = Math.Round((double)x.Sum(y => y.Hours),2)
                 }).OrderBy(x => x.Year).ThenBy(x => x.MonthName)
             };
             return result;
