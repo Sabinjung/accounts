@@ -48,8 +48,8 @@ namespace Accounts
                        .ForMember("PhoneNumber", x => x.MapFrom(y => y.Consultant.PhoneNumber))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
                        .ForMember("EndClientName", x => x.MapFrom(y => y.EndClient.ClientName))
-                       .ForMember("TotalHoursBilled", x => x.MapFrom(y => Math.Round(y.Invoices.Sum(z => z.TotalHours),2)))
-                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => Math.Round(y.Invoices.Sum(z => z.Total),2)))
+                       .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
+                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
                        .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name))
                        ;
 
@@ -57,8 +57,8 @@ namespace Accounts
                        .ForMember("ConsultantName", x => x.MapFrom(y => $"{y.Consultant.FirstName} {y.Consultant.LastName}"))
                        .ForMember("CompanyName", x => x.MapFrom(y => y.Company.DisplayName))
                        .ForMember("EndClientName", x => x.MapFrom(y => y.EndClient.ClientName))
-                       .ForMember("TotalHoursBilled", x => x.MapFrom(y => Math.Round(y.Invoices.Sum(z => z.TotalHours), 2)))
-                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => Math.Round(y.Invoices.Sum(z => z.Total), 2)))
+                       .ForMember("TotalHoursBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.TotalHours)))
+                       .ForMember("TotalAmountBilled", x => x.MapFrom(y => y.Invoices.Sum(z => z.Total)))
                         .ForMember("TermName", x => x.MapFrom(y => y.Term.Name))
                         .ForMember("InvoiceCycleName", x => x.MapFrom(y => y.InvoiceCycle.Name));
 

@@ -169,6 +169,8 @@ namespace Accounts.Projects
 
             Parallel.ForEach(result.Results, proj =>
             {
+                proj.TotalHoursBilled = Math.Round(proj.TotalHoursBilled, 2);
+                proj.TotalAmountBilled = Math.Round(proj.TotalAmountBilled, 2);
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
