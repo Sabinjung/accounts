@@ -9,5 +9,6 @@ namespace Accounts.Notify
         public string TeamId { get; set; }
         public string TeamName { get; set; }
         public string Message { get; set; }
+        public string From { get; set; }
     }
 }

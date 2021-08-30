@@ -27,6 +27,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using Abp.Extensions;
 
 namespace Accounts.HourLogEntries
 {
@@ -34,6 +35,8 @@ namespace Accounts.HourLogEntries
     public class HourLogEntryAppService : AsyncCrudAppService<HourLogEntry, HourLogEntryDto>, IHourLogEntryAppService
     {
         private readonly IProjectRepository ProjectRepository;
+        private readonly IRepository<Project> _projectRepo;
+        private readonly IRepository<Consultant> ConsultantRepository;
 
         private readonly IRepository<Timesheet> TimesheetRepository;
 
@@ -50,6 +53,8 @@ namespace Accounts.HourLogEntries
         public HourLogEntryAppService(
             IRepository<HourLogEntry> repository,
             IProjectRepository projectRepository,
+            IRepository<Project> projectRepo,
+            IRepository<Consultant> consultantRepository,
             IRepository<Config> configRepository,
             ITimesheetService timesheetService,
             IRepository<Timesheet> timesheetRepository,
@@ -59,6 +64,8 @@ namespace Accounts.HourLogEntries
         {
             ConfigRepository = configRepository;
             ProjectRepository = projectRepository;
+            _projectRepo = projectRepo;
+            ConsultantRepository = consultantRepository;
             Mapper = mapper;
             TimesheetService = timesheetService;
             TimesheetRepository = timesheetRepository;
@@ -286,7 +293,65 @@ namespace Accounts.HourLogEntries
             finalResult.Results = result.OrderBy(x => x.Project.ConsultantName);
             return finalResult;
         }
+        [AbpAuthorize("HourLog.Report")]
+        public async Task<List<HourLogReportDto>> GetHourLogReport()
+        {
+            var invoicedetails = await Repository.GetAll().Where(x => x.Timesheet.InvoiceId != null).ToListAsync();
+            var projects = ProjectRepository.GetAll();
+            var hourlogs = Repository.GetAll();
+            var joinHourlog = projects.Join(hourlogs, x => x.Id, y => y.ProjectId, (project, hourlog) => new 
+            { 
+                hourlog.ProjectId,
+                project.Consultant.DisplayName,
+                hourlog.Day,
+                hourlog.Hours,
+                hourlog.Timesheet.InvoiceId,
+                project.InvoiceCycleStartDt
+            });
+            var report =await joinHourlog.Where(x =>
+                                 x.InvoiceId == null
+                                 && x.Hours > 0
+                                 && x.Day >= x.InvoiceCycleStartDt
+                                 && x.Day < DateTime.Now.AddDays(-45))
+                                .GroupBy(x=> new { x.ProjectId,x.DisplayName})
+                                .Select(y=>new HourLogReportDto
+                                {
+                                    ProjectId = y.Key.ProjectId,
+                                    DisplayName = y.Key.DisplayName,
+                                    TotalInvoicedHours = Math.Round((double)invoicedetails.Where(z => z.ProjectId == y.Key.ProjectId).Sum(s => s.Hours),2),
+                                    TotalNonInvoicedHours =Math.Round((double)y.Sum(s => s.Hours),2)
+                                }).ToListAsync();
+           
+            return report;
 
+        }
+        public async Task<UnassociatedProjectHourlogReportDto> GetHourLogReportDetails(int projectId)
+        {
+            List<int> unassociatedTimesheets = TimesheetRepository.GetAllList().Where(x => x.InvoiceId == null).Select(x => x.Id).ToList();
+            var unassociatedHoursProjects = await Repository.GetAllIncluding(x => x.Project)
+                                            .Where(x => x.ProjectId == projectId 
+                                            && x.Hours>0 && (x.TimesheetId == null || unassociatedTimesheets
+                                            .Contains(x.TimesheetId.Value)) 
+                                            && x.Day < DateTime.Now.AddDays(-45) 
+                                            && x.Day >= x.Project.InvoiceCycleStartDt)
+                                            .GroupBy(z => new
+                                            {
+                                                z.Day.Date.Month,
+                                                z.Day.Date.Year
+                                            }).ToListAsync();
+            var result = new UnassociatedProjectHourlogReportDto
+            {
+                ConsultantName = ProjectRepository.FirstOrDefault(y => y.Id == projectId).Consultant.DisplayName,
+                UnassociatedHourReportDtos = unassociatedHoursProjects.Select(x => new UnassociatedHourlogMonthReportDto
+                {
+                    MonthName = x.Key.Month,
+                    Year = x.Key.Year,
+                    Days = x.Where(y=>y.Hours>0).Select(y=>new DailyHour { Day =y.Day,Hour= y.Hours }),
+                    TotalHours = Math.Round((double)x.Sum(y => y.Hours),2)
+                }).OrderBy(x => x.Year).ThenBy(x => x.MonthName)
+            };
+            return result;
+        }
         public async Task<InvoicedHourLogEntryDto> GetInvoicedHourLogs(int invoiceId)
         {
             var timesheetId = TimesheetRepository.GetAll().Where(x => x.InvoiceId == invoiceId).FirstOrDefault().Id;

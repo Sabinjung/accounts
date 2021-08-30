@@ -6,6 +6,7 @@ using Abp.Extensions;
 using Abp.UI;
 using Accounts.Blob;
 using Accounts.Data;
+using Accounts.Data.Models;
 using Accounts.Models;
 using Accounts.Projects.Dto;
 using Accounts.Timesheets;
@@ -38,7 +39,7 @@ namespace Accounts.Projects
         private readonly IRepository<Invoice> InvoiceRepository;
         private readonly IRepository<HourLogEntry> HourlogRepository;
         private readonly IRepository<Attachment> AttachmentRepository;
-
+        private readonly IRepository<Fieldglass> FieldglassRepository;
         private readonly QueryBuilderFactory QueryBuilder;
 
         private readonly IList<ProjectQueryParameters> SavedQueries;
@@ -53,6 +54,7 @@ namespace Accounts.Projects
             IRepository<Invoice> invoiceRepository,
             IRepository<HourLogEntry> hourlogRepository,
             IRepository<Attachment> attachmentRepository,
+            IRepository<Fieldglass> fieldglassRepository,
             IAzureBlobService azureBlobService,
             QueryBuilderFactory queryBuilderFactory,
             ITimesheetService timesheetService,
@@ -67,6 +69,7 @@ namespace Accounts.Projects
             InvoiceRepository = invoiceRepository;
             HourlogRepository = hourlogRepository;
             AttachmentRepository = attachmentRepository;
+            FieldglassRepository = fieldglassRepository;
             QueryBuilder = queryBuilderFactory;
             TimesheetService = timesheetService;
             Configuration = _Configuration;
@@ -166,6 +169,8 @@ namespace Accounts.Projects
 
             Parallel.ForEach(result.Results, proj =>
             {
+                proj.TotalHoursBilled = Math.Round(proj.TotalHoursBilled, 2);
+                proj.TotalAmountBilled = Math.Round(proj.TotalAmountBilled, 2);
                 var projectLastTimesheet = lastTimesheets.FirstOrDefault(t => t != null && t.ProjectId == proj.Id);
                 var (uStartDt, uEndDt) = TimesheetService.CalculateTimesheetPeriod(proj.StartDt, proj.EndDt, proj.InvoiceCycleStartDt, (InvoiceCycles)proj.InvoiceCycleId, projectLastTimesheet?.EndDt);
                 var duedays = projectLastTimesheet != null ? Math.Ceiling((DateTime.UtcNow - uStartDt).TotalDays) : Math.Ceiling((DateTime.UtcNow - uEndDt).TotalDays);
@@ -179,7 +184,6 @@ namespace Accounts.Projects
         {
            
             var activeProjectCount = await Repository.CountAsync(x => x.ConsultantId == input.ConsultantId && (x.EndDt.HasValue ? x.EndDt > DateTime.UtcNow : true));
-           
             if (input.DiscountType == null && input.DiscountValue !=null)
                 throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
             if (activeProjectCount > 0)
@@ -190,17 +194,13 @@ namespace Accounts.Projects
         public override async Task<ProjectDto> Update(ProjectDto input)
         {
             var query = Repository.GetAll().FirstOrDefault(x => x.Id == input.Id);
-          
-
+            if (input.EndDt.HasValue && HourlogRepository.GetAll().Any(x => x.ProjectId == input.Id && x.Day > input.EndDt))
+                throw new UserFriendlyException("Cannot Update Project.", "Hours are logged beyond the end date.");
             var timesheets = TimesheetRepository.GetAll().FirstOrDefault(x=>x.ProjectId == input.Id && x.Status.Name != "Invoiced");
             if(timesheets!=null && query!=null)
-            {
                 throw new UserFriendlyException("Project Edit Warning","Project has pending or approved timesheet. Please generate invoice or delete timesheet to edit project");
-            }
-           
-            if (input.DiscountType == null && input.DiscountValue != null)
-            throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
-
+            if(input.DiscountType == null && input.DiscountValue != null)
+                throw new UserFriendlyException("Discount Type not found.", "Please add discount type in project.");
             return await base.Update(input);
         }
         public override async Task<ProjectDto> Get(EntityDto<int> input)
@@ -227,7 +227,7 @@ namespace Accounts.Projects
                 {
                     MonthName = x.Key.Month,
                     Year = x.Key.Year,
-                    TotalHours = (double)x.Sum(y => y.Hours)
+                    TotalHours = Math.Round((double)x.Sum(y => y.Hours),2)
                 }).OrderBy(x => x.Year).ThenBy(x => x.MonthName)
             };
             return result;

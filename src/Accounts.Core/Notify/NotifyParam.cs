@@ -9,5 +9,6 @@ namespace Accounts.Core.Notify
         public List<string> EmailAddress { get; set; }
         public string Message { get; set; }
         public int ImType { get; set; }
+        public string From { get; set; }
     }
 }

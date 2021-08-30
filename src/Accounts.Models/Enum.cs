@@ -22,7 +22,8 @@ namespace Accounts.Data
         Weekly = 1,
         Monthly = 2,
         BiWeekly = 3,
-        BiMonthly = 4
+        BiMonthly = 4,
+        Fieldglass = 5
     }
 
     public enum ConfigTypes
